@@ -1,4 +1,4 @@
 alias(
     name   = "test",
-    actual = ":test"
+    actual = "//:test"
 )

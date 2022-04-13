@@ -6,6 +6,10 @@ Demos:
 
 * [ffi](ffi/readme.md) Demos using the standard OCaml FFI (**F**oreign **F**unction **I**nterface).
 
+Not yet implemented:
+* [cstubs](cstubs) Simple demo showing how to use the `cstubs` subpackage of `ctypes` to access C libraries.
+* [ctypes](ctypes) Simple demo showing how to use the `ctypes` package to access C libraries.
+
 ## resources
 
 * [Chapter 20  Interfacing C with OCaml](https://caml.inria.fr/pub/docs/manual-ocaml-4.11/intfc.html)

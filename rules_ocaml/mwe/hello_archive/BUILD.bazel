@@ -9,7 +9,7 @@ load(
 # $ bazel test //minimal/hello_archive:test
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 # $ bazel run minimal/hello_archive:hello
@@ -20,7 +20,7 @@ ocaml_executable(
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
