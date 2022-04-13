@@ -1,0 +1,32 @@
+# Demonstrates basic dyadic module, pairing structfile and sigfile
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(name = "test", main = "Test")
+
+ocaml_module(name   = "Test", struct = "testbzl.ml",
+             deps = [":A", "@ounit2//:ounit2"])
+
+# sig A depends module types B and C, which may be provided by any
+# sigfiles; the 'open' attribute will automatically add the needed
+# '-open' options to the compile command.
+ocaml_module(name = "A", struct = "a.ml", sig    = ":A_cmi")
+
+ocaml_signature(
+    name = "A_cmi",
+    src  = "a.mli",
+    open = select({
+        "//bzl:lang_en": [":B_EN", ":C_EN"],
+        "//bzl:lang_fr": [":B_FR", ":C_FR"],
+    })
+)
+ocaml_signature(name = "B_EN", src  = "b_en.mli")
+ocaml_signature(name = "C_EN", src  = "c_en.mli")
+ocaml_signature(name = "B_FR", src  = "b_fr.mli")
+ocaml_signature(name = "C_FR", src  = "c_fr.mli")
+

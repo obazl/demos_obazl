@@ -1,0 +1,11 @@
+cc_library(
+    name = "alpha",
+    srcs = ["alpha.c"],
+    hdrs = ["alpha.h"],
+    linkstatic = True,
+    copts = ["-Iexternal/ocaml/c"],
+    deps = [
+        "@ocaml//c",
+    ],
+    visibility = ["//interop/ffi/case120:__pkg__"],
+)

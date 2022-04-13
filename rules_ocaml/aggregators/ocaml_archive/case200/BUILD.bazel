@@ -1,0 +1,98 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+test_suite(
+    name = "test",
+    tests = [
+        ":test_archive",
+        ":test_noarchive"
+    ]
+)
+
+ocaml_test(
+    name = "test_archive",
+    main = ":Test_archive",
+)
+
+ocaml_test(
+    name = "test_noarchive",
+    main = ":Test_noarchive",
+)
+
+ocaml_module(
+    name    = "Test_archive",
+    forcename = True,
+    struct = "test.ml",
+    deps    = [":Main", "@ounit2//:ounit2"]
+)
+
+ocaml_module(
+    name    = "Test_noarchive",
+    forcename = True,
+    struct = "test.ml",
+    deps    = [
+        ":Main_noarchive",
+        "@ounit2//:ounit2"
+    ])
+
+ocaml_module(
+    name = "Main",
+    struct = "main.ml",
+    deps = [
+        ":arch",
+    ],
+)
+
+ocaml_archive(
+    name = "arch",
+    opts = ["-linkall",],
+    manifest = [
+        ":Easy",
+        ":Simple",
+    ],
+)
+
+ocaml_module(
+    name   = "Main_noarchive",
+    struct = "main2.ml",
+    deps   = [
+        ":Easy",
+        ":Simple",
+    ]
+)
+
+ocaml_module(
+    name = "Easy",
+    struct = "easy.ml",
+    opts = ["-linkall"],
+)
+
+ocaml_module(
+    name = "Simple",
+    struct = "simple.ml",
+    opts = ["-linkall"],
+)
+
+# ## this target compiles sources to an archive:
+# ocaml_archive(
+#     name = "archive_ml",
+#     message = "Archiving...",
+#     srcs = ["easy.ml", "simple.ml"],
+#     opts = [ "-verbose" ],
+#     visibility = ["//visibility:public"],
+# )
+
+# ## this target mixes compilation and archiving:
+# ocaml_archive(
+#     name = "archive_mix",
+#     message = "Archiving...",
+#     srcs = ["easy.ml"],
+#     opts = [ "-verbose" ],
+#     deps = [":simple"],
+#     visibility = ["//visibility:public"],
+# )

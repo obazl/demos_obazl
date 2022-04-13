@@ -1,0 +1,41 @@
+# no renaming, no aliasing, no namespacing
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":R",
+        ":G",
+        ":B",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name = "R",
+    struct = "r.ml",
+    visibility = ["//ns:__subpackages__"]
+)
+
+ocaml_module(
+    name = "G",
+    struct = "g.ml",
+    visibility = ["//ns:__subpackages__"]
+)
+
+ocaml_module(
+    name = "B",
+    struct = "b.ml",
+    visibility = ["//ns:__subpackages__"]
+)

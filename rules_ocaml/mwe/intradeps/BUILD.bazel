@@ -1,0 +1,48 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+# no renaming, no aliasing, no namespacing, with intramural deps.
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    # deps_opam = ["ounit2"],
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ## OBazl will automatically reorder these deps to put them in
+        ## dependency order. In this case, that is Blue, Green, Red -
+        ## to see this run `$ bazel aquery namespaces/obazl/set000/case120:test`
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+    deps = [":_Green"],
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+    deps = [":_Blue"],
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)

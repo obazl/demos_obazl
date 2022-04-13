@@ -1,0 +1,94 @@
+## aggregators/ppx_libraries/case420
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+    # "ppx_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    ppx = ":ppx.exe",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":_main", "@ounit2//:ounit2"]
+    # deps_opam = ["ounit2"]
+)
+
+#################
+ocaml_executable(
+    name = "hello",
+    main = ":_main",
+)
+
+ocaml_module(
+    name   = "_main",
+    struct = "main.ml",
+    ppx    = ":ppx.exe", ## main.ml includes extension points
+)
+
+###############
+ppx_executable(   ## make this ppx_test, with predefined driver? e.g. ppxlib_test? macro!
+    name = "ppx.exe",
+    main = ":_Ppxlib_driver",
+    deps = [":ppx_color", "@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+############
+ocaml_library(
+    name = "ppx_color",
+    manifest = [
+        ":ppx_red",
+        ":ppx_green",
+        ":ppx_blue",
+    ],
+)
+
+ocaml_module(
+    name      = "ppx_red",
+    struct    = "ppx_red.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "ppx_green",
+    struct    = "ppx_green.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "ppx_blue",
+    struct    = "ppx_blue.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+###########
+ocaml_module(
+    name = "_Ppxlib_driver",
+    struct = ":ppxlib_driver.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

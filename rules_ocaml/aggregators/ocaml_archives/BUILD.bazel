@@ -1,0 +1,14 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//aggregators/ocaml_archives/case110:test",
+        "//aggregators/ocaml_archives/case114:test",
+        # # "//aggregators/ocaml_archives/case118:test",  ## EXPECTED FAIL
+        "//aggregators/ocaml_archives/case120:test",
+        "//aggregators/ocaml_archives/case124:test",
+        "//aggregators/ocaml_archives/case126:test",
+
+        # "//aggregators/ocaml_archives/case128:test" # KNOWN FAIL
+    ]
+)

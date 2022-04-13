@@ -1,0 +1,21 @@
+namespaces/new/case336x
+namespaces/new/case610x
+namespaces/obazl/footgunnery
+namespaces/obazl/set300/case317
+namespaces/obazl/set300/case321
+namespaces/obazl/set300/case327
+namespaces/obazl/set300/case331
+namespaces/obazl/set300/case341
+namespaces/obazl/set300/case367
+namespaces/obazl/set300/case371
+namespaces/obazl/set400/case470
+namespaces/obazl/set600/case660
+namespaces/obazl/set700/case710
+namespaces/obazl/set700/case730
+namespaces/obazl/set700/case740
+namespaces/ns-archive
+namespaces/assisted/hierarchical
+# ppx/deriving
+ppx/rewriters/get_env
+
+obsolete

@@ -1,0 +1,29 @@
+## expected fail
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":A", "@ounit2//:ounit2"]
+)
+
+ocaml_module(name = "A", struct = "a.ml", sig    = ":A_cmi")
+
+## build :A_cmi will fail with Unbound module type B,
+## because b.mli does not use 'module type'
+ocaml_signature(name = "A_cmi", src  = "a.mli", open=[":B_cmi", ":C_cmi"])
+ocaml_signature(name = "B_cmi", src  = "b.mli")
+ocaml_signature(name = "C_cmi", src  = "c.mli")
+
+

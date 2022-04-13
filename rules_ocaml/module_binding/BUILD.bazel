@@ -1,0 +1,13 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//module_binding/orphans:test",
+        "//module_binding/proper:test",
+        "//module_binding/selectboth:test",
+        "//module_binding/selectsig:test",
+        "//module_binding/selectstruct:test",
+        "//module_binding/splits:test",
+        "//module_binding/ns/topdown:test",
+    ]
+)

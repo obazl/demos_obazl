@@ -1,0 +1,70 @@
+## same as case110, but the CC lib is compiled separately from the OCaml wrapper.
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag") #, "string_setting")
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+string_flag( name = "link", build_setting_default = "default" )
+config_setting(name = "dynamic", flag_values = {":link": "dynamic"})
+config_setting(name = "static", flag_values = {":link": "static"})
+
+ocaml_test(
+    name = "test",
+    main = "_Test",
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = ["_Main", "@ounit2//:ounit2"]
+)
+
+ocaml_executable(
+    name = "hello",
+    main = ":_Main",
+)
+
+ocaml_module(
+    name = "_Main",
+    struct = "main.ml",
+    deps   = ["_Alpha"]
+    # deps = select({
+    #     ":dynamic": [":alpha_dynamic"],
+    #     ":static" : [":alpha_static"],
+    #     "//conditions:default": [":alpha"]
+    # })
+)
+
+ocaml_module(
+    name = "_Alpha",
+    struct = "alpha.ml",
+    deps = [
+        ":alphastub",
+        "//interop/ffi/case120/cclibs:alpha"
+    ],
+)
+
+cc_library(
+    name = "alphastub",
+    srcs = [
+        "alpha_adapter.c",
+    ],
+    copts = [
+        "-Iinterop/ffi/case120/cclibs",
+        "-Iexternal/ocaml/c",
+    ],
+    linkstatic = True,
+    linkopts   = ["-lalpha"],
+    deps = [
+        "//interop/ffi/case120/cclibs:alpha",
+        "@ocaml//c",
+    ],
+)
+
+

@@ -1,0 +1,116 @@
+## aggregators/ppx_libraries/case418:
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    ppx  = ":ppx.exe",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    ## NOTE: test.ml does NOT have any ppx _build_ dependencies ('deps'), only
+    ## preprocessing deps, which are handled by the ppx_executable passed via
+    ## the 'ppx' attribute.
+    deps = ["@ounit2//:ounit2"]
+    # deps_opam = ["ounit2"]
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":_Ppxlib_driver",
+    deps = [":_Ppx_color", "@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+############
+ocaml_library(
+    name = "_Ppx_color",
+    manifest = [
+        ":_Ppx_red",
+        ":_Ppx_green",
+        ":_Ppx_blue",
+        ":_Ppx_greek"
+    ],
+)
+
+ocaml_module(
+    name      = "_Ppx_red",
+    struct    = "ppx_red.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "_Ppx_green",
+    struct    = "ppx_green.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "_Ppx_blue",
+    struct    = "ppx_blue.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+############
+ocaml_library(
+    name = "_Ppx_greek",
+    manifest = [
+        ":_Ppx_alpha",
+        ":_Ppx_beta",
+        ":_Ppx_gamma",
+    ],
+)
+
+ocaml_module(
+    name      = "_Ppx_alpha",
+    struct    = "ppx_alpha.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "_Ppx_beta",
+    struct    = "ppx_beta.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "_Ppx_gamma",
+    struct    = "ppx_gamma.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+################################################################
+###########
+ocaml_module(
+    name = "_Ppxlib_driver",
+    struct = ":ppxlib_driver.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

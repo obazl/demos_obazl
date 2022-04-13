@@ -1,0 +1,12 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//aggregators/ocaml_libraries/case210:test",
+        "//aggregators/ocaml_libraries/case214:test",
+        "//aggregators/ocaml_libraries/case218:test",
+        "//aggregators/ocaml_libraries/case220:test",
+        "//aggregators/ocaml_libraries/case224:test",
+        "//aggregators/ocaml_libraries/case228:test",
+    ]
+)

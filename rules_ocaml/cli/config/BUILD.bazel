@@ -1,0 +1,8 @@
+load("@rules_ocaml//build:rules.bzl", "ocaml_module")
+
+ocaml_module(
+    name = "config",
+    struct = "config.ml",
+    opts   = ["-w", "-26"], # warning: unused variable
+    visibility = ["//visibility:public"],
+)

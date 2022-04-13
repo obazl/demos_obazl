@@ -1,0 +1,44 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    # "ocaml_test"
+)
+
+ocaml_module(
+    name = "libalpha",
+    cc_deps = {
+        ":alpha": "default",
+    },
+    struct = "alpha.ml",
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)
+
+ocaml_module(
+    name = "alpha_dynamic",
+    cc_deps = {
+        ":alpha": "dynamic",
+    },
+    struct = "alpha.ml",
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)
+
+ocaml_module(
+    name = "alpha_static",
+    cc_deps = {
+        ":alpha": "static",
+    },
+    struct = "alpha.ml",
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)
+
+cc_library(
+    name = "alpha",
+    srcs = [
+        "alpha_adapter.c",
+        "alpha.c",
+        "alpha.h",
+    ],
+    copts = ["-Iexternal/ocaml/c"],
+    deps = ["@ocaml//c"],
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)

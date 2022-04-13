@@ -1,0 +1,12 @@
+load("@rules_ocaml//build:rules.bzl", "ocaml_signature")
+
+## for demo purposes, we expose the source file as well as the build
+## target.
+
+exports_files(["hello.mli"])
+
+ocaml_signature(
+    name = "Hello",
+    src  = "hello.mli",
+    visibility = ["//module_binding/selectboth/dir_prefix:__pkg__"]
+)

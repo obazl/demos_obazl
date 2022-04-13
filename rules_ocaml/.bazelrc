@@ -1,0 +1,14 @@
+common --color=yes
+common --config=dbg
+
+# pass --config=dbg to enable this:
+common:dbg --subcommands=pretty_print
+common:dbg --verbose_failures
+# common:dbg --sandbox_debug
+
+# test --test_verbose_timeout_warnings
+
+build:bc --@rules_ocaml//build/mode=bytecode
+# build:bc --@ppx//mode=bytecode
+
+try-import .private/user.bazelrc

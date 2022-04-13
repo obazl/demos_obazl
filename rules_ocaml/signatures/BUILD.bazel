@@ -1,0 +1,8 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//signatures/merge:test",
+        "//signatures/moduletype:test",
+        "//signatures/moduletypeof:test",
+    ]
+)

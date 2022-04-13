@@ -1,0 +1,19 @@
+# to run: $ bazel run cli/kitty -- <filename>
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module"
+)
+
+ocaml_executable(
+    name = "kitty",
+    deps = [":_Kitty"]
+)
+
+ocaml_module(
+    name = "_Kitty",
+    struct = "kitty.ml",
+    deps = ["//cli/config"]
+)
+

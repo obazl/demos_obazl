@@ -1,0 +1,53 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    # "ocaml_test"
+)
+
+ocaml_module(
+    name = "print_stuff",
+    cc_deps = {
+        ":libprint_stuff": "default",
+    },
+    struct = "print_stuff.ml",
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)
+
+ocaml_module(
+    name = "print_stuff_dynamic",
+    cc_deps = {
+        ":libprint_stuff": "dynamic",
+    },
+    struct = "print_stuff.ml",
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)
+
+ocaml_module(
+    name = "print_stuff_static",
+    cc_deps = {
+        ":libprint_stuff": "static",
+    },
+    struct = "print_stuff.ml",
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)
+
+# ocaml_module(
+#     name = "print_stuff",
+#     cc_deps = {
+#         ":libprint_stuff": "default",
+#     },
+#     struct = "print_stuff.ml",
+#     visibility = ["//interop/ffi/simple:__pkg__"],
+# )
+
+cc_library(
+    name = "libprint_stuff",
+    srcs = [
+        "print_stuff_adapter.c",
+        "print_stuff.c",
+        "print_stuff.h",
+    ],
+    copts = ["-Iexternal/ocaml/c"],
+    deps = ["@ocaml//c"],
+    visibility = ["//interop/ffi/simple:__pkg__"],
+)

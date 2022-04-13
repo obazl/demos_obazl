@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//module_binding/selectboth/dir_prefix:test",
+        "//module_binding/selectboth/filename_prefix:test",
+    ]
+)

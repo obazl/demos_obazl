@@ -1,0 +1,18 @@
+# To build: $ bazel build mwe/hello_executable
+# To run:   $ bazel run mwe/hello_executable
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+)
+
+ocaml_executable(
+    name = "hello_executable",
+    deps = [":_Hello"],
+)
+
+ocaml_module(
+    name = "_Hello",
+    struct = "hello.ml",
+)

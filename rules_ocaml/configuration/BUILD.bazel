@@ -1,0 +1,7 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//configuration/template:test",
+    ]
+)

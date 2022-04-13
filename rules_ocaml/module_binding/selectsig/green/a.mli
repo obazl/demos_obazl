@@ -1,0 +1,2 @@
+
+val green : string

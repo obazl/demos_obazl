@@ -1,0 +1,12 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//aggregators/ppx_libraries/case410:test",
+        "//aggregators/ppx_libraries/case414:test",
+        "//aggregators/ppx_libraries/case418:test",
+        "//aggregators/ppx_libraries/case420:test",
+        "//aggregators/ppx_libraries/case424:test",
+        "//aggregators/ppx_libraries/case428:test",
+    ]
+)

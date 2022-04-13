@@ -1,0 +1,13 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//module_binding/splits/a1:test",
+        "//module_binding/splits/a2:test",
+        "//module_binding/splits/b1:test1",
+        "//module_binding/splits/b1:test2",
+        "//module_binding/splits/b2:test",
+        "//module_binding/splits/c1:test",
+        "//module_binding/splits/c2:test"
+    ]
+)

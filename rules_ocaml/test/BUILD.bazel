@@ -1,0 +1,4 @@
+alias(
+    name   = "test",
+    actual = ":test"
+)

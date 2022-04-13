@@ -1,0 +1,130 @@
+# Demonstrates generation of a file from a template, based on command-line arguments.
+
+# Contains test and executable targets that use the generated file.
+# The test target (`:test`) uses `ounit2` to verify the content of the
+# file. The executable target (`:hello`) prints it.
+
+# $ bazel test filegen/template:test
+# $ bazel run filegen/template:hello
+
+# The build settings used to populate the template can be set on the
+# command line; running the `:hello` target will demonstrate that they end up
+# in the generated file.
+# $ bazel run filegen/template:hello --//filegen/template:red=215
+
+# You can also build the generated file directly:
+# $ bazel build filegen/template:color_config
+# $ cat bazel-bin/filegen/template/config.ml
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+## *_flag rules define command-line options, e.g. --//filegen/template:red=123
+## *_setting rules (see below) define constants
+## IMPORTANT: These rules are defined by the standard 'Skylib'
+## library; they are not defined natively by Bazel.
+## See https://github.com/bazelbuild/bazel-skylib/blob/master/rules/common_settings.bzl
+load("@bazel_skylib//rules:common_settings.bzl",
+     "bool_flag", "bool_setting",
+     "int_flag", "int_setting")
+## Our custom rule `demo_config` refers to these rules as default values.
+## That means the defaults we set here will be the defaults for the rule attributes.
+bool_flag( name = "colorize", build_setting_default = False )
+int_flag( name = "red", build_setting_default = 0 )
+int_flag( name = "green", build_setting_default = 0 )
+int_setting( name = "green_105", build_setting_default = 105 )
+# The 'blue' attribute of 'demo_config` is an int rather than a label
+# attribute, so it cannot refer to a build setting rule.
+
+## demo_config is our custom rule, defined in `:BUILD.bzl`
+load(":BUILD.bzl", "demo_config")
+demo_config(
+    name = "color_config",
+    template = "config.ml.template",
+    ## the demo_config rule attribs (defined in //:BUILD.bzl) default to the flags defined above.
+    ## passing options on the command line will override the defaults
+    # use a constant label (defined above) to override default; this override
+    # takes priority over the command line
+    green = ":green_105",
+    blue  = 42  ## override the rule default - cannot be set on command line
+)
+
+## If we need multiple color configs we can use the same rule with different args.
+
+bool_setting( name = "colorize_enabled", build_setting_default = True )
+int_setting( name = "red_255", build_setting_default = 255 )
+int_setting( name = "green_127", build_setting_default = 127 )
+
+## this target is not used, but you can build it and inspect the output.
+## we comment it out so that 'bazel test //...:*' will work
+# demo_config(
+#     name = "coral",
+#     template = "config.ml.template",
+#     colorize = ":colorize_enabled",
+#     red   = ":red_255",
+#     green = ":green_127",
+#     blue  = 80
+# )
+
+# int_setting( name = "red_128",   build_setting_default = 128 )
+# int_setting( name = "green_128", build_setting_default = 128 )
+# int_setting( name = "blue_128",  build_setting_default = 128 )
+# demo_config(
+#     name = "teal",
+#     template = "teal.ml.template",  ## generate teal.ml
+#     colorize = ":colorize_enabled",
+#     red   = ":red_128",
+#     green = ":green_128",
+#     blue  = ":blue_128"
+# )
+
+#################
+ocaml_executable(
+    name = "hello",
+    main = ":_Hello",
+    deps = [":_Hello"],
+)
+
+#############
+ocaml_module(
+    name = "_Hello",
+    struct = "hello.ml",
+    deps = [":_Config"],
+)
+
+################################################################
+###########
+ocaml_test(
+    name = "test",
+    opts = [
+        # "-verbose",
+        "-linkall"
+    ],
+    main = "_Test",
+)
+
+#############
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        # "-verbose",
+        "-linkall",
+        "-no-opaque",
+        "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":_Config", "@ounit2//:ounit2"]
+    # deps_opam = ["ounit2"]
+)
+
+#############
+ocaml_module(
+    name = "_Config",
+    opts = ["-linkall"],
+    # src is generated file
+    struct = "color_config",  #  ":coral"
+)

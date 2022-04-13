@@ -1,0 +1,27 @@
+# $ bazel run minimal/hello_lwt
+# or: $ bazel build minimal/hello_lwt
+# or: $ bazel build minimal/hello_lwt:_Hello_lwt
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+)
+
+ocaml_executable(
+    name = "hello_lwt",
+    visibility = ["//visibility:public"],
+    # opts = ["-no-thread"], ## -thread is added by default
+    ## without -thread:
+    ## "ocamlfind: [WARNING] Package `threads': Linking problems may arise because of the missing -thread or -vmthread switch"
+    ## followed by "Error: Required module `Condition' is unavailable"
+    deps = [":_Hello_lwt"],
+)
+
+ocaml_module(
+    name = "_Hello_lwt",
+    opts = ["-thread"],  # avoid warning about possible linking problems
+    struct = "hello_lwt.ml",
+    deps = ["@lwt//unix"],
+    # default visibility is private
+)

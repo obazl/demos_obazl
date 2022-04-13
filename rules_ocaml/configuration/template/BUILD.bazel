@@ -1,0 +1,105 @@
+## demos/configuration
+
+# $ bazel test configuration:test
+# $ bazel run configuration:hello
+# $ bazel run configuration:hello --//configuration:red=123
+# $ bazel run configuration:hello --//configuration:red=123 --//configuration:green=97 --//configuration:blue=221
+## use config profiles (defined in demos/.bazelrc):
+# $ bazel run configuration:hello --config=lavendar
+# $ bazel run configuration:hello --config=teal
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test")
+
+load(":BUILD.bzl", "demo_config")
+
+## Starlark (a/k/a user-defined) "build settings".
+## see https://docs.bazel.build/versions/master/skylark/config.html#user-defined-build-settings
+
+## We use some flags predefined by Skylib, a starlark library; see
+## https://github.com/bazelbuild/bazel-skylib/blob/master/rules/common_settings.bzl
+## *_flag rules define command-line options, e.g. --//configuration:red=123
+load("@bazel_skylib//rules:common_settings.bzl",
+     "bool_flag", "bool_setting",
+     "int_flag", "int_setting")
+
+bool_flag( name = "colorize", build_setting_default = False )
+int_flag( name = "red", build_setting_default = 0 )
+int_flag( name = "green", build_setting_default = 0 )
+int_flag( name = "blue", build_setting_default = 0 )
+
+demo_config(
+    name = "color_config",
+    template = "config.ml.template",
+    ## the demo_config rule (defined in //:BUILD.bzl) defaults to the flags defined above.
+    ## passing options on the command line will override the defaults
+#     colorize = ":colorize",
+#     red   = ":red",
+#     green = ":green",
+#     blue  = ":blue"
+)
+
+## *_setting rules define constants
+bool_setting( name = "colorize_enabled", build_setting_default = True )
+int_setting( name = "red_255", build_setting_default = 255 )
+int_setting( name = "green_127", build_setting_default = 127 )
+int_setting( name = "blue_80",  build_setting_default = 80 )
+# demo_config(
+#     name = "coral",
+#     template = "config.ml.template",
+#     colorize = ":colorize_enabled",
+#     red   = ":red_255",
+#     green = ":green_127",
+#     blue  = ":blue_80"
+# )
+
+# int_setting( name = "green_128", build_setting_default = 128 )
+# int_setting( name = "blue_128",  build_setting_default = 128 )
+# demo_config(
+#     name = "teal",
+#     template = "config.ml.template",
+#     colorize = ":colorize_enabled",
+#     # red   = ":red",
+#     green = ":green_128",
+#     blue  = ":blue_128"
+# )
+
+###########
+ocaml_test(
+    name = "test",
+    main = ":_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [
+        ":_Config",
+        "@ounit2//:ounit2"
+    ]
+)
+
+ocaml_executable(
+    name = "hello",
+    main = ":_Hello",
+    deps = [":_Hello"],
+)
+
+#############
+ocaml_module(
+    name = "_Hello",
+    struct = "hello.ml",
+    deps = [":_Config"],
+)
+
+#############
+ocaml_module(
+    name = "_Config",
+    struct = "color_config",  #  ":coral"
+)

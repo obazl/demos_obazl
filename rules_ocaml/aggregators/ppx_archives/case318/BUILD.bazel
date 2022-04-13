@@ -1,0 +1,181 @@
+## aggregators/ppx_archives/case318: two simple (independent) archives
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name = "_Test",
+    struct = "test.ml",
+    ppx  = ":ppx.exe",
+    # ppx_args = ["-reconcile"],
+    ppx_print = "@rules_ocaml//ppx/print:text",
+    # ppx_verbose = True,
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = ["@ounit2//:ounit2"]
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Runner",
+    deps = [
+        ":lib_ppx_color",
+        # ":ppx_driver",
+        # ":ppx_color_driver",
+        # ":ppx_greek_driver"
+        "@ppxlib//:ppxlib"
+    ],
+    # deps_opam = ["ppxlib"]
+)
+
+############
+ocaml_archive(
+    name = "_Ppx_aggregated_archives",
+    # opts = ["-verbose"],
+    manifest = [
+        ":lib_ppx_color",
+        ":lib_ppx_greek",
+    ]
+)
+
+
+###########
+ocaml_module(
+    name      = "ppx_driver",
+    struct    = "ppx_driver.ml",
+    deps      = [":lib_ppx_color"], #  ":lib_ppx_greek"],
+    opts      = ["-w", "-33"]   ## unused open
+)
+
+###########
+# ocaml_module(
+#     name      = "ppx_color_driver",
+#     struct    = "ppx_color.ml",
+#     deps      = [":lib_ppx_color"],
+#     opts      = ["-w", "-33"]   ## unused open
+# )
+
+############
+ocaml_archive(
+    name = "lib_ppx_color",
+    opts = [
+        "-linkall",
+        # "-verbose",
+        "-open", "Ppx_gamma"
+    ],
+    manifest = [
+        ":Ppx_red",
+        ":Ppx_green",
+        ":Ppx_blue",
+
+        # ":Ppx_alpha",
+        # ":Ppx_beta",
+        # ":Ppx_gamma",
+       ":Ppx_greek_driver",
+    ]
+)
+
+ocaml_module(
+    name      = "Ppx_red",
+    struct    = "ppx_red.ml",
+    opts = ["-linkall"],
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_green",
+    struct    = "ppx_green.ml",
+    opts = ["-linkall"],
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_blue",
+    struct    = "ppx_blue.ml",
+    opts = ["-linkall"],
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+###########
+ocaml_module(
+    name      = "Ppx_greek_driver",
+    struct    = "ppx_greek_driver.ml",
+    deps = [
+        # ":Ppx_alpha",
+        # ":Ppx_beta",
+        # ":Ppx_gamma",
+        ":lib_ppx_greek"
+    ],
+    opts = [
+        "-w", "-33", ## unused open
+        "-linkall"
+    ]
+)
+
+############
+ocaml_archive(
+    name = "lib_ppx_greek",
+    opts = ["-linkall"],
+    manifest = [
+        ":Ppx_alpha",
+        ":Ppx_beta",
+        ":Ppx_gamma",
+        # ":Ppx_greek_driver"
+    ],
+)
+
+ocaml_module(
+    name      = "Ppx_alpha",
+    opts = ["-linkall"],
+    struct    = "ppx_alpha.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_beta",
+    opts = ["-linkall"],
+    struct    = "ppx_beta.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_gamma",
+    opts = ["-linkall"],
+    struct    = "ppx_gamma.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+################################################################
+###########
+ocaml_module(
+    name = "Runner",
+    struct = ":ppxlib_runner.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "genrunner",
+    outs = ["ppxlib_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

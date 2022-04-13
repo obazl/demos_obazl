@@ -1,0 +1,31 @@
+# https://ocaml.org/manual/intfc.html
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    # "ocaml_test"
+)
+
+ocaml_module(
+    name = "alpha",
+    struct = "alpha.ml",
+    deps = [":libalpha"],
+    visibility = ["//interop/ffi/case110:__pkg__"],
+)
+
+cc_library(
+    name = "libalpha",
+    srcs = [
+        "alpha_adapter.c",
+        "alpha.c",
+        "alpha.h",
+    ],
+    linkstatic = select({
+        "//interop/ffi/case110:dynamic": False,
+        "//interop/ffi/case110:static" : True,
+        "//conditions:default": True
+    }),
+    copts = ["-Iexternal/ocaml/c"],
+    deps = ["@ocaml//c"],
+    visibility = ["//interop/ffi/case110:__pkg__"],
+)

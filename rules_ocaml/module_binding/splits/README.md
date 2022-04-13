@@ -1,0 +1,34 @@
+# Demostrates a module composed of a structfile and a sigfile in
+# different directories.
+
+# To build the sig:    $ bazel build module_binding/split/sig:A
+# To build the module: $ bazel build module_binding/split/struct:A
+# To run the test:     $ bazel test module_binding/split:test
+
+# Note that the targets in sig/ and struct/ have visibility attributes
+# that expose them where they are used; without these, visibility
+# defaults to private so the build would fail.
+
+# To examine the build actions, just replace "build" and "test" in the
+# above commands with "aquery. In the output, notice the symlink
+# actions: they show that the source files are linked into a working
+# directory, which is where the compilation occurs. This ensures that
+# everything will be where the compiler expects it - in particular,
+# that the sigfile is in the same directory as the structfile. If it's
+# not, the compiler will give up and extract the signature from the
+# structfile, effectively ignoring the separate .mli file when it
+# compiles the .ml file.
+
+# The general rule of the standard compilers that this demonstrates is
+# what we might call "signature locality": to compile a .ml file, the
+# compile will first search for the corresponding .mli file *in the
+# same directory*. If it finds it, it will then look for the .cmi file
+# and use that in compiling the .ml file. If it does not find it, it
+# will look no further; instead it will extract the .mli file from the
+# .ml file, compile it, and use it for compiling the .ml file.
+
+# Thus in order to support splitting of modules into sig and struct
+# files in different directories, the build system must step in and do
+# what the compile cannot do, namely ensure that both files are in the
+# same (working) directory before compilation proceeds.
+

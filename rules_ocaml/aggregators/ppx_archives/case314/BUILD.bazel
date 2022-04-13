@@ -1,0 +1,134 @@
+## aggregators/ppx_archives/case314: two simple (independent) archives
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+)
+
+# FIXME: use ocaml_test? do we need separate test rules?
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name = "_Test",
+    struct = "test.ml",
+    ppx  = ":ppx.exe",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    ## NOTE: test.ml does NOT have any ppx _build_ dependencies ('deps'), only
+    ## preprocessing deps, which are handled by the ocaml_executable passed via
+    ## the 'ppx' attribute.
+    deps = ["@ounit2//:ounit2"]
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Runner",
+    deps = [
+        ":Ppx_color", "Ppx_greek",
+        "@ppxlib//:ppxlib"
+    ],
+    # deps_opam = ["ppxlib"]
+)
+
+###########
+ocaml_module(
+    name      = "Ppx_color",
+    struct    = "ppx_color.ml",
+    deps      = [":lib_ppx_color"],
+    opts      = ["-w", "-33"]   ## unused open
+)
+
+############
+ocaml_archive(
+    name = "lib_ppx_color",
+    manifest = [
+        ":Ppx_red",
+        ":Ppx_green",
+        ":Ppx_blue",
+    ],
+)
+
+ocaml_module(
+    name      = "Ppx_red",
+    struct    = "ppx_red.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_green",
+    struct    = "ppx_green.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_blue",
+    struct    = "ppx_blue.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+###########
+ocaml_module(
+    name      = "Ppx_greek",
+    struct    = "Ppx_greek.ml",
+    deps      = [":lib_ppx_greek"],
+    opts      = ["-w", "-33"]   ## unused open
+)
+
+############
+ocaml_archive(
+    name = "lib_ppx_greek",
+    manifest = [
+        ":Ppx_alpha",
+        ":Ppx_beta",
+        ":Ppx_gamma",
+    ],
+)
+
+ocaml_module(
+    name      = "Ppx_alpha",
+    struct    = "ppx_alpha.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_beta",
+    struct    = "ppx_beta.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+ocaml_module(
+    name      = "Ppx_gamma",
+    struct    = "ppx_gamma.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+################################################################
+###########
+ocaml_module(
+    name = "Runner",
+    struct = ":ppxlib_runner.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+    # deps_opam = ["ppxlib"]
+)
+
+########
+genrule(
+    name = "genrunner",
+    outs = ["ppxlib_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//interop/ffi/case110:test",
+        "//interop/ffi/case120:test",
+    ]
+)

@@ -1,0 +1,1 @@
+val xmsg : string

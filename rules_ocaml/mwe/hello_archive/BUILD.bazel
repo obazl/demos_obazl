@@ -1,0 +1,71 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+# $ bazel test //minimal/hello_archive:test
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+# $ bazel run minimal/hello_archive:hello
+ocaml_executable(
+    name = "hello",
+    main = ":main",
+    # deps = [":main"]
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":main",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name = "main",
+    struct = "main.ml",
+    deps = [":archive"],
+)
+
+ocaml_archive(
+    name = "archive",
+    manifest = [":easy", ":simple"],
+)
+
+ocaml_module(
+    name = "easy",
+    struct = "easy.ml",
+)
+
+ocaml_module(
+    name = "simple",
+    struct = "simple.ml",
+)
+
+# ## this target compiles sources to an archive:
+# ocaml_archive(
+#     name = "archive_ml",
+#     message = "Archiving...",
+#     srcs = ["easy.ml", "simple.ml"],
+#     opts = [ "-verbose" ],
+#     visibility = ["//visibility:public"],
+# )
+
+# ## this target mixes compilation and archiving:
+# ocaml_archive(
+#     name = "archive_mix",
+#     message = "Archiving...",
+#     srcs = ["easy.ml"],
+#     opts = [ "-verbose" ],
+#     deps = [":simple"],
+#     visibility = ["//visibility:public"],
+# )
+

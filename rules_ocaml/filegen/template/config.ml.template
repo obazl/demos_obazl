@@ -1,0 +1,6 @@
+
+let colorize = {COLORIZE} ;;
+
+let red   = {RED} ;;
+let green = {GREEN} ;;
+let blue  = {BLUE} ;;

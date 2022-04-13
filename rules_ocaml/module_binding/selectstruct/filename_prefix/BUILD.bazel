@@ -1,0 +1,82 @@
+# Demonstrates binding variant structures to a fixed signature.
+# Uses filename prefixes to namespace variant structfiles.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = select({
+        ":linux_en": "test_linux_en.ml",
+        ":linux_fr": "test_linux_fr.ml",
+        ":macos_en": "test_macos_en.ml",
+        ":macos_fr": "test_macos_fr.ml",
+    }),
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_signature(
+    name = "Hello_cmi",
+    src  = "hello.mli"
+)
+
+ocaml_module(
+    name    = "Hello",
+    ## four ways to fix sig dep:
+    # remote build target dep:
+    # sig    = "//module_binding/selectstruct/sig:Hello_cmi",
+    # remote direct file dep:
+    # sig    = "//module_binding/selectstruct/sig:hello.mli",
+
+    # local build target dep:
+    # sig    = ":Hello_cmi",
+    # local direct file dep:
+    sig    = "hello.mli",
+
+    # sig    = "howdy.mli",
+
+    struct = select({
+        ## namespacing by filename prefix
+        ## note the structural colon in <dirname>:<filename>
+        ":linux_en": "linux_en_hello.ml",
+        ":linux_fr": "linux_fr_hello.ml",
+        ":macos_en": "macos_en_hello.ml",
+        ":macos_fr": "macos_fr_hello.ml",
+    }, no_match_error = "unsupported config"),
+)
+
+################
+config_setting(
+    name = "linux_en",
+    constraint_values = ["@platforms//os:linux"],
+    flag_values = {"//bzl:lang": "en"}
+)
+config_setting(
+    name = "linux_fr",
+    constraint_values = ["@platforms//os:linux"],
+    flag_values = {"//bzl:lang": "fr"}
+)
+config_setting(
+    name = "macos_en",
+    constraint_values = ["@platforms//os:macos"],
+    flag_values = {"//bzl:lang": "en"}
+)
+config_setting(
+    name = "macos_fr",
+    constraint_values = ["@platforms//os:macos"],
+    flag_values = {"//bzl:lang": "fr"}
+)
+

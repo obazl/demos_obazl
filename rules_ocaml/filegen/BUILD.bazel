@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//filegen/genrule:test",
+        "//filegen/template:test"
+    ]
+)

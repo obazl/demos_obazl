@@ -1,0 +1,49 @@
+## This example demonstrates the OCaml Foreign Function Interface (FFI),
+## with configurable linkmode.
+## New code should use the 'ctypes' package instead.
+
+# $ bazel build interop/ffi/case120:hello
+# $ ./bazel-bin/interop/ffi/case120/hello
+## Warning: using 'run' won't work on MacOS, because of the search path for dylibs
+# $ bazel run interop/ffi/case120:hello
+#  => image not found
+
+# To set the link mode, pass '--//interop/ffi/case120:link=static' or '--//interop/ffi/case120:link=dynamic'
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag") #, "string_setting")
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+string_flag( name = "link", build_setting_default = "default" )
+config_setting(name = "dynamic", flag_values = {":link": "dynamic"})
+config_setting(name = "static", flag_values = {":link": "static"})
+
+# ocaml_test(
+#     name = "test",
+#     main = "test.ml",
+#     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+#     deps = [
+#         "@ocaml//pkg:ounit2",
+#         "_Main"
+#     ]
+# )
+
+ocaml_executable(
+    name = "hello",
+    main = ":_Main",
+)
+
+ocaml_module(
+    name = "_Main",
+    struct = "main.ml",
+    deps = select({
+        ":dynamic": ["//interop/ffi/case120/cclibs:print_stuff_dynamic"],
+        ":static" : ["//interop/ffi/case120/cclibs:print_stuff_static"],
+        "//conditions:default": ["//interop/ffi/case120/cclibs:print_stuff"]
+    })
+)

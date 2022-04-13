@@ -1,0 +1,42 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":rgb", "@ounit2//:ounit2"]
+    # deps_opam = ["ounit2"]
+)
+
+###########
+ocaml_module(
+    name   = "rgb",
+    struct = ":rgb_src",
+    opts   = [
+        "-w", "-32"  ## Error (warning 32): unused value
+    ]
+)
+
+########
+genrule(
+    name = "rgb_src",
+    outs = ["rgb.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let r = 255\" >> \"$@\"",
+        "echo \"let g = 127\" >> \"$@\"",
+        "echo \"let b = 80\"  >> \"$@\"",
+    ]),
+)

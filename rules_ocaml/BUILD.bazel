@@ -1,0 +1,15 @@
+test_suite(
+    name = "test",
+    tests = [
+
+        "//aggregators:test",
+        "//algebra/group:test",
+        "//configuration:test",
+        "//filegen:test",
+        "//interop:test",
+        "//mwe:test",
+        "//module_binding:test",
+        "//signatures:test",
+    ]
+)
+

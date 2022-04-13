@@ -1,0 +1,8 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//signatures/moduletypeof/a1:test",
+        "//signatures/moduletypeof/b:test",
+        "//signatures/moduletypeof/c:test",
+    ]
+)

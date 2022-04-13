@@ -1,0 +1,7 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//signatures/contraction/removetype:test",
+        "//signatures/contraction/renametype:test",
+    ]
+)
