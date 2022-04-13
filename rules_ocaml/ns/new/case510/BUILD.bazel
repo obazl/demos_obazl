@@ -1,0 +1,37 @@
+## new/case50: two ns lib deps, in separate packages
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [
+        ":main",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_module(
+    name = "main",
+    struct = "main.ml",
+    deps   = [
+        "//ns/new/case510/en:color",
+        "//ns/new/case510/fr:couleur"
+    ]
+)

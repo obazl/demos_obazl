@@ -1,0 +1,79 @@
+## new/case150: nslib nesting: ns lib Color contains ns lib Greek as a submodule
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test",
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [
+        ":color",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+        ":greek"
+    ],
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+    deps = [":_Green"],
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)
+
+###################
+ocaml_ns_library(
+    name = "greek",
+    submodules = {
+        ":_Alpha": "Alpha",
+        ":_Beta": "Beta",
+        ":_Gamma": "Gamma",
+    },
+)
+
+ocaml_module(
+    name = "_Alpha",
+    struct = "alpha.ml",
+)
+
+ocaml_module(
+    name = "_Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "_Gamma",
+    struct = "gamma.ml",
+)

@@ -1,0 +1,48 @@
+## bottomup/case100: minimal ns lib
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+ocaml_test(
+    name = "test",
+    main = ":_Test",
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":color", "@ounit2//:ounit2"],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    ns = "Color",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

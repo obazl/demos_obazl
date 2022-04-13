@@ -1,0 +1,62 @@
+## hard-coded resolver module
+## here foo.ml contains module aliasing equations,
+## and the module names are namespaced by filename prefixes.
+
+## Note the visibility attr on Foo__Red - it is used as a dependency
+## for another demo.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+## we do not package the ns (and its components) as an aggregate,
+## so all must be listed as deps:
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Foo__Red",
+        ":Foo__Green",
+        ":Foo__Blue",
+        ":Foo",
+        "@ounit2//:ounit2"
+    ],
+)
+
+## hard-coded resolver module
+## -no-alias-deps allows us to compile it independent of the modules
+## that it aliases.
+ocaml_module(
+    name   = "Foo",
+    struct = "foo.ml",
+    opts = [
+        "-no-alias-deps",
+        "-w", "-49" # no cmi file was found in path for module ...
+    ],
+)
+
+ocaml_module(
+    name   = "Foo__Red",
+    struct = "foo__Red.ml",
+    visibility = [
+        "//ns/prefixing/resolver/c:__pkg__",
+        "//ns/bottomup/embed:__subpackages__",
+    ]
+)
+
+ocaml_module(
+    name = "Foo__Green",
+    struct = "foo__Green.ml",
+)
+
+ocaml_module(
+    name = "Foo__Blue",
+    struct = "foo__Blue.ml",
+)

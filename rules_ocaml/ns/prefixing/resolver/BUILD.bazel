@@ -1,0 +1,8 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/prefixing/resolver/a:test",
+        "//ns/prefixing/resolver/b:test",
+        "//ns/prefixing/resolver/c:test",
+    ]
+)

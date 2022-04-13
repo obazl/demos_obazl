@@ -1,0 +1,9 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/bottomup/mwe/aliasing:test",
+        "//ns/bottomup/mwe/idaliasing:test",
+        "//ns/bottomup/mwe/nsaliasing:test",
+        "//ns/bottomup/mwe/includes:test",
+    ]
+)

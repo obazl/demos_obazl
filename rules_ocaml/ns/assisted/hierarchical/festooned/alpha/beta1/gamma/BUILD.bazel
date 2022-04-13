@@ -1,0 +1,29 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    # "ocaml_archive",
+    # "ocaml_interface",
+    "ocaml_module",
+    "ocaml_ns",
+)
+
+ocaml_ns(
+    name = "gamma",
+    ns = "Alpha__Beta1__Gamma",
+    submodules = ["goodbye.ml", "hello.ml"],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "_Hello",
+    ns   = ":gamma",
+    src  = "hello.ml",
+    deps = [":_Goodbye"],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "_Goodbye",
+    ns   = ":gamma",
+    src  = "goodbye.ml",
+    visibility = ["//visibility:public"],
+)

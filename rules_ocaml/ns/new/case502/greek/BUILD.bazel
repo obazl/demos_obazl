@@ -1,0 +1,35 @@
+## new/case502: same as case500, with ns libs in separate pkgs
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+)
+
+###################
+ocaml_ns_library(
+    name = "greek",
+    submodules = [
+        ":_Alpha",
+        ":_Beta",
+        ":_Gamma",
+    ],
+    visibility = [
+        "//ns/new/case502/color:__pkg__"
+    ]
+)
+
+ocaml_module(
+    name = "_Alpha",
+    struct = "alpha.ml",
+)
+
+ocaml_module(
+    name = "_Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "_Gamma",
+    struct = "gamma.ml",
+)

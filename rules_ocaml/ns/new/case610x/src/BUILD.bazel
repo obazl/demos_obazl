@@ -1,0 +1,61 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    # "ocaml_archive",
+    # "ocaml_library",
+    "x_ocaml_module",
+    "x_ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":alpha"],
+)
+
+# How to support articulated module paths like Alpha.Beta.Color
+x_ocaml_ns_library(
+    name = "alpha",
+    submodules = {
+        ":beta": "Beta",  ## ns submodule
+    },
+    visibility = ["//visibility:public"],
+)
+
+###################
+x_ocaml_ns_library(
+    name = "beta",
+    submodules = {
+        ":color": "Color",  ## ns submodule
+    },
+)
+
+###################
+x_ocaml_ns_library(
+    name = "color",
+    submodules = {
+        ":_Red": "Red",
+        ":_Green": "Green",
+        ":_Blue": "Blue",
+    },
+)
+
+x_ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+x_ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+x_ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)

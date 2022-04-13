@@ -1,0 +1,9 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/topdown/case100:test",
+        "//ns/topdown/case130:test",
+        "//ns/topdown/case140:test",
+        "//ns/topdown/hello:test",
+    ]
+)

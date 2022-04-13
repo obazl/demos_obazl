@@ -1,0 +1,64 @@
+## namespacing without aliases (no resolver module)
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    deps = [
+        ":Nofoo__Blue",
+        ":Nofoo__Green",
+        ":Nofoo__Red",
+        ":Nobar__Blue",
+        ":Nobar__Green",
+        ":Nobar__Red",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name = "Nofoo__Red",
+    struct = "nofoo__Red.ml",
+)
+
+ocaml_module(
+    name = "Nofoo__Green",
+    struct = "nofoo__Green.ml",
+    visibility = [
+        "//ns/prefixing/resolver/c:__pkg__",
+        "//ns/topdown:__subpackages__",
+    ]
+)
+
+ocaml_module(
+    name = "Nofoo__Blue",
+    struct = "nofoo__Blue.ml",
+)
+
+ocaml_module(
+    name = "Nobar__Red",
+    struct = "nobar__Red.ml",
+)
+
+ocaml_module(
+    name = "Nobar__Green",
+    struct = "nobar__Green.ml",
+)
+
+ocaml_module(
+    name = "Nobar__Blue",
+    struct = "nobar__Blue.ml",
+    visibility = [
+        "//ns/prefixing/resolver/c:__pkg__",
+        "//ns/topdown:__subpackages__",
+    ]
+)

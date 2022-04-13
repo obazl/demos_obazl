@@ -1,0 +1,60 @@
+## BROKEN! Due to a bug in Bazel's transition functions.
+## I'm not sure it ever worked, but it should.
+## see https://github.com/bazelbuild/bazel/issues/12171#issuecomment-912765906
+
+## new/case520: diamond dependency on module
+## diamond dep should only be built once
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    deps = [
+        "_Test1",
+        "_Test2"
+    ]
+)
+
+ocaml_module(
+    name   = "_Test1",
+    struct = "test1.ml",
+    opts = [
+        "-w", "-27", ## unused variable test_ctxt.
+        "-w", "-31"  ## files x and y both define a module named Z
+    ],
+    deps = [
+        ":main",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_module(
+    name   = "_Test2",
+    struct = "test2.ml",
+    opts = [
+        "-w", "-27", ## unused variable test_ctxt.
+        "-w", "-31"  ## files x and y both define a module named Z
+    ],
+    deps = [
+        ":main",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_module(
+    name = "main",
+    struct = "main.ml",
+    deps   = [
+        "//ns/new/case520/en:color",
+        "//ns/new/case520/fr:couleur"
+    ]
+)

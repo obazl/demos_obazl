@@ -1,0 +1,25 @@
+## new/case502: same as case500, with ns libs in separate pkgs
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test",
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [
+        "//ns/new/case502/color:color",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)

@@ -1,0 +1,17 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_module(
+    name = "diamond",
+    struct = "diamond.ml",
+    visibility = [
+        "//ns/new/case520/en:__pkg__",
+        "//ns/new/case520/fr:__pkg__"
+    ]
+)

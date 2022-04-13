@@ -1,0 +1,115 @@
+## hard-coded resolver module
+## here bar.ml contains module aliasing equations,
+## and the module names are namespaced by filename prefixes.
+## contains submodule interdeps, requiring -open
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+## we do not package the ns (and its components) as an aggregate,
+## so all must be listed as deps:
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Bar__Blue",
+        ":Bar__Green",
+        ":Bar__Red",
+        ":Bar",
+        ":Baz__Blue",
+        ":Baz__Green",
+        ":Baz__Red",
+        ":Baz",
+        "@ounit2//:ounit2"
+    ],
+)
+
+## hard-coded resolver module
+ocaml_module(
+    name   = "Bar",
+    struct = "bar.ml",
+    opts = ["-no-alias-deps", "-w", "-49"],
+)
+
+ocaml_module(
+    name   = "Baz",
+    struct = "baz.ml",
+    opts = ["-no-alias-deps", "-w", "-49"],
+)
+
+################################################################
+## this module depends on its siblings, so it must depend on the resolver
+ocaml_module(
+    name   = "Bar__Red",
+    struct = "bar__Red.ml",
+    opts   = [
+        "-no-alias-deps",
+        # "-open", "Bar"
+    ],
+    open   = [":Bar"],
+    deps   = [
+        # ":Bar",
+        ":Bar__Blue",
+        ":Bar__Green",
+        "@ounit2//:ounit2"
+    ],
+    visibility = [
+    ]
+)
+
+ocaml_module(
+    name = "Bar__Green",
+    struct = "bar__Green.ml",
+    visibility = [
+        "//ns/prefixing/resolver/c:__pkg__",
+        "//ns/bottomup/embed:__subpackages__",
+    ]
+)
+
+ocaml_module(
+    name = "Bar__Blue",
+    struct = "bar__Blue.ml",
+    visibility = [
+        "//ns/obazl/set400:__subpackages__"
+    ]
+)
+
+################################################################
+## this module depends on its siblings, so it must depend on the resolver
+ocaml_module(
+    name   = "Baz__Red",
+    struct = "baz__Red.ml",
+    opts   = [
+        "-no-alias-deps",
+        # "-open", "Baz"
+    ],
+    open   = [":Baz"],
+    deps   = [
+        # ":Baz",
+        ":Baz__Blue",
+        ":Baz__Green",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name = "Baz__Green",
+    struct = "baz__Green.ml",
+)
+
+ocaml_module(
+    name = "Baz__Blue",
+    struct = "baz__Blue.ml",
+    visibility = [
+        "//ns/prefixing/resolver/c:__pkg__",
+        "//ns/bottomup/embed:__subpackages__",
+    ]
+)

@@ -1,0 +1,43 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Color",
+        "//ns/prefixing/resolver/a:Foo__Red",
+        "//ns/prefixing/resolver/b:Bar__Green",
+        "//ns/prefixing/resolver/b:Baz__Blue",
+        ":Grue",
+        "@ounit2//:ounit2"
+    ],
+)
+
+## hard-coded resolver module
+ocaml_module(
+    name = "Color",
+    struct = "color.ml",
+    opts = [
+        "-no-alias-deps",
+        "-w", "-49" # no cmi file was found in path for module ...
+    ],
+    # aliases = [
+    #     "//ns/prefixing/resolver/a:Foo__Red",
+    #     "//ns/prefixing/noresolver:Foo__Green",
+    #     "//ns/prefixing/noresolver:Bar__Blue",
+    # ]
+)
+
+ocaml_module(
+    name = "Grue",
+    struct = "grue.ml",
+)
