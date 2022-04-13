@@ -1,0 +1,64 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+ocaml_ns_resolver(
+    name = "color_ns",
+    ns   = "Color",
+    names = [
+        "Red",
+        "Green",
+        "Blue"
+        ]
+)
+
+ocaml_library(
+    name = "libColor",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":color_ns"
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    ns_resolver = ":color_ns",
+    visibility = ["//ns/bottomup/mwe/exogenous_submodules:__pkg__"],
+)
+
+ocaml_module(
+    name = "Green",
+    ns_resolver   = ":color_ns",
+    struct = "green.ml",
+    visibility = ["//ns/bottomup/mwe/exogenous_submodules:__pkg__"],
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_resolver   = ":color_ns",
+    struct = "blue.ml",
+    visibility = ["//ns/bottomup/mwe/exogenous_submodules:__pkg__"],
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":libColor", "@ounit2//:ounit2"],
+    # deps_opam = ["ounit2"],
+)

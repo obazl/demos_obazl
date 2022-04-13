@@ -1,5 +1,3 @@
-## bottomup/case100: minimal ns lib
-
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
@@ -7,18 +5,20 @@ load(
     "ocaml_ns_resolver",
     "ocaml_test",
 )
-ocaml_test(
-    name = "test",
-    main = ":Test",
-)
 
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        ":libcolor",
-        "@ounit2//:ounit2"
-    ],
+ocaml_ns_resolver(
+    name = "color_ns",  # target name, not (necessarily) ns name
+    ## By default, ns name == target name (normalized)
+    ## Use 'ns' attrib to override.
+    ns   = "Color",
+    names = [
+        ## these are strings, not labels. must match name of modules
+        ## that elect membership using ns_resolver attribute.
+        "Red",
+        "Green",
+        "Blue"
+        ],
+    visibility = ["//ns/bottomup/mwe:__subpackages__"],
 )
 
 ## package resolver module and submodules in a library
@@ -31,20 +31,6 @@ ocaml_library(
         ":color_ns"
     ],
     visibility = ["//visibility:public"],
-)
-
-ocaml_ns_resolver(
-    name = "color_ns",  # target name, not (necessarily) ns name
-    ## By default, ns name == target name (normalized)
-    ## Use 'ns' attrib to override.
-    ns   = "Color",
-    submodules = [
-        ## these are strings, not labels. must match module names.
-        "Red",
-        "Green",
-        "Blue"
-        ],
-    visibility = ["//ns/bottomup/mwe:__subpackages__"],
 )
 
 ocaml_module(
@@ -66,4 +52,18 @@ ocaml_module(
     ns_resolver = ":color_ns",
     struct = "blue.ml",
     visibility = ["//ns/bottomup/embed/mwe:__pkg__"],
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libcolor",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
 )
