@@ -1,10 +1,10 @@
-
 test_suite(
     name = "test",
     tests = [
         "//mwe/hello_archive:test",
         "//mwe/hello_module:test",
-        "//mwe/rgb:test",
+        "//mwe/hello_sig:test",
         "//mwe/intradeps:test",
+        "//mwe/rgb:test",
     ]
 )

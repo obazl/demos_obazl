@@ -1,5 +1,5 @@
-# To build the module: $ bazel build minimal/hello_module:_Hello
-# To run the test:     $ bazel test minimal/hello_module:test
+# To build the module: $ bazel build mwe/hello_module:_Hello
+# To run the test:     $ bazel test mwe/hello_module:test
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -10,23 +10,19 @@ load(
 ocaml_test(
     name = "test",
     main = "Test",
-    deps = ["Hello"]
 )
 
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    opts = ["-w", "-27",
-            "-linkall"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = ["-linkall"],
     deps = [
         "@ounit2//:ounit2",
         ":Hello",
     ],
-    # deps_opam = ["ounit2"]
 )
 
 ocaml_module(
     name = "Hello",
     struct = "hello.ml",
-    # opts   = ["-no-thread"]
 )

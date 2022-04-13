@@ -6,6 +6,7 @@ To use a standard OPAM switch, install dependencies:
 
 * ounit2 - needed by most targets
 * ppxlib - ppx demos only
+* ppx_inline_test - testing/ppx
 * lwt - only for //mwe/hello_lwt
 * core - only for //parsing/ocamllex
 
