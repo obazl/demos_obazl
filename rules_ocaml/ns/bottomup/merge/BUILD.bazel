@@ -1,0 +1,53 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+## instead of composing namespaces, we merge their contents, so we can refer to them without using the ns name. E.g. Colors.R not Colors.RGB.Red
+ocaml_ns_resolver(
+    name = "colors_ns",
+    ns   = "Colors",
+    imports = {
+        ## ns_resolver modules:
+        "//ns/bottomup/merge/rgb:Red"   : "R",
+        "//ns/bottomup/merge/rgb:Green" : "G",
+        "//ns/bottomup/merge/rgb:Blue"  : "B",
+        "//ns/bottomup/merge/hsb:Hue"        : "H",
+        "//ns/bottomup/merge/hsb:Saturation" : "S",
+        "//ns/bottomup/merge/hsb:Brightness" : "Br",
+        "//ns/bottomup/merge/cmyk:Cyan"    : "C",
+        "//ns/bottomup/merge/cmyk:Magenta" : "M",
+        "//ns/bottomup/merge/cmyk:Yellow"  : "Y",
+        "//ns/bottomup/merge/cmyk:Key"     : "K",
+    },
+)
+
+ocaml_library(
+    name = "libColors",
+    manifest = [
+        ":colors_ns",
+        "//ns/bottomup/merge/rgb:libRGB",
+        "//ns/bottomup/merge/hsb:libHSB",
+        "//ns/bottomup/merge/cmyk:libCMYK",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+#############
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libColors",
+        ":colors_ns",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)

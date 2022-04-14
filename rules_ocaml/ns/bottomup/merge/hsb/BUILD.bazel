@@ -1,0 +1,64 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+# package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//ns/bottomup/merge:__subpackages__"])
+
+ocaml_ns_resolver(
+    name = "hsb_ns",
+    ns   = "HSB",
+    submodules = [
+        "Hue",
+        "Saturation",
+        "Brightness"
+        ],
+    visibility = ["//ns/bottomup/thunkish:__subpackages__"],
+)
+
+ocaml_library(
+    name = "libHSB",
+    manifest = [
+        ":Hue",
+        ":Saturation",
+        ":Brightness",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name        = "Hue",
+    ns_resolver = ":hsb_ns",
+    struct      = "hue.ml",
+)
+
+ocaml_module(
+    name = "Saturation",
+    ns_resolver = ":hsb_ns",
+    struct = "saturation.ml",
+)
+
+ocaml_module(
+    name = "Brightness",
+    ns_resolver = ":hsb_ns",
+    struct = "brightness.ml",
+)
+
+#############
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libHSB",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
