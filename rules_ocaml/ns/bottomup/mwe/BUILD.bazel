@@ -1,9 +1,8 @@
 test_suite(
     name = "test",
     tests = [
-        "//ns/bottomup/mwe/subnames:test",
-        "//ns/bottomup/mwe/subns:test",
-        "//ns/bottomup/mwe/exogenous_modules:test",
-        "//ns/bottomup/mwe/exogenous_submodules:test",
+        "//ns/bottomup/mwe/hello:test",
+        "//ns/bottomup/mwe/imports:test",
+        "//ns/bottomup/mwe/submodules:test",
     ]
 )

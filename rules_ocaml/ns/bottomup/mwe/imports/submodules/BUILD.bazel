@@ -9,17 +9,17 @@ load(
 ocaml_ns_resolver(
     name = "greek_ns",
     ns   = "Greek",
-    names = [
+    submodules = [
         "Alpha",
         "Beta",
         "Gamma",
         ],
-    submodules = {
+    imports = {
         # include and alias exogenous namespaced submodules
         # e.g. colors:Red will be accessible as Greek.Red
-        "//ns/bottomup/mwe/exogenous_submodules/colors:Red"  : "Red",
-        "//ns/bottomup/mwe/exogenous_submodules/colors:Green": "Green",
-        "//ns/bottomup/mwe/exogenous_submodules/colors:Blue" : "Blue",
+        "//ns/bottomup/mwe/imports/submodules/colors:Red"  : "Red",
+        "//ns/bottomup/mwe/imports/submodules/colors:Green": "Green",
+        "//ns/bottomup/mwe/imports/submodules/colors:Blue" : "Blue",
     },
 )
 
@@ -31,7 +31,7 @@ ocaml_library(
         ":Alpha",
         ":Beta",
         ":Gamma",
-        "//ns/bottomup/mwe/exogenous_submodules/colors:libColor"
+        "//ns/bottomup/mwe/imports/submodules/colors:libColor"
     ],
 )
 

@@ -11,7 +11,7 @@ ocaml_ns_resolver(
     ## By default, ns name == target name (normalized)
     ## Use 'ns' attrib to override.
     ns   = "Color",
-    names = [
+    submodules = [
         ## these are strings, not labels. must match name of modules
         ## that elect membership using ns_resolver attribute.
         "Red",

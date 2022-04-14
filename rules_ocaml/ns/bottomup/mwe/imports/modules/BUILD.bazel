@@ -11,7 +11,7 @@ ocaml_ns_resolver(
     ns          = "Color",
     # ingest non-namespaced exogenous modules
     modules  = {
-        "//mwe/rgb:R": "R",      ## identity alias
+        "//mwe/rgb:R": "R",
         "//mwe/rgb:G": "Green",
         "//mwe/rgb:B": "Blue"
     }

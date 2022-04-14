@@ -6,15 +6,15 @@ load(
     "ocaml_test"
 )
 
-ocaml_test(
-    name = "test",
-    main = "Test"
-)
-
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [":libHello", "@ounit2//:ounit2"]
+ocaml_ns_resolver(
+    name = "hello_ns",
+    ns   = "Hello",
+    submodules = [
+        "Australian",
+        "English",
+        "French",
+        "Spanish"
+    ]
 )
 
 ocaml_library(
@@ -24,17 +24,6 @@ ocaml_library(
         ":English",
         ":French",
         ":Spanish"
-    ]
-)
-
-ocaml_ns_resolver(
-    name = "hello_ns",
-    ns   = "Hello",
-    submodules = [
-        "Australian",
-        "English",
-        "French",
-        "Spanish"
     ]
 )
 
@@ -63,3 +52,13 @@ ocaml_module(
     struct  = "spanish.ml",
 )
 
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":libHello", "@ounit2//:ounit2"]
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)

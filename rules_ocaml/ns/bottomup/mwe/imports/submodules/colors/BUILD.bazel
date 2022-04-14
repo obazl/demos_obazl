@@ -9,7 +9,7 @@ load(
 ocaml_ns_resolver(
     name = "color_ns",
     ns   = "Color",
-    names = [
+    submodules = [
         "Red",
         "Green",
         "Blue"
@@ -31,21 +31,21 @@ ocaml_module(
     name = "Red",
     struct = "red.ml",
     ns_resolver = ":color_ns",
-    visibility = ["//ns/bottomup/mwe/exogenous_submodules:__pkg__"],
+    visibility = ["//ns/bottomup/mwe/imports/submodules:__pkg__"],
 )
 
 ocaml_module(
     name = "Green",
     ns_resolver   = ":color_ns",
     struct = "green.ml",
-    visibility = ["//ns/bottomup/mwe/exogenous_submodules:__pkg__"],
+    visibility = ["//ns/bottomup/mwe/imports/submodules:__pkg__"],
 )
 
 ocaml_module(
     name = "Blue",
     ns_resolver   = ":color_ns",
     struct = "blue.ml",
-    visibility = ["//ns/bottomup/mwe/exogenous_submodules:__pkg__"],
+    visibility = ["//ns/bottomup/mwe/imports/submodules:__pkg__"],
 )
 
 ocaml_test(
