@@ -20,12 +20,12 @@ ocaml_module(
 
 ocaml_ns_library(
     name = "hello",
-    submodules = {
-        ":Australian": "Australian",
-        ":English": "English",
-        ":French": "French",
-        ":Spanish": "Spanish"
-    },
+    submodules = [
+        ":Australian",
+        ":English",
+        ":French",
+        ":Spanish"
+    ],
 )
 
 ocaml_module(

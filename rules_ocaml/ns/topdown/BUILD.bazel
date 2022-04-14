@@ -2,8 +2,16 @@ test_suite(
     name = "test",
     tests = [
         "//ns/topdown/case100:test",
+        "//ns/topdown/case110:test",
+        "//ns/topdown/case120:test",
         "//ns/topdown/case130:test",
         "//ns/topdown/case140:test",
-        "//ns/topdown/hello:test",
+        "//ns/topdown/case150:test",
+        "//ns/topdown/case160:test",
+        "//ns/topdown/case170:test",
+        "//ns/topdown/case180:test",
+        "//ns/topdown/case190:test",
+        "//ns/topdown/mwe:test",
+        "//ns/topdown/ppx:test",
     ]
 )

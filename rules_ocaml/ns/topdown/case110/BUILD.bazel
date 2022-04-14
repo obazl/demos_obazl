@@ -1,0 +1,31 @@
+## new/case100: singleton nslib
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//:ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    submodules = [
+        ":Grue",
+    ]
+)
+
+ocaml_module(
+    name   = "Grue",
+    struct = "grue.ml",
+)

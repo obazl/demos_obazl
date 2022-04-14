@@ -1,0 +1,71 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+package(default_visibility = ["//ns/bottomup/include/colors:__pkg__"])
+
+ocaml_ns_resolver(
+    name = "cmyk_ns",
+    ns   = "CMYK",
+    submodules = [
+        "Cyan",
+        "Magenta",
+        "Yellow",
+        "Key"
+        ],
+)
+
+ocaml_library(
+    name = "olibCMYK",
+    manifest = [
+        ":Cyan",
+        ":Magenta",
+        ":Yellow",
+        ":Key",
+        ":cmyk_ns"
+    ],
+)
+
+#############
+ocaml_module(
+    name        = "Cyan",
+    ns_resolver = ":cmyk_ns",
+    struct      = "cyan.ml",
+)
+
+ocaml_module(
+    name = "Magenta",
+    ns_resolver = ":cmyk_ns",
+    struct = "magenta.ml",
+)
+
+ocaml_module(
+    name = "Yellow",
+    ns_resolver = ":cmyk_ns",
+    struct = "yellow.ml",
+)
+
+ocaml_module(
+    name = "Key",
+    ns_resolver = ":cmyk_ns",
+    struct = "key.ml",
+)
+
+#############
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":olibCMYK",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)

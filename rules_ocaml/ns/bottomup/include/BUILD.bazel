@@ -1,0 +1,7 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/bottomup/include/colors:test",
+        "//ns/bottomup/include/rgb:test",
+    ]
+)

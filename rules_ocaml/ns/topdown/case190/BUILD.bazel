@@ -1,7 +1,7 @@
-#  user-defined 'main'
-
 load(
     "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_ns_library",
     "ocaml_test",
@@ -9,24 +9,18 @@ load(
 
 ocaml_ns_library(
     name = "color",
-    resolver = ":Color", ## user-provided main module
     submodules = [
         ":Red",
         ":Green",
-        ":Blue"
+        ":Blue",
+        "//ns/topdown/case190/greek:greek"
     ],
-    visibility = ["//visibility:public"],
-)
-
-ocaml_module(
-    name = "Color",
-    # opts = ["-no-alias-deps", "-w", "-49"],
-    struct = "color.ml",
 )
 
 ocaml_module(
     name = "Red",
     struct = "red.ml",
+    deps = [":Green"],
 )
 
 ocaml_module(
@@ -48,6 +42,5 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//:ounit2"],
+    deps = [":color", "@ounit2//:ounit2"]
 )
-

@@ -1,0 +1,67 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+package(default_visibility = ["//visibility:public"])
+
+ocaml_ns_resolver(
+    name = "rgb_ns",  # target name, not (necessarily) ns name
+    ## By default, ns name == target name (normalized)
+    ## Use 'ns' attrib to override.
+    ns   = "RGB",
+    submodules = [
+        ## these are strings, not labels. must match name of modules
+        ## that elect membership using ns_resolver attribute.
+        "Red",
+        "Green",
+        "Blue"
+        ],
+)
+
+## package resolver module and submodules in a library
+ocaml_library(
+    name = "olibRGB",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":rgb_ns"
+    ],
+)
+
+ocaml_module(
+    name        = "Red",
+    ns_resolver = ":rgb_ns",
+    struct      = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    ns_resolver = ":rgb_ns",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_resolver = ":rgb_ns",
+    struct = "blue.ml",
+)
+
+#############
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":olibRGB",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)

@@ -1,16 +1,7 @@
+
 test_suite(
     name = "test",
     tests = [
-        "//ns/new/case100:test",
-        # "//ns/new/case102:test",
-        "//ns/new/case104:test",
-        # "//ns/new/case110:test",
-        "//ns/new/case120:test",
-        "//ns/new/case130:test",
-        "//ns/new/case140:test",
-        "//ns/new/case150:test",
-        "//ns/new/case153:test",
-        "//ns/new/case155:test",
         "//ns/new/case160:test",
 
         # "//ns/new/case200:test",

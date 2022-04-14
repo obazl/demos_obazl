@@ -1,0 +1,82 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+ocaml_ns_resolver(
+    name = "greek_ns",
+    ns   = "Greek",
+    submodules = [
+        # elective submodules
+        "Alpha",
+        "Beta",
+        "Gamma",
+        ],
+    include = {
+        # exogenous NON-namespaced submodules
+        "//mwe/rgb:R": "R",
+        "//mwe/rgb:G": "G",
+        "//mwe/rgb:B": "B",
+    },
+    merge = [
+        # exogenous namespaced submodules
+        "//ns/bottomup/election/rgb:rgb_ns"
+    ],
+    embed = {
+        "//ns/bottomup/embed/colors/cmyk:cmyk_ns": "CMYK"
+    }
+)
+
+# package resolver and submodules in one library
+ocaml_library(
+    name = "olibGreek",
+    manifest = [
+        # ":greek_ns",
+        ":Alpha",
+        ":Beta",
+        ":Gamma",
+        "//mwe/rgb:R",
+        "//mwe/rgb:G",
+        "//mwe/rgb:B",
+        "//ns/bottomup/election/rgb:olibRGB",
+        "//ns/bottomup/embed/colors/cmyk:olibCMYK",
+    ],
+)
+
+#############
+ocaml_module(
+    name        = "Alpha",
+    ns_resolver = ":greek_ns",
+    struct      = "alpha.ml",
+)
+
+ocaml_module(
+    name        = "Beta",
+    ns_resolver = ":greek_ns",
+    struct      = "beta.ml",
+)
+
+ocaml_module(
+    name        = "Gamma",
+    ns_resolver = ":greek_ns",
+    struct      = "gamma.ml",
+)
+
+#############
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":olibGreek",
+        "@ounit2//:ounit2",
+    ],
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+

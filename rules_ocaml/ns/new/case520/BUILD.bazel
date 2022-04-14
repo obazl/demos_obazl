@@ -1,7 +1,3 @@
-## BROKEN! Due to a bug in Bazel's transition functions.
-## I'm not sure it ever worked, but it should.
-## see https://github.com/bazelbuild/bazel/issues/12171#issuecomment-912765906
-
 ## new/case520: diamond dependency on module
 ## diamond dep should only be built once
 

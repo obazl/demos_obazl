@@ -1,8 +1,64 @@
-test_suite(
-    name = "test",
-    tests = [
-        "//ns/bottomup/mwe/hello:test",
-        "//ns/bottomup/mwe/imports:test",
-        "//ns/bottomup/mwe/submodules:test",
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_resolver",
+    "ocaml_test"
+)
+
+ocaml_ns_resolver(
+    name = "hello_ns",
+    ns   = "Hello",
+    submodules = [
+        "Australian",
+        "English",
+        "French",
+        "Spanish"
     ]
+)
+
+ocaml_library(
+    name = "olibHello",
+    manifest = [
+        ":Australian",
+        ":English",
+        ":French",
+        ":Spanish"
+    ]
+)
+
+## Each submodule must depend on the ns_resolver target
+ocaml_module(
+    name = "Australian",
+    ns_resolver = ":hello_ns",
+    struct  = "australian.ml",
+)
+
+ocaml_module(
+    name = "English",
+    ns_resolver = ":hello_ns",
+    struct  = "english.ml",
+)
+
+ocaml_module(
+    name = "French",
+    ns_resolver = ":hello_ns",
+    struct  = "french.ml",
+)
+
+ocaml_module(
+    name = "Spanish",
+    ns_resolver = ":hello_ns",
+    struct  = "spanish.ml",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":olibHello", "@ounit2//:ounit2"]
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
 )

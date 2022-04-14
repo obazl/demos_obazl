@@ -1,0 +1,57 @@
+# compare //ns/bottomup/conjunction/colors
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+## instead of composing namespaces, we fuse their submodules, so we
+## can refer to them without using their ns names.
+## E.g. Colors.R => RGB.Red
+ocaml_ns_resolver(
+    name = "colors_ns",
+    ns   = "Colors",
+    include = {
+        ## ns_resolver modules:
+        "//ns/bottomup/include/colors/rgb:Red"   : "R",
+        "//ns/bottomup/include/colors/rgb:Green" : "G",
+        "//ns/bottomup/include/colors/rgb:Blue"  : "B",
+        "//ns/bottomup/include/colors/hsb:Hue"        : "H",
+        "//ns/bottomup/include/colors/hsb:Saturation" : "S",
+        "//ns/bottomup/include/colors/hsb:Brightness" : "Br",
+        "//ns/bottomup/include/colors/cmyk:Cyan"    : "C",
+        "//ns/bottomup/include/colors/cmyk:Magenta" : "M",
+        "//ns/bottomup/include/colors/cmyk:Yellow"  : "Y",
+        "//ns/bottomup/include/colors/cmyk:Key"     : "K",
+    },
+)
+
+ocaml_library(
+    name = "olibColors",
+    manifest = [
+        ":colors_ns",
+        "//ns/bottomup/include/colors/rgb:olibRGB",
+        "//ns/bottomup/include/colors/hsb:olibHSB",
+        "//ns/bottomup/include/colors/cmyk:olibCMYK",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+#############
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":olibColors",
+        ":colors_ns",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)

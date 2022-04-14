@@ -1,0 +1,41 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+ocaml_ns_resolver(
+    name        = "rgb_ns",
+    ns          = "RGB",
+    # fuse non-namespaced exogenous modules
+    # e.g. RGB.R => R, RGB.G = > Green, RGB.B => Blue
+    include = {
+        "//mwe/rgb:R": "R",     # identity alias
+        "//mwe/rgb:G": "Green", # renaming alias
+        "//mwe/rgb:B": "Blue"   # renaming alias
+    }
+)
+
+## aggregate resolver and submodules
+ocaml_library(
+    name = "olibRGB",
+    manifest = [
+        "//mwe/rgb:R",
+        "//mwe/rgb:G",
+        "//mwe/rgb:B",
+        ":rgb_ns"
+    ],
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":olibRGB", "@ounit2//:ounit2"],
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)

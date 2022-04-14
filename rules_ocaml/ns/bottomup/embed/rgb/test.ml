@@ -1,15 +1,17 @@
 open OUnit2
 
-let test1 _ = assert_equal  32 (MyRGB.Red.r)
-let test2 _ = assert_equal  64 (MyRGB.Green.g)
-let test3 _ = assert_equal 128 (MyRGB.Blue.b)
+let test1 _ = assert_equal  32 (Colors.MyRGB.Red.r)
+let test2 _ = assert_equal  64 (Colors.MyRGB.Green.g)
+let test3 _ = assert_equal 128 (Colors.MyRGB.Blue.b)
 
-(* The MyRGB ns merges all submodules of exogenous RGB ns. Those
-   submodules remain accessible via the RGB ns. *)
+(* The Colors namespace depends on the RGB namespace, it just aliases
+   MyRGB to RGB. So we can also access RGB without using the
+   Colors.MyRGB prefix: *)
 
 let test4 _ = assert_equal  32 (RGB.Red.r)
 let test5 _ = assert_equal  64 (RGB.Green.g)
 let test6 _ = assert_equal 128 (RGB.Blue.b)
+
 
 let suite =
 "suite">:::

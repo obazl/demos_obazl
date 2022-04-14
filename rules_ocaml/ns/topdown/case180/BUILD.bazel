@@ -1,0 +1,101 @@
+## new/case155: nslib nesting: two deep, two wide
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_ns_library(
+    name = "color",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":greek",
+        ":foobar"
+    ],
+)
+
+ocaml_ns_library(
+    name = "greek",
+    submodules = [
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
+    ],
+)
+
+ocaml_ns_library(
+    name = "foobar",
+    submodules = [
+        ":Foo",
+        ":Bar",
+        ":Baz"
+    ],
+)
+
+
+#############
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    deps = [":Green"],
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)
+
+#############
+ocaml_module(
+    name = "Alpha",
+    struct = "alpha.ml",
+)
+
+ocaml_module(
+    name = "Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "Gamma",
+    struct = "gamma.ml",
+)
+
+#############
+ocaml_module(
+    name = "Foo",
+    struct = "foo.ml",
+)
+
+ocaml_module(
+    name = "Bar",
+    struct = "bar.ml",
+)
+
+ocaml_module(
+    name = "Baz",
+    struct = "baz.ml",
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//:ounit2"],
+)

@@ -1,4 +1,4 @@
-## new/case130: ns lib with submodule dependent on non-ns module
+## new/case150: nslib nesting: ns lib Color contains ns lib Greek as a submodule
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -15,18 +15,14 @@ ocaml_ns_library(
         ":Red",
         ":Green",
         ":Blue",
+        ":greek"
     ],
 )
 
 ocaml_module(
     name = "Red",
     struct = "red.ml",
-    deps = [":Red_helper"],
-)
-
-ocaml_module(
-    name = "Red_helper",
-    struct = "red_helper.ml",
+    deps = [":Green"],
 )
 
 ocaml_module(
@@ -39,6 +35,31 @@ ocaml_module(
     struct = "blue.ml",
 )
 
+###################
+ocaml_ns_library(
+    name = "greek",
+    submodules = {
+        ":Alpha": "Alpha",
+        ":Beta": "Beta",
+        ":Gamma": "Gamma",
+    },
+)
+
+ocaml_module(
+    name = "Alpha",
+    struct = "alpha.ml",
+)
+
+ocaml_module(
+    name = "Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "Gamma",
+    struct = "gamma.ml",
+)
+
 ###########
 ocaml_test(
     name = "test",
@@ -48,5 +69,5 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//:ounit2"]
+    deps = [":color", "@ounit2//:ounit2"],
 )

@@ -1,32 +1,31 @@
-#  user-defined 'main'
+## minimal ns lib with separate interface files
 
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_ns_library",
+    "ocaml_signature",
     "ocaml_test",
 )
 
 ocaml_ns_library(
-    name = "color",
-    resolver = ":Color", ## user-provided main module
+    name = "Color",
     submodules = [
         ":Red",
         ":Green",
         ":Blue"
     ],
-    visibility = ["//visibility:public"],
-)
-
-ocaml_module(
-    name = "Color",
-    # opts = ["-no-alias-deps", "-w", "-49"],
-    struct = "color.ml",
 )
 
 ocaml_module(
     name = "Red",
     struct = "red.ml",
+    sig    = ":Red.cmi"
+)
+
+ocaml_signature(
+    name = "Red.cmi",
+    src  = "red.mli",
 )
 
 ocaml_module(
@@ -42,12 +41,11 @@ ocaml_module(
 ###########
 ocaml_test(
     name = "test",
-    main = "Test",
+    main = ":Test"
 )
 
 ocaml_module(
-    name = "Test",
+    name   = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//:ounit2"],
+    deps = [":Color", "@ounit2//:ounit2"],
 )
-

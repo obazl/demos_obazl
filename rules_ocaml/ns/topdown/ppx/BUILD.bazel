@@ -1,0 +1,91 @@
+## new/case110: minimal ns lib with ppx transforms
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+    "ppx_executable",
+)
+
+ocaml_ns_library(
+    name = "color",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+## change this to "@ppx//print:text" to get readable output
+PPX_PRINT = "@rules_ocaml//ppx/print:text"
+
+ocaml_module(
+    name = "Red",
+    ppx  = ":ppx.exe",
+    ppx_print = PPX_PRINT,
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    ppx  = ":ppx.exe",
+    ppx_print = PPX_PRINT,
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    ppx  = ":ppx.exe",
+    ppx_print = PPX_PRINT,
+    struct = "blue.ml",
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Ppxlib_runner",
+    deps = [":ppx_hex_of_dec"]
+)
+
+###########
+ocaml_module(
+    name      = "ppx_hex_of_dec",
+    struct    = ":ppx_hex_of_dec.ml",
+    deps = ["@ppxlib//:ppxlib"]
+)
+
+###########
+ocaml_module(
+    name = "Ppxlib_runner",
+    struct = ":ppxlib_runner.ml",
+    deps = ["@ppxlib//:ppxlib"]
+)
+
+########
+genrule(
+    name = "genrunner",
+    outs = ["ppxlib_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":color", "@ounit2//:ounit2"],
+    # deps_opam = ["ounit2"],
+    # deps = [":color"],
+)

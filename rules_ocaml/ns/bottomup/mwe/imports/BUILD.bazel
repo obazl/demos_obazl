@@ -1,8 +1,0 @@
-test_suite(
-    name = "test",
-    tests = [
-        "//ns/bottomup/mwe/imports/modules:test",
-        "//ns/bottomup/mwe/imports/submodules:test",
-        "//ns/bottomup/mwe/imports/namespaces:test",
-    ]
-)
