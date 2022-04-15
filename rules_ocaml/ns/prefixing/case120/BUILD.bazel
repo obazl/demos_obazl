@@ -1,0 +1,53 @@
+## set100/case130 - hard-coded namespace prefix without resolver module
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":Demo__Blue",
+        ":Demo__Green",
+        ":Demo__Red",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_module(
+    name = "Demo__Red",
+    struct = "demo__Red.ml",
+    visibility = [
+        "//ns/obazl/set400:__subpackages__",
+        "//ns/obazl/set500:__subpackages__"
+    ]
+)
+
+ocaml_module(
+    name = "Demo__Green",
+    struct = "demo__Green.ml",
+    visibility = [
+        "//ns/obazl/set400:__subpackages__"
+    ]
+)
+
+ocaml_module(
+    name = "Demo__Blue",
+    struct = "demo__Blue.ml",
+    visibility = [
+        "//ns/obazl/set400:__subpackages__"
+    ]
+)

@@ -1,0 +1,75 @@
+## set100/case124
+## * hard-coded namespace prefix
+## * hard-coded resolver module
+## * no sibling deps
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":Demo__Blue",
+        ":Demo__Green",
+        ":Demo__Red",
+        ":Demo",
+        "@ounit2//:ounit2"
+    ],
+)
+
+## hard-coded resolver module - no deps, use -no-alias-deps
+ocaml_module(
+    name   = "Demo",
+    struct = "demo.ml",
+    opts = [
+        "-w", "-49", ## Disable: Error (warning 49 [no-cmi-file])
+        "-no-alias-deps",
+    ],
+    deps = [
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name   = "Demo__Red",
+    struct = "demo__Red.ml",
+    opts   = ["-no-alias-deps", "-open", "Demo"],
+    deps   = [":Demo"],
+    visibility = [
+        "//ns/obazl/set400:__subpackages__",
+        "//ns/obazl/set500:__subpackages__"
+    ]
+)
+
+ocaml_module(
+    name = "Demo__Green",
+    struct = "demo__Green.ml",
+    opts   = ["-no-alias-deps", "-open", "Demo"],
+    deps   = [":Demo"],
+    visibility = [
+        "//ns/obazl/set400:__subpackages__"
+    ]
+)
+
+ocaml_module(
+    name = "Demo__Blue",
+    struct = "demo__Blue.ml",
+    opts   = ["-no-alias-deps", "-open", "Demo"],
+    deps   = [":Demo"],
+    visibility = [
+        "//ns/obazl/set400:__subpackages__"
+    ]
+)
