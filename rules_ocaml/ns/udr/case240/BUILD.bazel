@@ -1,0 +1,65 @@
+## set200/case240: use of 'include' in main ns module
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":libColor", "@ounit2//:ounit2"],
+)
+
+#################
+ocaml_ns_library(
+    name = "libColor",
+    ns = "Color",
+    resolver = ":Color_resolver",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        # ":Color_resolver"
+    ],
+)
+
+## color.ml 'include's color_include.ml
+ocaml_module(
+    name = "Color_resolver",
+    struct = "color.ml",
+    deps = [
+        ":Color_include"
+    ]
+)
+
+ocaml_module(
+    name = "Color_include",
+    struct = "color_include.ml",
+    deps = [
+        ":Red"
+    ]
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

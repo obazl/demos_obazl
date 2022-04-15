@@ -1,0 +1,58 @@
+# set200/case220 - user-provided ns resolver
+
+# null namespace - no submodule renaming
+# in this demo, the ns-resolver is a hand-coded module ("Color")
+# this allows refs like Color.Red, which resolves to Red (not Color__red).
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test",
+    # deps = [":color"]
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [
+        ":Color", "@ounit2//:ounit2"],
+)
+
+## the identity resolver, just puts submodules in Color namespace
+ocaml_module(
+    name = "Color",
+    struct = "color.ml",
+    # opts   = ["-no-alias-deps"],
+    deps   = [
+        ":Red",
+        ":Green",
+        ":Blue"
+    ]
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+    visibility = [
+        ## this target is used by set400,  cases 415, 425
+        "//ns/obazl/set400:__subpackages__",
+    ],
+)

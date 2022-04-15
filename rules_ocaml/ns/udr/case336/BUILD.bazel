@@ -1,0 +1,74 @@
+# set300/case334
+
+## Legacy code may have a user-supplied main nslib module that references
+## code in an nslib submodule, but does not contain an aliasing equation for it.
+## In this case we must put the dep on module that needs it, but not in the
+## submodules list of the nslib.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [":alpha", "@ounit2//:ounit2"],
+)
+
+#################
+ocaml_ns_library(
+    name = "alpha",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+        ":_Alpha",  ## user-provided main module
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name   = "_Alpha",
+    struct = "alpha.ml",
+    ## module Alpha contains aliasing equations for Red, Green, and Blue,
+    ## It _uses_ (references) Red, which must ipso facto be listed as a dep.
+    ## It does not alias nslib Beta, but does use it, so it must be listed
+    ## as a dep, but not as a submodule.
+    deps   = [
+        ":_Red",
+        "//ns/obazl/set300/case336/beta:beta"
+    ]
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+    visibility = [
+        "//ns/obazl/class03/case09:__pkg__",
+        "//ns/obazl/class03/case10:__pkg__",
+        "//ns/obazl/set035/case03:__pkg__",
+        "//ns/obazl/set035/case04:__pkg__",
+    ],
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+    visibility = ["//ns/obazl/set035/case03:__pkg__"],
+)

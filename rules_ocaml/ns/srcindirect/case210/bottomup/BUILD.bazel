@@ -1,0 +1,66 @@
+# set200/case210/bottomup - simple bottom-up namespacing
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+SRC = "//ns/obazl/set200/case210/src:"
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = SRC + "test.ml",
+    opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [":libcolor", "@ounit2//:ounit2"],
+)
+
+ocaml_library(
+    name = "libcolor",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+)
+
+ocaml_module(
+    name = "Red",
+    ns_resolver = ":color_ns",
+    struct = SRC + "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    ns_resolver = ":color_ns",
+    struct = SRC + "green.ml",
+    visibility = [
+        "//ns/obazl/set400:__subpackages__",
+        "//ns/obazl/set600/case640:__pkg__",
+    ],
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_resolver = ":color_ns",
+    struct = SRC + "blue.ml",
+)
+
+ocaml_ns_resolver(
+    name = "color_ns",  # target name, not (necessarily) ns name
+## By default, ns name == target name (normalized)
+## Use 'ns' attrib to override.
+    ns   = "Color",
+    submodules = [
+        "Red",
+        "Green",
+        "Blue"
+        ]
+)

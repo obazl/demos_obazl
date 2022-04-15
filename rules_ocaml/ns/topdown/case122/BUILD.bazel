@@ -1,0 +1,46 @@
+## intramural deps, Green, Red depend on Blue
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_ns_library(
+    name = "color",
+    submodules = {
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",  # no prefix => red.cmo
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",  # => green.cmo
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",  # => blue.cmo
+)
+
+#############
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//:ounit2"],
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)

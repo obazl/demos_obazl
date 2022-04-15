@@ -3,7 +3,7 @@ test_suite(
     tests = [
         "//ns/bottomup:test",
         "//ns/new:test",
-        # "//ns/obazl:test",
+        "//ns/prefixing:test",
         "//ns/topdown:test"
 
         # "//ns/obazl/set100:test",

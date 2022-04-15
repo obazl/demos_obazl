@@ -1,0 +1,34 @@
+# set300/case336
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+#################
+ocaml_ns_library(
+    name = "beta",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue",
+    ],
+    visibility = ["//ns/obazl/set300/case336:__pkg__"],
+)
+
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)

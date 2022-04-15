@@ -1,6 +1,16 @@
+## hard-coded pseudo-namespacing, using fs prefixes
+
+## these demos do not use OBazl namespacing rules, everything is
+## coded explicitly.
+
 test_suite(
     name = "test",
     tests = [
+        "//ns/prefixing/case120:test",
+        "//ns/prefixing/case124:test",
+        "//ns/prefixing/case130:test",
+        "//ns/prefixing/case132:test",
+        "//ns/prefixing/case134:test",
         "//ns/prefixing/noresolver:test",
         "//ns/prefixing/resolver:test"
     ]

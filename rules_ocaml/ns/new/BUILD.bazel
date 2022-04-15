@@ -2,7 +2,6 @@
 test_suite(
     name = "test",
     tests = [
-        "//ns/new/case160:test",
 
         # "//ns/new/case200:test",
 

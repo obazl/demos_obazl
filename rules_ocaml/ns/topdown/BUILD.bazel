@@ -4,6 +4,7 @@ test_suite(
         "//ns/topdown/case100:test",
         "//ns/topdown/case110:test",
         "//ns/topdown/case120:test",
+        "//ns/topdown/case122:test",
         "//ns/topdown/case130:test",
         "//ns/topdown/case140:test",
         "//ns/topdown/case150:test",
@@ -11,6 +12,8 @@ test_suite(
         "//ns/topdown/case170:test",
         "//ns/topdown/case180:test",
         "//ns/topdown/case190:test",
+        "//ns/topdown/case366:test",
+        "//ns/topdown/case370/foo-bar:test",
         "//ns/topdown/mwe:test",
         "//ns/topdown/ppx:test",
     ]
