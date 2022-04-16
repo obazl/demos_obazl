@@ -1,0 +1,23 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+)
+
+###########
+ocaml_module(
+    name = "driver",
+    struct = ":ppxlib_driver_wrapper.ml",
+    deps   = ["@ppxlib//:ppxlib"],
+    opts = ["-linkall"],
+    visibility = ["//visibility:public"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver_wrapper.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)
