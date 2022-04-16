@@ -1,0 +1,93 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable")
+
+###########
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short",
+)
+
+###########
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Antiquot",
+        ":For_test",
+        ":Simple",
+        ":Subst_test",
+        "@ounit2//:ounit2",
+    ],
+    opts = [
+        "-linkall"
+    ]
+)
+
+#############
+ocaml_module(
+    name = "Antiquot",
+    ppx = ":ppx.exe",
+    struct = "antiquot.ml",
+    # ppx_print = "@rules_ocaml//ppx/print:text",
+)
+
+ocaml_module(
+    name = "For_test",
+    ppx = ":ppx.exe",
+    struct = "for_test.ml",
+    # ppx_print = "@rules_ocaml//ppx/print:text",
+)
+
+ocaml_module(
+    name = "Simple",
+    ppx = ":ppx.exe",
+    struct = "simple.ml",
+    # ppx_print = "@rules_ocaml//ppx/print:text",
+)
+
+ocaml_module(
+    name = "Subst_test",
+    ppx = ":ppx.exe",
+    struct = "subst_test.ml",
+    # ppx_print = "@rules_ocaml//ppx/print:text",
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Ppx_runner",  ## hand-rolled, see below
+    # deps = [
+    ppx_codeps = [
+        ## NB: these should be listed as runtime deps (codeps) in
+        ## @metaquote//ppx but they are not, so we need to list them
+        ## here
+        "@ppxlib//:ppxlib",
+        "@metapp//:metapp"
+    ]
+)
+
+###########
+ocaml_module(
+    name = "Ppx_runner",
+    struct = ":ppx_runner.ml",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@metaquot//ppx"
+    ],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppx_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        ## either of the following will work:
+        "echo \"Ppxlib.Driver.standalone ()\" >> \"$@\"",
+        # "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

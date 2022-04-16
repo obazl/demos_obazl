@@ -1,0 +1,6 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ppx/derivers/simple_deriver:test",
+    ]
+)

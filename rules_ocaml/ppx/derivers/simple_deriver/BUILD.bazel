@@ -1,0 +1,51 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable")
+
+###########
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    ppx  = ":ppx.exe",
+    # ppx_print = "@rules_ocaml//ppx/print:text",
+    deps = ["@ounit2//:ounit2"]
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":ppxlib_driver",
+    deps = [":ppx_deriving_accessors"]
+)
+
+###########
+ocaml_module(
+    name      = "ppx_deriving_accessors",
+    struct    = ":ppx_deriving_accessors.ml",
+    deps      = ["@ppxlib//:ppxlib"]
+)
+
+###########
+ocaml_module(
+    name = "ppxlib_driver",
+    struct = ":ppxlib_driver.ml",
+    deps   = ["@ppxlib//:ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

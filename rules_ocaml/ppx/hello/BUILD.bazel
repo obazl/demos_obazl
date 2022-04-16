@@ -1,0 +1,88 @@
+# $ bazel test ppx/hello:test
+
+# You can build each target:
+# $ bazel build ppx/hello
+# $ bazel build ppx/hello:_Hello
+# $ bazel build ppx/hello:ppx.exe
+# $ bazel build ppx/hello:_Driver
+# $ bazel build ppx/hello:gendriver
+
+# To inspect the result of ppx processing:
+# first, run `source tools/aliases`. this defines an alias `bzlog` you can use to browse the command log after running a build.
+# uncomment the `ppx_print` line below to set output format to text
+# then run `bazel aquery ppx/hello:Hello
+# search the output for PpxTransformAction. The output is also written to the command log, so you can run `bzlog` to view it. But be forewarned that the comand log is overwritten each time you run a Bazel command.
+# The output of aquery will look something like:
+
+ # Outputs: [bazel-out/darwin-fastbuild/bin/ppx/hello/__obazl/Hello.ml]
+ #        Command Line: (exec bazel-out/darwin-fastbuild/bin/ppx/hello/Hello_ppx.sh \
+ #          -dump-ast \
+ #          -o \
+ #          ../bazel-out/darwin-fastbuild/bin/ppx/hello/__obazl/Hello.ml \
+ #          -impl \
+
+# The transformed file is listed in the 'Outputs:' clause.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable")
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+###########
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Hello",  # the transformed and compiled test code
+        "@ounit2//:ounit2",
+    ],
+)
+
+#############
+ocaml_module(
+    name = "Hello",
+    # opts = ["-verbose"],  ## to print the expanded ppx transform command, etc.
+    ppx = ":ppx.exe",
+    struct = "hello.ml",
+    # ppx_print = "@rules_ocaml//ppx/print:text",
+    deps = [
+        "@core//:core",  # contains Sexp module
+    ],
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Ppx_runner",  ## hand-rolled, see below
+    deps = [
+        "@ppx_sexp_value//:ppx_sexp_value", #contains handler for `[%sexp ]`
+    ],
+)
+
+###########
+ocaml_module(
+    name = "Ppx_runner",
+    struct = ":ppx_runner.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@ppxlib//:ppxlib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppx_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        ## either of the following will work:
+        "echo \"Ppxlib.Driver.standalone ()\" >> \"$@\"",
+        # "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

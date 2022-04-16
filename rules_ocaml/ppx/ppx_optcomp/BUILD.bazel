@@ -1,0 +1,102 @@
+# $ bazel test ppx/ppx_optcomp:test
+
+load("@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ocaml_executable",
+    "ppx_executable")
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+string_flag(
+    name = "msg",
+    build_setting_default = "hello",
+    values = [
+        "hello",
+        "goodbye",
+    ],
+)
+
+config_setting(
+    name = "hello",
+    flag_values = {":msg": "hello"},
+)
+
+config_setting(
+    name = "goodbye",
+    flag_values = {":msg": "goodbye"},
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Hello",
+        "@ounit2//:ounit2"
+    ]
+)
+
+#############
+ARG = select({
+    ":hello": [":genhello"],
+    ":goodbye": [":gengoodbye"],
+})
+
+ocaml_module(
+    name = "Hello",
+    ppx = ":ppx.exe",
+    # ppx_data = ARG,
+    ppx_data = [
+        ":config.mlh" ## generated below by :genconfig
+    ],  # this is our runtime dep
+    # ppx_print = "@rules_ocaml//ppx/print:text", # or :binary
+    struct = "hello.ml",
+)
+
+########
+## WARNING: due to Bazel restrictions on the way 'select()' can be used, we
+## can only select the entire command string here. we cannot use it to
+## select a parameter, for example.
+
+## here {...} is for string interpolation, and $@ is the genrule outfile
+CMD = "echo [%%define greeting {cmd}] > \"$@\""
+
+genrule(
+    name = "genconfig",
+    outs = ["config.mlh"],
+    cmd = select({
+        ":hello": CMD.format(cmd = 1),
+        ":goodbye": CMD.format(cmd = 2),
+    }),
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Driver",
+    deps = ["@ppx_optcomp//:ppx_optcomp"]
+)
+
+###########
+ocaml_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    deps = ["@ppxlib//:ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

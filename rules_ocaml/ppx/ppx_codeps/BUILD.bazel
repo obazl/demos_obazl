@@ -1,0 +1,114 @@
+# $ bazel test ppx/ppx_codeps
+
+# You can build each target:
+# $ bazel build ppx/ppx_codeps
+# $ bazel build ppx/ppx_codeps:_Hello
+# $ bazel build ppx/ppx_codeps:ppx
+# $ bazel build ppx/ppx_codeps:_Driver
+# $ bazel build ppx/ppx_codeps:gendriver
+
+# To inspect the result of ppx processing:
+# The easiest thing to do is run `bazel aquery ${TARGET}`, e.g. `bazel aquery ppx/ppx_codeps:_Hello`
+# first, run `source tools/aliases`. this defines an alias `bl` you can use to browse the log.
+# uncomment the `ppx_print` line below to set output format to text
+# then run `bazel clean`, then `bazel build ppx/ppx_codeps/hello:_Hello --subcommands
+# then run `bl` to inspect the command log. search for PpxTransformAction;
+# you will see the command, something like:
+# bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_obazl_/hello.ml -impl ppx/ppx_codeps/hello/hello.ml
+# the transformed output is the `-o` parameter (without the leading '../').
+# see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable")
+
+###########
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//:ounit2",
+        ":Hello",     # the transformed and compiled test code
+        # "@ppx_sexp_conv//runtime-lib",
+        # "@ppx_deriving//runtime",
+    ],
+    ppx = ":ppx",
+    # ppx_print = "@rules_ocaml//ppx/print:text",  # uncomment to get readable output
+)
+
+#############
+ocaml_module(
+    name = "Hello",
+    opts = [
+        ## the ppx injects code (int_of_sexp, Sexp) that depends on
+        ## these modules. usually these would be opened in the source
+        ## file, but for demo purposes we open them on the command
+        ## line. either way, we must also list the `sexplib` package
+        ## that contains them as a dependency, either here in 'deps'
+        ## or in the `ppx_codeps` attribute of the ppx transformer.
+        "-open", "Sexplib",
+        "-open", "Sexplib.Std",
+    ],
+    # open = [
+    #     "@sexplib//:sexplib",
+    # ],
+    ppx = ":ppx",
+    # ppx_print = "@rules_ocaml//ppx/print:text",  # uncomment to get readable output
+    struct = "hello.ml",
+    deps = [
+        # src file contains ref to "Sexp.to_string" so we need to
+        # depend on this lib.
+        # "@sexplib//:sexplib",
+        # "@ppx_sexp_conv//runtime-lib",
+    ],
+)
+
+###############
+ppx_executable(
+    name = "ppx",
+    main = "//ppx/driver",      # obazl will place this last in the list of deps
+    # main = "@ocaml//pkg:ppxlib.runner",
+    # main_opam = "ppxlib.runner",
+    # opts = [],                # obazl will automatically add '-predicates ppx_driver'
+    deps = [
+        ## without this, we get "Error: Cannot locate deriver sexp"
+        ## when we try to use this ppx executable to transform
+        ## hello.ml above, since it contains extension point
+        ## "[@@deriving sexp]".
+        "@ppx_sexp_conv//:ppx_sexp_conv",
+
+        ## without these, ppx transformation of test.ml fails
+        "@ppx_deriving//ord",
+        "@ppx_deriving//show",
+    ],
+    ## Use of ppx_codeps here is optional. They could also be added
+    ## to the compile rules that use this ppx to transform their
+    ## sources. Put here, they will be carried along with the ppx
+    ## executable and be automatically used wherever it is used - that
+    ## is, propagated as ppx_codeps on the files it transforms. this
+    ## obviates the need to manually add these deps to each rule that
+    ## depends on this one for ppx transformation.
+    ppx_codeps = [
+        ## without this, compilation of hello.ml will fail with
+        ## "Unbound module" errors (unless the source file lists them
+        ## as direct deps).
+        # "@ppx_sexp_conv//runtime-lib",
+        # "@ppx_deriving//runtime",
+
+        "@sexplib//:sexplib",
+
+
+        ## HOWEVER: we do not need to list it, because the transitive
+        ## closure of the deps includes some ppx_codeps, including
+        ## this one, as you can see by running
+        ##     bazel query "deps(@ocaml//lib/ppx_sexp_conv)"
+    ],
+)
