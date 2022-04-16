@@ -1,0 +1,21 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+test_suite(
+    name = "test",
+    tests = ["hello_alcotest"]
+)
+
+ocaml_test(
+    name = "hello_alcotest",
+    main = ":Hello",
+)
+
+ocaml_module(
+    name   = "Hello",
+    struct = "hello.ml",
+    deps   = ["@alcotest//:alcotest"]
+)
