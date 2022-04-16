@@ -4,6 +4,7 @@ test_suite(
         "//ns/bottomup:test",
         "//ns/new:test",
         "//ns/prefixing:test",
+        "//ns/srcindirect:test",
         "//ns/topdown:test"
 
         # "//ns/obazl/set100:test",

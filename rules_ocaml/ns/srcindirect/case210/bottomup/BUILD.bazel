@@ -8,7 +8,7 @@ load(
     "ocaml_test",
 )
 
-SRC = "//ns/obazl/set200/case210/src:"
+SRC = "//ns/srcindirect/case210/src:"
 
 ocaml_test(
     name = "test",
