@@ -1,0 +1,11 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/udr/case220:test",
+        # "//ns/udr/case230:test",
+        # "//ns/udr/case240:test",
+        # "//ns/udr/case330:test",
+        # "//ns/udr/case334:test",
+        # "//ns/udr/case336:test",
+    ]
+)

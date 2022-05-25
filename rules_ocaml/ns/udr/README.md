@@ -1,1 +1,1 @@
-# UDR: user-defined resolvers
+# UDRs - User-Defined Resolvers
