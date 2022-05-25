@@ -1,20 +1,20 @@
-namespaces/new/case336x
-namespaces/new/case610x
-namespaces/obazl/footgunnery
-namespaces/obazl/set300/case317
-namespaces/obazl/set300/case321
-namespaces/obazl/set300/case327
-namespaces/obazl/set300/case331
-namespaces/obazl/set300/case341
-namespaces/obazl/set300/case367
-namespaces/obazl/set300/case371
-namespaces/obazl/set400/case470
-namespaces/obazl/set600/case660
-namespaces/obazl/set700/case710
-namespaces/obazl/set700/case730
-namespaces/obazl/set700/case740
-namespaces/ns-archive
-namespaces/assisted/hierarchical
+ns/new/case336x
+ns/new/case610x
+ns/obazl/footgunnery
+ns/obazl/set300/case317
+ns/obazl/set300/case321
+ns/obazl/set300/case327
+ns/obazl/set300/case331
+ns/obazl/set300/case341
+ns/obazl/set300/case367
+ns/obazl/set300/case371
+ns/obazl/set400/case470
+ns/obazl/set600/case660
+ns/obazl/set700/case710
+ns/obazl/set700/case730
+ns/obazl/set700/case740
+ns/ns-archive
+ns/assisted/hierarchical
 # ppx/deriving
 ppx/rewriters/get_env
 

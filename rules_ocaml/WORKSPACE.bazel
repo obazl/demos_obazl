@@ -12,6 +12,9 @@ http_archive(
     sha256 = "c6966ec828da198c5d9adbaa94c05e3a1c7f21bd012a0b29ba8ddbccb2c93b0d",
 )
 
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+bazel_skylib_workspace()
+
 ################################################################
 git_repository(
     name = "rules_ocaml",
@@ -19,11 +22,8 @@ git_repository(
     branch = "obazl3",
 )
 
-load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
-bazel_skylib_workspace()
-
 git_repository(
-    name = "obazl_tools_obazl",
+    name = "tools_obazl",
     remote = "https://github.com/obazl/tools_obazl",
     branch = "dev",
 )
@@ -41,8 +41,8 @@ load("@rules_foreign_cc//foreign_cc:repositories.bzl",
 rules_foreign_cc_dependencies()
 
 ## uncomment after configuring coswitch; see README.md
-# load("//:COSWITCH.bzl", register_coswitch = "register")
-# register_coswitch()
+load("//:COSWITCH.bzl", register_coswitch = "register")
+register_coswitch()
 
-# load("@coswitch//:BOOTSTRAP.bzl", "bootstrap")
-# bootstrap()
+load("@coswitch//:BOOTSTRAP.bzl", "bootstrap")
+bootstrap()
