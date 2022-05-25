@@ -1,0 +1,20 @@
+load("@rules_ocaml//build:rules.bzl", "ocaml_module")
+
+## target, structfile, and sigfile have different names
+## default: module name is derived from target name
+## 'module' attribute overrides default
+ocaml_module(
+    name   = "Baz",
+    module = "A",
+    struct = "foo.ml",
+    # depend on sig source file
+    sig    = "//module_binding/dyadic/split/c3/sig:bar.mli",
+
+    # the a.mli file is there just for demo purposes, to prove that it
+    # is not inadvertently being compiled. It contains an error, so if
+    # it were to be compiled the build would fail.
+    # sig = "a.mli", ## will fail
+
+    visibility = ["//module_binding/dyadic/split/c3:__pkg__"]
+)
+

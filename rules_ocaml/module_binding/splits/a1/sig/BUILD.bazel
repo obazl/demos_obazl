@@ -1,9 +1,0 @@
-load("@rules_ocaml//build:rules.bzl", "ocaml_signature")
-
-exports_files(["hello.mli"])
-
-ocaml_signature(
-    name = "Hello",
-    src  = "hello.mli",
-    visibility = ["//module_binding/splits/a1:__pkg__"]
-)

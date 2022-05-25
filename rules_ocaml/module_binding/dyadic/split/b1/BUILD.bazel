@@ -1,0 +1,65 @@
+# Demos use of same structfile for different sigs;
+# module names derived from sigfiles.
+# the other way to do this is to use namespaces
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+# test_suite(
+#     name = "test",
+#     tests = [":test1", ":test2"]
+# )
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+# ocaml_test(
+#     name = "test2",
+#     main = "Test2"
+# )
+
+# ocaml_module(
+#     name   = "Test2",
+#     struct = "test2.ml",
+#     deps = [
+#         ":Hello2",
+#         "@ounit2//:ounit2"
+#     ],
+# )
+
+################################
+# depend directly on sigfile hello.mli
+ocaml_module(
+    name   = "Hello",
+    sig    = "hello.mli",
+    struct = "//module_binding/dyadic/split/b1/struct:hello.ml",
+)
+
+# # depend on compiled sig Hello.cmi - forces module name to Hello
+# ocaml_module(
+#     name   = "Hello2",
+#     sig    = ":Hello_cmi",
+
+#     ## only file deps for struct attrib:
+#     struct = "//module_binding/dyadic/split/b1/struct:hello.ml",
+# )
+
+# ocaml_signature(
+#     name = "Hello_cmi",
+#     src  = "hello.mli",
+# )

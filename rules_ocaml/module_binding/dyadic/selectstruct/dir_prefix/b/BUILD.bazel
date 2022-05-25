@@ -1,0 +1,33 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+)
+
+ocaml_signature(
+    name = "Hello_cmi",
+    src  = "hello.mli"
+)
+
+ocaml_module(
+    name    = "Hello",
+    visibility = ["//module_binding/dyadic/selectstruct/dir_prefix:__pkg__"],
+
+    # compiled sig in same package:
+    sig    = ":Hello_cmi",
+
+    struct = select({
+        "//bzl:linux_en":
+        "//module_binding/dyadic/selectstruct/dir_prefix/linux/en:hello.ml",
+
+        "//bzl:linux_fr":
+        "//module_binding/dyadic/selectstruct/dir_prefix/linux/fr:hello.ml",
+
+        "//bzl:macos_en":
+        "//module_binding/dyadic/selectstruct/dir_prefix/macos/en:hello.ml",
+
+        "//bzl:macos_fr":
+        "//module_binding/dyadic/selectstruct/dir_prefix/macos/fr:hello.ml",
+
+    }, no_match_error = "unsupported config"),
+)

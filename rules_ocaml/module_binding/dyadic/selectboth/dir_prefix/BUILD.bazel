@@ -1,0 +1,118 @@
+# Demonstrates binding variant structures and signatures,
+# using directories as namespace prefixes.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = select({
+        "//bzl:linux_en": "test_linux_en.ml",
+        "//bzl:linux_fr": "test_linux_fr.ml",
+        "//bzl:macos_en": "test_macos_en.ml",
+        "//bzl:macos_fr": "test_macos_fr.ml",
+    }),
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name   = "Hello",
+    sig    = select({
+        "//bzl:lang_en":
+        "//module_binding/dyadic/selectboth/dir_prefix/sig/en:Hello",
+        # "//module_binding/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
+
+        "//bzl:lang_fr":
+        # "//module_binding/dyadic/selectboth/dir_prefix/sig/fr:hello.mli",
+        "//module_binding/dyadic/selectboth/dir_prefix/sig/fr:Hello",
+    }, no_match_error = "unsupported sig"),
+
+    struct = select({
+        "//bzl:linux_en":
+        "//module_binding/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
+
+        "//bzl:linux_fr":
+        "//module_binding/dyadic/selectboth/dir_prefix/linux/fr:hello.ml",
+
+        "//bzl:macos_en":
+        "//module_binding/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
+
+        "//bzl:macos_fr":
+        "//module_binding/dyadic/selectboth/dir_prefix/macos/fr:hello.ml",
+
+    }, no_match_error = "unsupported arch"),
+)
+
+################################################################
+## below: for testing
+ocaml_test(name = "test1_linux_en", main = "Test1_linux_en")
+ocaml_module(name   = "Test1_linux_en", struct = "test_linux_en.ml",
+             module = "Test1_linux_en",
+             opts = ["-w", "-27"],
+             deps = [":Hello_test1_linux_en", "@ounit2//:ounit2"]
+)
+ocaml_module(
+    name   = "Hello_test1_linux_en",
+    module = "Hello_test1_linux_en",
+    sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
+    struct = "//module_binding/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
+)
+
+ocaml_test(name = "test2_linux_en", main = "Test2_linux_en")
+ocaml_module(name   = "Test2_linux_en", struct = "test_linux_en.ml",
+             module = "Test2_linux_en",
+             opts = ["-w", "-27"],
+             deps = [":Hello_test2_linux_en", "@ounit2//:ounit2"]
+)
+ocaml_module(
+    name   = "Hello_test2_linux_en",
+    sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:Hello",
+    struct = "//module_binding/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
+)
+
+ocaml_test(name = "test1_macos_en", main = "Test1_macos_en")
+ocaml_module(name   = "Test1_macos_en", struct = "test_macos_en.ml",
+             module = "Test1_macos_en",
+             opts = ["-w", "-27"],
+             deps = [":Hello_test1_macos_en", "@ounit2//:ounit2"]
+)
+ocaml_module(name   = "Hello_test1_macos_en",
+             module = "Hello_test1_macos_en",
+     sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
+     struct = "//module_binding/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
+)
+
+ocaml_test(name = "test2_macos_en", main = "Test2_macos_en")
+ocaml_module(name   = "Test2_macos_en", struct = "test_macos_en.ml",
+             module = "Test2_macos_en",
+             opts = ["-w", "-27"],
+             deps = [":Hello_test2_macos_en", "@ounit2//:ounit2"]
+)
+ocaml_module(name   = "Hello_test2_macos_en",
+    sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:Hello",
+    struct = "//module_binding/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
+)
+
+################
+test_suite(
+    name = "tests",
+    tests = [
+        ":test1_linux_en",
+        ":test2_linux_en",
+        ":test1_macos_en",
+        ":test2_macos_en",
+    ]
+)

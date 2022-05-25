@@ -1,0 +1,24 @@
+# Demonstrates building a module from sigfile and structfile in
+# different directories with different names
+# dependency on compiled sigfile forces module name to match signame
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "//module_binding/dyadic/split/c4/struct:Foo", # module name is A
+        "@ounit2//:ounit2"
+    ],
+)

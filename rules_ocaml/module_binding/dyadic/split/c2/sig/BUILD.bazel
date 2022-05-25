@@ -1,0 +1,4 @@
+## in this case, ocaml_module depends on source file bar.mli
+
+exports_files(["bar.mli"])
+

@@ -1,0 +1,24 @@
+# Demonstrates building a module from sigfile and structfile in
+# different directories with different names.
+# ocaml_module uses 'module' attribute to force module name
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "//module_binding/dyadic/split/c3/struct:Baz", # module name is A
+        "@ounit2//:ounit2"
+    ],
+)

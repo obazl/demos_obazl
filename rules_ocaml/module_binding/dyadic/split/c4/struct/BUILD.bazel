@@ -1,0 +1,12 @@
+load("@rules_ocaml//build:rules.bzl", "ocaml_module")
+
+# dependency on compiled sig forces module name to match sig name
+ocaml_module(
+    name = "Foo",
+    struct = "foo.ml",
+    # depend on compiled sig, forces module name to A:
+    sig    = "//module_binding/dyadic/split/c4/sig:A",
+
+    visibility = ["//module_binding/dyadic/split/c4:__pkg__"]
+)
+

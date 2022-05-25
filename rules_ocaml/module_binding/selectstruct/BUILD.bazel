@@ -1,8 +1,0 @@
-
-test_suite(
-    name = "test",
-    tests = [
-        "//module_binding/selectstruct/dir_prefix:test",
-        "//module_binding/selectstruct/filename_prefix:test",
-    ]
-)

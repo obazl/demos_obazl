@@ -1,0 +1,33 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+################################
+# depend on compiled sigfile
+ocaml_module(
+    name   = "Hello",
+    sig    = ":Hello_cmi",
+    struct = "//module_binding/dyadic/split/b1/struct:hello.ml",
+)
+
+ocaml_signature(
+    name = "Hello_cmi",
+    src  = "hello.mli",
+)

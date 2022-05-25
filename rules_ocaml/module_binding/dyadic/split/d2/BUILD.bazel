@@ -1,0 +1,33 @@
+# Demonstrates building a module from structfile and sigfile with
+# different names.
+
+# ocaml_module: in case of mismatch between target name and sig/struct
+# names, module name is derived from target name. this can be
+# overridden using the 'module' attribute.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Foo_a", # Foo_a is the target name; the module name will be Hello
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name   = "Foo_a",
+    module = "Hello", # force module name to Hello
+    sig    = "foo_a.mli",
+    struct = "bar_a.ml",
+)

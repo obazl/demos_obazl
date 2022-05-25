@@ -1,0 +1,32 @@
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_test",
+     "ocaml_module")
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":A",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_module(
+    name   = "A",
+    struct = "a.ml",
+    # depend on sig source file
+    sig    = "//module_binding/dyadic/split/c1/sig:a.mli",
+
+    # the a.mli file is there just for demo purposes, to prove that it
+    # is not inadvertently being compiled. It contains an error, so if
+    # it were to be compiled the build would fail.
+    # sig = "a.mli", ## will fail
+
+    visibility = ["//module_binding/dyadic/split/c1:__pkg__"]
+)
+

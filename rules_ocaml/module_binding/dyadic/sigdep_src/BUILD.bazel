@@ -1,0 +1,21 @@
+# Demonstrates basic dyadic module, pairing structfile and sigfile
+# ocaml_module depends on sig source file
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(name = "test", main = "Test")
+ocaml_module(name   = "Test",struct = "test.ml",
+    deps = [":Hello", "@ounit2//:ounit2"]
+)
+
+## depend directly on sig source file
+ocaml_module(
+    name = "Hello",
+    struct = "hello.ml",
+    sig    = "hello.mli",
+)
+

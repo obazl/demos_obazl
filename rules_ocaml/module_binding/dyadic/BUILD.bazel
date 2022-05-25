@@ -1,0 +1,13 @@
+## Dyadic module: composed of a structfile and a sigfile
+
+test_suite(
+    name = "test",
+    tests = [
+        "//module_binding/dyadic/selectboth:test",
+        "//module_binding/dyadic/selectsig:test",
+        "//module_binding/dyadic/selectstruct:test",
+        "//module_binding/dyadic/split:test",
+        "//module_binding/dyadic/sigdep_src:test",
+        "//module_binding/dyadic/sigdep_compiled:test",
+    ]
+)

@@ -1,0 +1,7 @@
+load("@rules_ocaml//build:rules.bzl", "ocaml_signature")
+
+ocaml_signature(
+    name = "A",
+    src  = "a.mli",
+    visibility = ["//module_binding/dyadic/split/c4/struct:__pkg__"]
+)

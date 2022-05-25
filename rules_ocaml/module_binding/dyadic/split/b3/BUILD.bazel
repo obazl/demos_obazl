@@ -1,0 +1,37 @@
+# Demostrates a module built from a structfile whose name does not
+# match its sigfile. ocaml_module depends on a compiled signature,
+# which forces the module name to match the sig name.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+ocaml_signature(
+    name = "Hello_cmi",
+    src  = "hello.mli",
+)
+
+## compiled sig forces module name to match signame
+## (since we cannot rename a compiled file)
+ocaml_module(
+    name = "Hello",
+    sig    = ":Hello_cmi",
+    struct = "hello_struct.ml",
+)

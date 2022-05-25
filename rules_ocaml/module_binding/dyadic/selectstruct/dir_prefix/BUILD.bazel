@@ -1,0 +1,104 @@
+## cases a, b, c, d are the same except for code organization
+## (location of source files and input of compiled v. source sig)
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+
+###########
+test_suite(
+    name = "test",
+    tests = [
+        ":testa",
+        ":testb",
+        ":testc",
+        ":testd"
+    ]
+)
+
+###########
+ocaml_test(
+    name = "testa",
+    main = "Testa"
+)
+
+ocaml_module(
+    name   = "Testa",
+    module = "Testa",
+    struct = select({
+        "//bzl:linux_en": "test_linux_en.ml",
+        "//bzl:linux_fr": "test_linux_fr.ml",
+        "//bzl:macos_en": "test_macos_en.ml",
+        "//bzl:macos_fr": "test_macos_fr.ml",
+    }),
+    deps = [
+        "//module_binding/dyadic/selectstruct/dir_prefix/a:Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+###########
+ocaml_test(
+    name = "testb",
+    main = "Testb"
+)
+
+ocaml_module(
+    name   = "Testb",
+    module = "Testb",
+    struct = select({
+        "//bzl:linux_en": "test_linux_en.ml",
+        "//bzl:linux_fr": "test_linux_fr.ml",
+        "//bzl:macos_en": "test_macos_en.ml",
+        "//bzl:macos_fr": "test_macos_fr.ml",
+    }),
+    deps = [
+        "//module_binding/dyadic/selectstruct/dir_prefix/b:Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+###########
+ocaml_test(
+    name = "testc",
+    main = "Testc"
+)
+
+ocaml_module(
+    name   = "Testc",
+    module = "Testc",
+    struct = select({
+        "//bzl:linux_en": "test_linux_en.ml",
+        "//bzl:linux_fr": "test_linux_fr.ml",
+        "//bzl:macos_en": "test_macos_en.ml",
+        "//bzl:macos_fr": "test_macos_fr.ml",
+    }),
+    deps = [
+        "//module_binding/dyadic/selectstruct/dir_prefix/c:Hello",
+        "@ounit2//:ounit2"
+    ],
+)
+
+###########
+ocaml_test(
+    name = "testd",
+    main = "Testd"
+)
+
+ocaml_module(
+    name   = "Testd",
+    module = "Testd",
+    struct = select({
+        "//bzl:linux_en": "test_linux_en.ml",
+        "//bzl:linux_fr": "test_linux_fr.ml",
+        "//bzl:macos_en": "test_macos_en.ml",
+        "//bzl:macos_fr": "test_macos_fr.ml",
+    }),
+    deps = [
+        "//module_binding/dyadic/selectstruct/dir_prefix/d:Hello",
+        "@ounit2//:ounit2"
+    ],
+)
