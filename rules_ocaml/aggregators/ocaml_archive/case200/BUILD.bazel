@@ -26,15 +26,15 @@ ocaml_test(
 
 ocaml_module(
     name    = "Test_archive",
-    forcename = True,
-    struct = "test.ml",
+    module  = "Test_archive",
+    struct  = "test.ml",
     deps    = [":Main", "@ounit2//:ounit2"]
 )
 
 ocaml_module(
     name    = "Test_noarchive",
-    forcename = True,
-    struct = "test.ml",
+    module  = "Test_noarchive",
+    struct  = "test.ml",
     deps    = [
         ":Main_noarchive",
         "@ounit2//:ounit2"
