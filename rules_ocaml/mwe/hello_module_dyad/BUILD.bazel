@@ -22,11 +22,11 @@ ocaml_module(
 ocaml_module(
     name = "Hello",
     struct = "hello.ml",
-    sig    = ":Hello.cmi",
+    sig    = ":Hello_cmi",
 )
 
 ocaml_signature(
-    name = "Hello.cmi",
+    name = "Hello_cmi",
     src = "hello.mli",
 )
 

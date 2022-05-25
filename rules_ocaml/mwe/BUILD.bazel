@@ -2,8 +2,8 @@ test_suite(
     name = "test",
     tests = [
         "//mwe/hello_archive:test",
-        "//mwe/hello_module:test",
-        "//mwe/hello_sig:test",
+        "//mwe/hello_module_dyad:test",
+        "//mwe/hello_module_orphan:test",
         "//mwe/intradeps:test",
         "//mwe/rgb:test",
     ]
