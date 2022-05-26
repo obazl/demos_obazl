@@ -7,7 +7,7 @@ COMBO=x
 
 # we only need one test file, since we have only one interface to test:
 test: test.ml a$(COMBO)
-	ocamlfind $(COMPILER) -w -49 $(LINKALL) -linkpkg -package ounit2 a.cmx -o test.exe test.ml;
+	ocamlfind $(COMPILER) $(LINKALL) -linkpkg -package ounit2 a.cmx -o test.exe test.ml;
 	./test.exe;
 
 ## principle names of sigfile and structfile must match.

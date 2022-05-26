@@ -6,7 +6,7 @@ COMBOS = x y z xy xz yz xyz
 COMBO=x
 
 test$(COMBO): test$(COMBO).ml a$(COMBO)
-	ocamlfind $(COMPILER) -w -49 $(LINKALL) -linkpkg -package ounit2 a.cmx -o test$(COMBO).exe test$(COMBO).ml;
+	ocamlfind $(COMPILER) $(LINKALL) -linkpkg -package ounit2 a.cmx -o test$(COMBO).exe test$(COMBO).ml;
 	./test$(COMBO).exe;
 
 a$(COMBO): a$(COMBO)mli
