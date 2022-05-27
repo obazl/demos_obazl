@@ -9,8 +9,11 @@ string_flag(
     build_setting_default = "en",
 )
 
-config_setting(name = "lang_en", flag_values = {":lang": "en"})
-config_setting(name = "lang_fr", flag_values = {":lang": "fr"})
+## configuration settings. a config setting will be "true" if all of
+## its *_values attributes are true. For example, building on MacOS
+## will cause Bazel to automatically set `@platforms//os:macos` to
+## true; passing `--//bzl:lang=fr` will set the value of `//bzl:lang`
+## to `fr`. Together these will set config setting `//bzl:macos_fr` to true.
 
 ################
 config_setting(
@@ -33,4 +36,8 @@ config_setting(
     constraint_values = ["@platforms//os:macos"],
     flag_values = {":lang": "fr"}
 )
+
+
+config_setting(name = "lang_en", flag_values = {":lang": "en"})
+config_setting(name = "lang_fr", flag_values = {":lang": "fr"})
 

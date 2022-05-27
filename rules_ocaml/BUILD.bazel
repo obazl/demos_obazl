@@ -15,6 +15,11 @@ test_suite(
 )
 
 alias(
+    name = "gensig",
+    actual = "@tools_obazl//sig:extract"
+)
+
+alias(
     name = "isig",
     actual = "@rules_ocaml//inspect:sig"
 )

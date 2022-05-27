@@ -13,10 +13,12 @@ LEAFS = MD5_$(RED).cmo \
 	MD5_$(BLUE).cmo
 
 test.byte: test.ml $(LEAFS) color.cmo
-	ocamlfind ocamlc -w -49 $(LINKALL) -linkpkg -package ounit2 $(LEAFS) color.cmo -o test.byte test.ml
+	ocamlfind ocamlc $(LINKALL) -linkpkg -package ounit2 $(LEAFS) color.cmo -o test.byte test.ml
 
 # The main ns module is Color; this is what clients will reference.
 # Since it depends on the submodule hashes, it must be generated at build time.
+# -w -49 eliminates warning:
+# Warning 49 [no-cmi-file]: no cmi file was found in path for module ...
 color.cmo: red.ml green.ml blue.ml
 	echo "module Red   = MD5_$(RED)"    > color.ml
 	echo "module Green = MD5_$(GREEN)" >> color.ml
@@ -26,15 +28,15 @@ color.cmo: red.ml green.ml blue.ml
 ## leaf nodes depend on the ns module
 MD5_$(RED).cmo: red.ml color.cmo
 	cp red.ml MD5_`${HASHER} red.ml | cut -d ' ' -f 1`.ml
-	ocamlc -w -49 $(LINKALL) -no-alias-deps -open Color -c MD5_$(RED).ml
+	ocamlc $(LINKALL) -no-alias-deps -open Color -c MD5_$(RED).ml
 
 MD5_$(GREEN).cmo: green.ml color.cmo
 	cp green.ml MD5_`${HASHER} green.ml | cut -d ' ' -f 1`.ml
-	ocamlc -w -49 $(LINKALL) -no-alias-deps -open Color -c MD5_$(GREEN).ml
+	ocamlc $(LINKALL) -no-alias-deps -open Color -c MD5_$(GREEN).ml
 
 MD5_$(BLUE).cmo: blue.ml color.cmo
 	cp blue.ml MD5_`${HASHER} blue.ml | cut -d ' ' -f 1`.ml
-	ocamlc -w -49 $(LINKALL) -no-alias-deps -open Color -c MD5_$(BLUE).ml
+	ocamlc $(LINKALL) -no-alias-deps -open Color -c MD5_$(BLUE).ml
 
 clean:
 	-rm *.exe 2>/dev/null || true;

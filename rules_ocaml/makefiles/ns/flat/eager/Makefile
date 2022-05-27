@@ -21,21 +21,24 @@ Alpha__Beta2.cmo \
 Alpha__Gamma.cmo \
 Alpha.cmo
 
+default: driver
+	./Driver.exe
+
 driver: ${OBJS}
 	ocamlc ${LINK_LAZY} ${OBJS} Driver.ml -o Driver.exe
 
 ## First we compile the leafs; they have no dependencies.
 Alpha__Beta1__Gamma__Hello.cmo:
-	ocamlc -w -49 -c Alpha__Beta1__Gamma__Hello.ml
+	ocamlc -c Alpha__Beta1__Gamma__Hello.ml
 
 Alpha__Beta1__Gamma__Goodbye.cmo:
-	ocamlc -w -49 ${MODE} Alpha__Beta1__Gamma__Goodbye.ml -o Alpha__Beta1__Gamma__Goodbye.cmo
+	ocamlc ${MODE} Alpha__Beta1__Gamma__Goodbye.ml -o Alpha__Beta1__Gamma__Goodbye.cmo
 
 Alpha__Beta2__Gamma__Gday.cmo:
-	ocamlc -w -49 ${MODE} Alpha__Beta2__Gamma__Gday.ml -o Alpha__Beta2__Gamma__Gday.cmo
+	ocamlc ${MODE} Alpha__Beta2__Gamma__Gday.ml -o Alpha__Beta2__Gamma__Gday.cmo
 
 Alpha__Gamma__Howdy.cmo:
-	ocamlc -w -49 ${MODE} Alpha__Gamma__Howdy.ml
+	ocamlc ${MODE} Alpha__Gamma__Howdy.ml
 
 ## NS modules do have compile-time linkage deps: the modules they alias.
 
@@ -44,22 +47,22 @@ Alpha__Gamma__Howdy.cmo:
 # LINK_LAZY=
 
 Alpha__Gamma.cmo: Alpha__Gamma__Howdy.cmo
-	ocamlc -w -49 ${MODE} ${LINK_LAZY} Alpha__Gamma.ml
+	ocamlc ${MODE} ${LINK_LAZY} Alpha__Gamma.ml
 
 Alpha__Beta1__Gamma.cmo: Alpha__Beta1__Gamma__Goodbye.cmo Alpha__Beta1__Gamma__Hello.cmo
-	ocamlc -w -49 ${MODE} ${LINK_LAZY} Alpha__Beta1__Gamma.ml -o Alpha__Beta1__Gamma.cmo
+	ocamlc ${MODE} ${LINK_LAZY} Alpha__Beta1__Gamma.ml -o Alpha__Beta1__Gamma.cmo
 
 Alpha__Beta1.cmo: Alpha__Beta1__Gamma.cmo
-	ocamlc -w -49 ${MODE} ${LINK_LAZY} Alpha__Beta1.ml -o Alpha__Beta1.cmo
+	ocamlc ${MODE} ${LINK_LAZY} Alpha__Beta1.ml -o Alpha__Beta1.cmo
 
 Alpha__Beta2__Gamma.cmo: Alpha__Beta2__Gamma__Gday.cmo
-	ocamlc -w -49 ${MODE} ${LINK_LAZY} Alpha__Beta2__Gamma.ml
+	ocamlc ${MODE} ${LINK_LAZY} Alpha__Beta2__Gamma.ml
 
 Alpha__Beta2.cmo: Alpha__Beta2__Gamma.cmo
-	ocamlc -w -49 ${MODE} ${LINK_LAZY} Alpha__Beta2.ml
+	ocamlc ${MODE} ${LINK_LAZY} Alpha__Beta2.ml
 
 Alpha.cmo: Alpha__Beta1.cmo Alpha__Beta2.cmo Alpha__Gamma.cmo
-	ocamlc -w -49 ${MODE} ${LINK_LAZY} Alpha.ml
+	ocamlc ${MODE} ${LINK_LAZY} Alpha.ml
 
 ## Finally the archive, which depends on everything
 Alpha.cma: ${OBJS}
