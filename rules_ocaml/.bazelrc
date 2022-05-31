@@ -1,3 +1,9 @@
+# flag for selecting which ppx_inline_test class to run:
+# --ppxt=main | hello | goodbye
+build --flag_alias=ppxt=//testing/ppx_inline_test/compound:t
+
+build --flag_alias=obj=@tools_obazl//ocamlobj
+
 common --color=yes
 # common --config=dbg
 

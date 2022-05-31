@@ -11,6 +11,7 @@ test_suite(
         "//ns:test",
         "//ppxlib:test",
         "//signatures:test",
+        "//testing:test",
     ]
 )
 

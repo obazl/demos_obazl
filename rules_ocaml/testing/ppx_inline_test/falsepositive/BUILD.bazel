@@ -28,7 +28,7 @@ ocaml_test(
         ## -inline-test-lib=="hello"; if you pass anything else with
         ## inline-test-runner, running this test executable will
         ## report success, because it will not run the test.
-        "inline-test-runner", LIBNAME,
+        "inline-test-runner", "FOO",
     ],
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
