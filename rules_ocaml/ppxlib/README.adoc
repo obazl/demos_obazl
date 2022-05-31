@@ -1,0 +1,34 @@
+= ppxlib
+
+`ppxlib` is the current standard library/framework for developing PPX software.
+
+== resources
+
+* link:https://discuss.ocaml.org/t/the-future-of-ppx/3766[The future of ppx,window="_blank"], blog, May 2019.
+** Essential reading. Includes a brief summary of the history of ppx
+   stuff, from primitive, to ppx_tools, OMP, ppx_tools_versioned,
+   ppx_deriving, and finally ppxlib. Evidently the plan is (was?) to
+   migrate to a new lib/framework called
+   link:https://github.com/ocaml-ppx/ppx[ppx,window="_blank"], but
+   that library has not been updated for several years, while
+   link:https://github.com/ocaml-ppx/ppxlib[ppxlib,window="_blank"] is
+   under active development.
+
+* link:https://tarides.com/blog/2019-05-09-an-introduction-to-ocaml-ppx-ecosystem[An introduction to OCaml PPX ecosystem,window="_blank"] blog, May 2019
+
+* link:https://ocaml-explore.netlify.app/workflows/meta-programming-with-ppx[Metaprograming with PPX,window="_blank"] blog, Sept 2020
+
+* https://ocamlverse.github.io/content/metaprogramming.html[Metaprogramming and PPX,window="_blank"] undated list of links
+
+* link:https://whitequark.org/blog/2014/04/16/a-guide-to-extension-points-in-ocaml[A Guide to Extension Points in OCaml,window="_blank"]
+Whitequark's original blog post, Apr 2014
+
+
+* link:https://ocamlverse.github.io/content/ppx.html[A Guide to PreProcessor eXtensions,window="_blank"] undated
+
+* link:https://victor.darvariu.me/jekyll/update/2018/06/19/ppx-tutorial.html[A Tutorial to OCaml -ppx Language Extensions,window="_blank"] blog post,  June 2018
+
+* link:http://rgrinberg.com/posts/extension-points-3-years-later[Extension points 3 years later,window="_blank"] blog post, Dec 2017
+
+* link:https://blog.shaynefletcher.org/2017/05/preprocessor-extensions-for-code.html[Preprocessor extensions for code generation,window="_blank"] blog post, May 2017
+

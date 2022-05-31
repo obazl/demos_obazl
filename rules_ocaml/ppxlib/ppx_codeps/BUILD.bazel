@@ -54,10 +54,13 @@ ocaml_module(
         ## line. either way, we must also list the `sexplib` package
         ## that contains them as a dependency, either here in 'deps'
         ## or in the `ppx_codeps` attribute of the ppx transformer.
+
         "-open", "Sexplib",
         "-open", "Sexplib.Std",
     ],
     # open = [
+    # we don't need to do this since this is listed as a ppx_codep of :ppx
+    # but we still need to pass -open
     #     "@sexplib//:sexplib",
     # ],
     ppx = ":ppx",
@@ -68,18 +71,22 @@ ocaml_module(
         # depend on this lib.
         # "@sexplib//:sexplib",
         # "@ppx_sexp_conv//runtime-lib",
+        # we do not need to depend on them here, since they are
+        # listed as ppx_codeps of the ppx.
     ],
 )
 
 ###############
 ppx_executable(
     name = "ppx",
-    main = "//ppx/driver",      # obazl will place this last in the list of deps
-    # main = "@ocaml//pkg:ppxlib.runner",
+    # we can use the driver we've defined in another package:
+    main = "//ppxlib/driver", # obazl will place this last in the list of deps
+    # main = "@ppxlib//runner:ppxlib_runner.cmx",
     # main_opam = "ppxlib.runner",
     # opts = [],                # obazl will automatically add '-predicates ppx_driver'
     deps = [
         ## without this, we get "Error: Cannot locate deriver sexp"
+        ## or "Error: Ppxlib.Deriving: 'sexp' is not a supported type deriving generator"
         ## when we try to use this ppx executable to transform
         ## hello.ml above, since it contains extension point
         ## "[@@deriving sexp]".
@@ -93,7 +100,7 @@ ppx_executable(
     ## to the compile rules that use this ppx to transform their
     ## sources. Put here, they will be carried along with the ppx
     ## executable and be automatically used wherever it is used - that
-    ## is, propagated as ppx_codeps on the files it transforms. this
+    ## is, propagated as deps on the files it transforms. this
     ## obviates the need to manually add these deps to each rule that
     ## depends on this one for ppx transformation.
     ppx_codeps = [
@@ -104,7 +111,6 @@ ppx_executable(
         # "@ppx_deriving//runtime",
 
         "@sexplib//:sexplib",
-
 
         ## HOWEVER: we do not need to list it, because the transitive
         ## closure of the deps includes some ppx_codeps, including

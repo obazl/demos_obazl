@@ -49,13 +49,19 @@ ocaml_module(
 #############
 ocaml_module(
     name = "Hello",
-    # opts = ["-verbose"],  ## to print the expanded ppx transform command, etc.
+    opts = [
+        # "-verbose",  ## to print the expanded ppx transform command, etc.
+
+        # "-dsource"
+        # or pass: --@rules_ocaml//cfg/module:opts=-dsource
+    ],
     ppx = ":ppx.exe",
+    # ppx_debug = ["dsource"],
     struct = "hello.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    deps = [
-        "@core//:core",  # contains Sexp module
-    ],
+    # deps = [  # see below, ppx_codeps
+    #     "@sexplib//:sexplib",
+    # ],
 )
 
 ###############
@@ -64,6 +70,9 @@ ppx_executable(
     main = ":Ppx_runner",  ## hand-rolled, see below
     deps = [
         "@ppx_sexp_value//:ppx_sexp_value", #contains handler for `[%sexp ]`
+    ],
+    ppx_codeps = [
+        "@sexplib//:sexplib",
     ],
 )
 

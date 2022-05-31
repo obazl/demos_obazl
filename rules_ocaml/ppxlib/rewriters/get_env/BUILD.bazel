@@ -1,0 +1,115 @@
+## WARNING: `bazel test ppx/rewriters/get_env:test` fails with
+## "Environment variable OBAZL not found". This comes from the source
+## of test.ml, when the ppx exe tries to process it. I have not found
+## a way to set the env var. `--test_env` is only for test rules, and
+## `--action_env`, which should work, does not.
+
+## Suspicion: the ppx_transform action is indirect, invoked by the
+## module rule, so maybe we need to propagate the env vars somehow.
+
+# $ bazel test ppx/rewriter
+# from https://github.com/ocaml-ppx/ppxlib/tree/master/examples/simple-extension-rewriter
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ocaml_module",
+    "ppx_executable")
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+string_flag(
+    name = "msg",
+    build_setting_default = "hello",
+    values = [
+        "hello",
+        "goodbye",
+    ],
+)
+
+config_setting(
+    name = "hello",
+    flag_values = {":msg": "hello"},
+)
+
+config_setting(
+    name = "goodbye",
+    flag_values = {":msg": "goodbye"},
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "_Test",
+    test = "short"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    ppx    = ":ppx.exe",
+    deps = [
+        ":main",
+        "@ounit2//:ounit2"
+    ]
+)
+
+#############
+ocaml_module(
+    name = "main",
+    struct = "main.ml",
+    ppx    = ":ppx.exe"
+    # deps   = [":alpha"]
+)
+
+ocaml_module(
+    name = "testx",
+    struct = "test.ml",
+    ppx    = ":ppx.exe"
+    # deps   = [":alpha"]
+)
+
+# #############
+# ocaml_module(
+#     name = "alpha",
+#     ppx = ":ppx.exe",
+#     # ppx_print = "@ppx//print:text",
+#     struct = "alpha.ml",
+#     deps   = [":mixed_mode"]
+# )
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Driver",
+    deps = [":ppx_get_env"]
+)
+
+###########
+ocaml_module(
+    name      = "ppx_get_env",
+    struct    = "ppx_get_env.ml",
+    deps = ["@ppxlib//:ppxlib"]
+)
+
+###########
+ocaml_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    deps = ["@ppxlib//:ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

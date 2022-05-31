@@ -9,7 +9,7 @@ test_suite(
         "//module_binding:test",
         "//mwe:test",
         "//ns:test",
-        "//ppx:test",
+        "//ppxlib:test",
         "//signatures:test",
     ]
 )
