@@ -1,5 +1,6 @@
 .obazl.d
 .opam
+_opam
 COSWITCH.bzl
 bazel-*
 dev
