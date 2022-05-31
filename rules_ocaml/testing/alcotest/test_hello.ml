@@ -3,10 +3,10 @@ let test_hello () =
 
 (* Run it *)
 let () =
-  Alcotest.run "ocaml_test"
+  Alcotest.run "OBazl alcotest"
     [
       ( "hello",
         [
-          Alcotest.test_case "Hello" `Quick test_hello;
+          Alcotest.test_case "Hello test" `Quick test_hello;
         ] );
     ]

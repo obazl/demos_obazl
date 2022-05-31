@@ -1,0 +1,78 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+)
+
+LIBNAME="hello"
+
+ocaml_test(
+    name = "test",
+    args = [
+        ## WARNING: the module under test was built with
+        ## -inline-test-lib=="hello"; if you pass anything else with
+        ## inline-test-runner, running this test executable will
+        ## report success, because it will not run the test.
+        "inline-test-runner", LIBNAME,
+        # "-list-test-names",
+        # "-log",
+    ],
+    # opts = ["-verbose"],
+    ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
+    ## puts 'main' last
+    main = ":Runner",
+    deps = [
+        "@ppx_inline_test//runner/lib",
+        ":Hello"
+    ],
+)
+
+ocaml_module(
+    name   = "Runner",
+    struct = "runner.ml",
+    deps   = [
+        "@ppx_inline_test//runtime-lib",
+    ],
+)
+
+ocaml_module(
+    name = "Hello",
+    ppx = ":ppx_inline_test",
+    ppx_args = [
+        "-inline-test-lib", LIBNAME
+    ],
+    struct = "hello.ml",
+)
+
+################################################################
+ppx_executable(
+    name = "ppx_inline_test",
+    main = ":Driver",
+    opts = [],
+    deps = [
+        "@ppx_inline_test//:ppx_inline_test",
+    ],
+    ppx_codeps = [
+        "@ppx_inline_test//runtime-lib",
+    ]
+)
+
+#############
+ocaml_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@ppxlib//:ppxlib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

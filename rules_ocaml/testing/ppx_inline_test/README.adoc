@@ -1,0 +1,45 @@
+=  ppx_inline_test
+
+
+See link:https://github.com/janestreet/ppx_inline_test[ppx_inline_test,window="_blank"]
+
+For ppx_inline_test we need to use the ppx_executable to transform the
+source file, and we need to run `Ppx_inline_test_lib.Runtime.exit ()`
+last. The demos put the latter in `runner.ml` and link it last by
+passing it to the `main` attribute of `ocaml_test`.
+
+
+Tests are only executed when both these conditions are met:
+
+* the module under test is compiled with `-inline-test-lib <libname>`.
+** This tags the ppx inline tests  in the module with `<libname>`.
+
+* the executable linked with the modules under test is linked with
+  `ppx_inline_test.runner.lib` (see `runtime lib` below for more on this)
+
+* the executable (e.g. `your.exe`) linked with the modules under test
+is called with command line arguments: 'your.exe inline-test-runner
+<libname> [options]'
+** The tag `<libname>` is what selects tests to be executed: any
+   inline test tagged by <libname> will be executed; tests not so
+   tagged will be ignored.
+
+
+"Finally, after running tests,`Ppx_inline_test_lib.Runtime.exit ()`
+should be called (to exit with an error and a summary of the number of
+failed tests if there were errors or exit normally otherwise)."
+
+
+WARNING: If you pass the wrong <libname> on the command line (as arg
+to `inline-test-runner`), then the intended tests will _not_ be
+executed. The test run may succeed, but that does not mean that your
+tests have passed.
+
+This tagging mechanism allows you to link modules compiled with
+different ppx_inline_test tags ("libnames"), and select which tests to
+execute at runtime. See demo `testing/ppx_inline_test/compound` for an
+example.
+
+== runtime lib
+
+ppx_inline_test.runner.lib

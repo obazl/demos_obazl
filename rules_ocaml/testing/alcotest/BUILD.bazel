@@ -6,16 +6,36 @@ load(
 
 test_suite(
     name = "test",
-    tests = ["hello_alcotest"]
+    tests = ["alcotest", "hellotest"]
 )
 
 ocaml_test(
-    name = "hello_alcotest",
-    main = ":Hello",
+    name = "alcotest",
+    main = ":Test_alcotest",
+)
+
+ocaml_module(
+    name   = "Test_alcotest",
+    struct = "test_alcotest.ml",
+    deps   = ["@alcotest//:alcotest"]
+)
+
+###########
+ocaml_test(
+    name = "hellotest",
+    main = "Test_hello",
+)
+
+ocaml_module(
+    name   = "Test_hello",
+    struct = "test_hello.ml",
+    deps = [
+        "@alcotest//:alcotest",
+        ":Hello",
+    ],
 )
 
 ocaml_module(
     name   = "Hello",
     struct = "hello.ml",
-    deps   = ["@alcotest//:alcotest"]
 )

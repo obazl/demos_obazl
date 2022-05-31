@@ -1,0 +1,97 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+)
+
+LIBNAME="hello"
+
+## https://github.com/janestreet/ppx_inline_test
+# Tests are only executed when both these conditions are met:
+
+# * the executable containing the tests is linked with
+# * ppx_inline_test.runner.lib
+
+# * the executable containing the tests is called with command line
+# arguments: 'your.exe inline-test-runner libname [options]'
+
+
+## For ppx_inline_test we need to use the ppx_executable to transform
+## the source file, and we need to run
+## `Ppx_inline_test_lib.Runtime.exit ()` last.
+ocaml_test(
+    name = "test",
+    args = [
+        ## WARNING: the module under test was built with
+        ## -inline-test-lib=="hello"; if you pass anything else with
+        ## inline-test-runner, running this test executable will
+        ## report success, because it will not run the test.
+        "inline-test-runner", LIBNAME,
+    ],
+    ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
+    ## puts 'main' last
+    main = ":Runner",
+    deps = [
+        # ":Test_ppx_inline",  # the transformed and compiled test code
+        "@ppx_inline_test//runner/lib",
+        # "//rules/ocaml_module:Hello",
+        ":Hello"
+    ],
+)
+
+ocaml_module(
+    name   = "Runner",
+    struct = "runner.ml",
+    deps   = [
+        "@ppx_inline_test//runtime-lib",
+    ],
+)
+
+ocaml_module(
+    name = "Hello",
+    ppx = ":ppx_inline_test",
+    ppx_args = [
+        "-inline-test-lib", LIBNAME
+    ],
+    struct = "hello.ml",
+    deps = [
+        # "@core//:core",
+        # "@ppx_inline_test//runtime-lib", ## not needed -
+        # listed as ppx_codep on the ppx executable
+        # "//rules/ocaml_module:Hello"
+    ],
+)
+
+################################################################
+ppx_executable(
+    name = "ppx_inline_test",
+    main = ":Driver",
+    opts = [],
+    deps = [
+        "@ppx_inline_test//:ppx_inline_test",
+        # "@ppxlib//:ppxlib",
+    ],
+    ppx_codeps = [
+        "@ppx_inline_test//runtime-lib",
+    ]
+)
+
+###########
+ocaml_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@ppxlib//:ppxlib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)
