@@ -1,0 +1,121 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_executable",
+    "ocaml_module",
+    "ocaml_test",
+    "ppx_executable",
+)
+
+# In this example we have three modules, Main, Hello, and Goodbye,
+# each compiled with a different ppx_inline_test "libname". This
+# "libname" determines a "class" of tests; we can only run one at a
+# time, by passing 'inline-test-runner <libname>' to the test
+# executable. We use a string flag and config_settings so that we can
+# pass the libname we want on the command line.
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+string_flag(name = "t",
+            values = ["main", "hello", "goodbye"],
+            build_setting_default = "main",
+)
+# Convert the flag passed to a config_setting that 'select()' can use:
+config_setting(name = "main", flag_values = {":t": "main"})
+config_setting(name = "hello", flag_values = {":t": "hello"})
+config_setting(name = "goodbye", flag_values = {":t": "goodbye"})
+
+# to select a test class, pass e.g.
+# --//testing/ppx_inline_test/compound:t=hello
+# as a convenience we've defined a flag alias in .bazelrc:
+# build --flag_alias=ppxt=//testing/ppx_inline_test/compound:t
+# so we can do this instead:
+# --ppxt=hello
+
+ocaml_test(
+    name = "test",
+    args = select({
+        ":main": ["inline-test-runner", "main"],
+        ":hello": ["inline-test-runner", "hello"],
+        ":goodbye": ["inline-test-runner", "goodbye"],
+        "//conditions:default": ["inline-test-runner", "main"]
+    }) + [
+        # "-list-test-names",
+        # "-log",
+        "-verbose"
+    ],
+    # opts = ["-verbose"],
+    ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
+    ## puts 'main' last
+    main = ":Runner",
+    deps = [
+        "@ppx_inline_test//runner/lib",
+        ":Main"
+    ],
+)
+
+ocaml_module(
+    name   = "Runner",
+    struct = "runner.ml",
+    deps   = [
+        "@ppx_inline_test//runtime-lib",
+    ],
+)
+
+ocaml_module(
+    name = "Main",
+    ppx = ":ppx_inline_test",
+    ppx_args = [
+        "-inline-test-lib", "main"
+    ],
+    struct = "main.ml",
+    deps = [":Hello", ":Goodbye"]
+)
+
+ocaml_module(
+    name = "Hello",
+    ppx = ":ppx_inline_test",
+    ppx_args = [
+        "-inline-test-lib", "hello",
+    ],
+    struct = "hello.ml",
+)
+
+ocaml_module(
+    name = "Goodbye",
+    ppx = ":ppx_inline_test",
+    ppx_args = [
+        "-inline-test-lib", "goodbye"
+    ],
+    struct = "goodbye.ml",
+)
+
+################################################################
+ppx_executable(
+    name = "ppx_inline_test",
+    main = ":Driver",
+    opts = [],
+    deps = [
+        "@ppx_inline_test//:ppx_inline_test",
+    ],
+    ppx_codeps = [
+        "@ppx_inline_test//runtime-lib",
+    ]
+)
+
+#############
+ocaml_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@ppxlib//:ppxlib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)
