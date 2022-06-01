@@ -18,23 +18,32 @@ bazel_skylib_workspace()
 ################################################################
 http_archive(
     name = "rules_ocaml",
-    url = "https://github.com/obazl/rules_ocaml/archive/f7c0ee1f63f049343cf16164064fb7ec551ca783.zip",
-    strip_prefix = "rules_ocaml-f7c0ee1f63f049343cf16164064fb7ec551ca783",
-    sha256 = "db173b1bbba7bfe0a0f53ed815a2bf0e8f0aeb6e2f727e7489c17f130abe6dec"
+    url  = "https://github.com/obazl/rules_ocaml/archive/refs/heads/main.zip",
+    strip_prefix = "rules_ocaml-main"
+
+    # url = "https://github.com/obazl/rules_ocaml/archive/f7c0ee1f63f049343cf16164064fb7ec551ca783.zip",
+    # strip_prefix = "rules_ocaml-f7c0ee1f63f049343cf16164064fb7ec551ca783",
+    # sha256 = "db173b1bbba7bfe0a0f53ed815a2bf0e8f0aeb6e2f727e7489c17f130abe6dec"
 )
 
 http_archive(
     name = "tools_obazl",
-    url  = "https://github.com/obazl/tools_obazl/archive/848c7931a2e89564ad98a84bd5e33a808284287b.zip",
-    strip_prefix = "tools_obazl-848c7931a2e89564ad98a84bd5e33a808284287b",
-    sha256 = "ef00f971c787798bcebc2645477a0d0ebd5d7001f4de703562a6464d6b3e2399"
+    url  = "https://github.com/obazl/tools_obazl/archive/refs/heads/main.zip",
+    strip_prefix = "tools_obazl-main"
+
+    # url  = "https://github.com/obazl/tools_obazl/archive/848c7931a2e89564ad98a84bd5e33a808284287b.zip",
+    # strip_prefix = "tools_obazl-848c7931a2e89564ad98a84bd5e33a808284287b",
+    # sha256 = "ef00f971c787798bcebc2645477a0d0ebd5d7001f4de703562a6464d6b3e2399"
 )
 
 http_archive(
     name = "opam",  ## do not change name
-    url  = "https://github.com/obazl/tools_opam/archive/57762f24eec916ffca4e0f3053227d54f98788db.zip",
-    strip_prefix = "tools_opam-57762f24eec916ffca4e0f3053227d54f98788db",
-    sha256 = "28b4f6ff32c815162e1a0da49ddbcc4e8c4132d3427e110f71a7f3bd1737e6a5"
+    url  = "https://github.com/obazl/tools_opam/archive/refs/heads/main.zip",
+    strip_prefix = "tools_opam-main",
+
+    # url  = "https://github.com/obazl/tools_opam/archive/57762f24eec916ffca4e0f3053227d54f98788db.zip",
+    # strip_prefix = "tools_opam-57762f24eec916ffca4e0f3053227d54f98788db",
+    # sha256 = "28b4f6ff32c815162e1a0da49ddbcc4e8c4132d3427e110f71a7f3bd1737e6a5"
 )
 
 load("@opam//:WORKSPACE.bzl", "opam_fetch_repos")
