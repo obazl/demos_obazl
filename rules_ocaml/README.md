@@ -2,29 +2,11 @@
 
 ## Getting started
 
-To use a standard OPAM switch, install dependencies:
+1. `$ opam switch import opam.local --switch .`
 
-* ounit2 - needed by most targets
-* ppxlib - ppx demos only
-* ppx_inline_test - testing/ppx
-* lwt - only for //mwe/hello_lwt
-* core - only for //parsing/ocamllex
+2. `$ bazel run @opam//local:refresh`
 
-Then run:
-
-`$ bazel run @opam//coswitch:refresh` - refreshes coswitch for current OPAM switch
-
-Then `$ bazel run @opam//coswitch:set` - sets current switch as the effective coswitch for OBazl builds
-
-To use a here-switch:
-
-`$ bazel run @opam//here/opam:init`
-
-`$ bazel run @opam//here/opam:install -- ounit2 ppxlib lwt`
-
-`$ bazel run @opam//here:set`
-
-Verify config: `$ bazel run @opam//coswitch:show`
+3. `$ bazel test test`
 
 >    Contributing: if you would like to contribute a demo, please file an
 >    issue first. Demos should illustrate one concept, using minimal code.
