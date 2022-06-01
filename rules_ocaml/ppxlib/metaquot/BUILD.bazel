@@ -76,7 +76,7 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Ppx_runner",  ## hand-rolled, see below
     ppx_codeps = [
-        "@ocaml//compiler-libs",
+        "@ocaml//compiler-libs/common",
         ## NB: these should be listed as runtime deps (codeps) in
         ## @metaquote//ppx but they are not, so we need to list them
         ## here
