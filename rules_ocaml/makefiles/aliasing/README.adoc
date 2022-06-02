@@ -3,7 +3,7 @@
 Top-level module aliasing is the mechanism that links internal OCaml
 namespacing (each module determines a namespace) and the file system.
 
-Example "embedded" shows that, when resolving A.B, the compiler will
+Example "embedded_defmod" shows that, when resolving A.B, the compiler will
 find module A and search it for a definition of B. Since A contains a
 definition of module B, the search succeeds.
 
@@ -14,7 +14,16 @@ Unbound module A.B". But module B is compiled in the same directory,
 which shows that the compiler will not search the file system after it
 fails to resolve B in the current environment.
 
-Example "aliased" shows that, when resolving A.B, the compiler will
+Example "embedded_alias" shows that, when resolving A.B, the compiler
+will find module A and search it for a definition of B. It finds an
+equation aliasing B to X, so it will search for a definition of X in
+the current environment. That search will succeed, since such a
+definition occurs before the aliasing equation. So it will alias B to
+the embedded definition of X and references to A.B will resolve. The
+file system will not be searched, so the compiled module X in the same
+directory will be ignored.
+
+Example "fs_aliased" shows that, when resolving A.B, the compiler will
 find module A and search it for a definition of B. It finds an
 equation aliasing B to X, so it will search for a definition of X in
 the current environment. That search will fail, so it will then search
@@ -23,6 +32,29 @@ directory containing the file it is compiling. It will find module X,
 so it will alias B to X and references to A.B will resolve.
 
 All of which shows that when resolving A.B the compiler will search
-the namespace determined by module A, and if it finds that B is
-aliased to some other module, it will search the file system. Without
-aliasing the file system will not be searched.
+the namespace determined by module A, looking for:
+
+a. a definition of B embedded in A;
+b. an equation, in A, aliasing B to some other module
+
+In case b, it will search the text of A preceding the equation for a
+definition of B; if it does not find one,then, finally, it will search the file system.
+
+And to complicate things, aliasings can be chained, so we could have
+something like the following in a.ml:
+
+module Y = Z
+module X = Y
+module B = X
+
+in which case the search for B would eventually result in a search of
+the file system for module Z.
+
+Or:
+module Y = struct ... end
+module X = Y
+module B = X
+
+in which case the search would stop at the definition of module Y.
+
+Without aliasing the file system will not be searched.
