@@ -43,17 +43,24 @@ definition of X; if it does not find one,then, finally, it will search the file 
 And to complicate things, aliasings can be chained, so we could have
 something like the following in a.ml:
 
+[source,ocaml]
+----
 module Y = Z
 module X = Y
 module B = X
+----
 
 in which case the search for B would eventually result in a search of
 the file system for module Z.
 
 Or:
+
+[source,ocaml]
+----
 module Y = struct ... end
 module X = Y
 module B = X
+----
 
 in which case the search would stop at the definition of module Y.
 
