@@ -32,14 +32,14 @@ ocaml_module(
 
 ocaml_signature(
     name = "Hello",
-    module = "Hello",
+    module = "Hello", # force sigfile rename (symlink)
     src  = select({
         ":lang_en": "hello_en.mli",
         ":lang_fr": "hello_fr.mli",
     }, no_match_error = "unsupported sig"),
 )
 
-## module name will be derived rom sig name
+## module name will be derived from sig name, not name attribute.
 ocaml_module(
     name   = "_Hello",
     sig    = ":Hello",

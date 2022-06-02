@@ -23,16 +23,17 @@ not, the compiler will give up and extract the signature from the
 structfile, effectively ignoring the separate .mli file when it
 compiles the .ml file.
 
-# The general rule of the standard compilers that this demonstrates is
-# what we might call "signature locality": to compile a .ml file, the
-# compile will first search for the corresponding .mli file *in the
-# same directory*. If it finds it, it will then look for the .cmi file
-# and use that in compiling the .ml file. If it does not find it, it
-# will look no further; instead it will extract the .mli file from the
-# .ml file, compile it, and use it for compiling the .ml file.
+The general rule of the standard compilers that this demonstrates is
+what we might call "signature locality": to compile a .ml file, the
+compile will first search for the corresponding .mli file *in the
+same directory*. If it finds it, it will then look for the .cmi file
+and use that in compiling the .ml file. If it does not find it, it
+will look no further; instead it will extract the .mli file from the
+.ml file, compile it, and use it for compiling the .ml file.
 
-# Thus in order to support splitting of modules into sig and struct
-# files in different directories, the build system must step in and do
-# what the compile cannot do, namely ensure that both files are in the
-# same (working) directory before compilation proceeds.
+Thus in order to support splitting of modules into sig and struct
+files in different directories, the build system must step in and do
+what the compile cannot do, namely ensure that both files have the
+same principal name and are in the same (working) directory before
+compilation proceeds.
 
