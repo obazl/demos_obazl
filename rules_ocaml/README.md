@@ -2,11 +2,22 @@
 
 ## Getting started
 
+With a local switch:
+
 1. `$ opam switch import opam.local --switch .`
 
 2. `$ bazel run @opam//local:refresh`
 
 3. `$ bazel test test`
+
+With a shared switch:
+
+1. `$ opam switch import opam.local --switch obazl_demos` - creates a new switch named `obazl_demos`
+
+2. `$ bazel run @opam//shared:refresh`
+
+3. `$ bazel test test`
+
 
 >    Contributing: if you would like to contribute a demo, please file an
 >    issue first. Demos should illustrate one concept, using minimal code.
