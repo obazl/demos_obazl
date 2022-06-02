@@ -34,10 +34,10 @@ so it will alias B to X and references to A.B will resolve.
 All of which shows that when resolving A.B the compiler will search
 the namespace determined by module A, looking for:
 
-a. a definition of B embedded in A;
-b. an equation, in A, aliasing B to some other module
+1. a definition of B embedded in A;
+2. an equation, in A, aliasing B to some other module
 
-In case b, it will search the text of A preceding the equation for a
+In case 2, it will search the text of A preceding the equation for a
 definition of B; if it does not find one,then, finally, it will search the file system.
 
 And to complicate things, aliasings can be chained, so we could have
