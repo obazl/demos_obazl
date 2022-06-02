@@ -1,8 +1,15 @@
+# to eliminate warning
+# ld: warning: object file (bazel-out/darwin-fastbuild/bin/interop/ffi/case110/cclibs/liblibalpha.a(alpha.o)) was built for newer macOS version (12.3) than being linked (12.0)
+# build --host_macos_minimum_os=12.0
+# build --macos_minimum_os=12.0
+
 # flag for selecting which ppx_inline_test class to run:
 # --ppxt=main | hello | goodbye
 build --flag_alias=ppxt=//testing/ppx_inline_test/compound:t
 
 build --flag_alias=obj=@tools_obazl//ocamlobj
+
+# build --xcode_version_config=//bzl/host/macos:host_xcodes
 
 common --color=yes
 # common --config=dbg
