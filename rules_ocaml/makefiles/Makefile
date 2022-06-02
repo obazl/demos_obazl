@@ -1,4 +1,5 @@
 all:
+	$(MAKE) -C aliasing
 	$(MAKE) -C deps_sig
 	$(MAKE) -C deps_struct
 	$(MAKE) -C fixedsig
@@ -9,6 +10,7 @@ all:
 	$(MAKE) -C structs
 
 clean:
+	$(MAKE) -C aliasing clean
 	$(MAKE) -C deps_sig clean
 	$(MAKE) -C deps_struct clean
 	$(MAKE) -C fixedsig clean
