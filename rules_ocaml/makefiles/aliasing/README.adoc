@@ -35,10 +35,10 @@ All of which shows that when resolving A.B the compiler will search
 the namespace determined by module A, looking for:
 
 1. a definition of B embedded in A;
-2. an equation, in A, aliasing B to some other module
+2. an equation, in A, aliasing B to some other module X
 
 In case 2, it will search the text of A preceding the equation for a
-definition of B; if it does not find one,then, finally, it will search the file system.
+definition of X; if it does not find one,then, finally, it will search the file system.
 
 And to complicate things, aliasings can be chained, so we could have
 something like the following in a.ml:
