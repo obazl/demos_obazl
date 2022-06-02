@@ -1,0 +1,28 @@
+= aliasing
+
+Top-level module aliasing is the mechanism that links internal OCaml
+namespacing (each module determines a namespace) and the file system.
+
+Example "embedded" shows that, when resolving A.B, the compiler will
+find module A and search it for a definition of B. Since A contains a
+definition of module B, the search succeeds.
+
+Example "unresolved" shows that, when resolving A.B, the compiler will
+find module A and search it for a definition of B. It will not find
+one in the current environment, and the compile fails with "Error:
+Unbound module A.B". But module B is compiled in the same directory,
+which shows that the compiler will not search the file system after it
+fails to resolve B in the current environment.
+
+Example "aliased" shows that, when resolving A.B, the compiler will
+find module A and search it for a definition of B. It finds an
+equation aliasing B to X, so it will search for a definition of X in
+the current environment. That search will fail, so it will then search
+the directories in its search path, which by default includes the
+directory containing the file it is compiling. It will find module X,
+so it will alias B to X and references to A.B will resolve.
+
+All of which shows that when resolving A.B the compiler will search
+the namespace determined by module A, and if it finds that B is
+aliased to some other module, it will search the file system. Without
+aliasing the file system will not be searched.
