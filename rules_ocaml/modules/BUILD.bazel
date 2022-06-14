@@ -1,7 +1,7 @@
 test_suite(
     name = "test",
     tests = [
-        "//module_binding/dyadic:test",
-        "//module_binding/ns/topdown:test",
+        "//modules/dyadic:test",
+        "//modules/ns/topdown:test",
     ]
 )

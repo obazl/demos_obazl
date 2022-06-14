@@ -5,5 +5,5 @@ exports_files(["hello.mli"])
 ocaml_signature(
     name = "Hello",
     src  = "hello.mli",
-    visibility = ["//module_binding/dyadic/split/a1:__pkg__"]
+    visibility = ["//modules/dyadic/split/a1:__pkg__"]
 )

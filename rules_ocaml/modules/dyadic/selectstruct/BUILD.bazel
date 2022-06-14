@@ -1,7 +1,7 @@
 test_suite(
     name = "test",
     tests = [
-        "//module_binding/dyadic/selectstruct/dir_prefix:test",
-        "//module_binding/dyadic/selectstruct/filename_prefix:test",
+        "//modules/dyadic/selectstruct/dir_prefix:test",
+        "//modules/dyadic/selectstruct/filename_prefix:test",
     ]
 )

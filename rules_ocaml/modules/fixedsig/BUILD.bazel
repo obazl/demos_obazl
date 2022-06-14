@@ -2,9 +2,9 @@ load("@rules_ocaml//build:rules.bzl", "ocaml_signature")
 
 ## for demo purposes, we expose the source file as well as the build
 ## target. Clients may depend on either the compiled sig:
-## //module_binding/fixedsig:Hello_cmi
+## /modules/fixedsig:Hello_cmi
 ## or the sig source file:
-## //module_binding/fixedsig:hello.mli
+## /modules/fixedsig:hello.mli
 
 exports_files(["hello.mli"])
 

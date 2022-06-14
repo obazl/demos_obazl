@@ -3,11 +3,11 @@
 test_suite(
     name = "test",
     tests = [
-        "//module_binding/dyadic/selectboth:test",
-        "//module_binding/dyadic/selectsig:test",
-        "//module_binding/dyadic/selectstruct:test",
-        "//module_binding/dyadic/split:test",
-        "//module_binding/dyadic/sigdep_src:test",
-        "//module_binding/dyadic/sigdep_compiled:test",
+        "//modules/dyadic/selectboth:test",
+        "//modules/dyadic/selectsig:test",
+        "//modules/dyadic/selectstruct:test",
+        "//modules/dyadic/split:test",
+        "//modules/dyadic/sigdep_src:test",
+        "//modules/dyadic/sigdep_compiled:test",
     ]
 )

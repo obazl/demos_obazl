@@ -2,7 +2,7 @@ test_suite(
     name = "test",
     tests = [
         "//ns/topdown/mwe/hello:test",
-        "//ns/topdown/mwe/rgb:test",
-        "//ns/topdown/mwe/rgbsig:test",
+        "//ns/topdown/mwe/rgbdyads:test",
+        "//ns/topdown/mwe/rgborphans:test",
     ]
 )

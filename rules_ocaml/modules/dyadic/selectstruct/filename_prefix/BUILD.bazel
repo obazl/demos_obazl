@@ -37,9 +37,9 @@ ocaml_module(
     name    = "Hello",
     ## four ways to fix sig dep:
     # remote build target dep:
-    # sig    = "//module_binding/dyadic/selectstruct/sig:Hello_cmi",
+    # sig    = "//modules/dyadic/selectstruct/sig:Hello_cmi",
     # remote direct file dep:
-    # sig    = "//module_binding/dyadic/selectstruct/sig:hello.mli",
+    # sig    = "//modules/dyadic/selectstruct/sig:hello.mli",
 
     # local build target dep:
     # sig    = ":Hello_cmi",

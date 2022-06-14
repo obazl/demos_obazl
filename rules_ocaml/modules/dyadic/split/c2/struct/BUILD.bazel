@@ -22,13 +22,13 @@ ocaml_module(
     name   = "A",
     struct = "foo.ml",
     # depend on sig source file
-    sig    = "//module_binding/dyadic/split/c2/sig:bar.mli",
+    sig    = "//modules/dyadic/split/c2/sig:bar.mli",
 
     # the a.mli file is there just for demo purposes, to prove that it
     # is not inadvertently being compiled. It contains an error, so if
     # it were to be compiled the build would fail.
     # sig = "a.mli", ## will fail
 
-    visibility = ["//module_binding/dyadic/split/c2:__pkg__"]
+    visibility = ["//modules/dyadic/split/c2:__pkg__"]
 )
 

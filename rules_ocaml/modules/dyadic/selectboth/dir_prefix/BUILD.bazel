@@ -32,26 +32,26 @@ ocaml_module(
     name   = "Hello",
     sig    = select({
         "//bzl:lang_en":
-        "//module_binding/dyadic/selectboth/dir_prefix/sig/en:Hello",
-        # "//module_binding/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
+        "//modules/dyadic/selectboth/dir_prefix/sig/en:Hello",
+        # "//modules/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
 
         "//bzl:lang_fr":
-        # "//module_binding/dyadic/selectboth/dir_prefix/sig/fr:hello.mli",
-        "//module_binding/dyadic/selectboth/dir_prefix/sig/fr:Hello",
+        # "//modules/dyadic/selectboth/dir_prefix/sig/fr:hello.mli",
+        "//modules/dyadic/selectboth/dir_prefix/sig/fr:Hello",
     }, no_match_error = "unsupported sig"),
 
     struct = select({
         "//bzl:linux_en":
-        "//module_binding/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
+        "//modules/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
 
         "//bzl:linux_fr":
-        "//module_binding/dyadic/selectboth/dir_prefix/linux/fr:hello.ml",
+        "//modules/dyadic/selectboth/dir_prefix/linux/fr:hello.ml",
 
         "//bzl:macos_en":
-        "//module_binding/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
+        "//modules/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
 
         "//bzl:macos_fr":
-        "//module_binding/dyadic/selectboth/dir_prefix/macos/fr:hello.ml",
+        "//modules/dyadic/selectboth/dir_prefix/macos/fr:hello.ml",
 
     }, no_match_error = "unsupported arch"),
 )
@@ -67,8 +67,8 @@ ocaml_module(name   = "Test1_linux_en", struct = "test_linux_en.ml",
 ocaml_module(
     name   = "Hello_test1_linux_en",
     module = "Hello_test1_linux_en",
-    sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
-    struct = "//module_binding/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
+    sig    = "//modules/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
+    struct = "//modules/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
 )
 
 ocaml_test(name = "test2_linux_en", main = "Test2_linux_en")
@@ -79,8 +79,8 @@ ocaml_module(name   = "Test2_linux_en", struct = "test_linux_en.ml",
 )
 ocaml_module(
     name   = "Hello_test2_linux_en",
-    sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:Hello",
-    struct = "//module_binding/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
+    sig    = "//modules/dyadic/selectboth/dir_prefix/sig/en:Hello",
+    struct = "//modules/dyadic/selectboth/dir_prefix/linux/en:hello.ml",
 )
 
 ocaml_test(name = "test1_macos_en", main = "Test1_macos_en")
@@ -91,8 +91,8 @@ ocaml_module(name   = "Test1_macos_en", struct = "test_macos_en.ml",
 )
 ocaml_module(name   = "Hello_test1_macos_en",
              module = "Hello_test1_macos_en",
-     sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
-     struct = "//module_binding/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
+     sig    = "//modules/dyadic/selectboth/dir_prefix/sig/en:hello.mli",
+     struct = "//modules/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
 )
 
 ocaml_test(name = "test2_macos_en", main = "Test2_macos_en")
@@ -102,8 +102,8 @@ ocaml_module(name   = "Test2_macos_en", struct = "test_macos_en.ml",
              deps = [":Hello_test2_macos_en", "@ounit2//:ounit2"]
 )
 ocaml_module(name   = "Hello_test2_macos_en",
-    sig    = "//module_binding/dyadic/selectboth/dir_prefix/sig/en:Hello",
-    struct = "//module_binding/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
+    sig    = "//modules/dyadic/selectboth/dir_prefix/sig/en:Hello",
+    struct = "//modules/dyadic/selectboth/dir_prefix/macos/en:hello.ml",
 )
 
 ################

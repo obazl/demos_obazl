@@ -2,7 +2,7 @@
 test_suite(
     name = "test",
     tests = [
-        "//module_binding/dyadic/selectboth/dir_prefix:test",
-        "//module_binding/dyadic/selectboth/filename_prefix:test",
+        "//modules/dyadic/selectboth/dir_prefix:test",
+        "//modules/dyadic/selectboth/filename_prefix:test",
     ]
 )

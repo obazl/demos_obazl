@@ -24,7 +24,7 @@ ocaml_module(
 ocaml_module(
     name   = "Hello",
     sig    = ":Hello_cmi",
-    struct = "//module_binding/dyadic/split/b1/struct:hello.ml",
+    struct = "//modules/dyadic/split/b1/struct:hello.ml",
 )
 
 ocaml_signature(

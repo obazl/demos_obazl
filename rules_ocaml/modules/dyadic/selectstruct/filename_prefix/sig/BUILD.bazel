@@ -8,5 +8,5 @@ exports_files(["hello.mli"])
 ocaml_signature(
     name = "Hello_cmi",
     src  = "hello.mli",
-    visibility = ["//module_binding/fixedsig:__pkg__"]
+    visibility = ["//modules/fixedsig:__pkg__"]
 )

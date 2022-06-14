@@ -11,23 +11,23 @@ ocaml_signature(
 
 ocaml_module(
     name    = "Hello",
-    visibility = ["//module_binding/dyadic/selectstruct/dir_prefix:__pkg__"],
+    visibility = ["//modules/dyadic/selectstruct/dir_prefix:__pkg__"],
 
     # compiled sig in same package:
     sig    = ":Hello_cmi",
 
     struct = select({
         "//bzl:linux_en":
-        "//module_binding/dyadic/selectstruct/dir_prefix/linux/en:hello.ml",
+        "//modules/dyadic/selectstruct/dir_prefix/linux/en:hello.ml",
 
         "//bzl:linux_fr":
-        "//module_binding/dyadic/selectstruct/dir_prefix/linux/fr:hello.ml",
+        "//modules/dyadic/selectstruct/dir_prefix/linux/fr:hello.ml",
 
         "//bzl:macos_en":
-        "//module_binding/dyadic/selectstruct/dir_prefix/macos/en:hello.ml",
+        "//modules/dyadic/selectstruct/dir_prefix/macos/en:hello.ml",
 
         "//bzl:macos_fr":
-        "//module_binding/dyadic/selectstruct/dir_prefix/macos/fr:hello.ml",
+        "//modules/dyadic/selectstruct/dir_prefix/macos/fr:hello.ml",
 
     }, no_match_error = "unsupported config"),
 )

@@ -1,7 +1,7 @@
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
 # by default sig red is bound. to select another pass:
-#  --//module_binding/dyadic/selectsig:sig=green    (or blue)
+#  --/modules/dyadic/selectsig:sig=green    (or blue)
 string_flag(
     name   = "sig",
     values = ["red", "green", "blue"],
@@ -58,9 +58,9 @@ ocaml_module(
     struct = "a.ml",
     ## vary sig
     sig    = select({
-        ":red": "//module_binding/dyadic/selectsig/red:a.mli",
-        ":green": "//module_binding/dyadic/selectsig/green:a.mli",
-        ":blue": "//module_binding/dyadic/selectsig/blue:a.mli",
+        ":red": "//modules/dyadic/selectsig/red:a.mli",
+        ":green": "//modules/dyadic/selectsig/green:a.mli",
+        ":blue": "//modules/dyadic/selectsig/blue:a.mli",
     }, no_match_error = "unsupported arch"),
 )
 

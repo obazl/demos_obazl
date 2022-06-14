@@ -1,16 +1,16 @@
 test_suite(
     name = "test",
     tests = [
-        "//module_binding/dyadic/split/a1:test",
-        "//module_binding/dyadic/split/a2:test",
-        "//module_binding/dyadic/split/b1:test",
-        "//module_binding/dyadic/split/b2:test",
-        "//module_binding/dyadic/split/b3:test",
-        "//module_binding/dyadic/split/c1:test",
-        "//module_binding/dyadic/split/c2:test",
-        "//module_binding/dyadic/split/c3:test",
-        "//module_binding/dyadic/split/c4:test",
-        "//module_binding/dyadic/split/d1:test",
-        "//module_binding/dyadic/split/d2:test"
+        "//modules/dyadic/split/a1:test",
+        "//modules/dyadic/split/a2:test",
+        "//modules/dyadic/split/b1:test",
+        "//modules/dyadic/split/b2:test",
+        "//modules/dyadic/split/b3:test",
+        "//modules/dyadic/split/c1:test",
+        "//modules/dyadic/split/c2:test",
+        "//modules/dyadic/split/c3:test",
+        "//modules/dyadic/split/c4:test",
+        "//modules/dyadic/split/d1:test",
+        "//modules/dyadic/split/d2:test"
     ]
 )

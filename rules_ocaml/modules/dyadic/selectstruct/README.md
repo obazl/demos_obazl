@@ -42,8 +42,8 @@ struct:
   package: `sig=":Hello_cmi"`
 
 * demo `dir_prefix/c`: depend on a compiled sig located in a different
-  package: `sig="//module_binding/fixedsig:Hello_cmi"`
+  package: `sig="//modules/fixedsig:Hello_cmi"`
 
 * demo `dir_prefix/d`: depend on a sig source file located in a
-  different package: `sig="//module_binding/fixedsig:hello.mli"`
+  different package: `sig="//modules/fixedsig:hello.mli"`
 
