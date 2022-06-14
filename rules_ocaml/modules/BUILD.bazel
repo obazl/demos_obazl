@@ -2,6 +2,6 @@ test_suite(
     name = "test",
     tests = [
         "//modules/dyadic:test",
-        "//modules/ns/topdown:test",
+        "//modules/orphan:test",
     ]
 )
