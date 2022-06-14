@@ -1,4 +1,4 @@
 ;; test dunefile
 
 (library
-    (name oibl-test))
+    (name mibl-test))

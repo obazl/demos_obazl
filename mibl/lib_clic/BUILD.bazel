@@ -1,0 +1,54 @@
+load("@obazl_rules_ocaml//ocaml:rules.bzl",
+    "ocaml_archive",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_signature",
+)
+
+###############################################
+########### Archive/Library Targets ###########
+
+######## tezos-clic ########
+TEZOS_CLIC_OPTS = [
+    "-open", "Tezos_error_monad",
+    "-open", "Tezos_error_monad.TzLwtreslib",
+    "-open", "Tezos_stdlib",
+]
+
+TEZOS_CLIC_DEPS = [
+    "//src/lib_error_monad:tezos-error-monad",
+    "//src/lib_lwt_result_stdlib:tezos-lwt-result-stdlib",
+    "//src/lib_stdlib:tezos-stdlib",
+    "@lwt//:lwt",
+    "@re//:re",
+]
+
+ocaml_ns_archive(
+    name       = "tezos-clic",
+    ns         = "Tezos_clic",
+    visibility = ["//visibility:public"],
+    submodules = [
+        ":Clic",
+    ],
+)
+
+#############################
+####  Singleton Targets  ####
+
+ocaml_module(
+    name     = "Clic",
+    struct   = "clic.ml",
+    sig      = ":Clic_cmi",
+    opts     = TEZOS_CLIC_OPTS,
+    deps     = TEZOS_CLIC_DEPS + [
+    ]
+)
+
+ocaml_signature(
+    name     = "Clic_cmi",
+    src      = "clic.mli",
+    opts     = TEZOS_CLIC_OPTS,
+    deps     = TEZOS_CLIC_DEPS + [
+    ]
+)
+
