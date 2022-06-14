@@ -22,4 +22,4 @@ common --color=yes
 build:bc --@rules_ocaml//build/mode=bytecode
 # build:bc --@ppx//mode=bytecode
 
-try-import .private/bazelrc
+try-import private/bazelrc
