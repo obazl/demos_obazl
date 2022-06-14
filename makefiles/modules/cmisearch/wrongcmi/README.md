@@ -1,4 +1,4 @@
-# cmisearch
+# wrongcmi
 
 Demonstrates that search for .cmi, unlike search for .mli, is affected
 by "-I" options. The compiler will find ./hello.mli, but will then

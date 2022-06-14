@@ -10,4 +10,4 @@ b:
 	ocamlopt -c b.ml
 
 clean:
-	@-rm -f a.cmx a.o a.cmi a.exe b.cmx b.o b.cmi
+	@-rm -f *.cmx *.o *.cmi *.exe

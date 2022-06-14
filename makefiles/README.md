@@ -2,7 +2,8 @@
 
 These examples demonstrate the OCaml build discipline using makefiles.
 
-Some of them use the ounit2 unit testing package. You must install it in the current switch. This also installs ocamlfind.
+**WARNING** Some of them use the ounit2 unit testing package. You must
+install it in the current switch. This also installs ocamlfind.
 
 ```
 $ opam install ocamlfind ounit2

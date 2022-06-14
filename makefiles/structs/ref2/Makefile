@@ -12,5 +12,5 @@ b:
 	$(MAKE) -C b
 
 clean:
+	@-rm -f *.cmx *.o *.cmi *.exe
 	@$(MAKE) -C b clean
-	@-rm -f a.cmx a.o a.cmi a.exe

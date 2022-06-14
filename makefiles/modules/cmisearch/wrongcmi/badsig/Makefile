@@ -3,4 +3,5 @@ default:
 	ocamlopt -c hello.ml;
 
 clean:
-	rm hello.cmi hello.cmx hello.o
+	@-rm -f *.cmx *.o *.cmi *.exe
+

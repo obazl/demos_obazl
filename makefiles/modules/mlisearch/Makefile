@@ -1,9 +1,5 @@
 
 all:
-	@echo "Demonstrates that -I does not affect search for .mli file.";
-	@echo "The compiler will not find badsig/hello.mli,";
-	@echo "so it will infer hello.mli from hello.ml";
-	@echo;
 	ocamlopt -c hello.ml -I badsig;
 
 ## same story even if we compile badsig/hello.mli - it will be ignored
@@ -12,7 +8,7 @@ withsig:
 	ocamlopt -c hello.ml -I badsig;
 
 ## Use ocamlobjinfo to inspect hello.cmi, hello.cmx. Verify the
-## checksums for the Hello interface.
+## checksums for the Hello interface do not match.
 
 inspect:
 	ocamlobjinfo hello.cmx;
@@ -20,3 +16,7 @@ inspect:
 	ocamlobjinfo hello.cmi;
 	@echo;
 	ocamlobjinfo badsig/hello.cmi;
+
+clean:
+	@-rm -f *.cmx *.o *.cmi *.exe
+	$(MAKE) -C badsig clean;
