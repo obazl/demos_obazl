@@ -1,0 +1,33 @@
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+ocaml_module(
+    name   = "Greeting",
+    struct = "greeting.ml",
+    opts   = ["-opaque"],
+    deps   = [
+        "//deps/opaque/msg:Hello",
+        "//deps/opaque/msg:Goodbye",
+    ]
+)
+
+################
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Greeting",
+        "@ounit2//:ounit2"
+    ],
+)
+

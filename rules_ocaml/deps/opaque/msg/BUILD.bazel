@@ -1,0 +1,40 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+)
+
+ocaml_signature(
+    name = "Hello_cmi",
+    src  = "hello.mli",
+    opts = ["-opaque"]
+)
+
+ocaml_module(
+    name   = "Hello",
+    struct = "hello.ml",
+    sig    = ":Hello_cmi",
+    opts = [
+        "-opaque",
+        "-w", "-32"
+    ],
+    visibility = ["//deps/opaque:__pkg__"]
+)
+
+ocaml_signature(
+    name = "Goodbye_cmi",
+    src  = "goodbye.mli",
+    # opts = ["-opaque"]
+)
+
+ocaml_module(
+    name   = "Goodbye",
+    struct = "goodbye.ml",
+    sig    = ":Goodbye_cmi",
+    opts = [
+        # "-opaque",
+        "-w", "-32"
+    ],
+    visibility = ["//deps/opaque:__pkg__"]
+)
+
