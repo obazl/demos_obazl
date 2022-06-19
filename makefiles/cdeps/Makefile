@@ -1,15 +1,3 @@
-## cdeps
-
-## demonstrates that compile-time module dependencies can be resolved
-## with cmi files only. If the cmx file is missing, the compiler will
-## issue a warning but the compile will succeed.
-
-## however, if we then try to link the compiled module into an
-## executable the compiler with throw an exception, see below.
-
-## Expected result:
-# Warning 58 [no-cmx-file]: no cmx file was found in path for module B, and its interface was not compiled with -opaque
-
 acmx: b
 	ocamlopt -c a.ml; # emits a.cmi, a.cmx, a.o
 

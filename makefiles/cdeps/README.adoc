@@ -1,0 +1,28 @@
+= cdeps
+
+Demonstrates that compile-time module dependencies can be resolved
+with cmi files only. If the cmx file is missing, the compiler will
+issue a warning but the compile will succeed. In this demo we don't
+even have file `b.ml`, we only have `b.mli`. Nonetheless, we can
+compile module A, which depends on B.
+
+`$ make`
+
+Expected result:
+
+* emits: `b.cmi`, `a.cmi`, `a.cmx`, `a.o`
+* prints: `Warning 58 [no-cmx-file]: no cmx file was found in path for module B, and its interface was not compiled with -opaque`
+
+However, if we then try to link the compiled module `A` into an
+executable the compiler with throw an exception:
+
+`$ make exe`
+
+Expected result: as above,plus:
+
+----
+`Error: No implementations provided for the following modules:
+         B referenced from a.cmx
+----
+
+
