@@ -1,5 +1,6 @@
 default:
 	$(MAKE) -C aliasing;
+	$(MAKE) -C cdeps;
 	$(MAKE) -C deps_sig;
 	$(MAKE) -C deps_struct;
 	$(MAKE) -C fixed_sig
