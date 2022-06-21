@@ -1,0 +1,29 @@
+= archives - minimal working example
+
+Module Client depends on modules Red, Green, and Blue, which are built in subdir `color`.
+
+The color target builds `red.[cmi,cmx,o]`, `green.[cmi,cmx,o]`, and
+`blue.[cmi,cmx,o]`, then archives them into `color.[cmxa,a]`.
+
+We build `color.[cmi,cmx,o]` by passing `-I color`.
+
+Question: how does the compiler access the needed modules? Does it use `color.cmxa`?
+
+To build the test executable, we must pass `client.cmx` and the
+modules it depends on. We can do that by listing those deps or, in
+this case, by passing the archive `client.cmxa`. We pass `-I color` so
+that the compiler can find the archive file. But note that `color/`
+also contains the `.[cmi,.cmx,o]` files.
+
+If we omit `color.cmxa` from the command line for the `test` target, we get:
+
+----
+File "test.ml", line 1:
+Error: No implementations provided for the following modules:
+         Green referenced from client.cmx, test.cmx
+         Blue referenced from client.cmx, test.cmx
+         Red referenced from client.cmx, test.cmx
+----
+
+NOTE: The error is no _implementations_ found; that means the
+interface files _were_ found, since they are in `-I color`.

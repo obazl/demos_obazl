@@ -1,0 +1,129 @@
+= archives - links
+
+This demo is the same as demo `archives/mwe`, except that instead of
+passing `-I color` we symlink the files it contains into the current
+directory. That we we can control exactly what the compiler can see.
+
+If do do not link any of the files, and we do not pass `-I color`
+(i.e. remove the `lncolor` target from the Makefile), then we will
+get:
+
+----
+File "test.ml", line 3, characters 32-37:
+3 | let test1 _ = assert_equal 255 (Red.r)
+                                    ^^^^^
+Error: Unbound module Red
+----
+
+What this message actually means is that the compiler found a
+reference to module Red as it was compiling `test.ml`, and the first
+thing it did to resolve it was to search for the `.cmi` file
+(`red.cmi` or `Red.cmi`). Failing to find it, its message is not that
+it could not find a file, but that it could not find a binding of
+`Red` to a modulel - that is it also failed to find such a binding in
+the code it has already compiled.
+
+So the first thing we will do is symlink the color modules:
+
+----
+lncolor: color
+	ln -fs color/red.cmi .;
+	ln -fs color/green.cmi .;
+	ln -fs color/blue.cmi .;
+----
+
+Now when we build, things are a little more complicated.
+
+* If we compile `client.ml` (`make client`), then we get:
+
+----
+File "_none_", line 1:
+Warning 58 [no-cmx-file]: no cmx file was found in path for module Blue, and its interface was not compiled with -opaque
+File "_none_", line 1:
+Warning 58 [no-cmx-file]: no cmx file was found in path for module Green, and its interface was not compiled with -opaque
+File "_none_", line 1:
+Warning 58 [no-cmx-file]: no cmx file was found in path for module Red, and its interface was not compiled with -opaque
+----
+
+(if we add `-I color` to the build command for `client.ml` those warnings will go away)
+
+* If we try to build the test executable (`make test`), we get the
+   warnings twice, once for `client.ml` and once for `test.ml`. Plus we get an error:
+
+----
+File "test.ml", line 1:
+Error: Cannot find file color.cmxa
+----
+
+Let's focus on the error message first. We fix it by linking: `ln -fs
+color/color.cmxa .;`. Then we get the same warnings, but a different error:
+
+----
+clang: error: no such file or directory: 'color.a'
+----
+
+This is because `.cmxa` files and `.a` files go together. So the fix
+is to link that too: `ln -fs color/color.a .;`. Then the build will
+succeed, albeit with the warnings just metioned.
+
+IMPORTANT: We still must pass `color.cmxa` when we build `test`.
+Otherwise OCaml has no way of knowing what ought to be linked to form
+the executable. It will discover that implementations are missing, but
+has no way of deciding what to look for. If the implementation for
+`Green` is missing, should it look for `green.cmx` or should it search
+whatever `.cmxa` files it can find? Remember that archive files can
+have any name, and the search space could include many archive files.
+So when if fails to find an implementation it gives up, and it's up to
+us to tell explicitly it what to link.
+
+Now about the `no-cmx-file` warnings. By default OCaml will try to do
+cross-module optimizations, and to do that it needs the `.cmx` files.
+
+But we have those files. Why is it complaining? Notice that the
+message source is `File "_none_", line 1:` - not a file. We can locate
+it by trial and error. If we run `make client` we do not see the
+warnings. The build of `client.cmx` succeeds, and if we inspect it:
+
+`ocamlobjinfo client.cmx` we will see that modules `Red`, `Green`, and
+`Blue` have been imported.
+
+It's when we try to link `client.cmx` into an executable that OCaml
+will complain: `make test` compiles `test.ml` to `test.[cmi,cmx.o]`,
+and emits the warnings.
+
+This is a confusing state of affairs, because we can build the `test`
+executable, and it will run successfully. So the warning `no cmx file
+was found in path` is puzzling, since the compiler was in fact able to
+find the needed `.cmx` files, presumably in the `.cmxa` file.
+
+The warnings go way if we do put the `color` dir containing the `.cmx`
+files on the path. So why does it complain if those files are not in
+the path, even though they are in the `.cmxa` file?
+
+The answer is evidently that OCaml can do cross-module optimization if
+it has the `.cmx` files, but not if it only has a `.cmxa` file.
+
+So the warning basically means: "I will not be able to perform
+cross-module optimization, which is the default, and you did not
+explicitly tell me not to by passing the `-opaque` flag".
+
+You can tell OCaml to suppress the warning by passing `-w -58` on the
+command line.
+
+Moral of the story:
+
+* the `.cmxa` file must be passed on the command line;
+* the `.a` file must be on the search path;
+* to use an archive file for dependency resolution, the `.cmi` files
+  for all the modules in the archive must be on the search path;
+* if you want to perform cross-module optimization you must also have
+  the `.cmx` files on the search path;
+
+
+Which suggests that archive files serve no purpose if you are doing
+cross-module optimization. So why bother? A possible reason: archiving
+optimizes the C part of OCaml builds, at least a bit, since you use a
+single `.a` file instead of one `.o` file per module.
+
+
+

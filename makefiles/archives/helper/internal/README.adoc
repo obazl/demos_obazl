@@ -1,0 +1,8 @@
+= archives - helper
+
+This demo is the same as demo `archives/links`, except that we add a
+"helper" module, so that the modules in the archive depend on a module
+outside of the archive.
+
+In this case we put the helper in the archive, then we need not
+provided it explicitly when we go to link an executable.
