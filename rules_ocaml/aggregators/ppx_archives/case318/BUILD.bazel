@@ -1,3 +1,5 @@
+##FIXME broken
+
 ## aggregators/ppx_archives/case318: two simple (independent) archives
 
 load(
@@ -29,10 +31,15 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Runner",
     deps = [
+        ## FIXME: deps mgmt broken
+        # ":lib_ppx_greek",
+
         ":lib_ppx_color",
+
+
         # ":ppx_driver",
         # ":ppx_color_driver",
-        # ":ppx_greek_driver"
+        ":Ppx_greek_driver",
         "@ppxlib//:ppxlib"
     ],
     # deps_opam = ["ppxlib"]

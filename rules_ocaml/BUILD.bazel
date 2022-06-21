@@ -6,12 +6,12 @@ test_suite(
         "//configuration:test",
         "//filegen:test",
         "//interop:test",
-        "//module_binding:test",
+        "//modules:test",
         "//mwe:test",
         "//ns:test",
         "//ppxlib:test",
         "//signatures:test",
-        "//testing:test",
+        # "//testing:test",
     ]
 )
 

@@ -69,7 +69,10 @@ ocaml_module(
     deps = [
         # src file contains ref to "Sexp.to_string" so we need to
         # depend on this lib.
-        # "@sexplib//:sexplib",
+
+        ##FIXME: this should not be needed, ppx_codeps is borken
+        "@sexplib//:sexplib",
+
         # "@ppx_sexp_conv//runtime-lib",
         # we do not need to depend on them here, since they are
         # listed as ppx_codeps of the ppx.

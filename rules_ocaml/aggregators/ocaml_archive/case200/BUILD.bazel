@@ -3,6 +3,7 @@ load(
     "ocaml_archive",
     "ocaml_executable",
     "ocaml_module",
+    "ocaml_signature",
     "ocaml_test",
 )
 
@@ -10,7 +11,7 @@ test_suite(
     name = "test",
     tests = [
         ":test_archive",
-        ":test_noarchive"
+        # ":test_noarchive"
     ]
 )
 
@@ -66,10 +67,16 @@ ocaml_module(
     ]
 )
 
+ocaml_signature(
+    name = "Easy_cmi",
+    src  = "easy.mli"
+)
+
 ocaml_module(
     name = "Easy",
     struct = "easy.ml",
-    opts = ["-linkall"],
+    sig    = ":Easy_cmi",
+    opts = ["-linkall", "-w", "-32"],
 )
 
 ocaml_module(

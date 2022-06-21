@@ -41,7 +41,7 @@ ocaml_module(
     ppx = ":ppx.exe",
     struct = "for_test.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    # deps = ["@ppxlib//:ppxlib"],
+    deps = ["@ppxlib//:ppxlib"],
 )
 
 ocaml_module(

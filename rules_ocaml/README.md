@@ -18,6 +18,10 @@ With a shared switch:
 
 3. `$ bazel test test`
 
+If you get errors involving missing "@something..." it probably means
+your local switch/coswitch is misconfigured. Try rerunning
+
+`$ bazel run @opam//local:refresh`.
 
 >    Contributing: if you would like to contribute a demo, please file an
 >    issue first. Demos should illustrate one concept, using minimal code.

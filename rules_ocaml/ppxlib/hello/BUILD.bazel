@@ -59,9 +59,9 @@ ocaml_module(
     # ppx_debug = ["dsource"],
     struct = "hello.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    # deps = [  # see below, ppx_codeps
-    #     "@sexplib//:sexplib",
-    # ],
+    deps = [  # see below, ppx_codeps
+        "@sexplib//:sexplib",
+    ],
 )
 
 ###############
