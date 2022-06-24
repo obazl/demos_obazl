@@ -1,5 +1,3 @@
-# compare //ns/bottomup/conjunction/colors
-
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_library",

@@ -6,6 +6,17 @@ load(
     "ocaml_test",
 )
 
+## aggregate resolver and submodules
+ocaml_library(
+    name = "olibRGB",
+    manifest = [
+        "//mwe/rgb:R",
+        "//mwe/rgb:G",
+        "//mwe/rgb:B",
+        ":rgb_ns"
+    ],
+)
+
 ocaml_ns_resolver(
     name        = "rgb_ns",
     ns          = "RGB",
@@ -16,17 +27,6 @@ ocaml_ns_resolver(
         "//mwe/rgb:G": "Green", # renaming alias
         "//mwe/rgb:B": "Blue"   # renaming alias
     }
-)
-
-## aggregate resolver and submodules
-ocaml_library(
-    name = "olibRGB",
-    manifest = [
-        "//mwe/rgb:R",
-        "//mwe/rgb:G",
-        "//mwe/rgb:B",
-        ":rgb_ns"
-    ],
 )
 
 ocaml_module(
