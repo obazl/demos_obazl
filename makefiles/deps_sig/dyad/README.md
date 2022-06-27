@@ -1,4 +1,4 @@
-# bdyad
+# dyad
 
 Demonstrates:
 

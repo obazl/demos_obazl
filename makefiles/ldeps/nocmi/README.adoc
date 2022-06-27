@@ -1,0 +1,15 @@
+= ldeps nocmi
+
+Demonstrates that the link action depgraph needs only cmx files, not cmi files.
+
+The job of the cmi file is done once it no longer needs to play a role
+in module compilation. Once the modules are compiled, they contain
+info about the cmx files they need, but no longer need their cmi files.
+
+So when it comes time to like compiled modules into an executable, we
+only need the cmx files. No need for sigfiles, because all references
+have been resolved during compilation.
+
+Compare C/C++, where headers are only needed for compilation, not
+linking.
+

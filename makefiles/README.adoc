@@ -28,4 +28,8 @@ of the targets are expected to fail, as illustration of some aspect of
 OCaml builds. Most demos are documented in the Makefiles and/or README
 files.
 
-All Makefiles include a `make clean` target.
+WARNING: In some cases warnings or errors will only occur the first
+time you run make. The "Expected output" messages will always print,
+but if you rerun make, you won't see the expected output. Examine the
+Makefile to see why. To see all messages, run `make clean` before
+rerunning `make`. All Makefiles include a `make clean` target.

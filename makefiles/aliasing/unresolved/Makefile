@@ -6,7 +6,11 @@ COMPILER=ocamlopt
 #                                           ^^^^^^^
 # Error: Unbound module A.B
 
+include ../../Makecolors.mak
+
 test: a
+	@echo "$(CCRED)Makefile: $(CURDIR)"
+	@echo "Expected output: Error unbound module$(CCRESET)"
 	-ocamlfind $(COMPILER) -linkpkg -package ounit2 \
 	-c test.ml;  # emits test.cmi, test.cmx, test.o
 

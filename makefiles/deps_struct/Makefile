@@ -1,7 +1,7 @@
 all:
-	$(MAKE) -C bdyad
-	$(MAKE) -C borphan
+	$(MAKE) -C dyad
+	$(MAKE) -C singleton
 
 clean:
-	$(MAKE) -C bdyad clean
-	$(MAKE) -C borphan clean
+	$(MAKE) -C dyad clean
+	$(MAKE) -C singleton clean

@@ -1,6 +1,8 @@
 COMPILER=ocamlopt
 LINKALL=
 
+include ../../Makecolors.mak
+
 ## for compilation, module A depends on b.cmi but not b.cmx;
 ## for linking, it depends on b.cmx, so we put that dep here:
 test: test.ml a bcmx

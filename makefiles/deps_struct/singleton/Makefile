@@ -1,6 +1,8 @@
 COMPILER=ocamlopt
 LINKALL=
 
+include ../../Makecolors.mak
+
 ## since the B dep is not in the same directory as a.ml,
 ## we need to tell the linker where to find b.cmx
 ## by passsing -I:
@@ -20,11 +22,10 @@ test: test.ml a bcmx
 ## Expected output:
 # Warning 58 [no-cmx-file]: no cmx file was found in path for module B, and its interface was not compiled with -opaque
 ## Passing -opaque would eliminate this warning.
-a: bcmi a.ml
+a: bcmi
+	@echo "$(CCMAG)Makefile: $(CURDIR)"
+	@echo "Expected output: Warning 58 [no-cmx-file]$(CCRESET)"
 	$(COMPILER) -I dep -c a.ml; # emits a.cmx, a.o, a.cmi
-
-# acmi: a.mli
-# 	$(COMPILER) -c a.mli; # emits a.cmi
 
 bcmi:
 	@$(MAKE) -C dep bcmi
@@ -35,6 +36,6 @@ bcmx:
 ################################################################
 clean:
 	@$(MAKE) -C dep clean
-	@-rm -f *.cmi *.cmx *.o *.cmo
+	@-rm -f *.cmx *.o *.cmi *.exe
 	@-rm -f test*.exe;
 	@-rm -f oUnit*;

@@ -8,7 +8,7 @@ include ../../../Makecolors.mak
 
 all:
 	@echo "$(CCRED)Makefile: $(CURDIR)"
-	@echo "Expected output: could not find cmi file$(CCRESET)"
+	@echo "Expected output: Error: could not find cmi file$(CCRESET)"
 	ocamlopt -c hello.ml;
 
 clean:

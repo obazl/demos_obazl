@@ -1,5 +1,7 @@
 # opaque1: compile a.ml without dep b.cmx and without -opaque
 
+include ../../Makecolors.mak
+
 ## this will succeed, but a.cmx will not be cross-module optimized.
 exe: a bcmx
 	ocamlopt b.cmx a.cmx -o a.exe
@@ -7,6 +9,8 @@ exe: a bcmx
 # expected output from 'make a':
 # Warning 58 [no-cmx-file]: no cmx file was found in path for module B, and its interface was not compiled with -opaque
 a: bcmi
+	@echo "$(CCMAG)Makefile: $(CURDIR)"
+	@echo "Expected output: Warning 58 [no-cmx-file]$(CCRESET)"
 	ocamlopt -c a.ml
 
 ## we could suppress the warning, by passing -w -58:

@@ -7,10 +7,11 @@ bcmx: bcmi
 # for this demo we pass -opaque, to eliminate the warning:
 # Warning 58 [no-cmx-file]: no cmx file was found in path for module B, and its interface was not compiled with -opaque
 # we only need -opaque for the sigfile
-OPAQUE=-opaque
+OPAQUE=
+## -opaque
 
 bcmi:
-	$(COMPILER) $(OPAQUE) -c b.mli; # emits b.cmi
+	$(COMPILER) $(OPAQUE) -c b.mli; # emits b.cmi; needs -opaque
 
 ################################################################
 clean:

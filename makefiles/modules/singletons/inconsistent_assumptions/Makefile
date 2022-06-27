@@ -2,6 +2,8 @@
 # Error: Files a.cmx and dep/b.cmx
 #        make inconsistent assumptions over interface B
 
+include ../../../Makecolors.mak
+
 COMPILER=ocamlopt
 LINKALL=
 
@@ -18,7 +20,9 @@ LINKALL=
 # then do the same for dep/b.cmi and dep/b.cmx
 
 test: test.ml a
-	ocamlfind $(COMPILER) -w -49 $(LINKALL) -linkpkg -package ounit2 \
+	@echo "$(CCRED)Makefile: $(CURDIR)"
+	@echo "Expected output: Error: inconsistent assumptions$(CCRESET)"
+	ocamlfind $(COMPILER) $(LINKALL) -linkpkg -package ounit2 \
 	-I dep b.cmx \
 	a.cmx \
 	-o test.exe test.ml;
