@@ -4,7 +4,11 @@
 
 # To fix, just compile the mli file first.
 
+include ../../../Makecolors.mak
+
 all:
+	@echo "$(CCRED)Makefile: $(CURDIR)"
+	@echo "Expected output: could not find cmi file$(CCRESET)"
 	ocamlopt -c hello.ml;
 
 clean:

@@ -7,7 +7,11 @@
 # Adding '-I badsig' (and failing to compile ./hello.mli) is what
 # causes the problem.
 
+include ../../../Makecolors.mak
+
 default: badsig
+	@echo "$(CCRED)Makefile: $(CURDIR)"
+	@echo "Expected output: Error: implementation does not match interface$(CCRESET)"
 	ocamlopt -c hello.ml -I badsig;
 
 .PHONY: badsig badclean
