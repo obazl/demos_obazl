@@ -1,0 +1,15 @@
+= OBazl: demos_obazl
+Demo and test code for the OBazl toolsuite
+
+Getting started:
+
+* rules_ocaml:  see link:rules_ocaml/README.adoc[README]
+* makefiles: link:makefiles/README.adoc[README]
+
+See also:
+
+* link:https://github.com/obazl/rules_ocaml[rules_ocaml]
+* link:https://obazl.github.io/docs_obazl[docs_obazl]
+* link:https://github.com/obazl/demos_obazl[demos_obazl]
+* link:https://github.com/obazl/tools_obazl[tools_obazl]
+

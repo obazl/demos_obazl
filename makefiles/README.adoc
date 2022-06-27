@@ -1,0 +1,29 @@
+= makefiles
+
+These examples demonstrate the OCaml build discipline using makefiles.
+
+The demos in the link:makefiles[makefiles] directory depend on an
+link:https://opam.ocaml.org/[OPAM] installation with the following
+packages installed:
+
+* findlib
+* ounit2
+
+To start from scratch, install OPAM and then:
+
+```
+$ opam update
+$ opam switch create 4.14.0
+$ eval $(opam env)
+$ opam install ounit2
+```
+
+This will also install findlib.
+
+You can tell OPAM to list the packages installed in the current
+switch: `$ opam  list`.
+
+Run `make` from the top directory or any of the subdirectories. Some
+of the targets are expected to fail, as illustration of some aspect of
+OCaml builds. Most demos are documented in the Makefiles and/or README
+files.

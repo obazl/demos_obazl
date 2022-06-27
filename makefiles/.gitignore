@@ -7,6 +7,11 @@
 *.cmx
 *.cmxs
 *.cmxa
+*.exe
+
+# oUnit stuff
+*.log
+*.cache
 
 # ocamlbuild working directory
 _build/
