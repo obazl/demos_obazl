@@ -6,7 +6,8 @@ test_suite(
         "//ns/prefixing:test",
         "//ns/srcindirect:test",
         "//ns/topdown:test",
-        "//ns/udr:test"
+
+        # "//ns/udr:test"
 
         # "//ns/obazl/set100:test",
         # "//ns/obazl/set200:test",

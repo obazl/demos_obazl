@@ -34,8 +34,8 @@ config_setting(name = "goodbye", flag_values = {":t": "goodbye"})
 ocaml_test(
     name = "test",
     args = select({
-        ":main": ["inline-test-runner", "main"],
         ":hello": ["inline-test-runner", "hello"],
+        ":main": ["inline-test-runner", "main"],
         ":goodbye": ["inline-test-runner", "goodbye"],
         "//conditions:default": ["inline-test-runner", "main"]
     }) + [
@@ -49,7 +49,9 @@ ocaml_test(
     main = ":Runner",
     deps = [
         "@ppx_inline_test//runner/lib",
-        ":Main"
+        ":Main",
+
+        "@time_now//:time_now" ## FIXME: this should automatically be added
     ],
 )
 
@@ -63,7 +65,7 @@ ocaml_module(
 
 ocaml_module(
     name = "Main",
-    ppx = ":ppx_inline_test",
+    ppx = ":ppx.exe",
     ppx_args = [
         "-inline-test-lib", "main"
     ],
@@ -73,7 +75,7 @@ ocaml_module(
 
 ocaml_module(
     name = "Hello",
-    ppx = ":ppx_inline_test",
+    ppx = ":ppx.exe",
     ppx_args = [
         "-inline-test-lib", "hello",
     ],
@@ -82,7 +84,7 @@ ocaml_module(
 
 ocaml_module(
     name = "Goodbye",
-    ppx = ":ppx_inline_test",
+    ppx = ":ppx.exe",
     ppx_args = [
         "-inline-test-lib", "goodbye"
     ],
@@ -91,14 +93,19 @@ ocaml_module(
 
 ################################################################
 ppx_executable(
-    name = "ppx_inline_test",
+    name = "ppx.exe",
     main = ":Driver",
     opts = [],
     deps = [
         "@ppx_inline_test//:ppx_inline_test",
+        ## NB! ppx_inline_test itself depends on the runtime-lib
+        "@ppx_inline_test//runtime-lib",
     ],
     ppx_codeps = [
+        ## FIXME: these are listed as codeps in the ppx_inline_test
+        ## pkg, so we should not need to list them here.
         "@ppx_inline_test//runtime-lib",
+        "@ppx_inline_test//config",
     ]
 )
 

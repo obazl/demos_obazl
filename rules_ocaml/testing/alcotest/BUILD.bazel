@@ -12,7 +12,9 @@ test_suite(
 ocaml_test(
     name = "alcotest",
     main = ":Test_alcotest",
+    deps   = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
 )
+
 
 ocaml_module(
     name   = "Test_alcotest",
@@ -24,6 +26,7 @@ ocaml_module(
 ocaml_test(
     name = "hellotest",
     main = "Test_hello",
+    deps   = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
 )
 
 ocaml_module(

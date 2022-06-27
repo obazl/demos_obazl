@@ -1,5 +1,9 @@
 # namespacing
 
+Namespacing can be implemented in two ways: by "packing" modules or
+aliasing submodules. The latter can be top-down or bottom-up; those
+are features of the build-system not the language.
+
 IMPORTANT: There are two orthogonal kinds of namespace involved, the
 OCaml namespaces (determined by module names), and filesystem
 namespaces (determined by filename prefixes). Module aliasing can

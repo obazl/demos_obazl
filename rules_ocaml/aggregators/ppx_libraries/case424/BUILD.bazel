@@ -11,25 +11,25 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     ppx  = ":ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":_main", "@ounit2//:ounit2"]
+    deps = [":main", "@ounit2//:ounit2"]
 )
 
 #################
 ocaml_executable(
     name = "hello",
-    main = ":_main",
+    main = ":main",
 )
 
 ocaml_module(
-    name   = "_main",
+    name   = "main",
     struct = "main.ml",
     ppx    = ":ppx.exe", ## main.ml includes extension points
 )
@@ -37,38 +37,41 @@ ocaml_module(
 ###############
 ppx_executable(
     name = "ppx.exe",
-    main = ":_Ppxlib_driver",
-    deps = [":_Ppx_color", "_Ppx_greek",
-            "@ppxlib//:ppxlib"]
+    main = ":Ppxlib_driver",
+    deps = [
+        ":Ppx_color", "Ppx_greek",
+        "@ppxlib//:ppxlib",
+        "@ppxlib//ast",
+    ]
     # deps_opam = ["ppxlib"]
 )
 
 ############
 ocaml_library(
-    name = "_Ppx_color",
+    name = "Ppx_color",
     manifest = [
-        ":_Ppx_red",
-        ":_Ppx_green",
-        ":_Ppx_blue",
+        ":Ppx_red",
+        ":Ppx_green",
+        ":Ppx_blue",
     ],
 )
 
 ocaml_module(
-    name      = "_Ppx_red",
+    name      = "Ppx_red",
     struct    = "ppx_red.ml",
     deps      = ["@ppxlib//:ppxlib"]
     # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
-    name      = "_Ppx_green",
+    name      = "Ppx_green",
     struct    = "ppx_green.ml",
     deps      = ["@ppxlib//:ppxlib"]
     # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
-    name      = "_Ppx_blue",
+    name      = "Ppx_blue",
     struct    = "ppx_blue.ml",
     deps      = ["@ppxlib//:ppxlib"]
     # deps_opam = ["ppxlib"]
@@ -76,39 +79,38 @@ ocaml_module(
 
 ############
 ocaml_library(
-    name = "_Ppx_greek",
+    name = "Ppx_greek",
     manifest = [
-        ":_Ppx_alpha",
-        ":_Ppx_beta",
-        ":_Ppx_gamma",
+        ":Ppx_alpha",
+        ":Ppx_beta",
+        ":Ppx_gamma",
     ],
 )
 
 ocaml_module(
-    name      = "_Ppx_alpha",
+    name      = "Ppx_alpha",
     struct    = "ppx_alpha.ml",
     deps      = ["@ppxlib//:ppxlib"]
     # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
-    name      = "_Ppx_beta",
+    name      = "Ppx_beta",
     struct    = "ppx_beta.ml",
     deps      = ["@ppxlib//:ppxlib"]
     # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
-    name      = "_Ppx_gamma",
+    name      = "Ppx_gamma",
     struct    = "ppx_gamma.ml",
     deps      = ["@ppxlib//:ppxlib"]
     # deps_opam = ["ppxlib"]
 )
 
 ################################################################
-###########
 ocaml_module(
-    name = "_Ppxlib_driver",
+    name = "Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps      = ["@ppxlib//:ppxlib"]
     # deps_opam = ["ppxlib"]

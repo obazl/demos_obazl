@@ -40,7 +40,7 @@ ocaml_module(
         # "@ppx_sexp_conv//runtime-lib",
         # "@ppx_deriving//runtime",
     ],
-    ppx = ":ppx",
+    ppx = ":ppx.exe",
     # ppx_print = "@rules_ocaml//ppx/print:text",  # uncomment to get readable output
 )
 
@@ -63,7 +63,7 @@ ocaml_module(
     # but we still need to pass -open
     #     "@sexplib//:sexplib",
     # ],
-    ppx = ":ppx",
+    ppx = ":ppx.exe",
     # ppx_print = "@rules_ocaml//ppx/print:text",  # uncomment to get readable output
     struct = "hello.ml",
     deps = [
@@ -81,7 +81,7 @@ ocaml_module(
 
 ###############
 ppx_executable(
-    name = "ppx",
+    name = "ppx.exe",
     # we can use the driver we've defined in another package:
     main = "//ppxlib/driver", # obazl will place this last in the list of deps
     # main = "@ppxlib//runner:ppxlib_runner.cmx",
@@ -120,4 +120,6 @@ ppx_executable(
         ## this one, as you can see by running
         ##     bazel query "deps(@ocaml//lib/ppx_sexp_conv)"
     ],
+
+    data = glob(["_opam/lib/stublibs/*"])
 )

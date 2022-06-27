@@ -19,7 +19,10 @@ common --color=yes
 
 # test --test_verbose_timeout_warnings
 
-build:bc --@rules_ocaml//build/mode=bytecode
-# build:bc --@ppx//mode=bytecode
+build:bc  --host_platform=@opam//tc/bc
+build:bco --host_platform=@opam//tc/bc:opt
+# nc: native code
+build:nc  --host_platform=@opam//tc/n
+build:nco --host_platform=@opam//tc/n:opt
 
 try-import private/bazelrc

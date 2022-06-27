@@ -7,9 +7,22 @@ load(
     "ocaml_test",
 )
 
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    deps = [":libcolor", "@ounit2//:ounit2"],
+)
+
+#################
 ocaml_ns_library(
-    name = "color",
-    resolver = ":Color", ## user-provided main module
+    name = "libcolor",
+    resolver = ":color", ## user-provided main module
     submodules = [
         ":Red",
         ":Green",
@@ -19,8 +32,8 @@ ocaml_ns_library(
 )
 
 ocaml_module(
-    name = "Color",
-    # opts = ["-no-alias-deps", "-w", "-49"],
+    name = "color",
+    opts = ["-no-alias-deps"], # "-w", "-49"],
     struct = "color.ml",
 )
 
@@ -38,16 +51,3 @@ ocaml_module(
     name = "Blue",
     struct = "blue.ml",
 )
-
-###########
-ocaml_test(
-    name = "test",
-    main = "Test",
-)
-
-ocaml_module(
-    name = "Test",
-    struct = "test.ml",
-    deps = [":color", "@ounit2//:ounit2"],
-)
-

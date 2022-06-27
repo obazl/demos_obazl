@@ -54,7 +54,9 @@ ocaml_module(
 
     ## use output of genrule that runs the ppx
     struct = "tmp/hello.ml",  # output of genrule, which will be triggered
-    deps = ["@core//:core"],
+    deps = [
+        "@core//:core"
+    ],
 
     ## normally you would use these convenience attribs to tell the
     ## `ocaml_module` rule run the ppx as an action before compiling:
@@ -86,6 +88,9 @@ ppx_executable(
     main = ":Driver",  # obazl will place main last in the list of deps
     deps = [
         "@ppx_sexp_value//:ppx_sexp_value",  # contains handler for `[%sexp ]` extension
+        # tmp:
+        "@ppx_here//runtime-lib",
+        "@ppx_sexp_conv//runtime-lib"
     ],
 )
 

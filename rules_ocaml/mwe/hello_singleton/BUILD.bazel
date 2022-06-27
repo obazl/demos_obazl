@@ -25,4 +25,5 @@ ocaml_module(
 ocaml_module(
     name = "Hello",
     struct = "hello.ml",
+    # opts = ["-opaque"]
 )

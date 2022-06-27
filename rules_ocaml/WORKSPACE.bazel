@@ -27,7 +27,7 @@ http_archive(
 )
 
 http_archive(
-    name = "tools_obazl",
+    name = "obazl",
     url  = "https://github.com/obazl/tools_obazl/archive/refs/heads/main.zip",
     strip_prefix = "tools_obazl-main"
 

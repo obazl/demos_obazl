@@ -10,11 +10,11 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w", "-27", ## Error (warning 27): unused variable test_ctxt.
@@ -26,30 +26,30 @@ ocaml_module(
 ocaml_ns_library(
     name = "color",
     submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
     },
 )
 
 ocaml_module(
-    name = "_Red",
-    sig = ":_Red.cmi",
+    name = "Red",
+    sig = ":Red_cmi",
     struct = "red.ml",
-    deps = [":_Green"],
+    deps = [":Green"],
 )
 
 ocaml_signature(
-    name = "_Red.cmi",
+    name = "Red_cmi",
     src = "red.mli",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )

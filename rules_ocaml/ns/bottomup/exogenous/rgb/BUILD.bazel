@@ -6,6 +6,17 @@ load(
     "ocaml_test",
 )
 
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":olibRGB", "@ounit2//:ounit2"],
+)
+
 ## aggregate resolver and submodules
 ocaml_library(
     name = "olibRGB",
@@ -13,6 +24,8 @@ ocaml_library(
         "//mwe/rgb:R",
         "//mwe/rgb:G",
         "//mwe/rgb:B",
+        # the submodules are not namespaced so they will not
+        # automatically carry along the ns; we must add it explicitly:
         ":rgb_ns"
     ],
 )
@@ -27,15 +40,4 @@ ocaml_ns_resolver(
         "//mwe/rgb:G": "Green", # renaming alias
         "//mwe/rgb:B": "Blue"   # renaming alias
     }
-)
-
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [":olibRGB", "@ounit2//:ounit2"],
-)
-
-ocaml_test(
-    name = "test",
-    main = "Test"
 )

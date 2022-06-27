@@ -6,7 +6,7 @@ load(
     "ppx_executable",
 )
 
-LIBNAME="hello"
+LIBNAME="Hello"
 
 ocaml_test(
     name = "test",
@@ -39,16 +39,19 @@ ocaml_module(
 
 ocaml_module(
     name = "Hello",
-    ppx = ":ppx_inline_test",
+    ppx = ":ppx.exe",
     ppx_args = [
         "-inline-test-lib", LIBNAME
     ],
     struct = "hello.ml",
+    deps = [
+        "@ppx_inline_test//runtime-lib",
+    ]
 )
 
 ################################################################
 ppx_executable(
-    name = "ppx_inline_test",
+    name = "ppx.exe",
     main = ":Driver",
     opts = [],
     deps = [

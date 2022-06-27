@@ -8,11 +8,11 @@ load(
 )
 ocaml_test(
     name = "test",
-    main = ":_Test",
+    main = ":Test",
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.

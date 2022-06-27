@@ -23,12 +23,12 @@ ocaml_module(
 ocaml_ns_library(
     name = "color",
     # use user-provided file as main ns module:
-    # main = ":_Color",
+    resolver = ":_Color",
     submodules = [
         ":_Red",
         ":_Green",
         ":_Blue",
-        ":_Color",
+        # ":_Color",
     ],
     visibility = ["//visibility:public"],
 )

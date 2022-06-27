@@ -1,4 +1,4 @@
-## new/case155: nslib nesting: two deep, two wide
+## new/case155: nslib embedding (nesting): one ns with two embedded nss
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -20,25 +20,6 @@ ocaml_ns_library(
     ],
 )
 
-ocaml_ns_library(
-    name = "greek",
-    submodules = [
-        ":Alpha",
-        ":Beta",
-        ":Gamma"
-    ],
-)
-
-ocaml_ns_library(
-    name = "foobar",
-    submodules = [
-        ":Foo",
-        ":Bar",
-        ":Baz"
-    ],
-)
-
-
 #############
 ocaml_module(
     name = "Red",
@@ -57,6 +38,15 @@ ocaml_module(
 )
 
 #############
+ocaml_ns_library(
+    name = "greek",
+    submodules = [
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
+    ],
+)
+
 ocaml_module(
     name = "Alpha",
     struct = "alpha.ml",
@@ -73,6 +63,15 @@ ocaml_module(
 )
 
 #############
+ocaml_ns_library(
+    name = "foobar",
+    submodules = [
+        ":Foo",
+        ":Bar",
+        ":Baz"
+    ],
+)
+
 ocaml_module(
     name = "Foo",
     struct = "foo.ml",

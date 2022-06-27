@@ -119,7 +119,6 @@ Moral of the story:
 * if you want to perform cross-module optimization you must also have
   the `.cmx` files on the search path;
 
-
 Which suggests that archive files serve no purpose if you are doing
 cross-module optimization. So why bother? A possible reason: archiving
 optimizes the C part of OCaml builds, at least a bit, since you use a

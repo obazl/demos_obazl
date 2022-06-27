@@ -10,10 +10,10 @@ test_suite(
         "//ns/topdown/case150:test",
         "//ns/topdown/case160:test",
         "//ns/topdown/case170:test",
-        "//ns/topdown/case180:test",
         "//ns/topdown/case190:test",
         "//ns/topdown/case366:test",
         "//ns/topdown/case370/foo-bar:test",
+        "//ns/topdown/embed:test",
         "//ns/topdown/mwe:test",
         "//ns/topdown/ppx:test",
     ]

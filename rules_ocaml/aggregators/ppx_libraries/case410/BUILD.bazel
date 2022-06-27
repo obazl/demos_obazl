@@ -1,4 +1,4 @@
-## aggregators/ppx_libraries/case410
+## aggregators/ppx_libraries/case410 - create library of ppx modules
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -18,7 +18,6 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     ppx = ":ppx.exe",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = ["@ounit2//:ounit2"]
 )
 

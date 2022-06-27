@@ -4,7 +4,7 @@ test_suite(
         "//ns/bottomup/election:test",
         "//ns/bottomup/embed:test",
         "//ns/bottomup/hybrid:test",
-        "//ns/bottomup/include:test",
+        # "//ns/bottomup/include:test",
         "//ns/bottomup/merge:test",
         "//ns/bottomup/mwe:test",
     ]

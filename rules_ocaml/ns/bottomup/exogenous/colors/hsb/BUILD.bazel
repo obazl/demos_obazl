@@ -6,7 +6,7 @@ load(
     "ocaml_test",
 )
 
-package(default_visibility = ["//ns/bottomup/include/colors:__pkg__"])
+package(default_visibility = ["//ns/bottomup/exogenous/colors:__pkg__"])
 
 ocaml_ns_resolver(
     name = "hsb_ns",

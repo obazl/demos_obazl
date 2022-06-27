@@ -4,6 +4,8 @@
 
 With a local switch:
 
+0. `$ opam update`
+
 1. `$ opam switch import opam.local --switch .`
 
 2. `$ bazel run @opam//local:refresh`
