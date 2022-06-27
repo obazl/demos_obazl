@@ -1,3 +1,10 @@
+build:bcbc --host_platform=@opam//tc:bc --platforms=@opam//tc:bc
+build:bcnc --host_platform=@opam//tc:bc --platforms=@opam//tc:nc
+build:ncnc --host_platform=@opam//tc:nc --platforms=@opam//tc:nc
+build:ncbc --host_platform=@opam//tc:nc --platforms=@opam//tc:bc
+
+build:nc  --host_platform=@opam//tc:nc
+
 # to eliminate warning
 # ld: warning: object file (bazel-out/darwin-fastbuild/bin/interop/ffi/case110/cclibs/liblibalpha.a(alpha.o)) was built for newer macOS version (12.3) than being linked (12.0)
 # build --host_macos_minimum_os=12.0
@@ -18,11 +25,5 @@ common --color=yes
 # common:dbg --sandbox_debug
 
 # test --test_verbose_timeout_warnings
-
-build:bc  --host_platform=@opam//tc/bc
-build:bco --host_platform=@opam//tc/bc:opt
-# nc: native code
-build:nc  --host_platform=@opam//tc/n
-build:nco --host_platform=@opam//tc/n:opt
 
 try-import private/bazelrc
