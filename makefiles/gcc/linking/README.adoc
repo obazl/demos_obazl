@@ -1,0 +1,29 @@
+= gcc linking
+
+
+GCC config: `gcc -dumpspecs`
+
+Or: `gcc -v` - note `--program-suffix=9`
+
+The search paths for gcc include it, e.g.
+`/usr/lib/gcc/x86_64-linux-gnu/9`. The search paths for the linker
+do not. This makes sense insofar as the linker can be used with
+different compilers.
+
+Run `$ LD_DEBUG=help ld`
+
+Try `$ LD_DEBUG=libs bazel build mwe/hello_singleton:test`
+
+Print ld search paths:  `$ ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012`
+
+Or: `$ ldconfig -v 2>/dev/null | grep -v ^$'\t'`
+
+See also LD_LIBRARY_PATH
+
+GCC search paths:
+
+`$ gcc -print-search-dirs | sed '/^lib/b 1;d;:1;s,/[^/.][^/]*/\.\./,/,;t 1;s,:[^=]*=,:;,;s,;,;  ,g' | tr \; \\012 | tr : \\012`
+
+`$  gcc -m64 -Xlinker --verbose  2>/dev/null | grep SEARCH | sed 's/SEARCH_DIR("=\?\([^"]\+\)"); */\1\n/g'  | grep -vE '^$'`
+
+
