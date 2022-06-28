@@ -2,9 +2,8 @@
 
 These examples demonstrate the OCaml build discipline using makefiles.
 
-The demos in the link:makefiles[makefiles] directory depend on an
-link:https://opam.ocaml.org/[OPAM] installation with the following
-packages installed:
+The Makefile demos depend on an link:https://opam.ocaml.org/[OPAM]
+installation with the following packages installed:
 
 * findlib
 * ounit2
