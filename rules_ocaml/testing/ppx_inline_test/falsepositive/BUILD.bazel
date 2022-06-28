@@ -1,8 +1,9 @@
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_executable",
+    "ocaml_binary",
     "ocaml_module",
     "ocaml_test",
+    "ppx_module",
     "ppx_executable",
 )
 
@@ -51,14 +52,14 @@ ocaml_module(
 
 ocaml_module(
     name = "Hello",
-    ppx = ":ppx_inline_test",
+    ppx = ":ppx.exe",
     ppx_args = [
         "-inline-test-lib", LIBNAME
     ],
     struct = "hello.ml",
     deps = [
         # "@core//:core",
-        # "@ppx_inline_test//runtime-lib", ## not needed -
+        "@ppx_inline_test//runtime-lib", ## not needed -
         # listed as ppx_codep on the ppx executable
         # "//rules/ocaml_module:Hello"
     ],
@@ -66,24 +67,26 @@ ocaml_module(
 
 ################################################################
 ppx_executable(
-    name = "ppx_inline_test",
+    name = "ppx.exe",
     main = ":Driver",
     opts = [],
     deps = [
-        "@ppx_inline_test//:ppx_inline_test",
         # "@ppxlib//:ppxlib",
+    ],
+)
+
+###########
+ppx_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ppx_inline_test//:ppx_inline_test",
+        "@ppxlib//:ppxlib"
     ],
     ppx_codeps = [
         "@ppx_inline_test//runtime-lib",
     ]
-)
-
-###########
-ocaml_module(
-    name = "Driver",
-    struct = ":ppxlib_driver.ml",
-    visibility = ["//visibility:public"],
-    deps = ["@ppxlib//:ppxlib"],
 )
 
 ########

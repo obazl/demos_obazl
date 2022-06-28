@@ -14,7 +14,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag") #, "string_setti
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_executable",
+    "ocaml_binary",
     "ocaml_module",
     "ocaml_test"
 )
@@ -33,7 +33,7 @@ config_setting(name = "static", flag_values = {":link": "static"})
 #     ]
 # )
 
-ocaml_executable(
+ocaml_binary(
     name = "hello",
     main = ":_Main",
 )

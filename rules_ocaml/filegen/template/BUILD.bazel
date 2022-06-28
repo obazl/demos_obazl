@@ -18,7 +18,7 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_executable",
+    "ocaml_binary",
     "ocaml_module",
     "ocaml_test",
 )
@@ -83,7 +83,7 @@ int_setting( name = "green_127", build_setting_default = 127 )
 # )
 
 #################
-ocaml_executable(
+ocaml_binary(
     name = "hello",
     main = ":_Hello",
     deps = [":_Hello"],

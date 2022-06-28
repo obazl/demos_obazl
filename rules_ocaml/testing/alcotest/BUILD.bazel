@@ -26,7 +26,11 @@ ocaml_module(
 ocaml_test(
     name = "hellotest",
     main = "Test_hello",
-    deps   = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
+    opts = [
+        "-ccopt", "-Wl,-v",
+        "-verbose"
+    ]
+    # deps   = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
 )
 
 ocaml_module(

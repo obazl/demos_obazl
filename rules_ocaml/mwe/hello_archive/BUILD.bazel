@@ -1,7 +1,7 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
-    "ocaml_executable",
+    "ocaml_binary",
     "ocaml_module",
     "ocaml_test",
 )
@@ -13,7 +13,7 @@ ocaml_test(
 )
 
 # $ bazel run minimal/hello_archive:hello
-ocaml_executable(
+ocaml_binary(
     name = "hello",
     main = ":main",
     # deps = [":main"]

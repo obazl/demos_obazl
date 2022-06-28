@@ -4,7 +4,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag") #, "string_setti
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_executable",
+    "ocaml_binary",
     "ocaml_module",
     "ocaml_test"
 )
@@ -25,7 +25,7 @@ ocaml_module(
     deps = ["_Main", "@ounit2//:ounit2"]
 )
 
-ocaml_executable(
+ocaml_binary(
     name = "hello",
     main = ":_Main",
 )

@@ -1,7 +1,7 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
-    "ocaml_executable",
+    "ocaml_binary",
     "ocaml_module",
     "ocaml_signature",
     "ocaml_test",

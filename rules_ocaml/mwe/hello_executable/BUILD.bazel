@@ -3,11 +3,11 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_executable",
+    "ocaml_binary",
     "ocaml_module",
 )
 
-ocaml_executable(
+ocaml_binary(
     name = "hello_executable",
     deps = [":_Hello"],
 )

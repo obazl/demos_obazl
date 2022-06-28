@@ -20,7 +20,7 @@ ocaml_module(
     ppx  = ":ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     ## NOTE: test.ml does NOT have any ppx _build_ dependencies ('deps'), only
-    ## preprocessing deps, which are handled by the ocaml_executable passed via
+    ## preprocessing deps, which are handled by the ocaml_binary passed via
     ## the 'ppx' attribute.
     deps = ["@ounit2//:ounit2"]
 )

@@ -3,7 +3,7 @@
 load("@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ocaml_executable",
+    "ocaml_binary",
     "ppx_executable")
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
