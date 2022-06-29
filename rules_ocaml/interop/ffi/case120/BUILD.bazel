@@ -16,6 +16,10 @@ config_setting(name = "static", flag_values = {":link": "static"})
 ocaml_test(
     name = "test",
     main = "_Test",
+    opts = [
+        "-ccopt", "-lalpha",
+        "-ccopt", "-lalphastub"
+    ]
 )
 
 ocaml_module(

@@ -1,22 +1,4 @@
-# $ bazel test ppx/ppx_codeps
-
-# You can build each target:
-# $ bazel build ppx/ppx_codeps
-# $ bazel build ppx/ppx_codeps:_Hello
-# $ bazel build ppx/ppx_codeps:ppx
-# $ bazel build ppx/ppx_codeps:_Driver
-# $ bazel build ppx/ppx_codeps:gendriver
-
-# To inspect the result of ppx processing:
-# The easiest thing to do is run `bazel aquery ${TARGET}`, e.g. `bazel aquery ppx/ppx_codeps:_Hello`
-# first, run `source tools/aliases`. this defines an alias `bl` you can use to browse the log.
-# uncomment the `ppx_print` line below to set output format to text
-# then run `bazel clean`, then `bazel build ppx/ppx_codeps/hello:_Hello --subcommands
-# then run `bl` to inspect the command log. search for PpxTransformAction;
-# you will see the command, something like:
-# bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_obazl_/hello.ml -impl ppx/ppx_codeps/hello/hello.ml
-# the transformed output is the `-o` parameter (without the leading '../').
-# see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.
+# $ bazel test ppx/ppx_codeps:test
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -93,9 +75,13 @@ ppx_executable(
         ## when we try to use this ppx executable to transform
         ## hello.ml above, since it contains extension point
         ## "[@@deriving sexp]".
+
+        ## ppx_sexp_conv introduces codeps
+        ## "@ppx_sexp_conv//runtime-lib", and "@sexplib0"
         "@ppx_sexp_conv//:ppx_sexp_conv",
 
         ## without these, ppx transformation of test.ml fails
+        ## these indirectly introduce a ppx_codep "@ppx_deriving//runtime",
         "@ppx_deriving//ord",
         "@ppx_deriving//show",
     ],
@@ -112,8 +98,7 @@ ppx_executable(
         ## as direct deps).
         # "@ppx_sexp_conv//runtime-lib",
         # "@ppx_deriving//runtime",
-
-        "@sexplib//:sexplib",
+        # "@sexplib//:sexplib",
 
         ## HOWEVER: we do not need to list it, because the transitive
         ## closure of the deps includes some ppx_codeps, including

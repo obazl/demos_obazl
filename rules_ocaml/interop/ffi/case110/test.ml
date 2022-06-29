@@ -1,8 +1,8 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal "hello" (Alpha.my_str_fn())
+let test1 _ = assert_equal "hello" (Alpha.my_str_fn())
 
-let test2 test_ctxt = assert_equal 17 (Alpha.my_int_fn())
+let test2 _ = assert_equal 17 (Alpha.my_int_fn())
 
 let suite =
 "suite">:::
