@@ -1,9 +1,19 @@
-build:bcbc --host_platform=@opam//tc:bc --platforms=@opam//tc:bc
-build:bcnc --host_platform=@opam//tc:bc --platforms=@opam//tc:nc
-build:ncnc --host_platform=@opam//tc:nc --platforms=@opam//tc:nc
-build:ncbc --host_platform=@opam//tc:nc --platforms=@opam//tc:bc
+# most common: nc native compiler (nc>nc), bc cross-compiler (nc>bc)
+build:nc --host_platform=@opam//tc/host/build:nc
+build:nc --platforms=@opam//tc/host/target:nc
 
-build:nc  --host_platform=@opam//tc:nc
+build:bc --host_platform=@opam//tc/host/build:nc
+build:bc --platforms=@opam//tc/host/target:bc
+
+build:ncnc --host_platform=@opam//tc/host/build:nc
+build:ncnc --platforms=@opam//tc/host/target:nc
+build:ncbc --host_platform=@opam//tc/host/build:nc
+build:ncbc --platforms=@opam//tc/host/target:bc
+
+build:bcbc --host_platform=@opam//tc/host/build:bc
+build:bcbc --platforms=@opam//tc/host/target:bc
+build:bcnc --host_platform=@opam//tc/host/build:bc
+build:bcnc --platforms=@opam//tc/host/target:nc
 
 # to eliminate warning
 # ld: warning: object file (bazel-out/darwin-fastbuild/bin/interop/ffi/case110/cclibs/liblibalpha.a(alpha.o)) was built for newer macOS version (12.3) than being linked (12.0)
