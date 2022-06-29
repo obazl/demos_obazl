@@ -39,7 +39,9 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    opts = [
+        "-cclib", "-llibalpha"
+    ],
     deps = [
         "Main",
         "@ounit2//:ounit2"
@@ -52,8 +54,8 @@ ocaml_binary(
     main = ":Main",
     opts = [
         "-verbose", "-ccopt", "-Wl,-v", "-ccopt", "-v",
-        "-cclib", "-llibalpha"
-    ]
+    ],
+    deps = ["//interop/ffi/case110/cclibs:alpha"]
 )
 
 ocaml_module(

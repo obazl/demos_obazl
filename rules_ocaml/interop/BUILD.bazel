@@ -2,7 +2,8 @@
 test_suite(
     name = "test",
     tests = [
-        "//interop/ffi/case110:test",
-        "//interop/ffi/case120:test",
+        ## broken on vm platform
+        # "//interop/ffi/case110:test",
+        # "//interop/ffi/case120:test",
     ]
 )
