@@ -5,8 +5,8 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_test",
+    "ppx_module",
     "ppx_executable",
-    # "ppx_test",
 )
 
 ocaml_test(
@@ -22,10 +22,10 @@ ocaml_module(
 )
 
 ###############
-ppx_executable(   ## make this ppx_test, with predefined driver? e.g. ppxlib_test? macro!
+ppx_executable(
     name = "ppx.exe",
-    main = ":_Ppxlib_driver",
-    deps = [":ppx_color", "@ppxlib//:ppxlib"]
+    main = ":Ppxlib_driver",
+    deps = [":ppx_color"]
 )
 
 ############
@@ -38,28 +38,27 @@ ocaml_library(
     ],
 )
 
-ocaml_module(
+ppx_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
     deps      = ["@ppxlib//:ppxlib"]
 )
 
-ocaml_module(
+ppx_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
     deps      = ["@ppxlib//:ppxlib"]
 )
-# builds library of three ppx modules
 
-ocaml_module(
+ppx_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
     deps      = ["@ppxlib//:ppxlib"]
 )
 
 ###########
-ocaml_module(
-    name = "_Ppxlib_driver",
+ppx_module(
+    name = "Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps      = ["@ppxlib//:ppxlib"]
 )

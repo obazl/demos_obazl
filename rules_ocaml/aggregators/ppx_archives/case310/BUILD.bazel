@@ -1,27 +1,23 @@
-## aggregators/ppx_libraries/case110
-
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
     "ocaml_module",
     "ocaml_test",
+    "ppx_module",
     "ppx_executable",
 )
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name = "_Test",
-    struct = "test.ml",
+    name      = "Test",
+    struct    = "test.ml",
     ppx       = ":ppx.exe",
     ppx_print = "@rules_ocaml//ppx/print:text",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [
-        "@ounit2//:ounit2"
-    ]
+    deps      = ["@ounit2//:ounit2"]
 )
 
 ###############
@@ -32,11 +28,10 @@ ppx_executable(
         ":driver",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ppxlib"]
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name      = "driver",
     struct    = "driver.ml",
     deps      = [":ppx_color"],
@@ -53,31 +48,28 @@ ocaml_archive(
     ],
 )
 
-ocaml_module(
+ppx_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
     deps      = ["@ppxlib//:ppxlib"]
 )
 
-ocaml_module(
+ppx_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
-ocaml_module(
+ppx_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name = "ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    # deps_opam = ["ppxlib"]
     deps      = ["@ppxlib//:ppxlib"]
 )
 

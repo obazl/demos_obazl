@@ -6,6 +6,7 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_test",
+    "ppx_module",
     "ppx_executable",
 )
 
@@ -18,7 +19,6 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     ppx  = ":ppx.exe",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [":main", "@ounit2//:ounit2"]
 )
 
@@ -31,7 +31,7 @@ ocaml_binary(
 ocaml_module(
     name   = "main",
     struct = "main.ml",
-    ppx    = ":ppx.exe", ## main.ml includes extension points
+    ppx    = ":ppx.exe",
 )
 
 ###############
@@ -43,7 +43,6 @@ ppx_executable(
         "@ppxlib//:ppxlib",
         "@ppxlib//ast",
     ]
-    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -56,25 +55,22 @@ ocaml_library(
     ],
 )
 
-ocaml_module(
+ppx_module(
     name      = "Ppx_red",
     struct    = "ppx_red.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
-ocaml_module(
+ppx_module(
     name      = "Ppx_green",
     struct    = "ppx_green.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
-ocaml_module(
+ppx_module(
     name      = "Ppx_blue",
     struct    = "ppx_blue.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -87,33 +83,29 @@ ocaml_library(
     ],
 )
 
-ocaml_module(
+ppx_module(
     name      = "Ppx_alpha",
     struct    = "ppx_alpha.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
-ocaml_module(
+ppx_module(
     name      = "Ppx_beta",
     struct    = "ppx_beta.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
-ocaml_module(
+ppx_module(
     name      = "Ppx_gamma",
     struct    = "ppx_gamma.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ################################################################
-ocaml_module(
+ppx_module(
     name = "Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ########
