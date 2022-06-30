@@ -78,7 +78,7 @@ ocaml_module(
 ###########
 ocaml_module(
     name      = "Ppx_greek",
-    struct    = "Ppx_greek.ml",
+    struct    = "ppx_greek.ml",
     deps      = [":lib_ppx_greek"],
     opts      = ["-w", "-33"]   ## unused open
 )
