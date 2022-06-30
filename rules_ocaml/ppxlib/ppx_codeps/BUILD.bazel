@@ -4,6 +4,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
+    "ppx_module",
     "ppx_executable")
 
 ###########
@@ -64,8 +65,7 @@ ocaml_module(
 ###############
 ppx_executable(
     name = "ppx.exe",
-    # we can use the driver we've defined in another package:
-    main = "//ppxlib/driver", # obazl will place this last in the list of deps
+    main = ":driver", # obazl will place this last in the list of deps
     # main = "@ppxlib//runner:ppxlib_runner.cmx",
     # main_opam = "ppxlib.runner",
     # opts = [],                # obazl will automatically add '-predicates ppx_driver'
@@ -107,4 +107,22 @@ ppx_executable(
     ],
 
     data = glob(["_opam/lib/stublibs/*"])
+)
+
+ppx_module(
+    name = "driver",
+    struct = ":ppxlib_driver_wrapper.ml",
+    deps   = ["@ppxlib//:ppxlib"],
+    opts = ["-linkall"],
+    visibility = ["//visibility:public"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver_wrapper.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
 )

@@ -27,10 +27,7 @@ ocaml_test(
     name = "hellotest",
     main = "Test_hello",
     opts = [
-        "-ccopt", "-Wl,-v",
-        "-verbose"
     ]
-    # deps   = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
 )
 
 ocaml_module(

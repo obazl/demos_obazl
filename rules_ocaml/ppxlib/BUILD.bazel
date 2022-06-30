@@ -3,13 +3,11 @@ test_suite(
     tests = [
         # "//ppx/derivers:test",
 
-        # these are broken on vm platform but work on native
-
-        # "//ppxlib/genrule:test",
-        # "//ppxlib/hello:test",
-        # "//ppxlib/metaquot:test",
-        # "//ppxlib/ppx_codeps:test",
-        # "//ppxlib/ppx_optcomp:test",
-        # "//ppxlib/rewriters/greeting:test",
+        "//ppxlib/genrule:test",
+        "//ppxlib/hello:test",
+        "//ppxlib/metaquot:test",
+        "//ppxlib/ppx_codeps:test",
+        "//ppxlib/ppx_optcomp:test",
+        "//ppxlib/rewriters/greeting:test",
     ]
 )
