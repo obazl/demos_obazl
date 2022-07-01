@@ -1,19 +1,25 @@
+build --incompatible_enable_cc_toolchain_resolution
+build --incompatible_use_cc_configure_from_rules_cc
+
 # lm: local (hw) machine; vm: ocaml virtual machine (bytecode)
-build:lm --host_platform=@opam//tc/host/build:nc
-build:lm --platforms=@opam//tc/host/target:nc
+build:lm --host_platform=@opam//tc/host/build:local
+build:lm --platforms=@opam//tc/host/target:local
 
-build:vm --host_platform=@opam//tc/host/build:nc
-build:vm --platforms=@opam//tc/host/target:bc
+build:vm --host_platform=@opam//tc/host/build:local
+build:vm --platforms=@opam//tc/host/target:vm
 
-build:lmlm --host_platform=@opam//tc/host/build:nc
-build:lmlm --platforms=@opam//tc/host/target:nc
-build:lmvm --host_platform=@opam//tc/host/build:nc
-build:lmvm --platforms=@opam//tc/host/target:bc
+build:lmlm --host_platform=@opam//tc/host/build:local
+build:lmlm --platforms=@opam//tc/host/target:local
 
-build:vmvm --host_platform=@opam//tc/host/build:bc
-build:vmvm --platforms=@opam//tc/host/target:bc
-build:vmlm --host_platform=@opam//tc/host/build:bc
-build:vmlm --platforms=@opam//tc/host/target:nc
+# build:lmvm --host_platform=@opam//tc/host/build:lm
+build:lmvm --platforms=@opam//tc/host/target:vm
+
+build:vmvm --host_platform=@opam//tc/host/build:vm
+build:vmvm --platforms=@opam//tc/host/target:vm
+build:vmlm --host_platform=@opam//tc/host/build:vm
+build:vmlm --platforms=@opam//tc/host/target:local
+
+build:lmarm --platforms=@opam//tc/host/target:arm
 
 # to eliminate warning
 # ld: warning: object file (bazel-out/darwin-fastbuild/bin/interop/ffi/case110/cclibs/liblibalpha.a(alpha.o)) was built for newer macOS version (12.3) than being linked (12.0)

@@ -26,7 +26,11 @@ config_setting(name = "static", flag_values = {":link": "static"})
 ocaml_test(
     name = "test",
     main = ":Test",
-    opts = ["-cclib", "-llibalpha"]  ## fixme
+    opts = [
+        # "-cclib", "-llibalpha",   ## fixme
+        # "-verbose",
+        # "-ccopt", "-Wl,-v"
+    ]
 )
 
 # ocaml_binary(
@@ -53,15 +57,16 @@ ocaml_binary(
     name = "hello",
     main = ":Main",
     opts = [
-        "-verbose", "-ccopt", "-Wl,-v", "-ccopt", "-v",
+        # "-verbose", "-ccopt", "-Wl,-v", "-ccopt", "-v",
+        # "-cclib", "-lalpha"
     ],
-    deps = ["//interop/ffi/case110/cclibs:alpha"]
+    # deps = ["//interop/ffi/case110/cclibs:alpha"]
 )
 
 ocaml_module(
     name = "Main",
     struct = "main.ml",
-    deps   = ["//interop/ffi/case110/cclibs:alpha"]
+    deps   = ["//interop/ffi/case110/cclibs:Alpha"]
     # deps = select({
     #     ":dynamic": ["//interop/ffi/case110/cclibs:alpha_dynamic"],
     #     ":static" : ["//interop/ffi/case110/cclibs:alpha_static"],

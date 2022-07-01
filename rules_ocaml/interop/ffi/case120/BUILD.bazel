@@ -16,16 +16,15 @@ config_setting(name = "static", flag_values = {":link": "static"})
 ocaml_test(
     name = "test",
     main = "_Test",
-    opts = [
-        "-ccopt", "-lalpha",
-        "-ccopt", "-lalphastub"
-    ]
+    # opts = [
+    #     "-ccopt", "-lalpha",
+    #     "-ccopt", "-lalphastub"
+    # ]
 )
 
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = ["_Main", "@ounit2//:ounit2"]
 )
 

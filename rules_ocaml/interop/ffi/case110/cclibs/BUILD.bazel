@@ -7,25 +7,35 @@ load(
 )
 
 ocaml_module(
-    name = "alpha",
+    name = "Alpha",
     struct = "alpha.ml",
-    deps = [":libalpha"],
+    deps = [":alpha"],
+    opts = [
+        "-verbose",
+        "-ccopt", "-Wl,-v"
+    ],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
 
+# cc_binary(
+#     linkshared = True,
 cc_library(
-    name = "libalpha",
+    name = "alpha",
     srcs = [
         "alpha_adapter.c",
         "alpha.c",
         "alpha.h",
     ],
-    linkstatic = select({
-        "//interop/ffi/case110:dynamic": False,
-        "//interop/ffi/case110:static" : True,
-        "//conditions:default": True
-    }),
-    copts = ["-Iexternal/ocaml/c"],
+    # linkstatic = select({
+    #     "//interop/ffi/case110:dynamic": False,
+    #     "//interop/ffi/case110:static" : True,
+    #     "//conditions:default": True
+    # }),
+    linkstatic = False,
+    copts = [
+        # "version",
+        "-Iexternal/ocaml/c"
+    ],
     deps = ["@ocaml//c"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )

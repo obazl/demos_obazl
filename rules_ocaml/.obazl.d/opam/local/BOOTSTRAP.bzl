@@ -445,13 +445,8 @@ def bootstrap():
         path       = ".obazl.d/opam/local/lib/jst-config",
     )
 
-    native.register_toolchains("@ocaml//toolchains:macos_opam_native_native")
-    native.register_toolchains("@ocaml//toolchains:macos_opam_native_vm")
-    native.register_toolchains("@ocaml//toolchains:macos_opam_vm_vm")
-    native.register_toolchains("@ocaml//toolchains:macos_opam_vm_native")
-    native.register_toolchains("@ocaml//toolchains:default_macos")
-    native.register_toolchains("@ocaml//toolchains:linux_opam_native_native")
-    native.register_toolchains("@ocaml//toolchains:linux_opam_native_vm")
-    native.register_toolchains("@ocaml//toolchains:linux_opam_vm_vm")
-    native.register_toolchains("@ocaml//toolchains:linux_opam_vm_native")
-    native.register_toolchains("@ocaml//toolchains:default_linux")
+    native.register_toolchains("@ocaml//toolchain/selectors/macos:macos_x86_64__vm")
+    native.register_toolchains("@ocaml//toolchain/selectors/macos:macos_x86_64")
+
+    # native.register_toolchains("@ocaml//toolchain/selectors/macos:fake_macos_x86_64__linux_x86_64")
+    # native.register_toolchains("@ocaml//toolchain/selectors/linux:linux_x86_64")
