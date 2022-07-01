@@ -2,11 +2,11 @@
 
 == Getting started
 
-With a local switch:
+With a local switch:  `cd rules_ocaml`, then:
 
 0. `$ opam update`
 
-1. `$ opam switch import opam.local --switch .`
+1. `$ opam switch import .obazl.d/opam/local.manifest --switch .`
 
 2. `$ bazel run @opam//local:refresh`
 
@@ -14,7 +14,7 @@ With a local switch:
 
 With a shared switch:
 
-1. `$ opam switch import opam.local --switch obazl_demos` - creates a new switch named `obazl_demos`
+1. `$ opam switch import .obazl.d/opam/local.manifest --switch obazl_demos` - creates a new switch named `obazl_demos`
 
 2. `$ bazel run @opam//shared:refresh`
 
