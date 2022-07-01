@@ -2,7 +2,9 @@
 
 == Getting started
 
-With a local switch:  `cd rules_ocaml`, then:
+=== Using a local switch
+
+First  `cd rules_ocaml`, then:
 
 0. `$ opam update`
 
@@ -12,23 +14,15 @@ With a local switch:  `cd rules_ocaml`, then:
 
 3. `$ bazel test test`
 
-With a shared switch:
-
-1. `$ opam switch import .obazl.d/opam/local.manifest --switch obazl_demos` - creates a new switch named `obazl_demos`
-
-2. `$ bazel run @opam//shared:refresh`
-
-3. `$ bazel test test`
+WARNING: Step 2 may take a whle. OPAM will download and compile the
+entire OCaml toolsuite, then use it to compile all the packages listed
+in `.obazl.d/opam/local.manifest`.
 
 If you get errors involving missing "@something..." it probably means
 your local switch/coswitch is misconfigured. Try rerunning
 
 `$ bazel run @opam//local:refresh`.
 
-NOTE: If you would like to contribute a demo, please
-file an issue first. Demos should illustrate one concept, using
-minimal code. They should not require the user to install or configure
-any other software, unless that is the point of the demo.
 
 == OPAM deps
 
