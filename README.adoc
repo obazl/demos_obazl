@@ -9,6 +9,7 @@ Getting started:
 See also:
 
 * link:https://github.com/obazl/rules_ocaml[rules_ocaml]
+* link:https://github.com/obazl/tools_opam[tools_opam]
 * link:https://obazl.github.io/docs_obazl[docs_obazl]
 * link:https://github.com/obazl/demos_obazl[demos_obazl]
 * link:https://github.com/obazl/tools_obazl[tools_obazl]
