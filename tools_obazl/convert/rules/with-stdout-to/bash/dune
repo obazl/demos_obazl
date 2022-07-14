@@ -1,8 +1,9 @@
 (rule
- (targets registerer.ml)
- (deps (glob_files *.ml{,i}))
+ (targets output.txt)
+ (deps myscript.sh (:inputs (glob_files *.txt)))
  (action
   (with-stdout-to %{targets}
                   (run bash
-                       %{libexec:tezos-stdlib:test-ocp-indent.sh}
-                       %{deps}))))
+                       myscript.sh
+                       ;; %{libexec:myscript.sh}
+                       %{inputs}))))

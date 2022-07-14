@@ -1,0 +1,23 @@
+########################
+####  Rule Targets  ####
+
+################  rule  ################
+genrule(
+    name  = "__output.txt__",
+    srcs  = [
+        "a.txt",
+        "b.txt",
+        "c.txt",
+        "d.txt",
+        "myscript.sh"
+    ],
+    outs  = [
+        "output.txt"
+    ],
+    cmd   = " ".join([
+        "bash",
+        "$(location myscript.sh)",
+        "$(location ::inputs)",
+        "> $@"
+    ]),
+)

@@ -7,18 +7,18 @@ load("@rules_ocaml//build:rules.bzl",
 
 ################  rule  ################
 genrule(
-    name  = "foo",
+    name  = "__output.ml__",
     srcs  = [
-        ":hello.txt",
-        ":world.txt"
+        "world.txt",
+        "hello.txt"
     ],
     outs  = [
         "output.ml"
     ],
     cmd   = " ".join([
         "cat",
-        "$(location :hello.txt)",
-        "$(location :world.txt)",
+        "$(location rules/with-stdout-to/cat/glob/world.txt)",
+        "$(location rules/with-stdout-to/cat/glob/hello.txt)",
         "> $@"
     ]),
 )

@@ -6,25 +6,19 @@ load("@rules_ocaml//build:rules.bzl",
 ####  Rule Targets  ####
 
 ################  rule  ################
-## (
-##   (:deps (:_ ((:pkg "rules/with-stdout-to/cat/literal_deps") (:file "hello.txt")) ((:pkg "rules/with-stdout-to/cat/literal_deps") (:file "world.txt"))))
-##   (:targets (:_ ((:pkg "rules/with-stdout-to/cat/literal_deps") (:file "output.ml"))))
-##   (:action (:cmd (:tool cat) (:args "hello.txt" "world.txt")) (:stdout %{targets}))
-## )
 genrule(
-    name  = "foo",
+    name  = "__output.ml__",
     srcs  = [
-        ":hello.txt",
-        ":world.txt"
+        "hello.txt",
+        "world.txt"
     ],
     outs  = [
         "output.ml"
     ],
     cmd   = " ".join([
         "cat",
-        "hello.txt",
-        "world.txt",
+        "$(location hello.txt)",
+        "$(location world.txt)",
         "> $@"
     ]),
-    tools = [""],
 )
