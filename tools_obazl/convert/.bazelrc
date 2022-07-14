@@ -1,0 +1,51 @@
+common --color=yes
+common:dbg --subcommands=pretty_print
+common:dbg --verbose_failures
+build:dbgv --@rules_ocaml//cfg/verbose
+
+build --incompatible_enable_cc_toolchain_resolution
+build --incompatible_use_cc_configure_from_rules_cc
+
+# toolchain selection: bc (bytecode), nc (nativecode) E.g. to compile
+# with ocamlc.opt, pass --config=ncbc. this means: cross-compile from
+# sys platform (native code) to vm (bytecode).
+build:bc --host_platform=@opam//tc/host/build:bc
+build:bc --platforms=@opam//tc/host/target:bc
+
+# nc: local (hw) machine
+build:nc --host_platform=@opam//tc/host/build:nc
+build:nc --platforms=@opam//tc/host/target:nc
+
+build:ncnc --host_platform=@opam//tc/host/build:nc
+build:ncnc --platforms=@opam//tc/host/target:nc
+
+# build:ncbc --host_platform=@opam//tc/host/build:nc
+build:ncbc --platforms=@opam//tc/host/target:bc
+
+build:bcbc --host_platform=@opam//tc/host/build:bc
+build:bcbc --platforms=@opam//tc/host/target:bc
+
+build:bcnc --host_platform=@opam//tc/host/build:bc
+build:bcnc --platforms=@opam//tc/host/target:nc
+
+# to eliminate warning
+# ld: warning: object file (bazel-out/darwin-fastbuild/bin/interop/ffi/case110/cclibs/liblibalpha.a(alpha.o)) was built for newer macOS version (12.3) than being linked (12.0)
+# build --host_macos_minimum_os=12.0
+# build --macos_minimum_os=12.0
+# build --xcode_version_config=//bzl/host/macos:host_xcodes
+
+## global config flags
+# build --no@rules_ocaml//cfg:keep-locs
+# build --no@rules_ocaml//cfg:noassert
+# build --no@rules_ocaml//cfg:opaque
+# build --no@rules_ocaml//cfg:short-paths
+# build --no@rules_ocaml//cfg:strict-formats
+# build --no@rules_ocaml//cfg:strict-sequence
+# build --no@rules_ocaml//cfg:xmo             # cross-module optimization
+
+# build --@rules_ocaml//cfg:cmt        ## -bin-annot
+# build --@rules_ocaml//cfg:debug
+# build --@rules_ocaml//cfg:verbose
+# build --@rules_ocaml//cfg/types:principal
+
+try-import private/bazelrc

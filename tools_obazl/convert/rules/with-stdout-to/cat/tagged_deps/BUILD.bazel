@@ -1,0 +1,25 @@
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_module",
+)
+
+########################
+####  Rule Targets  ####
+
+################  rule  ################
+genrule(
+    name  = "foo",
+    srcs  = [
+        "rules/with-stdout-to/cat/tagged_deps:hello.txt",
+        "rules/with-stdout-to/cat/tagged_deps:world.txt"
+    ],
+    outs  = [
+        "output.ml"
+    ],
+    cmd   = " ".join([
+        "cat",
+        "rules/with-stdout-to/cat/tagged_deps:hello.txt",
+        "rules/with-stdout-to/cat/tagged_deps:world.txt",
+        "> $@"
+    ]),
+    tools = [""],
+)

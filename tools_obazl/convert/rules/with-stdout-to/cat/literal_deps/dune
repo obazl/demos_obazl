@@ -1,0 +1,5 @@
+(rule
+ (targets output.ml)
+ (deps hello.txt world.txt)
+ (action
+  (with-stdout-to %{targets} (cat hello.txt world.txt))))
