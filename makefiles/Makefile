@@ -5,6 +5,7 @@ default:
 	$(MAKE) -C deps_struct;
 	$(MAKE) -C fixed_sig
 	$(MAKE) -C fixed_struct
+	$(MAKE) -C ldeps;
 	$(MAKE) -C modules;
 	$(MAKE) -C ns;
 	$(MAKE) -C selection;
@@ -16,6 +17,7 @@ clean:
 	$(MAKE) -C deps_struct clean;
 	$(MAKE) -C fixed_sig clean;
 	$(MAKE) -C fixed_struct clean;
+	$(MAKE) -C ldeps clean;
 	$(MAKE) -C modules clean;
 	$(MAKE) -C ns clean;
 	$(MAKE) -C selection clean;

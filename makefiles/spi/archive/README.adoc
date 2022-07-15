@@ -1,0 +1,17 @@
+= spi
+
+In this example Module A references modules B and C, but does not directly depend
+on them here. Instead it depends on archive 'mylib', which contains both.
+
+Module B depends on module C. Module A is supposed to depend on B but
+not on C. But the user, seeing that B depends on C, and knowing that
+such deps are transitive, decides to reference C from A. Now when we
+change modules B and C in a way that should not break A, it
+nevertheless breaks, since A depends on C.
+
+For example, C.answer == 42, and B.answer sums 13 and C.answer. So we
+change B.answer to 55 and delete module C. Since A depends on C it breaks.
+
+The problem is that archives make no distinction between pubic and private.
+
+
