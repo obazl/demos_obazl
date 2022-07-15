@@ -5,13 +5,7 @@
        ;; but arg to hash-table-ref below is relative to ws root,
        ;; which may not be the same.
        (arg
-        "rules/copy"
-
-        ;; "rules/with-stdout-to/bash"
-        ;; "rules/with-stdout-to/cat/glob"
-        ;; "rules/with-stdout-to/cat/literal_deps"
-        ;; "rules/with-stdout-to/cat/tagged_deps"
-        ;; "rules/with-stdout-to/chdir"
+        "multilibs/mwe/a"
         )
        (wss (load-dune arg))
        (pkgs (cadr (assoc-in '(@ pkgs) wss)))

@@ -3,8 +3,7 @@
 (define _wss
   (let* ((_   (load "dune.scm"))
        (arg
-        ;; "multilibs/mwe/onelib"
-        "multilibs/mwe/twolibs"
+        "multilibs/mwe"
         )
        (wss (load-dune arg))
        ;; (pkgs (cadr (assoc-in '(@ pkgs) wss)))
@@ -55,8 +54,6 @@
             )
           _pkgs)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (let* ((_   (load "dune.scm"))
        (root_ws (assoc-val '@ _wss))

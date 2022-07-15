@@ -1,0 +1,7 @@
+(library
+    (name alib)
+  (modules a))
+
+(library
+    (name blib)
+  (modules b))

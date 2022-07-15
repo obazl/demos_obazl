@@ -3,8 +3,7 @@
 (define _wss
   (let* ((_   (load "dune.scm"))
        (arg
-        ;; "multilibs/mwe/onelib"
-        "multilibs/mwe/twolibs"
+        "multilibs/mwe"
         )
        (wss (load-dune arg))
        ;; (pkgs (cadr (assoc-in '(@ pkgs) wss)))
@@ -13,53 +12,7 @@
        )
     wss))
 
-(define @ws (assoc-val '@ _wss))
-
-(let* ((_ (format #t "alist? ~A~%" (alist? @ws)))
-       (name (assoc 'name @ws))
-       (_ (format #t "name ~A~%" name))
-       (path (assoc 'path @ws))
-       (_ (format #t "path ~A~%" path))
-       (exports (assoc 'exports @ws))
-       (_ (format #t "exports ~A~%" exports))
-       (pkgs (car (assoc-val 'pkgs @ws))))
-  '())
-
-;; (define exports (car (assoc-val 'exports (assoc-val '@ -mibl-ws-table))))
-;; (fill! exports #f)
-
-(define _pkgs (car (assoc-val 'pkgs @ws)))
-
-;; convert to mibl
-(let* ((_ (load "starlark.scm"))
-       (exports (car (assoc-val 'exports (assoc-val '@ -mibl-ws-table)))))
-  (map (lambda (kv)
-         (let ((mibl-pkg (dune-pkg->mibl (cdr kv) exports)))
-           (hash-table-set! _pkgs (car kv) mibl-pkg)))
-       _pkgs)
-  exports)
-
-;; now resolve target cross-references
-(let* ((_   (load "starlark.scm")))
-  (resolve-labels @ws)
-  ;; (for-each (lambda (kv)
-  ;;             (format #t "k: ~A\n" (car kv))
-  ;;             ;; (format #t "v: ~A\n" (cdr kv)))
-  ;;             )
-  ;;           _pkgs)
-  ())
-
-;; now write build files
-(for-each (lambda (kv)
-            (mibl-pkg->starlark (cdr kv))
-            )
-          _pkgs)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(let* ((_   (load "dune.scm"))
-       (root_ws (assoc-val '@ _wss))
+(let* ((root_ws (assoc-val '@ _wss))
        (_ (format #t "alist? ~A~%" (alist? root_ws)))
        (name (assoc 'name root_ws))
        (_ (format #t "name ~A~%" name))
@@ -74,6 +27,11 @@
        (keys (hash-table-keys pkgs))
        (_ (format #t "pkgs keys:~%~{    ~A~%~}" keys))
        )
+  ;; (for-each (lambda (kv)
+  ;;             (format #t "k: ~A\n" (car kv))
+  ;;             (let ((mibl-pkg (dune-pkg->mibl (cdr kv))))
+  ;;               (format #t "mibl-pkg: ~A~%" mibl-pkg)))
+  ;;           pkgs)
   '())
 
 
@@ -84,10 +42,10 @@
        ;; which may not be the same.
        (arg
         ;; "multilibs/mwe/a"
-        ;; "multilibs/mwe/bin"
-        "multilibs/mwe"
+        "multilibs/mwe/bin"
+        ;; "multilibs/mwe"
         )
-       ;; (wss (load-dune arg))
+       (wss (load-dune arg))
        (pkgs (cadr (assoc-in '(@ pkgs) wss)))
        (pkg (hash-table-ref pkgs arg))
        (nzs (dune-pkg->mibl pkg))
