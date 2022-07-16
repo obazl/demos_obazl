@@ -1,11 +1,10 @@
-;; tezos/src/proto_demo_counter/lib_protocol/dune.inc
 
 (rule
- (targets registerer.ml)
- (deps a.ml b.ml
+ (targets output.ml)
+ (deps a.ml b.ml myscript.sh
    (:src_dir TEZOS_PROTOCOL))
  (action
   (with-stdout-to %{targets}
-                  (run %{bin:tezos-embedded-protocol-packer}
+                  (run myscript.sh
                        "%{src_dir}"
                        "demo_counter"))))

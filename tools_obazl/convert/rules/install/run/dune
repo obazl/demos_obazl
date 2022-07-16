@@ -1,0 +1,8 @@
+(rule
+ (targets output.ml)
+ (deps (:data foo.data))
+ (action
+  (with-stdout-to %{targets}
+                  (run %{bin:mypgm}
+                       "%{data}"
+                       "demo_counter"))))
