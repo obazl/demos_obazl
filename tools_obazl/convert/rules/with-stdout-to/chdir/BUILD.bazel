@@ -1,0 +1,7 @@
+########################
+####  Rule Targets  ####
+
+## omitted:
+## #f
+## (chdir %{workspace_root} (run bin:tezos-embedded-protocol-packer ...))
+

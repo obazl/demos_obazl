@@ -1,5 +1,5 @@
 (rule
  (targets output.ml)
- (deps (glob_files "*.txt"))
+ (deps (glob_files "*.txt") (glob_files "**/*.txt"))
  (action
   (with-stdout-to %{targets} (cat %{deps}))))

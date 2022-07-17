@@ -1,0 +1,31 @@
+########################
+####  Rule Targets  ####
+
+################  rule  ################
+genrule(
+    name  = "__output.txt__",
+    srcs  = [
+        "a.txt",
+        "b.txt",
+        "c.txt",
+        "d.txt",
+    ],
+    tools = [
+        "myscript"
+    ],
+    outs  = [
+        "output.txt"
+    ],
+    cmd   = " ".join([
+        "bash",
+        "$(location myscript)",
+        "$(location a.txt)",
+        "$(location b.txt)",
+        "> $@"
+    ]),
+)
+
+sh_binary(
+    name = "myscript",
+    srcs = ["myscript.sh"]
+)

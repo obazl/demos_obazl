@@ -1,10 +1,10 @@
 
 (rule
  (targets output.ml)
- (deps a.ml b.ml myscript.sh
-   (:src_dir TEZOS_PROTOCOL))
+ (deps myscript.sh
+   (:config-file CONFIG))
  (action
   (with-stdout-to %{targets}
                   (run myscript.sh
-                       "%{src_dir}"
+                       "%{config-file}"
                        "demo_counter"))))

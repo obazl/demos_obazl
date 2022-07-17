@@ -1,7 +1,3 @@
-load("@rules_ocaml//build:rules.bzl",
-     "ocaml_module",
-)
-
 ########################
 ####  Rule Targets  ####
 
@@ -9,16 +5,18 @@ load("@rules_ocaml//build:rules.bzl",
 genrule(
     name  = "__output.ml__",
     srcs  = [
+        "hello.txt",
         "world.txt",
-        "hello.txt"
+        "//rules/with-stdout-to/cat/glob/morefiles:test.txt"
     ],
     outs  = [
         "output.ml"
     ],
     cmd   = " ".join([
         "cat",
-        "$(location rules/with-stdout-to/cat/glob/world.txt)",
-        "$(location rules/with-stdout-to/cat/glob/hello.txt)",
+        "$(location hello.txt)",
+        "$(location world.txt)",
+        "$(location //rules/with-stdout-to/cat/glob/morefiles/test.txt)",
         "> $@"
     ]),
 )
