@@ -48,4 +48,4 @@ build:bcnc --platforms=@opam//tc/host/target:nc
 # build --@rules_ocaml//cfg:verbose
 # build --@rules_ocaml//cfg/types:principal
 
-try-import private/bazelrc
+try-import .config/user.bazelrc
