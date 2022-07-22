@@ -1,0 +1,4 @@
+(rule
+ (targets foo.ml)
+ (deps foo.sh (:html (glob_files html/*.html)) (:css (glob_files css/*.css)))
+ (action (run foo.sh %{html} %{css} %{targets})))

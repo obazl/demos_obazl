@@ -1,0 +1,68 @@
+## DO NOT PUT UNDER VERSION CONTROL
+
+common --override_repository=rules_ocaml=/Users/gar/obazl/rules_ocaml
+common --override_repository=opam=/Users/gar/obazl/tools_opam
+common --override_repository=obazl=/Users/gar/obazl/tools_obazl
+common --override_repository=mibl=/Users/gar/obazl/mibl
+common --override_repository=libs7=/Users/gar/obazl/libs7
+
+query --notool_deps
+query --noimplicit_deps
+query --output package
+
+#build --toolchain_resolution_debug=@rules_ocaml//toolchain:type
+#build --toolchain_resolution_debug=@bazel_tools//tools/cpp:toolchain_type
+#build --toolchain_resolution_debug=.*
+
+## this prevents(?) bazel from running xcode_locator, as in:
+## Fetching @local_config_cc; Running xcode-locator 7s
+# build --xcode_version_config=//private/macos:host_xcodes
+
+# common --override_repository=sunlark=/Users/gar/obazl/sunlark
+# common --override_repository=sealark=/Users/gar/obazl/sealark
+
+
+# common --override_repository=rules_ppx=/Users/gar/obazl/rules_ppx
+
+# common --override_repository=bootstrap_opam=/Users/gar/obazl/bootstrap_opam
+
+common:dbg --subcommands=pretty_print
+common:dbg --verbose_failures
+build:dbgv --@rules_ocaml//cfg/verbose
+
+build --compilation_mode=dbg
+
+# build --subcommands=pretty_print
+# build --verbose_failures
+
+# build --explain=explain.log
+# build --build_event_text_file=bep.txt
+
+# common --color=no
+# common --curses=yes
+
+# pass --config=trace to enable this:
+# common --config=trace
+common:trace --@opam//bzl/debug:trace
+
+# build --@tools_opam//bootstrap:ast-dump
+# build --@tools_opam//bootstrap:yydebug
+
+# build --show_progress_rate_limit=0
+# build --show_task_finish
+# build --show_timestamps
+# build --worker_verbose
+
+## build --toolchain_resolution_debug=True
+
+# test --test_output=all
+
+# build --@sunlark//:debug=ast,s7-api,bindings,paths,queries,vectors,filters,targets,mutators,trace,set,properties,loads
+# build --@sealark//:debug=ast,s7-api,bindings,paths,queries,vectors,filters,targets,mutators,trace,set,properties,loads
+#,format
+#,utarrays
+#,serializers
+#,predicates
+#,mem
+
+## in .bazelrc: test --//sealark:yydebug=bindings,dicts,vectors

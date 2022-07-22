@@ -1,0 +1,13 @@
+;; fake dune file, to test (include ...)
+
+(library
+ (name inctest)
+ (libraries coda_digestif core_kernel base58))
+
+(include dune.inc)
+
+(rule
+ (alias buildtest)
+ (deps test_clic.exe)
+ (action (progn)))
+

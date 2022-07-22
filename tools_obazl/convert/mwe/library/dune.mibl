@@ -1,0 +1,1 @@
+((:ws-path "/Users/gar/obazl/demos_obazl/tools_obazl/convert") (:pkg-path "./mwe/library") (:realpath "/Users/gar/obazl/demos_obazl/tools_obazl/convert/mwe/library") (:structures (:static (A . a.ml))) (dune (library (name liba))) (:files (:static "dune.mibl")) (:dune (:ns-archive (:ns . liba) (:privname . liba) (:deps) (:manifest (:modules :static)))))

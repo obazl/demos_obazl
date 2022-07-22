@@ -1,0 +1,5 @@
+(rule
+ (targets c.ml c.mli d.ml e.ml e.mli)
+ (deps a b)
+ (action
+  (run %{exe:foo} %{deps} ./)))

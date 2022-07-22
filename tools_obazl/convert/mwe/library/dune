@@ -1,0 +1,4 @@
+;; minimum working example test
+
+(library
+    (name liba))

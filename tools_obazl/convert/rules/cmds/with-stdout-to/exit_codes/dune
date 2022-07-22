@@ -1,0 +1,3 @@
+(rule
+ (with-stdout-to exit.ml
+                 (echo "let () = exit (int_of_string Sys.argv.(1))")))

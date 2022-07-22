@@ -1,0 +1,23 @@
+= modules_without_implementation
+
+If a lib stanza contains sigs listed in
+`modules_without_implementation`, Dune compiles them and
+creates an empty archive, no namespacing.
+
+If the lib stanza also contains .ml modules, dune _also_ creates a
+namespaced lib and includes it in the archive. The archive contains
+the modules, not the "modules_without_implementation" (sigfiles).
+
+If a lib depends on such a lib, to use the sigfiles the stanza must
+contain a 'copy' to copy the sigfiles listed in
+'modules_without_implementation' into the depending library and
+compile them there.
+
+However dune does compile the sigfiles in-place.
+
+Bazel: one ocaml_signature target per file listed in
+`modules_without_implementation`. If modules are also listed, treat
+the library just like any other.
+
+Client libs that want to depend on such stuff can then reference the
+sigs by label; no need for a copy action.

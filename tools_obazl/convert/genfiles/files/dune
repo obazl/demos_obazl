@@ -1,0 +1,5 @@
+(rule
+ (targets foo.h.template bar.h dune.inc.gen)
+ (deps a b)
+ (action
+  (run cp %{deps} ./)))

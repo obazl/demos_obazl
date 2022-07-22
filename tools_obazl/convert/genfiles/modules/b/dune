@@ -1,0 +1,5 @@
+(rule
+ (targets c.ml)
+ (deps a b)
+ (action
+  (run foo.sh %{deps} ./)))

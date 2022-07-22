@@ -1,0 +1,87 @@
+;; mina/src/lib/crypto/kimchi_binding/js/chrome/dune
+
+(rule
+ (targets
+   plonk_wasm_bg.wasm.d.ts
+   plonk_wasm_bg.wasm
+   plonk_wasm.d.ts
+   plonk_wasm.js
+   flags.sexp
+   snippets/)
+ (deps
+  ../../wasm/Cargo.toml
+  (source_tree ../../wasm/src)
+  (source_tree ../../wasm/.cargo/config)
+  (source_tree ../../../proof-systems) )
+ (locks /cargo-lock) ; lock for rustup
+ (action
+  (progn
+   (run chmod -R +w ../../wasm .)
+   (setenv CARGO_TARGET_DIR "%{read:../../stubs/dune-build-root}/cargo_kimchi_wasm"
+    (run ./build.sh))
+   (write-file flags.sexp "()"))))
+
+;; mina/src/lib/crypto/kimchi_binding/js/stubs/dune
+(rule
+ (enabled_if (= %{env:MARLIN_PLONK_STUBS=n} n))
+ (targets libwires_15_stubs.a)
+ (deps
+  Cargo.toml
+  ../../Cargo.toml
+  ../../rust-toolchain.toml
+  (source_tree src)
+  (source_tree binding_generation)
+  (source_tree ../wasm)
+  (source_tree ../../proof-systems)
+  (env_var MARLIN_PLONK_STUBS))
+ (locks /cargo-lock) ;; lock for rustup
+ (action
+  (progn
+   (setenv CARGO_TARGET_DIR
+    "%{read:dune-build-root}/cargo_kimchi_stubs"
+    (setenv
+     RUSTFLAGS
+     "-C target-feature=+bmi2,+adx"
+     (run cargo build --release)))
+   (run cp %{read:dune-build-root}/cargo_kimchi_stubs/release/libwires_15_stubs.a .))))
+
+(rule
+ (enabled_if (<> %{env:MARLIN_PLONK_STUBS=n} n))
+ (targets libwires_15_stubs.a)
+ (deps (env_var MARLIN_PLONK_STUBS))
+ (action
+  (progn
+   (copy %{env:MARLIN_PLONK_STUBS=n}/lib/libwires_15_stubs.a libwires_15_stubs.a))))
+
+ ;; (action
+ ;;  (chdir
+ ;;   binding_generation
+ ;;   (progn
+ ;;    (run rm -rf ./target)
+ ;;    (run rm -f ./Cargo.lock)
+ ;;    (setenv CARGO_TARGET_DIR "%{read:dune-build-root}/cargo_kimchi_bindgen"
+ ;;     (run cargo run %{targets}))
+ ;;    (run ocamlformat -i %{targets}))))
+
+
+(rule
+ (targets kimchi_types.ml pasta_bindings.ml kimchi_bindings.ml)
+ (enabled_if (<> %{env:MARLIN_PLONK_STUBS=n} n))
+ (mode promote)
+ (deps
+   ../../../../.ocamlformat
+   (env_var MARLIN_PLONK_STUBS))
+ (action
+  (progn
+   (run %{env:MARLIN_PLONK_STUBS=n}/bin/binding_generation %{targets})
+   (run ocamlformat -i %{targets}))))
+
+;; mina/src/lib/pickles/plonk_checks/dune
+(rule
+ (targets scalars.ml)
+ (mode promote)
+ (action
+  (progn
+   (run gen_scalars/gen_scalars.exe scalars.ml)
+   (run ocamlformat -i scalars.ml))))
+

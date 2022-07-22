@@ -1,0 +1,19 @@
+; mibl config
+
+[mibl]
+version = 0.1.0
+grammar=1.0.0-BETA  ;; version number of config grammar, not obazl program
+
+[srcs]
+
+;; buggy:
+exclude = baddot
+exclude = rules/actions/progn/shell
+exclude = rules/progn/shell
+exclude = library/root_module
+exclude = library/select
+
+;; include = rules
+
+;; ;; excludes override includes
+;; exclude = src/foo/bar:src/foo/baz

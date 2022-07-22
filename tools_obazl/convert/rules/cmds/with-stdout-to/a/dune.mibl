@@ -1,0 +1,1 @@
+((:ws-path "/Users/gar/obazl/demos_obazl/tools_obazl/convert") (:pkg-path "./rules/cmds/with-stdout-to/a") (:realpath "/Users/gar/obazl/demos_obazl/tools_obazl/convert/rules/cmds/with-stdout-to/a") (dune (rule (with-stdout-to foo (echo bar)))) (:files (:static "dune.mibl")) (:dune (:rule (:deps) (:actions (:cmd (:tool echo) (:args (:script bar))) (:stdout foo)))))

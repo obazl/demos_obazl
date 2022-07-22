@@ -1,0 +1,8 @@
+various rule stanzas to test code that generates files.
+
+result of processing should be an updated pkg alist that adds a
+:generated alist, containing generated file assocs, to the :modules
+and :files assocs, e.g.:
+
+* (:modules (:dynamic (:ml foo.ml) ...))
+* (:files (:dynamic (:h "common.h") ...))

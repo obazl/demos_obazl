@@ -1,0 +1,21 @@
+= rules and actions
+
+According to the doc, rule syntax is:
+
+(rule
+ (target[s] <filenames>)
+ (action  <action>)
+ <optional-fields>)
+
+Sadly, the tests in dune's source code say differently. The 'action
+wrapper can be omitted. For example:
+
+(rule
+  (action (with-stdout-to ...)))
+
+or
+
+(rule
+  (with-stdout-to ...))
+
+So we split them into actions and cmds, the latter omitting the 'action wrapper.

@@ -1,0 +1,4 @@
+(rule
+ (targets foo.ml)
+ (deps (:< gen/gen.exe))
+ (action (run %{<} %{targets})))

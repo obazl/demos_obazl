@@ -1,0 +1,5 @@
+(rule
+ (targets foo.ml foo.mli bar.json baz.dat)
+ (deps a b)
+ (action
+  (run mytool %{deps} ./)))

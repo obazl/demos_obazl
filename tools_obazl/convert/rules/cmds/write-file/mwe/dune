@@ -1,0 +1,3 @@
+(rule
+  (target c.txt)
+  (write-file %{target} "c\n"))

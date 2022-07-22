@@ -1,0 +1,5 @@
+(rule
+ (targets c.ml c.mli d.ml e.ml e.mli test.sh test.dat)
+ (deps a b)
+ (action
+  (run mytool %{deps} ./)))

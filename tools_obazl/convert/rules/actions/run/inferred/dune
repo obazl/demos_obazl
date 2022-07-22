@@ -1,0 +1,2 @@
+(rule
+ (action (run foo.sh bar)))

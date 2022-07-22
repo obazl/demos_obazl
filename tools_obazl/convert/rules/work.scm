@@ -11,11 +11,13 @@
        (arg
         ;; "multilibs/mwe/twolibs"
 
-        "rules/copy"
+        ;; "rules/copy"
 
         ;; "rules/progn/empties"
+        ;; "rules/progn/runcat"
+        ;; "rules/progn/chdir"
 
-        ;; "rules/with-stdout-to/cat/literal_deps"
+        "rules/with-stdout-to/cat/literal_deps"
         ;; "rules/with-stdout-to/cat/tagged_deps"
         ;; "rules/with-stdout-to/cat/glob"
         ;; "rules/with-stdout-to/run"
@@ -41,8 +43,8 @@
 
        ;; resolve stuff
        (_ (resolve-labels (assoc-val :@ -mibl-ws-table)))
-       (_ (car (assoc-val :exports (assoc-val :@ _wss))))
-       ;; ) '())
+       ;; (exports (car (assoc-val :exports (assoc-val :@ _wss))))
+       ;; ) exports)
 
        )
   ;; to starlark

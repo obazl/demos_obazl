@@ -1,0 +1,18 @@
+;; progn used to force build of deps?
+
+;; Evidently such an alias is used to verify that a set of targets
+;; build successfully? In Tezos at least, alias 'buildtest' is used in
+;; rules that depend on .exe files and that run (progn). In the
+;; Makefile, target 'build-test' runs '@dune build @buildtest'.
+
+;; We use rule 'build_test' from the Skylib library for this. Instead
+;; of emitting on for each such stanza we iterate over all stanzas
+;; aliased to 'foo' and then emit one build-test target.
+
+(rule
+ (alias buildtest)
+ (deps test_tzList.exe
+       test_bounded_heap.exe
+       test_tzString.exe
+       test_lwt_pipe.exe)
+ (action (progn)))
