@@ -1,0 +1,2 @@
+(rule (write-file output.txt
+                  "unwrapped/inferred_output data content"))

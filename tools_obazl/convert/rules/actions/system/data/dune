@@ -1,0 +1,4 @@
+(rule
+ (targets foo.txt)
+ (deps foo.sh (:data a.dat b.dat))
+ (action (system foo.sh %{data} %{targets})))

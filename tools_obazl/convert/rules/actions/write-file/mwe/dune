@@ -1,9 +1,0 @@
-(rule
-  (target c.txt)
-  (action (write-file %{target} "c\n")))
-
-(rule
-  (target foo.txt)
-  (action (write-file %{target} "other content")))
-
-

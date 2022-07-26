@@ -1,0 +1,8 @@
+(rule
+  (target output.txt)
+  (action (write-file
+           output.txt
+           "action/mwe/literal data content")))
+
+
+

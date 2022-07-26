@@ -1,0 +1,4 @@
+(rule
+ (action (write-file
+          output.txt
+          "action/inferred_output data content")))

@@ -1,0 +1,6 @@
+(rule
+  (target c.txt)
+  (action (run (write-file %{target} "c\n"))))
+
+
+

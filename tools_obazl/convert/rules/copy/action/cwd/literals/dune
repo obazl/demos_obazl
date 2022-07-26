@@ -1,0 +1,4 @@
+(rule
+  (targets output.mlh)
+  (deps input.mlh)
+  (action (copy input.mlh output.mlh)))

@@ -1,4 +1,4 @@
 (rule
- (targets foo.ml)
+ (targets b.ml)
  (deps (:< gen.exe))
- (action (run %{<} "param" b.ml %{targets})))
+ (action (run %{<} "param" b.mli %{targets})))

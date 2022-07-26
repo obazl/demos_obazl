@@ -1,0 +1,4 @@
+(rule
+  (target output.txt)
+  (write-file %{target}
+              "unwrapped/mwe/tagged data content"))

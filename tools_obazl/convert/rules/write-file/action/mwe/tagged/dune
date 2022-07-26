@@ -1,0 +1,8 @@
+(rule
+  (target output.txt)
+  (action (write-file
+           %{target}
+           "action/mwe/tagged data content")))
+
+
+

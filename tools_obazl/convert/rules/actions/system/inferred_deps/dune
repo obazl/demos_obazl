@@ -1,0 +1,4 @@
+(rule
+ (targets foo.dat)
+ (deps foo.sh)
+ (action (system foo.sh a.dat b.dat %{target})))

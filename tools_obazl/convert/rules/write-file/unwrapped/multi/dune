@@ -1,0 +1,10 @@
+(rule
+  (target output_a.txt)
+  (write-file %{target} "a content"))
+
+(rule
+  (target output_b.txt)
+  (write-file output_b.txt "b content"))
+
+
+

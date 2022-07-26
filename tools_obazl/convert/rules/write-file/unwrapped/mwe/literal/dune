@@ -1,0 +1,4 @@
+(rule
+  (target output.txt)
+  (write-file output.txt
+              "unwrapped/mwe/literal data content"))

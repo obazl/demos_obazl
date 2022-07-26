@@ -1,2 +1,0 @@
-(rule
- (write-file target.txt %{lib:pkg}))

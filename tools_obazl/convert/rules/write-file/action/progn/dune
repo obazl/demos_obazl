@@ -1,0 +1,8 @@
+(rule
+  (target out_a.txt out_b.txt)
+  (action (progn
+           (write-file out_a.txt "amsg")
+           (write-file out_b.txt "bmsg"))))
+
+
+

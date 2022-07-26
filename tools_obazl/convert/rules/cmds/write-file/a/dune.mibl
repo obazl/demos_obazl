@@ -1,1 +1,0 @@
-((:ws-path "/Users/gar/obazl/demos_obazl/tools_obazl/convert") (:pkg-path "./rules/cmds/write-file/a") (:realpath "/Users/gar/obazl/demos_obazl/tools_obazl/convert/rules/cmds/write-file/a") (dune (rule (write-file target.txt %{lib:pkg}))) (:files (:static "dune.mibl")) (:dune (:rule (:deps) (:actions (:cmd (:tool ::write-file) (:args target.txt (:content %{lib:pkg})))))))

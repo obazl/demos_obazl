@@ -1,0 +1,7 @@
+(rule
+ (targets foo.ml) ;;  bar.ml)
+ (deps (:< foo.sh))
+ (action (run %{<}
+              "param"
+              "a.mli"
+              %{targets})))
