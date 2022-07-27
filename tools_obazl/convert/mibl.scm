@@ -98,9 +98,10 @@
          (pkgs (car (assoc-val :pkgs @ws))))
 
     (for-each (lambda (kv)
-                ;; (format #t "~A: ~A~%" (blue "miblarkizing") (car kv))
+                (format #t "~A: ~A~%" (blue "emitting") (car kv))
                 (if (not (null? (cdr kv)))
-                    (mibl-pkg->build-bazel (cdr kv)))
+                    (mibl-pkg->build-bazel (cdr kv))
+                    (format #t "~A: ~A~%" (blue "skipping") (car kv)))
                 )
               pkgs)))
 
@@ -114,16 +115,25 @@
 
   (let* ((_wss (-load-dune path))
          ;; (_ (-dump-pkgs :@))
+
          (mpkgs (-miblize :@))
+         ;; (_ (-dump-pkgs :@))
+
+         (mpkgs (add-filegroups-to-pkgs :@))
          (_ (-dump-pkgs :@))
-         (_ (-dump-exports :@))
-         (_ (-dump-filegroups :@))
-         ;; (_ (-resolve-labels :@))
-         ;; (_ (-dump-pkgs :@))
-         ;; (_ (-miblarkize :@))
-         ;; (_ (-dump-pkgs :@))
-         ;; (_ (-emit-mibl :@))
+
+         ;; ;; (_ (-dump-exports :@))
+         ;; (_ (-dump-filegroups :@))
+
+         (_ (-resolve-labels :@))
+         ;; ;; (_ (-dump-pkgs :@))
+
+         (_ (-miblarkize :@))
+         ;; ;; (_ (-dump-pkgs :@))
+
+         ;; ;; (_ (-emit-mibl :@))
          ;; ;; (_ (emit-mibl))
-         ;; (_ (-emit-starlark :@))
+
+         (_ (-emit-starlark :@))
          )
     '()))

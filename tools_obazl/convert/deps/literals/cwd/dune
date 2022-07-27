@@ -1,4 +1,4 @@
 (rule
- (targets foo.ml)
- (deps (:< gen.exe))
+ (targets foo.txt)
+ (deps (:< gen.sh))
  (action (run %{<} %{targets})))

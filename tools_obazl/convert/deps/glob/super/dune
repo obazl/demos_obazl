@@ -1,4 +1,4 @@
 (rule
  (targets foo.ml)
- (deps (:< foo.sh) (:css (glob_files ../*.css)))
+ (deps (:< concat.sh) (:css (glob_files ../css/*.css)))
  (action (run %{<} %{css} %{targets})))
