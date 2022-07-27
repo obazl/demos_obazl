@@ -1,3 +1,0 @@
-(rule
-  (targets config.mlh)
-  (action (write-file config.mlh "file content string...")))

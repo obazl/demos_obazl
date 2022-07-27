@@ -1,0 +1,7 @@
+(rule
+ (action (run (progn
+               (write-file output_a.txt "amsg")
+               (write-file output_b.txt "bmsg")))))
+
+
+
