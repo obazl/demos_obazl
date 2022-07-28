@@ -28,5 +28,14 @@ ocaml_module(
 ocaml_module(
     name = "Hello",
     struct = "hello.ml",
-    # opts = ["-opaque"]
+    opts = [
+        # "-opaque"
+        # "-dlocations",
+        # "-dsource",
+        # "-dparsetree",
+        # "-dshape",
+        # "-dtypedtree",
+        # "-dlambda",
+        # "-dclambda",
+    ]
 )

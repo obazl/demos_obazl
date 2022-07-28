@@ -6,6 +6,7 @@ load(
     "ocaml_ns_library",
     "ocaml_test",
     "ppx_executable",
+    "ppx_module",
 )
 
 ocaml_ns_library(
@@ -50,14 +51,14 @@ ppx_executable(
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name      = "ppx_hex_of_dec",
     struct    = ":ppx_hex_of_dec.ml",
     deps = ["@ppxlib//:ppxlib"]
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name = "Ppxlib_runner",
     struct = ":ppxlib_runner.ml",
     deps = ["@ppxlib//:ppxlib"]
