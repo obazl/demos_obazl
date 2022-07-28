@@ -1,5 +1,5 @@
 (library
- (name lib_b)
- (public_name lib-b)
+ (name lib_wdeps)
+ (public_name lib-wdep)
  ;;(modules :standard) ;; default: include all
  (libraries foo bar))

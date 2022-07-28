@@ -1,9 +1,9 @@
 (library
- (name lib_a)
- (public_name lib-a)
+ (name lib_mwe)
+ (public_name lib-mwe)
  (modules a b) ;; include only these
- (libraries foo bar)
- (flags (:standard -open foo -open bar -linkall)))
+ ;; (libraries foo bar)
+ (flags (:standard -linkall)))
 
 ;; (library
 ;;  (name lib_b)

@@ -1,6 +1,0 @@
-(library
- (name lib_a)
- (public_name lib-a)
- (modules :standard)
- (libraries foo bar)
- (flags (:standard -open foo -open bar -linkall)))

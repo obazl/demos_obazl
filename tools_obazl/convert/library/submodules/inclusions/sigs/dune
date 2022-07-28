@@ -1,0 +1,5 @@
+(library
+ (name lib_sigs)
+ (public_name lib-sigs)
+ (modules a c) ;; include only these; c is sig only
+ (flags (:standard -linkall)))

@@ -1,0 +1,7 @@
+(library
+ (name unwrapped_exclusions_mwe)
+ (public_name unwrapped-exclusions-mwe)
+ (wrapped false)
+ (modules :standard \ b) ;; all but b
+ (flags (:standard -linkall)))
+
