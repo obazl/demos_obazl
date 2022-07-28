@@ -50,10 +50,13 @@
     _wss))
 
 (define (-miblize ws)
+  (format #t "~A: ~A~%" (blue "-miblize") ws)
   (let* ((@ws (assoc-val ws -mibl-ws-table))
          (pkgs (car (assoc-val :pkgs @ws)))
          (mpkg-alist (map (lambda (kv)
-                           (let ((mibl-pkg (dune-pkg->mibl :@ (cdr kv))))
+                            ;; (format #t "~A: ~A~%" (red "pkg") (cdr kv))
+                            (let ((mibl-pkg (dune-pkg->mibl :@ (cdr kv))))
+                            ;; (format #t "~A: ~A~%" (red "miblized") mibl-pkg)
                              (hash-table-set! pkgs (car kv) mibl-pkg)
                              mibl-pkg))
                          pkgs)))
@@ -110,6 +113,7 @@
   ;; (format #t "-mibl-ws-table: ~A~%" -mibl-ws-table)
   ;; (format #t "BYE~%"))
 
+  (set! *build-dyads* #f)
   ;; (set! *wrapped-libs-to-ns-archives* #f)
   ;; (set! *unwrapped-libs-to-archives* #f)
 
@@ -118,18 +122,18 @@
 
          (mpkgs (-miblize :@))
          ;; (_ (-dump-pkgs :@))
-
-         (mpkgs (add-filegroups-to-pkgs :@))
-         (_ (-dump-pkgs :@))
+         (_ (format #t "~A~%" (red "XXXXXXXXXXXXXXXX")))
+         ;; (mpkgs (add-filegroups-to-pkgs :@))
+         ;; (_ (-dump-pkgs :@))
 
          ;; ;; (_ (-dump-exports :@))
          ;; (_ (-dump-filegroups :@))
 
          (_ (-resolve-labels :@))
-         ;; ;; (_ (-dump-pkgs :@))
+         ;; (_ (-dump-pkgs :@))
 
          (_ (-miblarkize :@))
-         ;; ;; (_ (-dump-pkgs :@))
+         ;; (_ (-dump-pkgs :@))
 
          ;; ;; (_ (-emit-mibl :@))
          ;; ;; (_ (emit-mibl))

@@ -1,4 +1,4 @@
 (rule
  (targets foo.ml)
- (deps (:< gen.exe))
+ (deps (:< gen.sh))
  (action (run %{<} "param" "a.ml" %{targets})))

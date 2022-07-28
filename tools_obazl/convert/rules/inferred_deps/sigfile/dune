@@ -1,5 +1,5 @@
 (rule
- (targets foo.ml) ;;  bar.ml)
+ (targets foo.ml)
  (deps (:< foo.sh))
  (action (run %{<}
               "param"

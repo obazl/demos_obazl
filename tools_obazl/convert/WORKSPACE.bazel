@@ -36,11 +36,11 @@ rules_foreign_cc_dependencies()
 rules_foreign_cc_dependencies(register_built_tools=False)
 
 ## uncomment after configuring coswitch; see README.md
-# load("//:COSWITCH.bzl", register_coswitch = "register")
-# register_coswitch()
+load("//:COSWITCH.bzl", register_coswitch = "register")
+register_coswitch()
 
-# load("@coswitch//:BOOTSTRAP.bzl", "bootstrap")
-# bootstrap()
+load("@coswitch//:BOOTSTRAP.bzl", "bootstrap")
+bootstrap()
 
 # ################################################################
 # http_archive(

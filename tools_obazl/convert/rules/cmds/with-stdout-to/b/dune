@@ -1,3 +1,0 @@
-(rule
- (targets dummy.ml)
- (action (with-stdout-to %{targets} (echo ""))))

@@ -2,5 +2,4 @@
  (name lib_b)
  (public_name lib-b)
  ;;(modules :standard) ;; default: include all
- (libraries foo bar)
- (flags (:standard -open foo -open bar -linkall)))
+ (flags (:standard -linkall)))
