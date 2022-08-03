@@ -1,0 +1,7 @@
+;; https://dune.readthedocs.io/en/stable/dune-files.html#test
+
+(tests
+ (names mytest)
+ (libraries alcotest mylib)
+ (action (run %{test} -e)))
+

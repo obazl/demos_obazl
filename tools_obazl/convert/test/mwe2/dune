@@ -1,0 +1,11 @@
+;; (rule
+;;   (target goodbye.ml)
+;;   (action (write-file
+;;            goodbye.ml
+;;            "val goodbye_msg: string")))
+
+(test
+ (name mytest)
+ ;; (package mwe)
+ ;; (modules mytest hello)
+ (libraries ounit2))
