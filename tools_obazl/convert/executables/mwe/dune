@@ -1,0 +1,3 @@
+(executables
+ (names a_exec b_exec)
+ (libraries ounit2))

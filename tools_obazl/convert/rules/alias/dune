@@ -1,0 +1,6 @@
+(rule (write-file generated-file dynamic-contents))
+
+;; %{dep:<string>} expands to filename, inferred as a dep
+(alias
+  (name test-dep)
+  (action (cat %{dep:generated-file})))

@@ -1,0 +1,9 @@
+(executable
+ (name myexec)
+ (libraries ounit2))
+
+(rule
+ (alias runtest)
+ (action (run %{exe:myexec.exe})))
+
+

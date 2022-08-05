@@ -13,6 +13,12 @@ exclude = rules/progn/shell
 exclude = library/root_module
 exclude = library/select
 
+;; to convert just deps/glob/super, uncomment the following 3 lines and
+;; run 'bazel run @obazl//batch -- deps/glob'
+exclude = deps/glob/cwd
+exclude = deps/glob/mixed
+exclude = deps/glob/sub
+
 ;; include = rules
 
 ;; ;; excludes override includes

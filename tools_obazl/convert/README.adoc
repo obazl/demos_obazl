@@ -1,0 +1,18 @@
+= dune conversion tests/demos
+
+== dev mode
+
+`$ bazel run @obazl//batch -- path/to/target`
+
+This will load `mibl.scm` and run its `main` routine.
+
+Some packages have out-of-scope depencies; they depend on files in
+directories that are not descendants. So if you try to convert them
+singly you'll get an error. You have to convert an ancestor directory
+that has everything needed in scope. But that means all the packages
+in scope will be converted so you gete a lot of output you don't need.
+You can restrict the scope by adding "exclude" entries to .config/miblrc.
+
+For example, deps/glob/super depends on deps/glob/css. See comments
+in .config/miblrc for instructions on how to convert it.
+

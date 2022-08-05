@@ -1,0 +1,10 @@
+(library
+  (name lib_ppx_sexp_value)
+  (public_name lib-ppx_sexp_value)
+  (modules :standard \ test)
+  (libraries sexplib ounit2)
+  (preprocess (pps ppx_sexp_value)))
+
+(test
+  (names test_ppx_sexp_value)
+  (libraries ounit2))

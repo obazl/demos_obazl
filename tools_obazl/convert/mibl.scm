@@ -124,23 +124,18 @@
          ;; (_ (-dump-pkgs :@))
 
          (mpkgs (add-filegroups-to-pkgs :@))
-         ;; (_ (format #t "~A~%" (red "AAAAAAAAAAAAAAAA")))
-
-         ;;;; run ocamldep to discover intramural deps
-         ;;;; (_ (mibl-ocamldeps! :@))
 
          (_ (-resolve-labels :@))
 
          (_ (resolve-pkg-file-deps :@))
 
          (_ (-miblarkize :@))
-         ;; (_ (format #t "~A~%" (red "CCCCCCCCCCCCCCCC")))
 
          (_ (format #t "~A~%" (red "PKG DUMP")))
          (_ (-dump-pkgs :@))
 
-         ;; ;; (_ (-dump-exports :@))
-         ;; (_ (-dump-filegroups :@))
+         (_ (-dump-exports :@))
+         (_ (-dump-filegroups :@))
 
 
          ;; ;; (_ (-emit-mibl :@))

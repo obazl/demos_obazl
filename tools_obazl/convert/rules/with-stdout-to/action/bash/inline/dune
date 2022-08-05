@@ -1,0 +1,7 @@
+(rule
+ (targets output.txt)
+ (deps (:foo (glob_files *.txt)))
+ (action
+  (with-stdout-to %{targets}
+                  (run bash
+                       "cat *.txt > output.txt"))))

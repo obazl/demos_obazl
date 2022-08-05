@@ -1,4 +1,4 @@
 (rule
- (targets foo.ml)
+ (targets output.txt)
  (deps concat.sh (:html (glob_files *.html)) (:css (glob_files *.css)))
  (action (run concat.sh %{html} %{css} %{targets})))

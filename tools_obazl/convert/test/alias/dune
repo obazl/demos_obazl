@@ -1,0 +1,15 @@
+(executable
+ (name myexec)
+ (libraries alcotest))
+
+;; aliases of test executables do (may?) not have an output
+;; so they do not translate to genrules
+;; instead the executable translates to ocaml_test
+;; and the alias rule is not translated
+
+(rule
+ (alias runtest)
+ (target foo.dat)
+ (action (run ./myexec.exe)))
+
+ ;; (action (run %{bin:myexec.exe}))

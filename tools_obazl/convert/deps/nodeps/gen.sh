@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "FOOBAR!" > $@
+echo "GENERATED FILE CONTENT!" > $@

@@ -1,0 +1,26 @@
+= bash actions
+
+We cannot expect to be able to parse inline shell scripts and infer
+dependencies and outputs, so instead of emiting one genrule for such
+actions we emit two targets:
+
+* a genrule that emits a shell script containing the inline code
+* a sh_binary target that runs the shell script
+
+For example, (action (bash "...script...")) would become something like
+
+genrule(name = "__foo__", outs = ["genscript.sh"], cmd_bash =  "...script...", executable=True)
+
+sh_binary(name = "genscript", srcs=["genscript.sh"]...)
+
+To make this work we need to process the inline script before emitting
+it, since it may contain dune %{} variables.  For example:
+
+ (action (bash "cat %{deps}/*"))
+
+ (action (bash "mkdir %{targets}"))
+
+(action  (bash "cp `grep '^ARCH=' %{conf} | cut -d'=' -f2`/*.ml ."))
+
+ (bash "%{dep:../tools/make_opcodes.exe} -opcodes < %{instr} > %{targets}")
+

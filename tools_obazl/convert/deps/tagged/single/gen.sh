@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "TAGGED FOOBAR!" > $1
+echo "GENERATED FILE CONTENT!" > $1

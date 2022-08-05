@@ -1,5 +1,5 @@
 (rule
- (targets output.ml)
+ (targets output.txt)
  (deps hello.txt world.txt)
  (action
   (with-stdout-to %{targets}
