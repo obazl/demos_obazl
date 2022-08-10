@@ -1,0 +1,9 @@
+;; dune won't accept glob_files here, it thinks there's a dep cycle
+
+(rule
+ (targets output.txt)
+ ;; (deps (glob_files *.txt))
+ (deps a.txt b.txt)
+ (action
+  (with-stdout-to %{targets}
+                  (bash "cat %{deps}"))))

@@ -1,0 +1,40 @@
+;; based on tezos lib_protocol_compiler
+
+;; NB: in dune, lib and native executable have same public_name
+;; in obazl they must have unique names
+
+;; "installs" to lib:mybin
+(library
+ (name my_bin) ;; tezos_protocol_compiler)
+ (public_name my-bin) ;; tezos-protocol-compiler)
+ ;; (libraries tezos-base
+ ;;            tezos-base.unix
+ ;;            tezos-version
+ ;;            tezos-protocol-environment-sigs
+ ;;            tezos-stdlib-unix
+ ;;            compiler-libs.common
+ ;;            lwt.unix
+ ;;            ocplib-ocamlres
+ ;;            unix)
+ ;; (flags (:standard -open Tezos_base__TzPervasives
+ ;;                   -open Tezos_base_unix
+ ;;                   -open Tezos_stdlib_unix))
+ (modules Goodbye Hello)) ;; Embedded_cmis Packer Compiler))
+
+;; "installs" to bin:mybin
+(executable
+ (name mybin) ;; main_native)
+ (public_name my-bin) ;; tezos-protocol-compiler)
+ ;; (modes native)
+ ;; (libraries tezos_protocol_compiler_native)
+ (flags (:standard -linkall)))
+ ;; (modules Mybin)) ;; Main_native))
+
+;; (executable
+;;  (name main_byte)
+;;  (public_name mybin) ;; tezos-protocol-compiler-byte)
+;;  (modes native)
+;;  (libraries tezos_protocol_compiler_byte)
+;;  (flags (:standard -linkall))
+;;  (modules Main_byte))
+

@@ -1,0 +1,10 @@
+(rule
+ (targets output.txt)
+ (deps myscript.sh (:inputs (glob_files *.txt)))
+ (action
+  (with-stdout-to %{targets}
+                  (bash
+                   "myscript.sh
+                   %{inputs}"))))
+
+                   ;; %{libexec:myscript.sh}

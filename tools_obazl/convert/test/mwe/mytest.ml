@@ -1,7 +1,5 @@
 open OUnit2
 
-(* open Goodbye *)
-
 let test1 _ = assert_equal "Hello" (Hello.msg)
 
 let suite =

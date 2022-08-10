@@ -1,0 +1,34 @@
+;; based on tezos lib_protocol_compiler/test
+;; see also proto_demo_noops/lib_protocol/dune.inc
+
+;; this converts to a sh_test.
+
+;; We need to force build of %{bin:tezos-protocol-compiler}.
+;; putting it in data attr of sh_test might work
+
+;; the shell script references source files in:
+;; (package tezos-protocol-demo-noops)
+;; which means we need to define a filegroup for that pkg
+;; Q: do we also need to depend on other targets in it?
+
+(rule
+ (alias runtest_foo)
+ ;; package: "all files installed by package"
+ ;; (deps (package tezos-protocol-demo-noops))
+ (deps (package mylib))
+ (action
+  (run
+   bash
+   ;; %{dep:rejections.sh}
+   %{dep:runner.sh}
+   ;; %{bin:tezos-protocol-compiler}
+   %{bin:mybin}
+   ;; %{lib:tezos-protocol-demo-noops:raw/TEZOS_PROTOCOL}
+   %{lib:mylib:raw/CONFIG}
+   )))
+
+;; (rule
+;;  (alias runtest_out_of_opam)
+;;  (deps
+;;    (alias runtest_rejections))
+;;  (action (progn)))

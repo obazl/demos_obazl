@@ -1,0 +1,28 @@
+;; tezos lib_protocol_compiler/test
+
+;; see proto_demo_noops/lib_protocol/dune.inc
+
+;; this converts to a write_file and a sh_test.
+
+;; maybe sh_test is sufficient?
+
+;; But we need to force build of %{bin:tezos-protocol-compiler}.
+;; putting it in data attr of sh_test might work
+
+(rule
+ (alias runtest_rejections)
+ ;; package: "all files installed by package"
+ (deps rejections.sh (package tezos-protocol-demo-noops))
+ (action
+  (run
+   bash
+   %{dep:rejections.sh}
+   %{bin:tezos-protocol-compiler}
+   %{lib:tezos-protocol-demo-noops:raw/TEZOS_PROTOCOL}
+   )))
+
+;; (rule
+;;  (alias runtest_out_of_opam)
+;;  (deps
+;;    (alias runtest_rejections))
+;;  (action (progn)))
