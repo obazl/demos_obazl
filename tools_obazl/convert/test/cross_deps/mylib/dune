@@ -2,16 +2,16 @@
 
 (install
  (section lib)
- (package tezos-protocol-demo-noops)
- (files (TEZOS_PROTOCOL as raw/TEZOS_PROTOCOL)))
+ (package my-lib) ;; tezos-protocol-demo-noops)
+ (files foo.txt (a.txt b.txt) (CONFIG as raw/CONFIG)))
 
 (library
- (name tezos_protocol_demo_noops)
- (public_name tezos-protocol-demo-noops)
- (libraries
-      tezos-protocol-environment
-      tezos-protocol-environment-sigs
-      tezos_raw_protocol_demo_noops)
+ (name my_lib) ;; tezos_protocol_demo_noops)
+ (public_name my-lib) ;; tezos-protocol-demo-noops)
+ ;; (libraries
+ ;;      tezos-protocol-environment
+ ;;      tezos-protocol-environment-sigs
+ ;;      tezos_raw_protocol_demo_noops)
  (flags -w "+a-4-6-7-9-29-40..42-44-45-48-60-67"
         -warn-error "+a"
         -nopervasives)

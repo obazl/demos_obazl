@@ -8,27 +8,20 @@
  (name my_bin) ;; tezos_protocol_compiler)
  (public_name my-bin) ;; tezos-protocol-compiler)
  ;; (libraries tezos-base
- ;;            tezos-base.unix
- ;;            tezos-version
- ;;            tezos-protocol-environment-sigs
- ;;            tezos-stdlib-unix
- ;;            compiler-libs.common
- ;;            lwt.unix
- ;;            ocplib-ocamlres
  ;;            unix)
  ;; (flags (:standard -open Tezos_base__TzPervasives
  ;;                   -open Tezos_base_unix
  ;;                   -open Tezos_stdlib_unix))
  (modules Goodbye Hello)) ;; Embedded_cmis Packer Compiler))
 
-;; "installs" to bin:mybin
+;; "installs" to :bin:mybin, :bin:my-bin
 (executable
  (name mybin) ;; main_native)
  (public_name my-bin) ;; tezos-protocol-compiler)
  ;; (modes native)
  ;; (libraries tezos_protocol_compiler_native)
- (flags (:standard -linkall)))
- ;; (modules Mybin)) ;; Main_native))
+ (flags (:standard -linkall))
+ (modules Mybin)) ;; Main_native))
 
 ;; (executable
 ;;  (name main_byte)

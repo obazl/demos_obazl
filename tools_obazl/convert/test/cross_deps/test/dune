@@ -15,16 +15,16 @@
  (alias runtest_foo)
  ;; package: "all files installed by package"
  ;; (deps (package tezos-protocol-demo-noops))
- (deps (package mylib))
+ (deps (package my-lib))
  (action
   (run
    bash
    ;; %{dep:rejections.sh}
    %{dep:runner.sh}
    ;; %{bin:tezos-protocol-compiler}
-   %{bin:mybin}
+   %{bin:my-bin}
    ;; %{lib:tezos-protocol-demo-noops:raw/TEZOS_PROTOCOL}
-   %{lib:mylib:raw/CONFIG}
+   %{lib:my-lib:raw/CONFIG}
    )))
 
 ;; (rule

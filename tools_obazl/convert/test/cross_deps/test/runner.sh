@@ -4,7 +4,11 @@
 # lib_protocol_compiler/test, proto_demo_noops/lib_protocol/dune.inc
 
 protocol_compiler="$1"
+echo "protocol_compiler: $protocol_compiler"
+
 base_protocol="$2"
+
+echo "base_protocol: $base_protocol"
 
 if ! [ -x "$protocol_compiler" ] ; then
     say "erroneous protocol-compiler, should be an executable"
@@ -17,7 +21,7 @@ if ! [ -f "$base_protocol" ] ; then
     exit 2
 fi
 if ! [ -f "$(dirname $base_protocol)/main.ml" ] ; then
-    say "wrong base-protocol: it needs to have a main.ml: $(dirname $base_protocol)/main.ml"
+    echo "wrong base-protocol: it needs to have a main.ml: $(dirname $base_protocol)/main.ml"
     usage
     exit 2
 fi

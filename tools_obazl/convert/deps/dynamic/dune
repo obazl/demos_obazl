@@ -2,13 +2,13 @@
   (target goodbye.ml)
   (action (write-file
            goodbye.ml
-           "let msg = \\\"bye-bye\\\"")))
+           "let () = print_endline \\\"bye\\\"\n\nlet msg = \\\"bye-bye\\\"\n")))
 
 (rule
   (target dynstruct.ml)
   (action (write-file
            dynstruct.ml
-           "let dynstruct_msg: \\\"hi dyn\\\"")))
+           "let () = print_endline \\\"dynstruct\\\"\n\nlet dynstruct_msg = \\\"hi dyn\\\"")))
 
 (rule
   (target dynsig.mli)
@@ -22,9 +22,9 @@
            dynsig2.mli
            "val dynsig2_msg: string")))
 
-
 (test
  (name mytest)
  ;; (package mwe)
- ;; (modules mytest hello)
+ ;; (modules mytest dynstruct) ;; mytest hello)
+ (flags (:standard -linkall))
  (libraries ounit2))

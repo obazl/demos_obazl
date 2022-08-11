@@ -26,14 +26,19 @@
          )
     (for-each (lambda (k)
                 (let ((pkg (hash-table-ref pkgs k)))
-                  (format #t "~A: ~A => ~A~%" (blue "pkg") (green k) pkg)
-                  (format #t "alist? ~A~%" (alist? pkg))))
+                  (format #t "~A: ~A => ~A~%" (ublue "pkg") (green k) pkg)
+                  (format #t "alist? ~A~%" (alist? pkg))
+                  (if-let ((dune (assoc :dune pkg)))
+                          (for-each (lambda (stanza)
+                                      (format #t "~A: ~A~%" (ucyan "stanza") stanza))
+                                    (cdr dune)))))
               (sort! (hash-table-keys pkgs) string<?))
     pkgs))
 
 (define (-dump-exports ws)
   (let* ((@ws (assoc-val ws -mibl-ws-table))
          (exports (car (assoc-val :exports @ws))))
+    (format #t "~A: ~A~%" (red "exports keys") (hash-table-keys exports))
     (format #t "~A: ~A~%" (red "exports table") exports)))
 
 (define (-dump-filegroups ws)
@@ -103,7 +108,7 @@
     (for-each (lambda (kv)
                 (format #t "~A: ~A~%" (blue "emitting") (car kv))
                 (if (not (null? (cdr kv)))
-                    (mibl-pkg->build-bazel (cdr kv))
+                    (mibl-pkg->build-bazel ws (cdr kv))
                     (format #t "~A: ~A~%" (blue "skipping") (car kv)))
                 )
               pkgs)))
@@ -131,15 +136,15 @@
 
          (_ (-miblarkize :@))
 
-         (_ (format #t "~A~%" (red "PKG DUMP")))
-         (_ (-dump-pkgs :@))
-
-         (_ (-dump-exports :@))
-         (_ (-dump-filegroups :@))
-
          ;; ;; (_ (-emit-mibl :@))
          ;; ;; (_ (emit-mibl))
 
          (_ (-emit-starlark :@))
+
+         (_ (format #t "~A~%" (red "PKG DUMP")))
+         (_ (-dump-pkgs :@))
+         (_ (-dump-exports :@))
+         (_ (-dump-filegroups :@))
+
          )
     '()))
