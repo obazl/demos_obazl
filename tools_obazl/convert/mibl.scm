@@ -26,8 +26,11 @@
          )
     (for-each (lambda (k)
                 (let ((pkg (hash-table-ref pkgs k)))
-                  (format #t "~A: ~A => ~A~%" (ublue "pkg") (green k) pkg)
-                  (format #t "alist? ~A~%" (alist? pkg))
+                  (format #t "~A: ~A => ~A~%" (bggreen "pkg") (green k) pkg)
+                  (format #t "~A: ~A~%" (ugreen "pkg-modules") (assoc-val :modules pkg))
+                  (format #t "~A: ~A~%" (ugreen "pkg-structures") (assoc-val :structures pkg))
+                  (format #t "~A: ~A~%" (ugreen "pkg-signatures") (assoc-val :signatures pkg))
+                  (format #t "~A: ~A~%" (ugreen "pkg-files") (assoc-val :files pkg))
                   (if-let ((dune (assoc :dune pkg)))
                           (for-each (lambda (stanza)
                                       (format #t "~A: ~A~%" (ucyan "stanza") stanza))
@@ -126,7 +129,6 @@
          ;; (_ (-dump-pkgs :@))
 
          (mpkgs (-miblize :@))
-         ;; (_ (-dump-pkgs :@))
 
          (mpkgs (add-filegroups-to-pkgs :@))
 
@@ -135,9 +137,6 @@
          (_ (resolve-pkg-file-deps :@))
 
          (_ (-miblarkize :@))
-
-         ;; ;; (_ (-emit-mibl :@))
-         ;; ;; (_ (emit-mibl))
 
          (_ (-emit-starlark :@))
 

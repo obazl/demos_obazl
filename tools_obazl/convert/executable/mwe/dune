@@ -4,6 +4,8 @@
 
 (rule
  (alias runtest)
- (action (run %{exe:myexec.exe})))
-
+ (action (run %{exe:myexec.exe}
+              ;; "foo"
+              ;; bar.ml  ;; FIXME: infer output target
+              )))
 

@@ -1,8 +1,8 @@
-;; (rule
-;;   (target goodbye.ml)
-;;   (action (write-file
-;;            goodbye.ml
-;;            "val goodbye_msg: string")))
+(rule
+  (target goodbye.ml)
+  (action (write-file
+           goodbye.ml
+           "let msg = \"Byebye\"")))
 
 (test
  (name mytest)

@@ -1,3 +1,4 @@
 (executables
  (names a_exec b_exec)
+ (public_names a-exec b-exec)
  (libraries ounit2))

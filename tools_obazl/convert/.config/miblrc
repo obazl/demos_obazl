@@ -7,9 +7,11 @@ grammar=1.0.0-BETA  ;; version number of config grammar, not obazl program
 [srcs]
 
 ;; buggy:
+exclude = alias/write_file
 exclude = baddot
-exclude = rules/actions/progn/shell
-exclude = rules/progn/shell
+exclude = rules/actions/progn/chdir
+exclude = rules/actions/progn/expect
+;; exclude = rules/progn/shell
 exclude = library/root_module
 exclude = library/select
 

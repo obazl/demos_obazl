@@ -1,4 +1,4 @@
-(rule (write-file generated-file dynamic-contents))
+(rule (write-file generated-file "dynamic-contents"))
 
 ;; %{dep:<string>} expands to filename, inferred as a dep
 (alias

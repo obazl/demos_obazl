@@ -1,6 +1,6 @@
 (executable
  (name myexec)
- (libraries alcotest))
+ (libraries ounit2))
 
 ;; aliases of test executables do (may?) not have an output
 ;; so they do not translate to genrules
@@ -9,7 +9,7 @@
 
 (rule
  (alias runtest)
- (target foo.dat)
+ ;; (target foo.dat)
  (action (run ./myexec.exe)))
 
  ;; (action (run %{bin:myexec.exe}))
