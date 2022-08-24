@@ -12,7 +12,7 @@ ocaml_test(
     name = "test",
     args = [
         ## WARNING: the module under test was built with
-        ## -inline-test-lib=="hello"; if you pass anything else with
+        ## -inline-test-lib=="Hello"; if you pass anything else with
         ## inline-test-runner, running this test executable will
         ## report success, because it will not run the test.
         "inline-test-runner", LIBNAME,
@@ -23,7 +23,7 @@ ocaml_test(
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
     main = ":Runner",
-    deps = [
+    manifest = [
         "@ppx_inline_test//runner/lib",
         ":Hello"
     ],
@@ -54,7 +54,7 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
     opts = [],
-    deps = [
+    manifest = [
         "@ppx_inline_test//:ppx_inline_test",
     ],
     ppx_codeps = [

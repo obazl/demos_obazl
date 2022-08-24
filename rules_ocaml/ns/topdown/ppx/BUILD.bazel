@@ -47,7 +47,7 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":Ppxlib_runner",
-    deps = [":ppx_hex_of_dec"]
+    manifest = [":ppx_hex_of_dec"]
 )
 
 ###########

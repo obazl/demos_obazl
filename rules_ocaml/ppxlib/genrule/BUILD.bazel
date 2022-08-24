@@ -86,7 +86,7 @@ genrule(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",  # obazl will place main last in the list of deps
-    deps = [
+    manifest = [
         "@ppx_sexp_value//:ppx_sexp_value",  # contains handler for `[%sexp ]` extension
         # tmp:
         "@ppx_here//runtime-lib",

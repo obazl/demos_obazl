@@ -81,7 +81,7 @@ genrule(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
-    deps = ["@ppx_optcomp//:ppx_optcomp"]
+    manifest = ["@ppx_optcomp//:ppx_optcomp"]
 )
 
 ###########

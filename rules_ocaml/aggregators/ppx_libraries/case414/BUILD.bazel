@@ -23,8 +23,11 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":Ppxlib_driver",
-    deps = [":Ppx_color", "Ppx_greek",
-            "@ppxlib//:ppxlib"],
+    manifest = [
+        ":Ppx_color",
+        ":Ppx_greek",
+        "@ppxlib//:ppxlib"
+    ]
 )
 
 ############

@@ -69,7 +69,7 @@ ppx_executable(
     # main = "@ppxlib//runner:ppxlib_runner.cmx",
     # main_opam = "ppxlib.runner",
     # opts = [],                # obazl will automatically add '-predicates ppx_driver'
-    deps = [
+    manifest = [
         ## without this, we get "Error: Cannot locate deriver sexp"
         ## or "Error: Ppxlib.Deriving: 'sexp' is not a supported type deriving generator"
         ## when we try to use this ppx executable to transform

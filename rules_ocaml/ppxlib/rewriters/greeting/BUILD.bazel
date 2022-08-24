@@ -31,7 +31,7 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
-    deps = [":ppx_greeting"]
+    manifest = [":ppx_greeting"]
 )
 
 # equivalently:

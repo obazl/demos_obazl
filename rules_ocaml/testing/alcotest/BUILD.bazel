@@ -12,7 +12,7 @@ test_suite(
 ocaml_test(
     name = "alcotest",
     main = ":Test_alcotest",
-    deps   = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
+    manifest = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
 )
 
 

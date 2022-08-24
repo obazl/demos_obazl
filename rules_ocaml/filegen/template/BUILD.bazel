@@ -86,7 +86,6 @@ int_setting( name = "green_127", build_setting_default = 127 )
 ocaml_binary(
     name = "hello",
     main = ":_Hello",
-    deps = [":_Hello"],
 )
 
 #############

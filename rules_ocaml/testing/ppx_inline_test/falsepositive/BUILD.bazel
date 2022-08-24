@@ -34,7 +34,7 @@ ocaml_test(
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
     main = ":Runner",
-    deps = [
+    manifest = [
         # ":Test_ppx_inline",  # the transformed and compiled test code
         "@ppx_inline_test//runner/lib",
         # "//rules/ocaml_module:Hello",
@@ -70,7 +70,7 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
     opts = [],
-    deps = [
+    manifest = [
         # "@ppxlib//:ppxlib",
     ],
 )
