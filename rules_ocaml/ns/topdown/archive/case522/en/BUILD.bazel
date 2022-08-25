@@ -1,0 +1,34 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_ns_archive(
+    name = "color",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue"
+    ],
+    visibility = ["//ns/topdown/archive/case522:__pkg__"]
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+    deps = [
+        "//ns/topdown/archive/case522/diamond:gem"
+    ],
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

@@ -1,0 +1,61 @@
+## set600/case620:  sublibs only, no direct submodules
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "_Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    opts = [
+        "-w",
+        "-27",  ## Error (warning 27): unused variable test_ctxt.
+    ],
+    deps = [
+        ":color",
+        "@ounit2//:ounit2",
+
+        # "@bigarray//:bigarray",
+        # "@ocaml//bigarray",
+
+        # "@dynlink//:dynlink",
+        # "@ocaml//dynlink",
+
+        # "@str//:str",
+        # "@ocaml//str",
+
+        # "@ocaml//threads",
+        # "@threads//:threads",
+
+        # "@ocaml//unix",
+        # "@unix//:unix",
+
+        # "@ocaml//compiler-libs/common",
+        # "@ocaml//compiler-libs/bytecomp",
+        # "@ocaml//compiler-libs/optcomp",
+        # "@ocaml//compiler-libs/toplevel",
+        # "@ocaml//compiler-libs/native-toplevel",
+
+        # "@ctypes//stubs"
+        # "@ppx_inline_test//:ppx_inline_test"
+    ],
+)
+
+ocaml_ns_archive(
+    name = "color",
+    submodules = [
+        "//ns/obazl/set600/case620/rgb:rgb",
+        "//ns/obazl/set600/case620/cmy:cmy"
+    ]
+)

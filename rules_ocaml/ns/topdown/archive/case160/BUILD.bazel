@@ -1,0 +1,76 @@
+## new/case160: nslib nesting: ns lib Color contains ns lib Greek as a submodule
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_ns_archive(
+    name = "color",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":greek"
+    ],
+    # subarchives = [
+    #     ":greek"
+    # ],
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    deps = [":Green"],
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)
+
+###################
+ocaml_ns_archive(
+    name = "greek",
+    submodules = {
+        ":Alpha": "Alpha",
+        ":Beta": "Beta",
+        ":Gamma": "Gamma",
+    },
+)
+
+ocaml_module(
+    name = "Alpha",
+    struct = "alpha.ml",
+)
+
+ocaml_module(
+    name = "Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "Gamma",
+    struct = "gamma.ml",
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//:ounit2"],
+)

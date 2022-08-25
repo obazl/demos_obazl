@@ -1,0 +1,31 @@
+## set400/case410 - basic exogenous submodules
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+# exogenous submodulues - modules from another package
+ocaml_ns_archive(
+    name = "color",
+    submodules = [
+        "//mwe/rgb:R",
+        "//mwe/rgb:G",
+        "//mwe/rgb:B"
+    ],
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//:ounit2"],
+)
+

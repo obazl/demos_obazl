@@ -1,0 +1,38 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_ns_archive(
+    name = "couleur",
+    submodules = [
+        ":_Rouge",
+        ":_Vert",
+        ":_Bleu"
+    ],
+    visibility = ["//ns/topdown/archive/case522:__pkg__"]
+)
+
+ocaml_module(
+    name = "_Rouge",
+    struct = "rouge.ml",
+    # deps = [
+    #     "//ns/topdown/archive/case522/diamond"
+    #     # ":_Vert",
+    # ],
+)
+
+ocaml_module(
+    name = "_Vert",
+    struct = "vert.ml",
+    deps = [
+        "//ns/topdown/archive/case522/diamond:gem"
+    ],
+)
+
+ocaml_module(
+    name = "_Bleu",
+    struct = "bleu.ml",
+)

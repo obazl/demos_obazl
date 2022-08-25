@@ -1,0 +1,56 @@
+## new/case522: diamond dependency on nslib
+## diamond dep should only be built once
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test1"
+)
+
+ocaml_module(
+    name   = "Test1",
+    struct = "test1.ml",
+    # opts = [
+    #     "-w", "-31"  ## files x and y both define a module named Z
+    # ],
+    deps = [
+        ":main",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_module(
+    name   = "Test2",
+    struct = "test2.ml",
+    # opts = [
+    #     "-w", "-31"  ## files x and y both define a module named Z
+    # ],
+    deps = [
+        ":main",
+        "@ounit2//:ounit2"
+    ],
+    # deps_opam = ["ounit2"],
+)
+
+ocaml_module(
+    name = "main",
+    struct = "main.ml",
+    # opts = [
+    #     "-w", "-31"  ## files x and y both define a module named Z
+    # ],
+    deps   = [
+        ## both of these depend indirectly on
+        ## "//ns/topdown/library/case522/diamond:gem"
+        "//ns/topdown/library/case522/en:color",
+        "//ns/topdown/library/case522/fr:couleur"
+    ]
+)

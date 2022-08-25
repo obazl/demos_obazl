@@ -1,0 +1,34 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+###################
+ocaml_ns_library(
+    name = "greek",
+    submodules = [
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
+    ],
+    visibility = ["//ns/topdown/library/case190:__pkg__"]
+)
+
+ocaml_module(
+    name = "Alpha",
+    struct = "alpha.ml",
+)
+
+ocaml_module(
+    name = "Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "Gamma",
+    struct = "gamma.ml",
+)

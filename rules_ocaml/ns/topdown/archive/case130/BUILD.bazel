@@ -1,0 +1,55 @@
+## new/case130: ns lib with submodule dependent on non-ns module
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_ns_archive(
+    name = "color",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    deps = [":Red_helper"],
+)
+
+ocaml_module(
+    name = "Red_helper",
+    struct = "red_helper.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//:ounit2",
+        ":color"
+    ]
+)

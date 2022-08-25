@@ -1,0 +1,8 @@
+test_suite(
+    name = "test",
+    tests = [
+        ## uses archive submodule
+        "//ns/topdown/archive/embed/case180:test",
+        # "//ns/topdown/archive/embed/case620:test",
+    ]
+)

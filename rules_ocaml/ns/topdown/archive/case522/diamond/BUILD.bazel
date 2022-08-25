@@ -1,0 +1,32 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_ns_archive(
+    name = "gem",
+    submodules = [
+        ":_Alpha",
+        ":_Beta",
+        ":_Gamma"
+    ],
+    visibility = ["//ns/topdown/archive/case522:__subpackages__"]
+)
+
+ocaml_module(
+    name = "_Alpha",
+    struct = "alpha.ml",
+    deps = [":_Beta"],
+)
+
+ocaml_module(
+    name = "_Beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "_Gamma",
+    struct = "gamma.ml",
+)

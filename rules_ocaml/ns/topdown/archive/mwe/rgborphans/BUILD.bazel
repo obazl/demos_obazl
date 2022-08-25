@@ -1,0 +1,45 @@
+## new/case100: minimal ns lib
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_ns_archive(
+    name = "color",
+    submodules = [
+        ":_Red",
+        ":_Green",
+        ":_Blue"
+    ],
+)
+
+#############
+ocaml_module(
+    name = "_Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "_Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "_Blue",
+    struct = "blue.ml",
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = ":_Test",
+)
+
+ocaml_module(
+    name   = "_Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//:ounit2"],
+)

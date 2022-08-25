@@ -1,0 +1,8 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/topdown/library/mwe/hello:test",
+        # "//ns/topdown/library/mwe/rgbdyads:test",
+        "//ns/topdown/library/mwe/rgborphans:test",
+    ]
+)

@@ -1,0 +1,21 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/topdown/library/case100:test",
+        "//ns/topdown/library/case110:test",
+        "//ns/topdown/library/case120:test",
+        "//ns/topdown/library/case122:test",
+        "//ns/topdown/library/case130:test",
+        "//ns/topdown/library/case140:test",
+        "//ns/topdown/library/case150:test",
+        "//ns/topdown/library/case160:test",
+        "//ns/topdown/library/case170:test",
+        "//ns/topdown/library/case190:test",
+        "//ns/topdown/library/case366:test",
+        "//ns/topdown/library/case370/foo-bar:test",
+        "//ns/topdown/library/case522:test",
+        "//ns/topdown/library/embed:test",
+        "//ns/topdown/library/mwe:test",
+        "//ns/topdown/library/ppx:test",
+    ]
+)

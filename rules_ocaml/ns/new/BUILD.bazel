@@ -12,8 +12,5 @@ test_suite(
 
         # 520: diamond dependency. seems broken
         # "//ns/new/case520:test",
-
-        "//ns/new/case522:test",
-
     ]
 )

@@ -1,3 +1,7 @@
+## aggregators/ppx_libraries/case414
+## same as aggregators/ppx_archives/case414:
+## except ocaml_library instead of ocaml_archive
+
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
@@ -25,7 +29,15 @@ ppx_executable(
     main = ":Ppxlib_driver",
     manifest = [
         ":Ppx_color",
+        # ":Ppx_red",
+        # ":Ppx_green",
+        # ":Ppx_blue",
+
         ":Ppx_greek",
+        # ":Ppx_alpha",
+        # ":Ppx_beta",
+        # ":Ppx_gamma",
+
         "@ppxlib//:ppxlib"
     ]
 )

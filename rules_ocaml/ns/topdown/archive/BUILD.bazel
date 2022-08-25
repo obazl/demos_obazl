@@ -1,0 +1,25 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/topdown/archive/case100:test",
+        "//ns/topdown/archive/case110:test",
+        "//ns/topdown/archive/case120:test",
+        "//ns/topdown/archive/case122:test",
+        "//ns/topdown/archive/case130:test",
+        "//ns/topdown/archive/case140:test",
+        "//ns/topdown/archive/case150:test",
+        "//ns/topdown/archive/case366:test",
+        "//ns/topdown/archive/case370/foo-bar:test",
+        "//ns/topdown/archive/case522:test",
+
+        "//ns/topdown/archive/mwe:test",
+        "//ns/topdown/archive/ppx:test",
+
+        ## using archive submodule:
+        "//ns/topdown/archive/case160:test",
+        "//ns/topdown/archive/case170:test",
+        "//ns/topdown/archive/case190:test",
+        "//ns/topdown/archive/embed:test",
+
+    ]
+)

@@ -5,5 +5,10 @@ test_suite(
         "//aggregators/ppx_archives/case310:test",
         "//aggregators/ppx_archives/case314:test",
         # "//aggregators/ppx_archives/case318:test",
+
+        # same as ppx_libraries cases except use of ocaml_archive
+        "//aggregators/ppx_archives/case414:test",
+        "//aggregators/ppx_archives/case424:test",
+        "//aggregators/ppx_archives/case428:test",
     ]
 )

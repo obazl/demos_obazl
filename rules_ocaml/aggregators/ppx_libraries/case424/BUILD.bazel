@@ -1,4 +1,6 @@
-## aggregators/ppx_libraries/case424:
+## aggregators/ppx_libraries/case424
+## same as aggregators/ppx_archives/case424:
+## except ocaml_library instead of ocaml_archive
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -19,17 +21,20 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     ppx  = ":ppx.exe",
-    deps = [":main", "@ounit2//:ounit2"]
+    deps = [
+        ":Main",
+        "@ounit2//:ounit2"
+    ]
 )
 
 #################
-ocaml_binary(
-    name = "hello",
-    main = ":main",
-)
+# ocaml_binary(
+#     name = "hello",
+#     main = ":main",
+# )
 
 ocaml_module(
-    name   = "main",
+    name   = "Main",
     struct = "main.ml",
     ppx    = ":ppx.exe",
 )
@@ -39,7 +44,8 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Ppxlib_driver",
     manifest = [
-        ":Ppx_color", "Ppx_greek",
+        ":Ppx_color",
+        ":Ppx_greek",
         "@ppxlib//:ppxlib",
         "@ppxlib//ast",
     ]
