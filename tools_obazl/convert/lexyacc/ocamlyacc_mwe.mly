@@ -1,0 +1,13 @@
+%{
+    /* header */
+%}
+
+ /* declarations */
+
+%%
+
+  /* rules */
+
+ %%
+
+  /* trailer */
