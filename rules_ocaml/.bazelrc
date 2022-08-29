@@ -3,30 +3,38 @@ common:dbg --subcommands=pretty_print
 common:dbg --verbose_failures
 build:dbgv --@rules_ocaml//cfg/verbose
 
+build:dbg --compilation_mode=dbg
+
 build --incompatible_enable_cc_toolchain_resolution
 build --incompatible_use_cc_configure_from_rules_cc
 
 # toolchain selection: bc (bytecode), nc (nativecode) E.g. to compile
 # with ocamlc.opt, pass --config=ncbc. this means: cross-compile from
 # sys platform (native code) to vm (bytecode).
-build:bc --host_platform=@opam//tc/host/build:bc
-build:bc --platforms=@opam//tc/host/target:bc
+## IMPORTANT: --host_platform sets buildhost; --platforms sets targethost
 
-# nc: local (hw) machine
-build:nc --host_platform=@opam//tc/host/build:nc
-build:nc --platforms=@opam//tc/host/target:nc
+# default platform is sys for both buildhost and targethost
 
-build:ncnc --host_platform=@opam//tc/host/build:nc
-build:ncnc --platforms=@opam//tc/host/target:nc
+# explicitly (sys to sys):
+build:sys --host_platform=@opam//tc/host/build:sys
+build:sys --platforms=@opam//tc/host/target:sys
 
-# build:ncbc --host_platform=@opam//tc/host/build:nc
-build:ncbc --platforms=@opam//tc/host/target:bc
+## use vm for both:
+build:vm --host_platform=@opam//tc/host/build:vm
+build:vm --platforms=@opam//tc/host/target:vm
 
-build:bcbc --host_platform=@opam//tc/host/build:bc
-build:bcbc --platforms=@opam//tc/host/target:bc
+# more explicitly (vm to vm):
+build:vmvm --host_platform=@opam//tc/host/build:vm
+build:vmvm --platforms=@opam//tc/host/target:vm
 
-build:bcnc --host_platform=@opam//tc/host/build:bc
-build:bcnc --platforms=@opam//tc/host/target:nc
+# cross-builds:
+## defaulting buildhost:
+# build:sysvm --host_platform=@opam//tc/host/build:sys
+build:sysvm --platforms=@opam//tc/host/target:vm
+
+## defaulting targethost
+build:vmsys --host_platform=@opam//tc/host/build:vm
+# build:vmsys --platforms=@opam//tc/host/target:sys
 
 # to eliminate warning
 # ld: warning: object file (bazel-out/darwin-fastbuild/bin/interop/ffi/case110/cclibs/liblibalpha.a(alpha.o)) was built for newer macOS version (12.3) than being linked (12.0)
