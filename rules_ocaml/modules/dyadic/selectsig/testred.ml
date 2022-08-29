@@ -1,8 +1,8 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal "Hello Red" (A.red)
-(* let test2 test_ctxt = assert_equal "Hello Green" (A.green) *)
-(* let test3 test_ctxt = assert_equal "Hello Blue" (A.blue) *)
+let test1 _ = assert_equal "Hello Red" (A.red)
+(* let test2 _ = assert_equal "Hello Green" (A.green) *)
+(* let test3 _ = assert_equal "Hello Blue" (A.blue) *)
 
 
 let suite =

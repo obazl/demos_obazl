@@ -1,6 +1,6 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal "Hello, Linux!" (Hello.greeting)
+let test1 _ = assert_equal "Hello, Linux!" (Hello.greeting)
 
 let suite =
 "suite">:::

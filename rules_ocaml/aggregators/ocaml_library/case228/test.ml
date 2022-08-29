@@ -1,20 +1,20 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal 255 (Red.v)
-let test2 test_ctxt = assert_equal 127 (Green.v)
-let test3 test_ctxt = assert_equal 80  (Blue.v)
+let test1 _ = assert_equal 255 (Red.v)
+let test2 _ = assert_equal 127 (Green.v)
+let test3 _ = assert_equal 80  (Blue.v)
 
-let test4 test_ctxt = assert_equal "msg from Alpha" (Alpha.msg)
-let test5 test_ctxt = assert_equal "msg from Beta" (Beta.msg)
-let test6 test_ctxt = assert_equal "msg from Gamma" (Gamma.msg)
+let test4 _ = assert_equal "msg from Alpha" (Alpha.msg)
+let test5 _ = assert_equal "msg from Beta" (Beta.msg)
+let test6 _ = assert_equal "msg from Gamma" (Gamma.msg)
 
-let test7 test_ctxt = assert_equal 255 (Main.r)
-let test8 test_ctxt = assert_equal 127 (Main.g)
-let test9 test_ctxt = assert_equal  80 (Main.b)
+let test7 _ = assert_equal 255 (Main.r)
+let test8 _ = assert_equal 127 (Main.g)
+let test9 _ = assert_equal  80 (Main.b)
 
-let test10 test_ctxt = assert_equal "msg from Alpha" (Main.alpha)
-let test11 test_ctxt = assert_equal "msg from Beta"  (Main.beta)
-let test12 test_ctxt = assert_equal "msg from Gamma" (Main.gamma)
+let test10 _ = assert_equal "msg from Alpha" (Main.alpha)
+let test11 _ = assert_equal "msg from Beta"  (Main.beta)
+let test12 _ = assert_equal "msg from Gamma" (Main.gamma)
 
 let suite =
 "suite">:::

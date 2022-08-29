@@ -2,9 +2,9 @@
 
 open OUnit2
 
-let test1 test_ctxt = assert_equal "msg from Simple" (Simple.msg())
-let test2 test_ctxt = assert_equal "msg from Easy" (Easy.msg)
-let test3 test_ctxt = assert_equal "msg from Main" (Main.msg())
+let test1 _ = assert_equal "msg from Simple" (Simple.msg())
+let test2 _ = assert_equal "msg from Easy" (Easy.msg)
+let test3 _ = assert_equal "msg from Main" (Main.msg())
 
 let suite =
 "suite">:::

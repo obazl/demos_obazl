@@ -4,7 +4,7 @@ open OUnit2
    ppx_greeting.ml, but it does "depend" on being transformed by a PPX
    that contains Ppx_greeting. *)
 
-let test1 test_ctxt = assert_equal "Hello, world!" [%greeting "world!"]
+let test1 _ = assert_equal "Hello, world!" [%greeting "world!"]
 
 let suite =
 "suite">:::

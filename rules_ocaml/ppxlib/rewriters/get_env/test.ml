@@ -1,6 +1,6 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal "1" [%get_env "OBAZL"]
+let test1 _ = assert_equal "1" [%get_env "OBAZL"]
 
 let suite =
 "suite">:::

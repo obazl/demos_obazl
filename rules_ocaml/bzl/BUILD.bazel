@@ -4,9 +4,9 @@ package(default_visibility = ["//visibility:public"])
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
 string_flag(
-    name = "lang",
-    values = ["en", "fr"],
-    build_setting_default = "en",
+    name = "foo",
+    values = ["foo", "bar", "baz"],
+    build_setting_default = "foo",
 )
 
 ## configuration settings. a config setting will be "true" if all of
@@ -16,6 +16,12 @@ string_flag(
 ## to `fr`. Together these will set config setting `//bzl:macos_fr` to true.
 
 ################
+string_flag(
+    name = "lang",
+    values = ["en", "fr"],
+    build_setting_default = "en",
+)
+
 config_setting(
     name = "linux_en",
     constraint_values = ["@platforms//os:linux"],

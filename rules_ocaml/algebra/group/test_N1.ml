@@ -1,7 +1,7 @@
 open OUnit2
 open Group
 
-let test1 test_ctxt = assert_equal 3 (mu 1 2)
+let test1 _ = assert_equal 3 (mu 1 2)
 
 let suite =
 "suite">:::

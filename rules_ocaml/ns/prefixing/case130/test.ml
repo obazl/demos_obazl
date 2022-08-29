@@ -1,8 +1,8 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal 255 (Demo__Red.v)
-let test2 test_ctxt = assert_equal 127 (Demo__Green.v)
-let test3 test_ctxt = assert_equal 80  (Demo__Blue.v)
+let test1 _ = assert_equal 255 (Demo__Red.v)
+let test2 _ = assert_equal 127 (Demo__Green.v)
+let test3 _ = assert_equal 80  (Demo__Blue.v)
 
 let suite =
 "suite">:::

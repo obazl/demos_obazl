@@ -1,7 +1,7 @@
 open OUnit2
 
-let test7 test_ctxt = assert_equal 24 (Main.green_carats)
-let test8 test_ctxt = assert_equal 24 (Main.vert_carats)
+let test7 _ = assert_equal 24 (Main.green_carats)
+let test8 _ = assert_equal 24 (Main.vert_carats)
 
 let suite =
 "suite">:::

@@ -1,12 +1,12 @@
 open OUnit2
 
-let test1 test_ctxt = assert_equal 255 (Color.Red.v)
-let test2 test_ctxt = assert_equal 127 (Color.Green.v)
-let test3 test_ctxt = assert_equal 80  (Color.Blue.v)
+let test1 _ = assert_equal 255 (Color.Red.v)
+let test2 _ = assert_equal 127 (Color.Green.v)
+let test3 _ = assert_equal 80  (Color.Blue.v)
 
-let test4 test_ctxt = assert_equal 255 (Greek.Alpha.v)
-let test5 test_ctxt = assert_equal 127 (Greek.Beta.v)
-let test6 test_ctxt = assert_equal 80  (Greek.Gamma.v)
+let test4 _ = assert_equal 255 (Greek.Alpha.v)
+let test5 _ = assert_equal 127 (Greek.Beta.v)
+let test6 _ = assert_equal 80  (Greek.Gamma.v)
 
 let suite =
 "suite">:::
