@@ -1,0 +1,84 @@
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_ns_archive",
+     "ocaml_module",
+     "ocaml_signature",
+)
+
+package(default_visibility = ["//visibility:public"])
+
+LIB_A_DEPS = select({
+    "x_pred": ["@yojson//:yojson"],
+    "y_pred": ["@sexplib//:sexplib"],
+    "//conditions:default": []
+})
+
+
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_ns_archive(
+    name       = "lib_a",
+    submodules = [
+        ":A",
+        ":P",
+        ":R"
+    ])
+
+#############################
+####  Singleton Targets  ####
+
+ocaml_module(
+    name          = "A",
+    struct        = "a.ml",
+    sig           = "a.mli",
+    deps          = LIB_A_DEPS,
+)
+
+ocaml_module(
+    name          = "P",
+    struct        = "p.ml",
+    sig           = "p.mli",
+    deps          = LIB_A_DEPS,
+)
+
+ocaml_module(
+    name          = "R",
+    struct        = "r.ml",
+    deps          = LIB_A_DEPS,
+)
+
+ocaml_signature(
+    name          = "Q.cmi",
+    src           = "q.mli",
+)
+
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+string_flag(
+    name = "foo",
+    values = ["x", "y", ""],
+    build_setting_default = ""
+)
+
+config_setting(
+    name = "x_pred",
+    flag_values = { ":foo": "x" }
+)
+
+config_setting(
+    name = "y_pred",
+    flag_values = { ":foo": "y" }
+)
+
+copy_file(
+    name = "_a.ml_",
+    src = select({
+        "x_pred": "a_x.ml",
+        "y_pred": "a_y.ml",
+        "//conditions:default": "a_default.ml"
+    }),
+    out = "a.ml"
+)
