@@ -1,0 +1,36 @@
+(env
+ ;; (_
+ ;;  (flags -bin-annot -annot -strict-sequence -keep-locs -no-alias-deps -w
+ ;;         A-4-42-41-48-70))
+
+ (dev
+  (flags -bin-annot -annot -strict-sequence -keep-locs -no-alias-deps -w
+         A-4-42-41-48-70)
+  (ocamlc_flags -absname)
+  (ocamlopt_flags -linscan)
+  (link_flags -linkall)
+  ;; (c_flags -c-flag)
+  ;; (cxx_flags -cxx-flag))
+  )
+
+ (dbg
+  (flags -bin-annot -annot -strict-sequence -keep-locs -no-alias-deps
+         -w A-4-42-41-48-70
+         -g)
+  (ocamlc_flags -absname)
+  (ocamlopt_flags -linscan)
+  (link_flags -linkall)
+  ;; (c_flags -c-flag)
+  ;; (cxx_flags -cxx-flag))
+  )
+
+ (release
+  (flags -bin-annot -annot -strict-sequence -keep-locs -no-alias-deps
+         -w A-4-42-41-48-70)
+  (ocamlc_flags -absname)
+  (ocamlopt_flags -linscan)
+  (link_flags -linkall)
+  ;; (c_flags -c-flag)
+  ;; (cxx_flags -cxx-flag))
+  )
+ )

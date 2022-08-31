@@ -1,0 +1,12 @@
+(rule
+ (targets version.ml.in)
+ (deps (:foo a.txt))
+ (action
+  (with-stdout-to
+   %{targets}
+   (run
+    %{dep:tools/version/gen/gen.exe}
+    ;; %{foo}
+    %{dep:VERSION}
+    ;; %{dep:foo}
+    %{dep:tools/version/GIT-VERSION}))))
