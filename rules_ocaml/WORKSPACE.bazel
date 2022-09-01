@@ -117,9 +117,6 @@ rules_foreign_cc_dependencies()
 load("//:COSWITCH.bzl", register_coswitch = "register")
 register_coswitch()
 
-# custom profiles take precedence over predefined profiles
-# register_toolchains("//bzl/profiles:myprofile")
-
 load("@coswitch//:BOOTSTRAP.bzl", "bootstrap")
 bootstrap()
 

@@ -56,4 +56,5 @@ build:vmsys --host_platform=@opam//tc/host/build:vm
 # build --@rules_ocaml//cfg:verbose
 # build --@rules_ocaml//cfg/types:principal
 
+try-import .config/dev.bazelrc
 try-import .config/user.bazelrc
