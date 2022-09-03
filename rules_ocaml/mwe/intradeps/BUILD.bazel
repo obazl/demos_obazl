@@ -14,11 +14,6 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    # deps_opam = ["ounit2"],
-    opts = [
-        "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ## OBazl will automatically reorder these deps to put them in
         ## dependency order. In this case, that is Blue, Green, Red -

@@ -14,12 +14,7 @@ ns_env(prefix = "foo")  # "red.ml", "green.ml"]) #, "blue.ml"])
 ocaml_test(
     name = "test",
     main = "test.ml",
-    opts = [
-        "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [":color", "@ounit2//:ounit2"],
-    # deps_opam = ["ounit2"],
 )
 
 ocaml_ns_library(

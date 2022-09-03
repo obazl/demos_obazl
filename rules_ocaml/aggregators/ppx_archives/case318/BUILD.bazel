@@ -42,7 +42,6 @@ ppx_executable(
         ":Ppx_greek_driver",
         "@ppxlib//:ppxlib"
     ],
-    # deps_opam = ["ppxlib"]
 )
 
 ############
@@ -97,7 +96,6 @@ ocaml_module(
     struct    = "ppx_red.ml",
     opts = ["-linkall"],
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
@@ -105,7 +103,6 @@ ocaml_module(
     struct    = "ppx_green.ml",
     opts = ["-linkall"],
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
@@ -113,7 +110,6 @@ ocaml_module(
     struct    = "ppx_blue.ml",
     opts = ["-linkall"],
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ###########
@@ -149,7 +145,6 @@ ocaml_module(
     opts = ["-linkall"],
     struct    = "ppx_alpha.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
@@ -157,7 +152,6 @@ ocaml_module(
     opts = ["-linkall"],
     struct    = "ppx_beta.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ocaml_module(
@@ -165,7 +159,6 @@ ocaml_module(
     opts = ["-linkall"],
     struct    = "ppx_gamma.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ################################################################
@@ -174,7 +167,6 @@ ocaml_module(
     name = "Runner",
     struct = ":ppxlib_runner.ml",
     deps      = ["@ppxlib//:ppxlib"]
-    # deps_opam = ["ppxlib"]
 )
 
 ########

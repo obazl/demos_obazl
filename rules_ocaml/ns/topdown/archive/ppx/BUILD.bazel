@@ -82,10 +82,5 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    opts = [
-        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
-    ],
     deps = [":color", "@ounit2//:ounit2"],
-    # deps_opam = ["ounit2"],
-    # deps = [":color"],
 )

@@ -15,7 +15,6 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [":color", "@ounit2//:ounit2"],
-    # deps_opam = ["ounit2"],
 )
 
 ocaml_ns_library(

@@ -3,9 +3,6 @@ test_suite(
     tests = [
         "//ns/topdown/library/case100:test",
         "//ns/topdown/library/case110:test",
-        "//ns/topdown/library/case120:test",
-        "//ns/topdown/library/case122:test",
-        "//ns/topdown/library/case130:test",
         "//ns/topdown/library/case140:test",
         "//ns/topdown/library/case150:test",
         "//ns/topdown/library/case160:test",
@@ -17,5 +14,13 @@ test_suite(
         "//ns/topdown/library/embed:test",
         "//ns/topdown/library/mwe:test",
         "//ns/topdown/library/ppx:test",
+
+        "//ns/topdown/library/helpers100:test",
+
+        "//ns/topdown/library/sibdeps100:test",
+        "//ns/topdown/library/sibdeps150:test",
+
+        ## udr = user-defined resolver
+        "//ns/topdown/library/udr:test",
     ]
 )

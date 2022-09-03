@@ -22,14 +22,12 @@ ocaml_module(
     name   = "_Test1",
     struct = "test1.ml",
     opts = [
-        "-w", "-27", ## unused variable test_ctxt.
         "-w", "-31"  ## files x and y both define a module named Z
     ],
     deps = [
         ":main",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(
@@ -43,7 +41,6 @@ ocaml_module(
         ":main",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(

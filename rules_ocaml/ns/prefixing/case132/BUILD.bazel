@@ -24,7 +24,6 @@ ocaml_module(
         ":_Foo__Red",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(

@@ -18,14 +18,10 @@ ocaml_test(
 ocaml_module(
     name   = "Test1",
     struct = "test1.ml",
-    # opts = [
-    #     "-w", "-31"  ## files x and y both define a module named Z
-    # ],
     deps = [
         ":main",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(
@@ -38,7 +34,6 @@ ocaml_module(
         ":main",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ounit2"],
 )
 
 ocaml_module(

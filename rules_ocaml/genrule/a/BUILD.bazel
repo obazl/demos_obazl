@@ -21,7 +21,6 @@ ocaml_module(
         ":rgb",
         "@ounit2//:ounit2"
     ],
-    # deps_opam = ["ounit2"]
 )
 
 ###########
