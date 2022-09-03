@@ -1,0 +1,44 @@
+## bottomup/singleton: illegal singleton config
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//:ounit2"],
+)
+
+ocaml_ns_archive(
+    name = "color",
+    ns = "Color",
+    submodules = [
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

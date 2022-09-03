@@ -1,0 +1,70 @@
+# udr/case100
+# user-defined resolver
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":color",
+        "@ounit2//:ounit2"
+    ],
+)
+
+#################
+ocaml_ns_library(
+    name = "color",
+    # user-defined resolver - not supported
+    # resolver = ":Color",
+    submodules = [
+        ":Color",
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+## NB: color.ml has aliasing equations for Red, Green, Blue,
+## but with -no-alias-deps we need not depend on them.
+## However, if color.ml /uses/ something from one of those modules,
+## then we must list it as a dep. Otherwise we get errors like:
+## Error: The module Red is an alias for module Red, which is missing
+## Note we need only list modules actually used.
+ocaml_module(
+    name   = "Color",
+    struct = "color.ml",
+    deps = [":Red"],
+    opts = [
+        "-no-alias-deps", # that is, alist-ONLY deps
+        "-w", "-49" # suppress [no-cmi-file] warnings
+    ]
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    deps = [":Green"]
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

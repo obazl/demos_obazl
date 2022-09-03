@@ -1,4 +1,5 @@
-# set300/case330
+# udr/case100
+# user-defined resolver
 
 load(
     "@rules_ocaml//build:rules.bzl",

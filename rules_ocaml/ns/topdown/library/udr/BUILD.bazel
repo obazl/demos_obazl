@@ -1,0 +1,7 @@
+test_suite(
+    name = "test",
+    tests = [
+        ## udr = user-defined resolver
+        "//ns/topdown/library/udr/case100:test",
+    ]
+)

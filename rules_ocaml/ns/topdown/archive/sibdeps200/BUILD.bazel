@@ -11,15 +11,12 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
-    opts = [
-        "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
-    ],
     deps = [
         ":color",
         ":greek",
@@ -30,25 +27,25 @@ ocaml_module(
 ocaml_ns_archive(
     name = "color",
     submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue",
+        ":Red",
+        ":Green",
+        ":Blue",
     ],
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
-    deps = [":_Green"],
+    deps = [":Green"],
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )
 
@@ -56,23 +53,23 @@ ocaml_module(
 ocaml_ns_archive(
     name = "greek",
     submodules = [
-        ":_Alpha",
-        ":_Beta",
-        ":_Gamma",
+        ":Alpha",
+        ":Beta",
+        ":Gamma",
     ],
 )
 
 ocaml_module(
-    name = "_Alpha",
+    name = "Alpha",
     struct = "alpha.ml",
 )
 
 ocaml_module(
-    name = "_Beta",
+    name = "Beta",
     struct = "beta.ml",
 )
 
 ocaml_module(
-    name = "_Gamma",
+    name = "Gamma",
     struct = "gamma.ml",
 )
