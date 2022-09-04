@@ -8,7 +8,7 @@ load(
 ocaml_test(name = "test", main = ":Test")
 
 ocaml_module(name   = "Test", struct = "testbzl.ml",
-             deps = [":A1", ":A2", "@ounit2//:ounit2"])
+             deps = [":A1", ":A2", "@ounit2//ounit2"])
 
 ocaml_module(name = "A2",
              struct = "a.ml", # <= OBazl will symlink this to <work>/a2.ml

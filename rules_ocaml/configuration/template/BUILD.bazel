@@ -34,7 +34,7 @@ int_flag( name = "blue", build_setting_default = 0 )
 demo_config(
     name = "color_config",
     template = "config.ml.template",
-    ## the demo_config rule (defined in //:BUILD.bzl) defaults to the flags defined above.
+    ## the demo_config rule (defined in //BUILD.bzl) defaults to the flags defined above.
     ## passing options on the command line will override the defaults
 #     colorize = ":colorize",
 #     red   = ":red",
@@ -81,7 +81,7 @@ ocaml_module(
     ],
     deps = [
         ":_Config",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ]
 )
 

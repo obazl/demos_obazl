@@ -7,7 +7,7 @@ load(
 
 ocaml_test(name      = "test", main = "Test")
 ocaml_module(name    = "Test", struct = "test.ml",
-             deps    = [":A", "@ounit2//:ounit2"])
+             deps    = [":A", "@ounit2//ounit2"])
 ocaml_module(name    = "A", struct = "a.ml",sig    = ":A_cmi")
 ocaml_signature(name = "A_cmi", src  = "a.mli", deps = [":B"])
 ocaml_signature(name = "B", src  = "b.mli")

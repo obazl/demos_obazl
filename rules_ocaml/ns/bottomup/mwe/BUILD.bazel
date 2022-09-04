@@ -55,7 +55,7 @@ ocaml_module(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":olibHello", "@ounit2//:ounit2"]
+    deps = [":olibHello", "@ounit2//ounit2"]
 )
 
 ocaml_test(

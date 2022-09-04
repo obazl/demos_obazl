@@ -21,7 +21,7 @@ ocaml_module(
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":Color", "@ounit2//:ounit2"],
+        ":Color", "@ounit2//ounit2"],
 )
 
 ocaml_library(

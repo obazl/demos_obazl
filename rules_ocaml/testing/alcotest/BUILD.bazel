@@ -12,14 +12,14 @@ test_suite(
 ocaml_test(
     name = "alcotest",
     main = ":Test_alcotest",
-    manifest = ["@alcotest//:alcotest"] ## FIXME this should not be needed here
+    manifest = ["@alcotest//alcotest"] ## FIXME this should not be needed here
 )
 
 
 ocaml_module(
     name   = "Test_alcotest",
     struct = "test_alcotest.ml",
-    deps   = ["@alcotest//:alcotest"]
+    deps   = ["@alcotest//alcotest"]
 )
 
 ###########
@@ -34,7 +34,7 @@ ocaml_module(
     name   = "Test_hello",
     struct = "test_hello.ml",
     deps = [
-        "@alcotest//:alcotest",
+        "@alcotest//alcotest",
         ":Hello",
     ],
 )

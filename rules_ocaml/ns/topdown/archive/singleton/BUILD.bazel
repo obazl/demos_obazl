@@ -3,42 +3,56 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
+    "ocaml_archive",
+    "ocaml_library",
     "ocaml_ns_archive",
     "ocaml_test",
 )
+
 ocaml_test(
     name = "test",
-    main = ":Test",
+    main = "Test"
 )
 
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//:ounit2"],
+    deps = [
+        ":color",
+        "@ounit2//ounit2",
+    ],
 )
+
+
+## This will fail, because the ns contains only one submodule, whose
+## name matches the ns name. This is disallowed. Use plain
+## ocaml_archive (or ocaml_library), or change the names.
 
 ocaml_ns_archive(
     name = "color",
     ns = "Color",
     submodules = [
-        ":Red",
-        ":Green",
-        ":Blue",
+        ":Color"
     ],
-    visibility = ["//visibility:public"],
 )
 
-ocaml_module(
-    name = "Red",
-    struct = "red.ml",
-)
+# But this works
+# ocaml_archive(
+#     name = "color",
+#     manifest = [
+#         ":Color"
+#     ],
+# )
+
+# So does this
+# ocaml_library(
+#     name = "color",
+#     manifest = [
+#         ":Color"
+#     ],
+# )
 
 ocaml_module(
-    name = "Green",
-    struct = "green.ml",
-)
-
-ocaml_module(
-    name = "Blue",
-    struct = "blue.ml",
+    name = "Color",
+    struct = "color.ml",
 )

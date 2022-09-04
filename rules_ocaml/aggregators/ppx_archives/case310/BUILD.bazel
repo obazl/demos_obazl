@@ -17,7 +17,7 @@ ocaml_module(
     struct    = "test.ml",
     ppx       = ":ppx.exe",
     ppx_print = "@rules_ocaml//ppx/print:text",
-    deps      = ["@ounit2//:ounit2"]
+    deps      = ["@ounit2//ounit2"]
 )
 
 ###############
@@ -26,7 +26,7 @@ ppx_executable(
     main = ":ppxlib_runner",
     manifest = [
         ":driver",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 
@@ -51,26 +51,26 @@ ocaml_archive(
 ppx_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ppx_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ppx_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ###########
 ppx_module(
     name = "ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ########

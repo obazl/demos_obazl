@@ -28,7 +28,7 @@ ocaml_module(
         ":Baz__Green",
         ":Baz__Red",
         ":Baz",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 
@@ -59,7 +59,7 @@ ocaml_module(
         # ":Bar",
         ":Bar__Blue",
         ":Bar__Green",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
     visibility = [
     ]
@@ -96,7 +96,7 @@ ocaml_module(
         # ":Baz",
         ":Baz__Blue",
         ":Baz__Green",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 

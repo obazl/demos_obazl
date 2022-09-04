@@ -55,7 +55,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":olibRGB",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 

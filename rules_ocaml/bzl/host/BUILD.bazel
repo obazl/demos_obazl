@@ -49,15 +49,15 @@ config_setting(
 )
 
 ## FIXME: should be based on compiler, not os, e.g. clang_debug v. gcc_debug
-##  @local_config_cc//:cc-compiler-darwin_x86_64
+##  @local_config_cc//cc-compiler-darwin_x86_64
 config_setting(
     name = "macos_debug",
     constraint_values = [
-        # "@local_config_cc//:cc-compiler-darwin_x86_64"
+        # "@local_config_cc//cc-compiler-darwin_x86_64"
         "@platforms//os:macos"
     ],
     values = {
-        # "@bazel_tools//tools/cpp:toolchain_type": "@local_config_cc//:cc-compiler-darwin_x86_64",
+        # "@bazel_tools//tools/cpp:toolchain_type": "@local_config_cc//cc-compiler-darwin_x86_64",
         "compilation_mode": "dbg"
     },
 )

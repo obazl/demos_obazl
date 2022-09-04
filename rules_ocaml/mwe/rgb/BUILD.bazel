@@ -18,7 +18,7 @@ ocaml_module(
         ":R",
         ":G",
         ":B",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 

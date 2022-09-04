@@ -28,7 +28,7 @@ ocaml_library(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":libcolor", "@ounit2//:ounit2"],
+    deps = [":libcolor", "@ounit2//ounit2"],
 )
 
 ocaml_test(

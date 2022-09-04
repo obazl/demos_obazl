@@ -41,7 +41,7 @@ ocaml_module(
     ],
     deps = [
         "Main",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ]
 )
 

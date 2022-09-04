@@ -21,7 +21,7 @@ ocaml_module(
         ":Nobar__Blue",
         ":Nobar__Green",
         ":Nobar__Red",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 

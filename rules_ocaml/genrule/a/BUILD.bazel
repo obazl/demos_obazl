@@ -19,7 +19,7 @@ ocaml_module(
     ],
     deps = [
         ":rgb",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 

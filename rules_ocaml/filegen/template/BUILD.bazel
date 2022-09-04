@@ -45,7 +45,7 @@ load(":BUILD.bzl", "demo_config")
 demo_config(
     name = "color_config",
     template = "config.ml.template",
-    ## the demo_config rule attribs (defined in //:BUILD.bzl) default to the flags defined above.
+    ## the demo_config rule attribs (defined in //BUILD.bzl) default to the flags defined above.
     ## passing options on the command line will override the defaults
     # use a constant label (defined above) to override default; this override
     # takes priority over the command line
@@ -115,7 +115,7 @@ ocaml_module(
         "-linkall",
         "-no-opaque",
     ],
-    deps = [":_Config", "@ounit2//:ounit2"]
+    deps = [":_Config", "@ounit2//ounit2"]
 )
 
 #############

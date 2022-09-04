@@ -58,7 +58,7 @@ ocaml_module(
     ],
     struct = "hello.ml",
     deps = [
-        # "@core//:core",
+        # "@core//core",
         "@ppx_inline_test//runtime-lib", ## not needed -
         # listed as ppx_codep on the ppx executable
         # "//rules/ocaml_module:Hello"
@@ -71,7 +71,7 @@ ppx_executable(
     main = ":Driver",
     opts = [],
     manifest = [
-        # "@ppxlib//:ppxlib",
+        # "@ppxlib//ppxlib",
     ],
 )
 
@@ -81,8 +81,8 @@ ppx_module(
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
     deps = [
-        "@ppx_inline_test//:ppx_inline_test",
-        "@ppxlib//:ppxlib"
+        "@ppx_inline_test//ppx_inline_test",
+        "@ppxlib//ppxlib"
     ],
     ppx_codeps = [
         "@ppx_inline_test//runtime-lib",

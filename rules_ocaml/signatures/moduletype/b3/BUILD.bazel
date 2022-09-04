@@ -10,7 +10,7 @@ load(
 ocaml_test(name = "test", main = "Test")
 
 ocaml_module(name   = "Test", struct = "testbzl.ml",
-             deps = [":A", "@ounit2//:ounit2"])
+             deps = [":A", "@ounit2//ounit2"])
 
 # sig A depends module types B and C, which may be provided by any
 # sigfiles; the 'open' attribute will automatically add the needed

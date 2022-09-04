@@ -71,7 +71,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":olibGreek",
-        "@ounit2//:ounit2",
+        "@ounit2//ounit2",
     ],
 )
 

@@ -25,7 +25,7 @@ ocaml_test(
 ocaml_module(
     name   = "_Test",
     struct = "test.ml",
-    deps = ["_Main", "@ounit2//:ounit2"]
+    deps = ["_Main", "@ounit2//ounit2"]
 )
 
 ocaml_binary(

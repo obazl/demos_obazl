@@ -16,7 +16,7 @@ ppx_module(
     name = "Test",
     struct = "test.ml",
     ppx  = ":ppx.exe",
-    deps = ["@ounit2//:ounit2"]
+    deps = ["@ounit2//ounit2"]
 )
 
 ###############
@@ -26,7 +26,7 @@ ppx_executable(
     manifest = [
         ":Ppx_color",
         ":Ppx_greek",
-        "@ppxlib//:ppxlib"
+        "@ppxlib//ppxlib"
     ],
 )
 
@@ -50,19 +50,19 @@ ocaml_archive(
 ppx_module(
     name      = "Ppx_red",
     struct    = "ppx_red.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ppx_module(
     name      = "Ppx_green",
     struct    = "ppx_green.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ppx_module(
     name      = "Ppx_blue",
     struct    = "ppx_blue.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ###########
@@ -85,19 +85,19 @@ ocaml_archive(
 ppx_module(
     name      = "Ppx_alpha",
     struct    = "ppx_alpha.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ppx_module(
     name      = "Ppx_beta",
     struct    = "ppx_beta.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ppx_module(
     name      = "Ppx_gamma",
     struct    = "ppx_gamma.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ################################################################
@@ -105,7 +105,7 @@ ppx_module(
 ppx_module(
     name = "Runner",
     struct = ":ppxlib_runner.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ########

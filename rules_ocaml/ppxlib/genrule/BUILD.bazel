@@ -44,7 +44,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ]
 )
 
@@ -55,7 +55,7 @@ ocaml_module(
     ## use output of genrule that runs the ppx
     struct = "tmp/hello.ml",  # output of genrule, which will be triggered
     deps = [
-        "@core//:core"
+        "@core//core"
     ],
 
     ## normally you would use these convenience attribs to tell the
@@ -87,7 +87,7 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Driver",  # obazl will place main last in the list of deps
     manifest = [
-        "@ppx_sexp_value//:ppx_sexp_value",  # contains handler for `[%sexp ]` extension
+        "@ppx_sexp_value//ppx_sexp_value",  # contains handler for `[%sexp ]` extension
         # tmp:
         "@ppx_here//runtime-lib",
         "@ppx_sexp_conv//runtime-lib"
@@ -98,7 +98,7 @@ ppx_executable(
 ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml", # this is in the 'outs' of the genrule
-    deps = ["@ppxlib//:ppxlib"],
+    deps = ["@ppxlib//ppxlib"],
 )
 
 ########

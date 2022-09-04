@@ -36,7 +36,7 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/a:Hello",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 
@@ -57,7 +57,7 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/b:Hello",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 
@@ -78,7 +78,7 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/c:Hello",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 
@@ -99,6 +99,6 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/d:Hello",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )

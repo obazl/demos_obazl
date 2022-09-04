@@ -29,7 +29,7 @@ ocaml_module(
     name    = "Test_archive",
     module  = "Test_archive",
     struct  = "test.ml",
-    deps    = [":Main", "@ounit2//:ounit2"]
+    deps    = [":Main", "@ounit2//ounit2"]
 )
 
 ocaml_module(
@@ -38,7 +38,7 @@ ocaml_module(
     struct  = "test.ml",
     deps    = [
         ":Main_noarchive",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ])
 
 ocaml_module(

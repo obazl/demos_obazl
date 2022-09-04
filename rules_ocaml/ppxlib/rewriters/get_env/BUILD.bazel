@@ -55,7 +55,7 @@ ocaml_module(
     ppx    = ":ppx.exe",
     deps = [
         ":main",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ]
 )
 
@@ -94,14 +94,14 @@ ppx_executable(
 ocaml_module(
     name      = "ppx_get_env",
     struct    = "ppx_get_env.ml",
-    deps = ["@ppxlib//:ppxlib"]
+    deps = ["@ppxlib//ppxlib"]
 )
 
 ###########
 ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@ppxlib//:ppxlib"]
+    deps = ["@ppxlib//ppxlib"]
 )
 
 ########

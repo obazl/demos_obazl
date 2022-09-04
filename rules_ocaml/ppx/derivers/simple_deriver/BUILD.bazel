@@ -16,7 +16,7 @@ ocaml_module(
     struct = "test.ml",
     ppx  = ":ppx.exe",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    deps = ["@ounit2//:ounit2"]
+    deps = ["@ounit2//ounit2"]
 )
 
 ###############
@@ -30,14 +30,14 @@ ppx_executable(
 ocaml_module(
     name      = "ppx_deriving_accessors",
     struct    = ":ppx_deriving_accessors.ml",
-    deps      = ["@ppxlib//:ppxlib"]
+    deps      = ["@ppxlib//ppxlib"]
 )
 
 ###########
 ocaml_module(
     name = "ppxlib_driver",
     struct = ":ppxlib_driver.ml",
-    deps   = ["@ppxlib//:ppxlib"]
+    deps   = ["@ppxlib//ppxlib"]
 )
 
 ########

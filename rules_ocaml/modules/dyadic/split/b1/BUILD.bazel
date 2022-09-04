@@ -24,7 +24,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 
@@ -38,7 +38,7 @@ ocaml_module(
 #     struct = "test2.ml",
 #     deps = [
 #         ":Hello2",
-#         "@ounit2//:ounit2"
+#         "@ounit2//ounit2"
 #     ],
 # )
 

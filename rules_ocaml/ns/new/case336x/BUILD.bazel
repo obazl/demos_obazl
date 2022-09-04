@@ -14,7 +14,7 @@ ns_env(prefix = "foo")  # "red.ml", "green.ml"]) #, "blue.ml"])
 ocaml_test(
     name = "test",
     main = "test.ml",
-    deps = [":color", "@ounit2//:ounit2"],
+    deps = [":color", "@ounit2//ounit2"],
 )
 
 ocaml_ns_library(

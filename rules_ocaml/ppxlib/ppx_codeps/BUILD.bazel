@@ -18,7 +18,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@ounit2//:ounit2",
+        "@ounit2//ounit2",
         ":Hello",     # the transformed and compiled test code
         # "@ppx_sexp_conv//runtime-lib",
         # "@ppx_deriving//runtime",
@@ -44,7 +44,7 @@ ocaml_module(
     # open = [
     # we don't need to do this since this is listed as a ppx_codep of :ppx
     # but we still need to pass -open
-    #     "@sexplib//:sexplib",
+    #     "@sexplib//sexplib",
     # ],
     ppx = ":ppx.exe",
     # ppx_print = "@rules_ocaml//ppx/print:text",  # uncomment to get readable output
@@ -54,7 +54,7 @@ ocaml_module(
         # depend on this lib.
 
         ##FIXME: this should not be needed, ppx_codeps is borken
-        "@sexplib//:sexplib",
+        "@sexplib//sexplib",
 
         # "@ppx_sexp_conv//runtime-lib",
         # we do not need to depend on them here, since they are
@@ -78,7 +78,7 @@ ppx_executable(
 
         ## ppx_sexp_conv introduces codeps
         ## "@ppx_sexp_conv//runtime-lib", and "@sexplib0"
-        "@ppx_sexp_conv//:ppx_sexp_conv",
+        "@ppx_sexp_conv//ppx_sexp_conv",
 
         ## without these, ppx transformation of test.ml fails
         ## these indirectly introduce a ppx_codep "@ppx_deriving//runtime",
@@ -98,7 +98,7 @@ ppx_executable(
         ## as direct deps).
         # "@ppx_sexp_conv//runtime-lib",
         # "@ppx_deriving//runtime",
-        # "@sexplib//:sexplib",
+        # "@sexplib//sexplib",
 
         ## HOWEVER: we do not need to list it, because the transitive
         ## closure of the deps includes some ppx_codeps, including
@@ -112,7 +112,7 @@ ppx_executable(
 ppx_module(
     name = "driver",
     struct = ":ppxlib_driver_wrapper.ml",
-    deps   = ["@ppxlib//:ppxlib"],
+    deps   = ["@ppxlib//ppxlib"],
     opts = ["-linkall"],
     visibility = ["//visibility:public"]
 )

@@ -21,7 +21,7 @@ ocaml_module(
         ":_Red",
         ":_Green",
         ":_Blue",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 

@@ -39,7 +39,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ]
 )
 
@@ -81,14 +81,14 @@ genrule(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
-    manifest = ["@ppx_optcomp//:ppx_optcomp"]
+    manifest = ["@ppx_optcomp//ppx_optcomp"]
 )
 
 ###########
 ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@ppxlib//:ppxlib"]
+    deps = ["@ppxlib//ppxlib"]
 )
 
 ########

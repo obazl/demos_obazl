@@ -20,7 +20,7 @@ ocaml_module(
         ":For_test",
         ":Simple",
         ":Subst_test",
-        "@ounit2//:ounit2",
+        "@ounit2//ounit2",
     ],
     opts = [
         "-linkall"
@@ -33,7 +33,7 @@ ocaml_module(
     ppx = ":ppx.exe",
     struct = "antiquot.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    deps = ["@ppxlib//:ppxlib"],
+    deps = ["@ppxlib//ppxlib"],
 )
 
 ocaml_module(
@@ -41,7 +41,7 @@ ocaml_module(
     ppx = ":ppx.exe",
     struct = "for_test.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    deps = ["@ppxlib//:ppxlib"],
+    deps = ["@ppxlib//ppxlib"],
 )
 
 ocaml_module(
@@ -49,7 +49,7 @@ ocaml_module(
     ppx = ":ppx.exe",
     struct = "simple.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    deps = ["@metapp//:metapp"],
+    deps = ["@metapp//metapp"],
 )
 
 ocaml_module(
@@ -58,7 +58,7 @@ ocaml_module(
     #ppx  = "@metaquot//ppx:exe",
     struct = "subst_test.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
-    deps = ["@ppxlib//:ppxlib", "@metapp//:metapp"],
+    deps = ["@ppxlib//ppxlib", "@metapp//metapp"],
 )
 
 #############
@@ -67,8 +67,8 @@ ocaml_module(
 #     ppx  = "@metaquot//ppx:exe",
 #     ppx_codeps = [
 #         "@ocaml//compiler-libs",
-#         "@ppxlib//:ppxlib",
-#         "@metapp//:metapp"
+#         "@ppxlib//ppxlib",
+#         "@metapp//metapp"
 #     ],
 # )
 
@@ -80,8 +80,8 @@ ppx_executable(
         ## NB: these should be listed as runtime deps (codeps) in
         ## @metaquote//ppx but they are not, so we need to list them
         ## here
-        "@ppxlib//:ppxlib",
-        # "@metapp//:metapp"
+        "@ppxlib//ppxlib",
+        # "@metapp//metapp"
     ],
 )
 

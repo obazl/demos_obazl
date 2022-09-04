@@ -20,7 +20,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@ounit2//:ounit2",
+        "@ounit2//ounit2",
         ":Hello",
     ],
 )

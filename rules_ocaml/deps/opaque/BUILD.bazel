@@ -27,7 +27,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Greeting",
-        "@ounit2//:ounit2"
+        "@ounit2//ounit2"
     ],
 )
 
