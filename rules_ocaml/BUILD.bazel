@@ -9,6 +9,7 @@ test_suite(
         "//modules:test",
         "//mwe:test",
         "//ns:test",
+        "//parsing:test",
         "//ppxlib:test",
         "//signatures:test",
         "//testing:test",

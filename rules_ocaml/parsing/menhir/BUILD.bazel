@@ -1,0 +1,18 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+
+test_suite(
+    name = "test",
+    tests = [
+        "//parsing/menhir/mwe:test",
+        "//parsing/menhir/ns-topdown:test",
+        ":build_test"
+    ]
+)
+
+build_test(
+    name = "build_test",
+    targets = [
+        "//parsing/menhir/handrolled:Parser"
+    ]
+)
+

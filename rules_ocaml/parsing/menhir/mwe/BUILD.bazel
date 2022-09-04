@@ -1,0 +1,105 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_archive",
+     "ocamllex",
+     "ocaml_module",
+     "ocaml_test",
+)
+
+load("@obazl//build:rules_ocaml.bzl", "menhir")
+
+###########
+ocaml_test(
+    name     = "test",
+    main     = ":ParserTest",
+    visibility = ["//visibility:public"],
+)
+ocaml_module(
+    name          = "ParserTest",
+    struct        = "parserTest.ml",
+    deps          = [
+        ":LibMwe",
+        "@ounit2//ounit2"
+    ]
+)
+
+#############################
+####  Aggregate Targets  ####
+
+ocaml_archive(
+    name     = "LibMwe",
+    manifest = [
+        ":Ast",
+        ":Lexer",
+        ":Parser",
+        ":ParserInterface"
+    ],
+)
+
+#############################
+####  Singleton Targets  ####
+
+LIBMWE_COMPILE_OPTS = [
+        "-w",
+        "-39"
+]
+
+ocaml_module(
+    name          = "Ast",
+    struct        = "ast.ml",
+    opts          = LIBMWE_COMPILE_OPTS,
+)
+
+ocaml_module(
+    name          = "Lexer",
+    struct        = "lexer.ml",
+    opts          = LIBMWE_COMPILE_OPTS,
+    deps          = [
+        ":Parser"
+    ],
+)
+
+ocaml_module(
+    name          = "Parser",
+    struct        = "parser.ml",
+    sig           = "parser.mli",
+    opts          = LIBMWE_COMPILE_OPTS,
+    deps          = [
+        ":Ast"
+    ],
+)
+
+ocaml_module(
+    name          = "ParserInterface",
+    struct        = "parserInterface.ml",
+    opts          = LIBMWE_COMPILE_OPTS,
+    deps          = [
+        ":Lexer",
+        ":Parser"
+    ],
+)
+
+##############################
+########################
+####  File Generators  ####
+
+##########
+ocamllex(
+    name  = "lex_Lexer",
+    src   = "lexer.mll",
+    out   = "lexer.ml",
+)
+
+#######  emitting menhir ####
+##########
+menhir(
+    name  = "menhir_Parser",
+    tool  = "@ocaml//bin:menhir",
+    src   = "parser.mly",
+    deps  = [":Ast"],
+    outs  = [
+        "parser.ml", "parser.mli"
+    ],
+    # opts = ["-open", "LibMwe"]
+)

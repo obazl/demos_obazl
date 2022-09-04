@@ -1,0 +1,17 @@
+(ocamllex lexer)
+
+(menhir (modules parser))
+
+(library
+    (name LibMwe)
+  (wrapped false)
+  (modules ast lexer parser parserInterface)
+  (flags
+   ;; menhir generates instances of the "unused rec flag"
+   ;; warning
+   (:standard -w -39)))
+
+(test
+ (name parserTest)
+ (modules parserTest)
+ (libraries LibMwe ounit2))

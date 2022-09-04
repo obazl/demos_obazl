@@ -1,0 +1,44 @@
+# demonstrates use of ocamllex
+package(default_visibility = ["//visibility:public"])
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocamllex",
+    "ocaml_module",
+    "ocaml_test",
+    # "ppx_executable"
+)
+
+ocaml_binary(
+    name = "main",
+    main = ":Main",
+    # deps = [
+    #     ":Lexer",
+    # ]
+)
+
+ocaml_module(
+    name = "Main",
+    struct = "main.ml",
+    opts = [
+        "-w",
+        "-21-26-33",
+    ],
+    deps = [
+        ":Lexer",
+        "@core//core",
+        "@core_unix//command_unix"
+    ]
+)
+
+ocaml_module(
+    name = "Lexer",
+    struct = "lexer.ml",
+)
+
+ocamllex(
+    name = "_genlexer",
+    src  = "lexer.mll",
+    out  = "lexer.ml"
+)

@@ -1,0 +1,17 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl", "ocaml_module", "ocamlyacc")
+
+# mly source: https://ohama.github.io/ocaml/ocamlyacc-tutorial/examples/reverspolishcalculator
+
+ocaml_module(
+    name          = "Rpcalc",
+    struct        = "rpcalc.ml",
+    sig           = "rpcalc.mli",
+)
+
+ocamlyacc(
+    name = "rpcalc",
+    src   = "rpcalc.mly",
+    outs  = ["rpcalc.ml", "rpcalc.mli"]
+)

@@ -1,3 +1,9 @@
+# demonstrates menhir processing using genrules only.
+# for demo purpose only, you should use the 'menhir' rule.
+# this will not work with top-down namespacing.
+
+package(default_visibility = ["//visibility:public"])
+
 load("@rules_ocaml//build:rules.bzl",
      "ocaml_ns_archive",
      "ocamllex",
@@ -5,21 +11,19 @@ load("@rules_ocaml//build:rules.bzl",
      "ocaml_test",
 )
 
-load("@obazl//build:rules_ocaml.bzl",
-     "menhir",
+ocaml_module(
+    name          = "Parser",
+    struct        = "parser.ml",
+    sig           = "parser.mli",
+    deps          = [
+        ":Ast"
+    ],
 )
 
-package(default_visibility = ["//visibility:public"])
-
-EUDOXIA0_COMPILE_OPTS = [
-        "-w",
-        "-39"
-]
-
-PARSERTEST_DEPS = [
-    ":eudoxia0",
-    "@ounit2//ounit2"
-]
+ocaml_module(
+    name          = "Ast",
+    struct        = "ast.ml",
+)
 
 genrule(
     name = "menhir1",
@@ -34,28 +38,10 @@ genrule(
     ])
 )
 
-# parser.deps will contain the ocamldep output; we need to parse it to
-# list those deps in step menhir3 below. This is not automated here;
-# you just have to run menhir2 and inspect the output. The 'menhir'
-# rule automates it.
-
+# in this case the parser depends on module Ast, so we need to extract the
+# path to the outputs of the :Ast build target defined above.
 genrule(
     name = "menhir2",
-    srcs = ["parser.mock.ml"],
-    outs = ["parser.deps"],
-    exec_tools = ["@ocaml//bin:ocamldep"],
-    cmd  = " ".join([
-        "$(execpath @ocaml//bin:ocamldep)",
-        "-modules",
-        "$(SRCS)",
-        "> $@"
-    ])
-)
-
-# in this case the parser depends on module Ast, so we need to extract the
-# path to the outputs of the :Ast build target defined below.
-genrule(
-    name = "menhir3",
     srcs = ["parser.mock.ml", ":Ast"],
     outs = ["parser.inferred.mli"],
     exec_tools = ["@ocaml//bin:ocamlc"],
@@ -72,7 +58,7 @@ genrule(
 )
 
 genrule(
-    name = "menhir4",
+    name = "menhir3",
     srcs = ["parser.mly", "parser.inferred.mli"],
     outs = ["parser.ml", "parser.mli"],
     exec_tools = ["@ocaml//bin:menhir"],
@@ -95,80 +81,20 @@ genrule(
     ])
 )
 
-## finally, we can compile the parser. Note that we do not use the
-## inferred .mli from step menhir3 above.
-ocaml_module(
-    name          = "Parser",
-    struct        = "parser.ml",
-    sig           = "parser.mli",
-    opts          = EUDOXIA0_COMPILE_OPTS,
-    deps          = [
-        ":Ast"
-    ],
-)
+# parser.deps will contain the ocamldep output; we need to parse it to
+# list those deps in step menhir3 below. This is not automated here;
+# you just have to run menhir2 and inspect the output. The 'menhir'
+# rule automates it.
 
-#############################
-####  Aggregate Targets  ####
-
-#################
-ocaml_ns_archive(
-    name       = "eudoxia0",
-    submodules = [
-        ":Ast",
-        ":Lexer",
-        ":Parser",
-        ":ParserInterface"
-    ],
-)
-
-#############################
-####  Singleton Targets  ####
-ocaml_module(
-    name          = "Ast",
-    struct        = "ast.ml",
-    opts          = EUDOXIA0_COMPILE_OPTS,
-)
-
-ocaml_module(
-    name          = "Lexer",
-    struct        = "lexer.ml",
-    opts          = EUDOXIA0_COMPILE_OPTS,
-    deps          = [
-        ":Parser"
-    ],
-)
-
-ocaml_module(
-    name          = "ParserInterface",
-    struct        = "parserInterface.ml",
-    opts          = EUDOXIA0_COMPILE_OPTS,
-    deps          = [
-        ":Lexer",
-        ":Parser"
-    ],
-)
-
-ocaml_module(
-    name          = "Parsertest",
-    struct        = "parsertest.ml",
-    deps          = PARSERTEST_DEPS,
-)
-
-##############################
-####  Test Targets  ####
-#############
-ocaml_test(
-    name     = "parsertest.exe",
-    main     = "Parsertest",
-    visibility = ["//visibility:public"],
-)
-
-########################
-####  File Generators  ####
-
-##########
-ocamllex(
-    name  = "lex_Lexer",
-    src   = "lexer.mll",
-    out   = "lexer.ml",
+genrule(
+    name = "menhir_deps",
+    srcs = ["parser.mock.ml"],
+    outs = ["parser.deps"],
+    exec_tools = ["@ocaml//bin:ocamldep"],
+    cmd  = " ".join([
+        "$(execpath @ocaml//bin:ocamldep)",
+        "-modules",
+        "$(SRCS)",
+        "> $@"
+    ])
 )

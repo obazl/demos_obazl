@@ -1,0 +1,10 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+
+test_suite(
+    name = "test",
+    tests = [
+        "//parsing/menhir:test",
+        "//parsing/ocamllex:test",
+        "//parsing/ocamlyacc:test",
+    ]
+)
