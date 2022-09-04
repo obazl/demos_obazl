@@ -1,0 +1,174 @@
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_ns_archive",
+     "ocamllex",
+     "ocaml_module",
+     "ocaml_test",
+)
+
+load("@obazl//build:rules_ocaml.bzl",
+     "menhir",
+)
+
+package(default_visibility = ["//visibility:public"])
+
+EUDOXIA0_COMPILE_OPTS = [
+        "-w",
+        "-39"
+]
+
+PARSERTEST_DEPS = [
+    ":eudoxia0",
+    "@ounit2//ounit2"
+]
+
+genrule(
+    name = "menhir1",
+    srcs = ["parser.mly"],
+    outs = ["parser.mock.ml"],
+    exec_tools = ["@ocaml//bin:menhir"],
+    cmd  = " ".join([
+        "$(execpath @ocaml//bin:menhir)",
+        "$(SRCS)",
+        "--base", "parser",
+        "--infer-write-query $@"
+    ])
+)
+
+# parser.deps will contain the ocamldep output; we need to parse it to
+# list those deps in step menhir3 below. This is not automated here;
+# you just have to run menhir2 and inspect the output. The 'menhir'
+# rule automates it.
+
+genrule(
+    name = "menhir2",
+    srcs = ["parser.mock.ml"],
+    outs = ["parser.deps"],
+    exec_tools = ["@ocaml//bin:ocamldep"],
+    cmd  = " ".join([
+        "$(execpath @ocaml//bin:ocamldep)",
+        "-modules",
+        "$(SRCS)",
+        "> $@"
+    ])
+)
+
+# in this case the parser depends on module Ast, so we need to extract the
+# path to the outputs of the :Ast build target defined below.
+genrule(
+    name = "menhir3",
+    srcs = ["parser.mock.ml", ":Ast"],
+    outs = ["parser.inferred.mli"],
+    exec_tools = ["@ocaml//bin:ocamlc"],
+    cmd  = " ".join([
+        # :Ast provides ast.cmi plus ast.cmo (or ast.cmx, ast.o)
+        "ASTOUTS=($(locations :Ast));",
+        # we need the dir so any output file will do
+        "DEP=`dirname $${ASTOUTS[0]}`;",
+        "$(execpath @ocaml//bin:ocamlc)",
+        "-I $$DEP",
+        "-i $(location parser.mock.ml)",
+        "> $@;"
+    ])
+)
+
+genrule(
+    name = "menhir4",
+    srcs = ["parser.mly", "parser.inferred.mli"],
+    outs = ["parser.ml", "parser.mli"],
+    exec_tools = ["@ocaml//bin:menhir"],
+    cmd  = " ".join([
+        "$(execpath @ocaml//bin:menhir)",
+        "$(location parser.mly)",
+        # "--base", "parser",
+        "--infer-read-reply $(location parser.inferred.mli);",
+
+        # menhir cmd puts output in same dir as input dir
+        # which in this case is `dirname $(location parser.mly)`
+        # which is parsing/menhir/handrolled.
+        # But the output dir @D is determined by Bazel and may be elsewhere,
+        # so we need to copy/move cmd output to the rule output dir.
+
+        "cp `dirname $(location parser.mly)`/parser.ml $(RULEDIR)/;",
+        "cp `dirname $(location parser.mly)`/parser.mli $(RULEDIR)/;",
+        # "ls `dirname $(location parser.mly)`;"
+
+    ])
+)
+
+## finally, we can compile the parser. Note that we do not use the
+## inferred .mli from step menhir3 above.
+ocaml_module(
+    name          = "Parser",
+    struct        = "parser.ml",
+    sig           = "parser.mli",
+    opts          = EUDOXIA0_COMPILE_OPTS,
+    deps          = [
+        ":Ast"
+    ],
+)
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_ns_archive(
+    name       = "eudoxia0",
+    submodules = [
+        ":Ast",
+        ":Lexer",
+        ":Parser",
+        ":ParserInterface"
+    ],
+)
+
+#############################
+####  Singleton Targets  ####
+ocaml_module(
+    name          = "Ast",
+    struct        = "ast.ml",
+    opts          = EUDOXIA0_COMPILE_OPTS,
+)
+
+ocaml_module(
+    name          = "Lexer",
+    struct        = "lexer.ml",
+    opts          = EUDOXIA0_COMPILE_OPTS,
+    deps          = [
+        ":Parser"
+    ],
+)
+
+ocaml_module(
+    name          = "ParserInterface",
+    struct        = "parserInterface.ml",
+    opts          = EUDOXIA0_COMPILE_OPTS,
+    deps          = [
+        ":Lexer",
+        ":Parser"
+    ],
+)
+
+ocaml_module(
+    name          = "Parsertest",
+    struct        = "parsertest.ml",
+    deps          = PARSERTEST_DEPS,
+)
+
+##############################
+####  Test Targets  ####
+#############
+ocaml_test(
+    name     = "parsertest.exe",
+    main     = "Parsertest",
+    visibility = ["//visibility:public"],
+)
+
+########################
+####  File Generators  ####
+
+##########
+ocamllex(
+    name  = "lex_Lexer",
+    src   = "lexer.mll",
+    out   = "lexer.ml",
+)
