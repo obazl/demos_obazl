@@ -18,15 +18,15 @@ ocaml_module(
     name   = "Test",
     struct = SRC + "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":libcolor", "@ounit2//ounit2"],
+    deps = [":libcolor", "@ounit2//lib/ounit2"],
 )
 
 ## By default, ns name == target name (normalized). Use 'ns' attrib to
 ## override.
 ocaml_ns_library(
     name = "libcolor",
-    ns   = "Color",
-    submodules = [
+    ns_name = "Color",
+    manifest = [
         ":Red",
         ":Green",
         ":Blue"

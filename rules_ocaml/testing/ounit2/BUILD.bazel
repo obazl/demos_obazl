@@ -14,7 +14,7 @@ ocaml_module(
     struct = "test_ounit2.ml",
     opts = ["-linkall"],
     deps = [
-        "@ounit2//ounit2",
+        "@ounit2//lib/ounit2",
         ":Hello",
     ],
 )

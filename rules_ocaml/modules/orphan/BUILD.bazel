@@ -13,7 +13,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@ounit2//ounit2",
+        "@ounit2//lib/ounit2",
         ":A",
     ],
 )

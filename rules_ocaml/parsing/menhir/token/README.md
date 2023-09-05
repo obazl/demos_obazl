@@ -1,5 +1,6 @@
-non-namespaced minimal working example.
+non-namespaced minimal working example using an external tokens file.
 
-Since modules named 'Parser' are not uncommon, best practice is
-probably to either use a namespace or give your parser a name that is
-likely to be unique, like MyFooParser.
+See https://github.com/ocaml/dune/issues/664: "the only thing
+--external-tokens helps with is establishing the type equality between
+the token in the external module and the token in .mly file."
+

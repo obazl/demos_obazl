@@ -14,13 +14,14 @@ ocaml_test(
     name     = "test",
     main     = "ParserTest",
     visibility = ["//visibility:public"],
+    timeout  = "short"
 )
 ocaml_module(
     name          = "ParserTest",
     struct        = "parserTest.ml",
     deps          = [
         ":LibMwe",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ]
 )
 
@@ -29,7 +30,7 @@ ocaml_module(
 
 ocaml_ns_archive(
     name       = "LibMwe",
-    submodules = [
+    manifest = [
         ":Ast",
         ":Lexer",
         ":Parser",
@@ -96,7 +97,7 @@ ocamllex(
 menhir(
     name  = "menhir_Parser",
     tool  = "@ocaml//bin:menhir",
-    src   = "parser.mly",
+    grammars = ["parser.mly"],
     deps  = [":Ast"],
     outs  = [
         "parser.ml", "parser.mli"

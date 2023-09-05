@@ -4,6 +4,7 @@ test_suite(
         "//aggregators:test",
         "//algebra/group:test",
         "//configuration:test",
+        "//deps:test",
         "//filegen:test",
         "//interop:test",
         "//modules:test",

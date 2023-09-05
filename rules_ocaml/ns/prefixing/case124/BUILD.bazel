@@ -11,11 +11,11 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w",
@@ -26,7 +26,7 @@ ocaml_module(
         ":Demo__Green",
         ":Demo__Red",
         ":Demo",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -39,7 +39,7 @@ ocaml_module(
         "-no-alias-deps",
     ],
     deps = [
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

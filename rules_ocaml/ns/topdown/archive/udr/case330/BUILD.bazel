@@ -9,47 +9,47 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color", "@ounit2//ounit2"],
+    deps = [":color", "@ounit2//lib/ounit2"],
 )
 
 #################
 ocaml_ns_archive(
     name = "color",
     # use user-provided file as main ns module:
-    resolver = ":_Color",
-    submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue",
-        # ":_Color",
+    # resolver = ":Color",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":Color",
     ],
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
-    name   = "_Color",
+    name   = "Color",
     struct = "color.ml",
     deps   = [
-        ":_Red",
-        ":_Green",
-        ":_Blue"
+        ":Red",
+        ":Green",
+        ":Blue"
     ]
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
     visibility = [
         "//ns/obazl/class03/case09:__pkg__",
@@ -60,7 +60,7 @@ ocaml_module(
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
     visibility = ["//ns/obazl/set035/case03:__pkg__"],
 )

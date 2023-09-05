@@ -25,3 +25,7 @@ exclude = library/select
 
 ;; ;; excludes override includes
 ;; exclude = src/foo/bar:src/foo/baz
+
+exclude = interop/rust
+exclude = deps/dynamic
+exclude = test/complex

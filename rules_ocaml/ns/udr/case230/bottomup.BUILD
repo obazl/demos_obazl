@@ -10,18 +10,18 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test",
+    main = "Test",
     # deps = [":color"]
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":Color", "@ounit2//ounit2"],
+        ":Color", "@ounit2//lib/ounit2"],
 )
 
 ocaml_library(
@@ -38,13 +38,13 @@ ocaml_library(
 #################
 # ocaml_ns_resolver(
 #     name = "color_ns",
-#     resolver   = ":_Color",
+#     resolver   = ":Color",
 #     ns = "Color",
-#     submodules = [
-#         ":_Red",
-#         ":_Green",
-#         ":_Blue",
-#         ":_Color"
+#     manifest = [
+#         ":Red",
+#         ":Green",
+#         ":Blue",
+#         ":Color"
 #     ],
 # )
 

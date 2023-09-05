@@ -15,12 +15,12 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":hello", "@ounit2//ounit2"]
+    deps = [":hello", "@ounit2//lib/ounit2"]
 )
 
 ocaml_ns_library(
     name = "hello",
-    submodules = [
+    manifest = [
         ":Australian",
         ":English",
         ":French",

@@ -13,25 +13,25 @@ load(
 ocaml_test(
     name = "test",
     deps = [
-        "_Test1",
-        "_Test2"
+        "Test1",
+        "Test2"
     ]
 )
 
 ocaml_module(
-    name   = "_Test1",
+    name   = "Test1",
     struct = "test1.ml",
     opts = [
         "-w", "-31"  ## files x and y both define a module named Z
     ],
     deps = [
         ":main",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
 ocaml_module(
-    name   = "_Test2",
+    name   = "Test2",
     struct = "test2.ml",
     opts = [
         "-w", "-27", ## unused variable test_ctxt.
@@ -39,7 +39,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

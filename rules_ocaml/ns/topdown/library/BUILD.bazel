@@ -17,6 +17,7 @@ test_suite(
 
         "//ns/topdown/library/helpers100:test",
 
+        "//ns/topdown/library/select:test",
         "//ns/topdown/library/sibdeps100:test",
         "//ns/topdown/library/sibdeps150:test",
 

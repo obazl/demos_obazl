@@ -1,1 +1,1 @@
-tutorial code from https://github.com/eudoxia0/parsing-menhir
+just the parser from https://github.com/eudoxia0/parsing-menhir

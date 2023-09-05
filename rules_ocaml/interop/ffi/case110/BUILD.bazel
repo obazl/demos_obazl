@@ -26,42 +26,42 @@ config_setting(name = "static", flag_values = {":link": "static"})
 ocaml_test(
     name = "test",
     main = ":Test",
-    opts = [
-        # "-cclib", "-llibalpha",   ## fixme
-        # "-verbose",
-        # "-ccopt", "-Wl,-v"
-    ]
+    # vm_runtime default is @ocaml_rules//cfg/runtime:runtime
+    vm_runtime = select({
+        ":dynamic": "@rules_ocaml//cfg/runtime:dynamic", # default
+        ":static": "@rules_ocaml//cfg/runtime:static",   # -custom
+        "//conditions:default": "@rules_ocaml//cfg/runtime:dynamic" # default
+        # vm_runtime = "//foo/bar:rt" ## standalone rt, -use-runtime=...
+    })
 )
 
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    opts = [
-        "-cclib", "-llibalpha"
-    ],
+    opts = ["-linkall"],
     deps = [
-        "Main",
-        "@ounit2//ounit2"
+        "//interop/ffi/case110/cclibs:Alpha",
+        "@ounit2//lib/ounit2",
     ]
 )
 
-ocaml_binary(
-    name = "hello",
-    main = ":Main",
-    opts = [
-        # "-verbose", "-ccopt", "-Wl,-v", "-ccopt", "-v",
-        # "-cclib", "-lalpha"
-    ],
-    # deps = ["//interop/ffi/case110/cclibs:alpha"]
-)
+# ocaml_binary(
+#     name = "hello",
+#     main = ":Main",
+#     opts = [
+#         # "-verbose", "-ccopt", "-Wl,-v", "-ccopt", "-v",
+#         # "-cclib", "-lalpha"
+#     ],
+#     # deps = ["//interop/ffi/case110/cclibs:alpha"]
+# )
 
-ocaml_module(
-    name = "Main",
-    struct = "main.ml",
-    deps   = ["//interop/ffi/case110/cclibs:Alpha"]
-    # deps = select({
-    #     ":dynamic": ["//interop/ffi/case110/cclibs:alpha_dynamic"],
-    #     ":static" : ["//interop/ffi/case110/cclibs:alpha_static"],
-    #     "//conditions:default": ["//interop/ffi/case110/cclibs:alpha"]
-    # })
-)
+# ocaml_module(
+#     name = "Main",
+#     struct = "main.ml",
+#     deps   = ["//interop/ffi/case110/cclibs:Alpha"]
+#     # deps = select({
+#     #     ":dynamic": ["//interop/ffi/case110/cclibs:alpha_dynamic"],
+#     #     ":static" : ["//interop/ffi/case110/cclibs:alpha_static"],
+#     #     "//conditions:default": ["//interop/ffi/case110/cclibs:alpha"]
+#     # })
+# )

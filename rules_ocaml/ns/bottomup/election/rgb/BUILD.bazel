@@ -8,12 +8,38 @@ load(
 
 package(default_visibility = ["//visibility:public"])
 
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libRGB",
+        "@ounit2//lib/ounit2"
+    ],
+)
+
+##################
+## package resolver module and submodules in a library
+ocaml_library(
+    name = "libRGB",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":nsRGB"
+    ],
+)
+
 ocaml_ns_resolver(
-    name = "rgb_ns",  # target name, not (necessarily) ns name
+    name = "nsRGB",  # target name, not (necessarily) ns name
     ## By default, ns name == target name (normalized)
     ## Use 'ns' attrib to override.
     ns   = "RGB",
-    submodules = [
+    manifest = [
         ## these are strings, not labels. must match name of modules
         ## that elect membership using ns_resolver attribute.
         "Red",
@@ -22,46 +48,20 @@ ocaml_ns_resolver(
         ],
 )
 
-## package resolver module and submodules in a library
-ocaml_library(
-    name = "olibRGB",
-    manifest = [
-        ":Red",
-        ":Green",
-        ":Blue",
-        ":rgb_ns"
-    ],
-)
-
 ocaml_module(
     name        = "Red",
-    ns_resolver = ":rgb_ns",
+    ns_resolver = ":nsRGB",
     struct      = "red.ml",
 )
 
 ocaml_module(
     name = "Green",
-    ns_resolver = ":rgb_ns",
+    ns_resolver = ":nsRGB",
     struct = "green.ml",
 )
 
 ocaml_module(
     name = "Blue",
-    ns_resolver = ":rgb_ns",
+    ns_resolver = ":nsRGB",
     struct = "blue.ml",
-)
-
-#############
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        ":olibRGB",
-        "@ounit2//ounit2"
-    ],
-)
-
-ocaml_test(
-    name = "test",
-    main = ":Test",
 )

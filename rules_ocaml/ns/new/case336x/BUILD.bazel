@@ -14,36 +14,36 @@ ns_env(prefix = "foo")  # "red.ml", "green.ml"]) #, "blue.ml"])
 ocaml_test(
     name = "test",
     main = "test.ml",
-    deps = [":color", "@ounit2//ounit2"],
+    deps = [":color", "@ounit2//lib/ounit2"],
 )
 
 ocaml_ns_library(
     name = "color",
     # use user-provided file as main ns module. in this case it will be renamed (copied) to color.ml:
     main = "color_main.ml",  ## Notice that we do NOT have a compile rule for color_main.ml
-    submodules = {
-        ":_Red": "Red",
-        ":_Green": "Green",
-        ":_Blue": "Blue",
+    manifest = {
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
     },
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
-    name = "_Red",
-    ns_env = ":_ns_env",
+    name = "Red",
+    ns_env = ":ns_env",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
-    ns_env = ":_ns_env",
+    name = "Green",
+    ns_env = ":ns_env",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
-    ns_env = ":_ns_env",
+    name = "Blue",
+    ns_env = ":ns_env",
     struct = "blue.ml",
     visibility = [
         "//ns/obazl/class03/case09:__pkg__",

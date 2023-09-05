@@ -12,18 +12,18 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test",
+    main = "Test",
     # deps = [":color"]
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":Color", "@ounit2//ounit2"],
+        ":Color", "@ounit2//lib/ounit2"],
 )
 
 ## the identity resolver, just puts submodules in Color namespace

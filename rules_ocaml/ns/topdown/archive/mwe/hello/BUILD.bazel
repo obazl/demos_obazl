@@ -4,6 +4,7 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test"
 )
 
@@ -15,12 +16,19 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":hello", "@ounit2//ounit2"]
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":libHello"
+    ]
 )
 
 ocaml_ns_archive(
-    name = "hello",
-    submodules = [
+# ocaml_ns_library(
+    name = "libHello",
+    ns_name = "Hello",
+    # archived = True,
+    # archive_name =  "Hello",
+    manifest = [
         ":Australian",
         ":English",
         ":French",

@@ -27,13 +27,15 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
+    "ppx_module",
     "ppx_executable")
 
 ###########
 ocaml_test(
     name = "test",
     main = "Test",
-    timeout = "short"
+    timeout = "short",
+    # prologue = [":Hello"]
 )
 
 ###########
@@ -42,7 +44,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",  # the transformed and compiled test code
-        "@ounit2//ounit2",
+        "@ounit2//lib/ounit2",
     ],
 )
 
@@ -60,7 +62,7 @@ ocaml_module(
     struct = "hello.ml",
     # ppx_print = "@rules_ocaml//ppx/print:text",
     deps = [  # see below, ppx_codeps
-        "@sexplib//sexplib",
+        "@sexplib//lib/sexplib",
     ],
 )
 
@@ -68,23 +70,23 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":Ppx_runner",  ## hand-rolled, see below
-    manifest = [
-        "@ppx_sexp_value//ppx_sexp_value", #contains handler for `[%sexp ]`
+    prologue = [
+        "@ppx_sexp_value//lib/ppx_sexp_value", #contains handler for `[%sexp ]`
         # tmp, till bug fixed:
-        "@ppx_here//runtime-lib",
-        "@ppx_sexp_conv//runtime-lib"
+        "@ppx_here//lib/runtime-lib",
+        "@ppx_sexp_conv//lib/runtime-lib"
     ],
     ppx_codeps = [
-        "@sexplib//sexplib",
+        "@sexplib//lib/sexplib",
     ],
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name = "Ppx_runner",
     struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
-    deps = ["@ppxlib//ppxlib"],
+    deps = ["@ppxlib//lib/ppxlib"],
 )
 
 ########

@@ -11,7 +11,7 @@ test_suite(
     name = "test",
     tests = [
         ":test_archive",
-        # ":test_noarchive"
+        ":test_noarchive"
     ]
 )
 
@@ -20,26 +20,12 @@ ocaml_test(
     main = ":Test_archive",
 )
 
-ocaml_test(
-    name = "test_noarchive",
-    main = ":Test_noarchive",
-)
-
 ocaml_module(
     name    = "Test_archive",
-    module  = "Test_archive",
+    # module_name  = "Test_archive",
     struct  = "test.ml",
-    deps    = [":Main", "@ounit2//ounit2"]
+    deps    = [":Main", "@ounit2//lib/ounit2"]
 )
-
-ocaml_module(
-    name    = "Test_noarchive",
-    module  = "Test_noarchive",
-    struct  = "test.ml",
-    deps    = [
-        ":Main_noarchive",
-        "@ounit2//ounit2"
-    ])
 
 ocaml_module(
     name = "Main",
@@ -58,6 +44,21 @@ ocaml_archive(
     ],
 )
 
+################
+ocaml_test(
+    name = "test_noarchive",
+    main = ":Test_noarchive",
+)
+
+ocaml_module(
+    name    = "Test_noarchive",
+    # module  = "Test_noarchive",
+    struct  = "test_noarchive.ml",
+    deps    = [
+        "@ounit2//lib/ounit2",
+        ":Main_noarchive",
+    ])
+
 ocaml_module(
     name   = "Main_noarchive",
     struct = "main2.ml",
@@ -67,6 +68,7 @@ ocaml_module(
     ]
 )
 
+################################################################
 ocaml_signature(
     name = "Easy_cmi",
     src  = "easy.mli"

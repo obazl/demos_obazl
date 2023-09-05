@@ -15,17 +15,21 @@ ocaml_test(
 
 ocaml_module(
     name   = "Test",
-    struct = select({
-        ":linux_en": "test_linux_en.ml",
-        ":linux_fr": "test_linux_fr.ml",
-        ":macos_en": "test_macos_en.ml",
-        ":macos_fr": "test_macos_fr.ml",
-    }),
+    struct = ":fg_test",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":Hello",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
+)
+filegroup(
+    name = "fg_test",
+    srcs = select({
+        ":linux_en": ["test_linux_en.ml"],
+        ":linux_fr": ["test_linux_fr.ml"],
+        ":macos_en": ["test_macos_en.ml"],
+        ":macos_fr": ["test_macos_fr.ml"],
+    }),
 )
 
 ocaml_signature(
@@ -48,13 +52,17 @@ ocaml_module(
 
     # sig    = "howdy.mli",
 
-    struct = select({
+    struct = "fg_hello",
+)
+filegroup(
+    name = "fg_hello",
+    srcs = select({
         ## namespacing by filename prefix
         ## note the structural colon in <dirname>:<filename>
-        ":linux_en": "linux_en_hello.ml",
-        ":linux_fr": "linux_fr_hello.ml",
-        ":macos_en": "macos_en_hello.ml",
-        ":macos_fr": "macos_fr_hello.ml",
+        ":linux_en": ["linux_en_hello.ml"],
+        ":linux_fr": ["linux_fr_hello.ml"],
+        ":macos_en": ["macos_en_hello.ml"],
+        ":macos_fr": ["macos_fr_hello.ml"],
     }, no_match_error = "unsupported config"),
 )
 

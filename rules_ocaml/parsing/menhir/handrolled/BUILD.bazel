@@ -1,6 +1,8 @@
 # demonstrates menhir processing using genrules only.
-# for demo purpose only, you should use the 'menhir' rule.
+# for demo purpose only; normally you would use the 'menhir' rule.
 # this will not work with top-down namespacing.
+
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -11,13 +13,16 @@ load("@rules_ocaml//build:rules.bzl",
      "ocaml_test",
 )
 
+build_test(
+    name = "test",
+    targets = [":Parser"]
+)
+
 ocaml_module(
     name          = "Parser",
     struct        = "parser.ml",
     sig           = "parser.mli",
-    deps          = [
-        ":Ast"
-    ],
+    deps          = [":Ast"]
 )
 
 ocaml_module(
@@ -38,16 +43,23 @@ genrule(
     ])
 )
 
-# in this case the parser depends on module Ast, so we need to extract the
-# path to the outputs of the :Ast build target defined above.
+# Target :Ast provides only Ast.cmx/o in DefaultInfo.
+# The .cmi and .o files are provided by --output_groups=all
+# So we must use a filegroup for that:
+filegroup(
+    name = "Ast_outs",
+    srcs = [":Ast"],
+    output_group = "all"
+)
+
 genrule(
     name = "menhir2",
-    srcs = ["parser.mock.ml", ":Ast"],
+    srcs = ["parser.mock.ml", ":Ast_outs"],
     outs = ["parser.inferred.mli"],
     exec_tools = ["@ocaml//bin:ocamlc"],
     cmd  = " ".join([
-        # :Ast provides ast.cmi plus ast.cmo (or ast.cmx, ast.o)
-        "ASTOUTS=($(locations :Ast));",
+        # "set -x;",
+        "ASTOUTS=($(locations :Ast_outs));",
         # we need the dir so any output file will do
         "DEP=`dirname $${ASTOUTS[0]}`;",
         "$(execpath @ocaml//bin:ocamlc)",
@@ -63,6 +75,7 @@ genrule(
     outs = ["parser.ml", "parser.mli"],
     exec_tools = ["@ocaml//bin:menhir"],
     cmd  = " ".join([
+        # "set -x;",
         "$(execpath @ocaml//bin:menhir)",
         "$(location parser.mly)",
         # "--base", "parser",
@@ -82,7 +95,7 @@ genrule(
 )
 
 # parser.deps will contain the ocamldep output; we need to parse it to
-# list those deps in step menhir3 below. This is not automated here;
+# list those deps in step menhir3 above. This is not automated here;
 # you just have to run menhir2 and inspect the output. The 'menhir'
 # rule automates it.
 

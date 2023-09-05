@@ -2,7 +2,8 @@
 open Ast
 %}
 
-%token <string> T_FOO
+%token <string> INT_CONSTANT
+%token EOS
 
 /* Types */
 
@@ -13,5 +14,5 @@ open Ast
 %%
 
 ast:
-  | T_FOO { IntConstant $1 }
+  | INT_CONSTANT EOS { IntConstant $1 }
   ;

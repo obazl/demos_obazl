@@ -11,11 +11,18 @@ passing it to the `main` attribute of `ocaml_test`.
 
 Tests are only executed when both these conditions are met:
 
+* Code using this extension must be compiled and linked using the
+  `ppx_inline_test.runtime-lib` library.
+  (`@ppx_inline_test//lib/runtime-lib`)
+
 * the module under test is compiled with `-inline-test-lib <libname>`.
 ** This tags the ppx inline tests  in the module with `<libname>`.
 
 * the executable linked with the modules under test is linked with
   `ppx_inline_test.runner.lib` (see `runtime lib` below for more on this)
+
+    ppx_link_codeps = ["@ppx_inline_test//lib/runner/lib"]
+
 
 * the executable (e.g. `your.exe`) linked with the modules under test
 is called with command line arguments: 'your.exe inline-test-runner
@@ -28,6 +35,8 @@ is called with command line arguments: 'your.exe inline-test-runner
 "Finally, after running tests,`Ppx_inline_test_lib.Runtime.exit ()`
 should be called (to exit with an error and a summary of the number of
 failed tests if there were errors or exit normally otherwise)."
+
+The lib provides this precompiled: `@ppx_inline_test//lib/runner`
 
 
 WARNING: If you pass the wrong <libname> on the command line (as arg
@@ -43,3 +52,17 @@ example.
 == runtime lib
 
 ppx_inline_test.runner.lib
+
+
+== examples
+
+from dune logs:
+
+```
+$ (cd _build/default/compiler/tests-jsoo && .jsoo_testsuite.inline-tests/inline_test_runner_jsoo_testsuite.exe inline-test-runner jsoo_testsuite -source-tree-root ../.. -diff-cmd - -allow-output-patterns)
+```
+
+
+$ (cd _build/default/compiler/tests-compiler && .jsooexp_build_path_prefix_map.inline-tests/inline_test_runner_jsooexp_build_path_prefix_map.exe inline-test-runner jsooexp_build_path_prefix_map -source-tree-root ../.. -diff-cmd - -allow-output-patterns)
+
+

@@ -21,13 +21,13 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Foo_a", # Foo_a is the target name; the module name will be Hello
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
 ocaml_module(
     name   = "Foo_a",
-    module = "Hello", # force module name to Hello
+    module_name = "Hello", # force module name to Hello
     sig    = "foo_a.mli",
     struct = "bar_a.ml",
 )

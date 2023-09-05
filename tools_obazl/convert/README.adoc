@@ -1,5 +1,7 @@
 = dune conversion tests/demos
 
+WARNING: OUTDATED - use the  Makefile
+
 == dev mode
 
 `$ bazel run @obazl//batch -- path/to/target`

@@ -8,26 +8,26 @@ load(
 
 ocaml_ns_library(
     name = "gem",
-    submodules = [
-        ":_Alpha",
-        ":_Beta",
-        ":_Gamma"
+    manifest = [
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
     ],
     visibility = ["//ns/topdown/library/case522:__subpackages__"]
 )
 
 ocaml_module(
-    name = "_Alpha",
+    name = "Alpha",
     struct = "alpha.ml",
-    deps = [":_Beta"],
+    deps = [":Beta"],
 )
 
 ocaml_module(
-    name = "_Beta",
+    name = "Beta",
     struct = "beta.ml",
 )
 
 ocaml_module(
-    name = "_Gamma",
+    name = "Gamma",
     struct = "gamma.ml",
 )

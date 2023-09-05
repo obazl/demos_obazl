@@ -6,25 +6,25 @@ load(
 
 ocaml_ns_archive(
     name = "cmy",
-    submodules = [
-        ":_Cyan",
-        ":_Magenta",
-        ":_Yellow"
+    manifest = [
+        ":Cyan",
+        ":Magenta",
+        ":Yellow"
     ],
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
-    name = "_Cyan",
+    name = "Cyan",
     struct = "cyan.ml",
 )
 
 ocaml_module(
-    name = "_Magenta",
+    name = "Magenta",
     struct = "magenta.ml",
 )
 
 ocaml_module(
-    name = "_Yellow",
+    name = "Yellow",
     struct = "yellow.ml",
 )

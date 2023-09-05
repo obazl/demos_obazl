@@ -10,7 +10,7 @@ load(
 # exogenous submodulues - modules from another package
 ocaml_ns_library(
     name = "color",
-    submodules = [
+    manifest = [
         "//mwe/rgb:R",
         "//mwe/rgb:G",
         "//mwe/rgb:B"
@@ -26,6 +26,6 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//ounit2"],
+    deps = [":color", "@ounit2//lib/ounit2"],
 )
 

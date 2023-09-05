@@ -8,11 +8,12 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test",
+    timeout = "short",
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w",
@@ -22,7 +23,7 @@ ocaml_module(
         ":Demo__Blue",
         ":Demo__Green",
         ":Demo__Red",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

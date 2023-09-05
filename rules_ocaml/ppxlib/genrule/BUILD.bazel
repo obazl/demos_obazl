@@ -9,6 +9,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
+    "ppx_module",
     "ppx_executable")
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
@@ -35,7 +36,8 @@ config_setting(
 ###########
 ocaml_test(
     name = "test",
-    main = "Test",
+    main = ":Test",
+    # opts = ["-verbose"],
     timeout = "short"
 )
 
@@ -44,7 +46,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ]
 )
 
@@ -55,7 +57,7 @@ ocaml_module(
     ## use output of genrule that runs the ppx
     struct = "tmp/hello.ml",  # output of genrule, which will be triggered
     deps = [
-        "@core//core"
+        "@core//lib/core"
     ],
 
     ## normally you would use these convenience attribs to tell the
@@ -65,15 +67,15 @@ ocaml_module(
 )
 
 ## switch to get text output
-# PPX_PRINT=""  # text output
-PPX_PRINT = "-dump-ast"  # binary output
+PPX_PRINT=""  # text output
+# PPX_PRINT = "-dump-ast"  # binary output
 
 ########
 genrule(
     name = "transform",
+    outs = ["tmp/hello.ml"],
     srcs = ["hello.ml"],
     ## due to filename->module_name rules, output must be hello.ml, not e.g. hello.pp.ml
-    outs = ["tmp/hello.ml"],
     ## $(location :ppx.exe) resolves to wherever Bazel placed ppx.exe
     ## {print_fmt} is for string interpolation
     cmd = "$(location :ppx.exe) {print_fmt} $< > $@".format(
@@ -86,19 +88,16 @@ genrule(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",  # obazl will place main last in the list of deps
-    manifest = [
-        "@ppx_sexp_value//ppx_sexp_value",  # contains handler for `[%sexp ]` extension
-        # tmp:
-        "@ppx_here//runtime-lib",
-        "@ppx_sexp_conv//runtime-lib"
+    prologue = [
+        "@ppx_sexp_value//lib/ppx_sexp_value",  # contains handler for `[%sexp ]` extension
     ],
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml", # this is in the 'outs' of the genrule
-    deps = ["@ppxlib//ppxlib"],
+    deps = ["@ppxlib//lib/ppxlib"],
 )
 
 ########

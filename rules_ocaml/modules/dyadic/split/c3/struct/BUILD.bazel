@@ -5,7 +5,7 @@ load("@rules_ocaml//build:rules.bzl", "ocaml_module")
 ## 'module' attribute overrides default
 ocaml_module(
     name   = "Baz",
-    module = "A",
+    module_name = "A",
     struct = "foo.ml",
     # depend on sig source file
     sig    = "//modules/dyadic/split/c3/sig:bar.mli",

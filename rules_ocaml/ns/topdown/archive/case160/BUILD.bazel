@@ -6,24 +6,43 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":libColor"
+    ]
+)
+
 ocaml_ns_archive(
-    name = "color",
-    submodules = [
-        ":Red",
+    name = "libColor",
+    ns_name = "Color",
+    manifest = [
+        ":Red", # ":RedModule",
         ":Green",
         ":Blue",
-        ":greek"
+        ":Greek", # ":libGreek"
     ],
     # subarchives = [
-    #     ":greek"
+    #     ":libGreek"
     # ],
 )
 
 ocaml_module(
-    name = "Red",
+    name = "Red",  # "RedModule",
+    module_name = "Red",
     struct = "red.ml",
     deps = [":Green"],
 )
@@ -39,17 +58,21 @@ ocaml_module(
 )
 
 ###################
-ocaml_ns_archive(
-    name = "greek",
-    submodules = {
-        ":Alpha": "Alpha",
-        ":Beta": "Beta",
-        ":Gamma": "Gamma",
-    },
+# ocaml_ns_archive(  # nope
+# ocaml_library(  # nope
+ocaml_ns_library(  # ok
+    name = "Greek", # "libGreek",
+    # ns_name = "Greek",
+    manifest = [
+        ":Alpha", # ":AlphaModule",
+        ":Beta",
+        ":Gamma"
+    ],
 )
 
 ocaml_module(
-    name = "Alpha",
+    name = "Alpha", # "AlphaModule",
+    # module_name = "Alpha",
     struct = "alpha.ml",
 )
 
@@ -63,14 +86,3 @@ ocaml_module(
     struct = "gamma.ml",
 )
 
-###########
-ocaml_test(
-    name = "test",
-    main = "Test",
-)
-
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [":color", "@ounit2//ounit2"],
-)

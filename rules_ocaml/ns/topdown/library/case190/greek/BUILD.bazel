@@ -10,7 +10,7 @@ load(
 ###################
 ocaml_ns_library(
     name = "greek",
-    submodules = [
+    manifest = [
         ":Alpha",
         ":Beta",
         ":Gamma"

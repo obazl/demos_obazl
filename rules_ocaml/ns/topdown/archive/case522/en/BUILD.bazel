@@ -7,7 +7,7 @@ load(
 
 ocaml_ns_archive(
     name = "color",
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue"
@@ -24,7 +24,7 @@ ocaml_module(
     name = "Green",
     struct = "green.ml",
     deps = [
-        "//ns/topdown/archive/case522/diamond:gem"
+        "//ns/topdown/archive/case522/diamond:libGem"
     ],
 )
 

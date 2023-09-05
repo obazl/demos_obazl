@@ -7,9 +7,9 @@ load(
 )
 
 ocaml_ns_resolver(
-    name = "greek_ns",
+    name = "nsGreek",
     ns   = "Greek",
-    submodules = [
+    manifest = [
         # elective submodules
         "Alpha",
         "Beta",
@@ -23,45 +23,45 @@ ocaml_ns_resolver(
     },
     merge = [
         # exogenous namespaced submodules
-        "//ns/bottomup/election/rgb:rgb_ns"
+        "//ns/bottomup/election/rgb:nsRGB"
     ],
     embed = {
-        "//ns/bottomup/embed/colors/cmyk:cmyk_ns": "CMYK"
+        "//ns/bottomup/embed/colors/cmyk:nsCMYK": "CMYK"
     }
 )
 
 # package resolver and submodules in one library
 ocaml_library(
-    name = "olibGreek",
+    name = "libGreek",
     manifest = [
-        # ":greek_ns",
+        # ":nsGreek",
         ":Alpha",
         ":Beta",
         ":Gamma",
         "//mwe/rgb:R",
         "//mwe/rgb:G",
         "//mwe/rgb:B",
-        "//ns/bottomup/election/rgb:olibRGB",
-        "//ns/bottomup/embed/colors/cmyk:olibCMYK",
+        "//ns/bottomup/election/rgb:libRGB",
+        "//ns/bottomup/embed/colors/cmyk:libCMYK",
     ],
 )
 
 #############
 ocaml_module(
     name        = "Alpha",
-    ns_resolver = ":greek_ns",
+    ns_resolver = ":nsGreek",
     struct      = "alpha.ml",
 )
 
 ocaml_module(
     name        = "Beta",
-    ns_resolver = ":greek_ns",
+    ns_resolver = ":nsGreek",
     struct      = "beta.ml",
 )
 
 ocaml_module(
     name        = "Gamma",
-    ns_resolver = ":greek_ns",
+    ns_resolver = ":nsGreek",
     struct      = "gamma.ml",
 )
 
@@ -70,8 +70,8 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        ":olibGreek",
-        "@ounit2//ounit2",
+        ":libGreek",
+        "@ounit2//lib/ounit2",
     ],
 )
 

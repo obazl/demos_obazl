@@ -4,6 +4,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
     "ocaml_binary",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_test",
 )
@@ -18,15 +19,17 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        ":color",
-        ":greek",
-        "@ounit2//ounit2"
+        ":libColor",
+        ":libGreek",
+        "@ounit2//lib/ounit2"
     ],
 )
 
 ##############
-ocaml_archive(
-    name = "color",
+# ocaml_archive(
+ocaml_library(
+    name = "libColor",
+    archived = True,
     manifest = [
         ":Red",
         ":Green",
@@ -50,8 +53,9 @@ ocaml_module(
 )
 
 ##############
-ocaml_archive(
-    name = "greek",
+ocaml_library(
+    name = "libGreek",
+    archived = True,
     manifest = [
         ":Alpha",
         ":Beta",

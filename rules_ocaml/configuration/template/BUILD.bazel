@@ -70,36 +70,36 @@ int_setting( name = "blue_80",  build_setting_default = 80 )
 ###########
 ocaml_test(
     name = "test",
-    main = ":_Test"
+    main = ":Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
-        ":_Config",
-        "@ounit2//ounit2"
+        ":Config",
+        "@ounit2//lib/ounit2"
     ]
 )
 
 ocaml_binary(
     name = "hello",
-    main = ":_Hello",
-    manifest = [":_Hello"],
+    main = ":Hello",
+    prologue = [":Hello"],
 )
 
 #############
 ocaml_module(
-    name = "_Hello",
+    name = "Hello",
     struct = "hello.ml",
-    deps = [":_Config"],
+    deps = [":Config"],
 )
 
 #############
 ocaml_module(
-    name = "_Config",
+    name = "Config",
     struct = "color_config",  #  ":coral"
 )

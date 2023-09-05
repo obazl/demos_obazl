@@ -8,11 +8,11 @@ load(
 
 ocaml_binary(
     name = "kitty",
-    deps = [":_Kitty"]
+    deps = [":Kitty"]
 )
 
 ocaml_module(
-    name = "_Kitty",
+    name = "Kitty",
     struct = "kitty.ml",
     deps = ["//cli/config"]
 )

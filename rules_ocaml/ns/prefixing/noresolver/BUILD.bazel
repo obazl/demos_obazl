@@ -8,11 +8,11 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     deps = [
         ":Nofoo__Blue",
@@ -21,7 +21,7 @@ ocaml_module(
         ":Nobar__Blue",
         ":Nobar__Green",
         ":Nobar__Red",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

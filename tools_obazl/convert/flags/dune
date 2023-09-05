@@ -3,4 +3,6 @@
  (public_name std-flags)
  (libraries uri qcheck-alcotest alcotest alcotest-lwt)
  (flags
-  (:standard -linkall)))
+  (:standard -w -7-37 -safe-string)
+  ;;(:standard -linkall)
+  ))

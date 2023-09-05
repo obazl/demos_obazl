@@ -9,7 +9,11 @@ load(
 ocaml_module(
     name = "Alpha",
     struct = "alpha.ml",
-    deps = [":alpha"],
+    deps = select({
+        "//interop/ffi/case110:dynamic": [":dllalpha.so"],
+        "//interop/ffi/case110:static":  [":alpha"],
+        "//conditions:default": [":dllalpha.so"]
+    }),
     opts = [
         "-verbose",
         "-ccopt", "-Wl,-v"
@@ -17,8 +21,8 @@ ocaml_module(
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
 
-# cc_binary(
-#     linkshared = True,
+## bazel 4.2.0: produces both .a and .so
+## bazel 5+: produces .a
 cc_library(
     name = "alpha",
     srcs = [
@@ -26,16 +30,20 @@ cc_library(
         "alpha.c",
         "alpha.h",
     ],
-    # linkstatic = select({
-    #     "//interop/ffi/case110:dynamic": False,
-    #     "//interop/ffi/case110:static" : True,
-    #     "//conditions:default": True
-    # }),
-    linkstatic = False,
+    alwayslink = True,
+    linkstatic = True,
     copts = [
         # "version",
-        "-Iexternal/ocaml/c"
+        "-Iexternal/ocaml/c",
+        # "-lcamlrun"
     ],
     deps = ["@ocaml//c"],
+    visibility = ["//interop/ffi/case110:__pkg__"],
+)
+
+cc_binary(
+    name = "dllalpha.so",
+    linkshared = True,
+    srcs = [":alpha"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )

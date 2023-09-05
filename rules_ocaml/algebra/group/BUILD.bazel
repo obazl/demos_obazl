@@ -1,9 +1,18 @@
-load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("@bazel_skylib//rules:common_settings.bzl",
+     "string_flag", "string_setting")
+
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_signature",
     "ocaml_test",
+)
+
+test_suite(
+    name = "test",
+    tests = [
+        "//algebra/group:group_test"
+    ]
 )
 
 string_flag(name="g", build_setting_default="n0")
@@ -19,35 +28,53 @@ config_setting(
 )
 
 ocaml_test(
-    name = "test",
-    main = ":_Test"
+    name = "group_test",
+    main = ":Test",
+)
+ocaml_test(
+    name = "n0_test",
+    main = ":Test",
+    # constraint_deps = { ## transitions
+    #     ":g": "n1"
+    # }
 )
 
-## module name will be derived from struct file, so we'll have two
+## module name will be derived from struct file, so we'll have two ...
 ocaml_module(
-    name   = "_Test",
-    struct = select({
-        ":n0": "test_N0.ml",
-        ":n1": "test_N1.ml",
-    }),
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    name   = "Test",
+    module_name = "Test", # ... unless we specify module name like this
+    ## WARNING: transistion functions cannot handle attributes using select,
+    ## so we must move the select to a filegroup
+    struct = ":fg_test",
     deps = [":mygroup",
-            "@ounit2//ounit2"]
+            "@ounit2//lib/ounit2"]
+)
+
+filegroup(
+    name = "fg_test",
+    srcs = select({
+        ":n0": ["test_N0.ml"],
+        ":n1": ["test_N1.ml"],
+    })
 )
 
 ## module name will be derived from sig srcfile ("Group" in this case)
 ## struct file will be renamed (by copy) accordingly
 ocaml_module(
     name   = "mygroup",
-    struct = select({
-        ":n0": "group_N0.ml",
-        ":n1": "group_N1.ml",
-    }),
+    struct = ":fg_mygroup",
     sig = "group_cmi",
-    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        "@ounit2//ounit2",
+        "@ounit2//lib/ounit2",
     ],
+)
+
+filegroup(
+    name = "fg_mygroup",
+    srcs = select({
+        ":n0": ["group_N0.ml"],
+        ":n1": ["group_N1.ml"]
+    })
 )
 
 ocaml_signature(

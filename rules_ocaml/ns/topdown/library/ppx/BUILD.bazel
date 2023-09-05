@@ -11,7 +11,7 @@ load(
 
 ocaml_ns_library(
     name = "color",
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue",
@@ -19,8 +19,8 @@ ocaml_ns_library(
     visibility = ["//visibility:public"],
 )
 
-## change this to "@ppx//print:text" to get readable output
-PPX_PRINT = "@rules_ocaml//ppx/print:text"
+## change this to "@ppx//print:text!" to get readable output
+PPX_PRINT = "@rules_ocaml//ppx/print:text!"
 
 ocaml_module(
     name = "Red",
@@ -47,21 +47,21 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":Ppxlib_runner",
-    manifest = [":ppx_hex_of_dec"]
+    prologue = [":ppx_hex_of_dec"]
 )
 
 ###########
 ppx_module(
     name      = "ppx_hex_of_dec",
     struct    = ":ppx_hex_of_dec.ml",
-    deps = ["@ppxlib//ppxlib"]
+    deps = ["@ppxlib//lib/ppxlib"]
 )
 
 ###########
 ppx_module(
     name = "Ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    deps = ["@ppxlib//ppxlib"]
+    deps = ["@ppxlib//lib/ppxlib"]
 )
 
 ########
@@ -83,5 +83,5 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//ounit2"],
+    deps = [":color", "@ounit2//lib/ounit2"],
 )

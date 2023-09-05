@@ -20,13 +20,13 @@ ocaml_module(
     deps = [
         ":color",
         ":greek",
-        "@ounit2//ounit2",
+        "@ounit2//lib/ounit2",
     ],
 )
 
 ocaml_ns_archive(
     name = "color",
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue",
@@ -52,7 +52,7 @@ ocaml_module(
 ###################
 ocaml_ns_archive(
     name = "greek",
-    submodules = [
+    manifest = [
         ":Alpha",
         ":Beta",
         ":Gamma",

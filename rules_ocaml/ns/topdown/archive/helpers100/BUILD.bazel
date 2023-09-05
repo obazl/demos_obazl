@@ -1,17 +1,35 @@
-## new/case130: ns lib with submodule dependent on non-ns module
+## helpers100: ns lib with submodule dependent on non-ns module
 
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
+    "ocaml_exec_module",
+    "ocaml_ns_library",
     "ocaml_ns_archive",
     "ocaml_test",
 )
 
-ocaml_ns_archive(
+###########
+ocaml_test(
+    name = "test",
+    # prologue = ["Red_helper"],
+    main = "Test",
+)
+
+ocaml_exec_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":color"
+    ]
+)
+
+ocaml_ns_library( # archive(
     name = "color",
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue",
@@ -37,19 +55,4 @@ ocaml_module(
 ocaml_module(
     name = "Blue",
     struct = "blue.ml",
-)
-
-###########
-ocaml_test(
-    name = "test",
-    main = "Test",
-)
-
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        "@ounit2//ounit2",
-        ":color"
-    ]
 )

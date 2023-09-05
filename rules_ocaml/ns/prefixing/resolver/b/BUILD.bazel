@@ -28,7 +28,7 @@ ocaml_module(
         ":Baz__Green",
         ":Baz__Red",
         ":Baz",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -46,20 +46,18 @@ ocaml_module(
 )
 
 ################################################################
-## this module depends on its siblings, so it must depend on the resolver
+## this module depends on its siblings,
+## so it must depend on and open the resolver Bar
 ocaml_module(
     name   = "Bar__Red",
     struct = "bar__Red.ml",
-    opts   = [
-        "-no-alias-deps",
-        # "-open", "Bar"
-    ],
+    opts   = ["-no-alias-deps"],
     open   = [":Bar"],
     deps   = [
-        # ":Bar",
+        ":Bar",
         ":Bar__Blue",
         ":Bar__Green",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
     visibility = [
     ]
@@ -83,20 +81,18 @@ ocaml_module(
 )
 
 ################################################################
-## this module depends on its siblings, so it must depend on the resolver
+## this module depends on its siblings,
+## so it must depend on and open the resolver Baz
 ocaml_module(
     name   = "Baz__Red",
     struct = "baz__Red.ml",
-    opts   = [
-        "-no-alias-deps",
-        # "-open", "Baz"
-    ],
+    opts   = ["-no-alias-deps"],
     open   = [":Baz"],
     deps   = [
-        # ":Baz",
+        ":Baz",
         ":Baz__Blue",
         ":Baz__Green",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

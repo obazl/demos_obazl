@@ -38,18 +38,22 @@ ocaml_test(
 
 ocaml_module(
     name   = "Test",
-    struct = select({
-        ":red":   ":testred.ml",
-        ":green": ":testgreen.ml",
-        ":blue":  ":testblue.ml",
-    }),
+    struct = ":fg_color",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":A",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
+filegroup(
+    name = "fg_color",
+    srcs = select({
+        ":red":   [":testred.ml"],
+        ":green": [":testgreen.ml"],
+        ":blue":  [":testblue.ml"]
+    })
+)
 ocaml_module(
     name   = "A",
     ## ignore Error (warning 32 [unused-value-declaration]): unused value red.
@@ -57,10 +61,15 @@ ocaml_module(
     ## fix struct
     struct = "a.ml",
     ## vary sig
-    sig    = select({
-        ":red": "//modules/dyadic/selectsig/red:a.mli",
-        ":green": "//modules/dyadic/selectsig/green:a.mli",
-        ":blue": "//modules/dyadic/selectsig/blue:a.mli",
+    sig    = ":fg_sig",
+)
+
+filegroup(
+    name = "fg_sig",
+    srcs = select({
+        ":red":   ["//modules/dyadic/selectsig/red:a.mli"],
+        ":green": ["//modules/dyadic/selectsig/green:a.mli"],
+        ":blue":  ["//modules/dyadic/selectsig/blue:a.mli"],
     }, no_match_error = "unsupported arch"),
 )
 

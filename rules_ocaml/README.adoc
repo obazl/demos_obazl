@@ -10,7 +10,7 @@ First  `cd rules_ocaml`, then:
 
 1. `$ opam switch import .obazl.d/opam/local.manifest --switch .`
 
-2. `$ bazel run @opam//local:refresh`
+2. `$ bazel run @opam//coswitch/local:refresh`
 
 3. `$ bazel test test`
 

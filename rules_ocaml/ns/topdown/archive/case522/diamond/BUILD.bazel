@@ -1,32 +1,49 @@
 load(
     "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_ns_archive",
     "ocaml_test",
 )
 
-ocaml_ns_archive(
-    name = "gem",
-    submodules = [
-        ":_Alpha",
-        ":_Beta",
-        ":_Gamma"
-    ],
+## IMPORTANT IMPORTANT
+# We need this ocaml_library as an intermediary to ensure the :gem
+# archive is only built once. Without it, :gem will be built under two
+# different configurations. With it, :libGem is built under two
+# configs, but the transition logic is designed so that :gem will be
+# built under one config. And since ocaml_library does not actually
+# build anything, this means the archive will only be built once. Use
+# the 'ocamlinfo' query util to view the providers for :libGem, :gem,
+# and the two targets that depend on :libGem, and inspect the
+# 'darwin-fastbuild-ST-...' portion of the paths - that's the
+# configuration ID.
+ocaml_library(
+    name = "libGem",
+    manifest = [":gem"],
     visibility = ["//ns/topdown/archive/case522:__subpackages__"]
 )
 
-ocaml_module(
-    name = "_Alpha",
-    struct = "alpha.ml",
-    deps = [":_Beta"],
+ocaml_ns_archive(
+    name = "gem",
+    manifest = [
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
+    ],
 )
 
 ocaml_module(
-    name = "_Beta",
+    name = "Alpha",
+    struct = "alpha.ml",
+    deps = [":Beta"],
+)
+
+ocaml_module(
+    name = "Beta",
     struct = "beta.ml",
 )
 
 ocaml_module(
-    name = "_Gamma",
+    name = "Gamma",
     struct = "gamma.ml",
 )

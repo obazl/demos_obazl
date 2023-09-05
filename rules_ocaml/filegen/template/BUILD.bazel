@@ -85,14 +85,14 @@ int_setting( name = "green_127", build_setting_default = 127 )
 #################
 ocaml_binary(
     name = "hello",
-    main = ":_Hello",
+    main = ":Hello",
 )
 
 #############
 ocaml_module(
-    name = "_Hello",
+    name = "Hello",
     struct = "hello.ml",
-    deps = [":_Config"],
+    deps = [":Config"],
 )
 
 ################################################################
@@ -103,24 +103,24 @@ ocaml_test(
         # "-verbose",
         "-linkall"
     ],
-    main = "_Test",
+    main = "Test",
 )
 
 #############
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         # "-verbose",
         "-linkall",
         "-no-opaque",
     ],
-    deps = [":_Config", "@ounit2//ounit2"]
+    deps = [":Config", "@ounit2//lib/ounit2"]
 )
 
 #############
 ocaml_module(
-    name = "_Config",
+    name = "Config",
     opts = ["-linkall"],
     # src is generated file
     struct = "color_config",  #  ":coral"

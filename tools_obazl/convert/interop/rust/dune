@@ -43,7 +43,7 @@
      RUSTFLAGS
      "-C target-feature=+bmi2,+adx"
      (run cargo build --release)))
-   (run cp %{read:dune-build-root}/cargo_kimchi_stubs/release/libwires_15_stubs.a .))))
+   (run cp %{read:dune-build-root}/cargo_kimchi_stubs/release/libwires_15_stubs.a .)))) ;; baddot
 
 (rule
  (enabled_if (<> %{env:MARLIN_PLONK_STUBS=n} n))

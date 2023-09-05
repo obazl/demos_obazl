@@ -6,32 +6,32 @@ load(
     "ocaml_test",
 )
 
-# put exogenous ns RGB in Colors namespace, and alias it as Mycolors.
-# e.g. Mycolors.Red => RGB.Red
-ocaml_ns_resolver(
-    name        = "rgb_ns",
-    ns          = "Colors",
-    embed  = {
-        "//ns/bottomup/election/rgb:rgb_ns": "MyRGB"
-    }
-)
-
-## aggregate resolver and subnamespace
-ocaml_library(
-    name = "libcolor",
-    manifest = [
-        "//ns/bottomup/election/rgb:olibRGB",
-        ":rgb_ns"
-    ],
+ocaml_test(
+    name = "test",
+    main = "Test"
 )
 
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":libcolor", "@ounit2//ounit2"],
+    deps = ["@ounit2//lib/ounit2", ":libColor"],
 )
 
-ocaml_test(
-    name = "test",
-    main = "Test"
+## aggregate resolver and subnamespace
+ocaml_library(
+    name = "libColor",
+    manifest = [
+        "//ns/bottomup/election/rgb:libRGB",
+        ":nsRGB"
+    ],
+)
+
+# put exogenous ns RGB in Colors namespace, and alias it as Mycolors.
+# e.g. Mycolors.Red => RGB.Red
+ocaml_ns_resolver(
+    name        = "nsRGB",
+    ns          = "Colors",
+    embed  = {
+        "//ns/bottomup/election/rgb:nsRGB": "MyRGB"
+    }
 )

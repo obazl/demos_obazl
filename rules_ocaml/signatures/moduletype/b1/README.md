@@ -8,3 +8,5 @@ c.mli contains 'module type C1 = sig...end'.
 
 Sigfile then contains an 'open' directive for the signature types B
 and C, and 'include' directives for the module types B1 and C1.
+
+Compare with demo a1, where the modue type name matches the mli file name.

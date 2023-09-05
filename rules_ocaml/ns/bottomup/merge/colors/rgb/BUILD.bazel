@@ -11,18 +11,24 @@ package(default_visibility = [
     "//ns/bottomup/hybrid:__pkg__"
 ])
 
-ocaml_ns_resolver(
-    name = "rgb_ns",
-    ns   = "RGB",
-    submodules = [
-        "Red",
-        "Green",
-        "Blue"
-        ],
+#############
+ocaml_test(
+    name = "test",
+    main = ":Test",
 )
 
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":libRGB"
+    ],
+)
+
+##################
 ocaml_library(
-    name = "olibRGB",
+    name = "libRGB",
     manifest = [
         ":Red",
         ":Green",
@@ -30,36 +36,31 @@ ocaml_library(
     ],
 )
 
+ocaml_ns_resolver(
+    name = "nsRGB",
+    ns   = "RGB",
+    manifest = [
+        "Red",
+        "Green",
+        "Blue"
+        ],
+)
+
 #############
 ocaml_module(
     name        = "Red",
-    ns_resolver = ":rgb_ns",
+    ns_resolver = ":nsRGB",
     struct      = "red.ml",
 )
 
 ocaml_module(
     name = "Green",
-    ns_resolver = ":rgb_ns",
+    ns_resolver = ":nsRGB",
     struct = "green.ml",
 )
 
 ocaml_module(
     name = "Blue",
-    ns_resolver = ":rgb_ns",
+    ns_resolver = ":nsRGB",
     struct = "blue.ml",
-)
-
-#############
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        ":olibRGB",
-        "@ounit2//ounit2"
-    ],
-)
-
-ocaml_test(
-    name = "test",
-    main = ":Test",
 )

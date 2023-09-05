@@ -5,7 +5,7 @@
        (arg
         "multilibs/mwe"
         )
-       (wss (load-dune arg))
+       (wss (mibl-load-project arg))
        ;; (pkgs (cadr (assoc-in '(@ pkgs) wss)))
        ;; (pkg (hash-table-ref pkgs arg))
        ;; (nzs (dune-pkg->mibl pkg))
@@ -24,14 +24,14 @@
        (pkgs (car (assoc-val 'pkgs @ws))))
   '())
 
-;; (define exports (car (assoc-val 'exports (assoc-val '@ -mibl-ws-table))))
+;; (define exports (car (assoc-val 'exports (assoc-val '@ *mibl-project*))))
 ;; (fill! exports #f)
 
 (define _pkgs (car (assoc-val 'pkgs @ws)))
 
 ;; convert to mibl
 (let* ((_ (load "starlark.scm"))
-       (exports (car (assoc-val 'exports (assoc-val '@ -mibl-ws-table)))))
+       (exports (car (assoc-val 'exports (assoc-val '@ *mibl-project*)))))
   (map (lambda (kv)
          (let ((mibl-pkg (dune-pkg->mibl (cdr kv) exports)))
            (hash-table-set! _pkgs (car kv) mibl-pkg)))
@@ -76,7 +76,7 @@
 
 (define _pkg
   (let* ((_   (load "dune.scm"))
-       ;; WARNING: arg to load-dune is relative to cwd,
+       ;; WARNING: arg to mibl-load-project is relative to cwd,
        ;; but arg to hash-table-ref below is relative to ws root,
        ;; which may not be the same.
        (arg
@@ -84,7 +84,7 @@
         ;; "multilibs/mwe/bin"
         "multilibs/mwe"
         )
-       ;; (wss (load-dune arg))
+       ;; (wss (mibl-load-project arg))
        (pkgs (cadr (assoc-in '(@ pkgs) wss)))
        (pkg (hash-table-ref pkgs arg))
        (nzs (dune-pkg->mibl pkg))

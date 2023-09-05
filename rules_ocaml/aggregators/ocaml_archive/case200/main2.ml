@@ -1,6 +1,8 @@
-let () = print_endline "Hello from Main2! No archive!" ;
+let hello () = print_endline "Hello from Main2! No archive!"
 
-Easy.hello();
+let msg = "msg from Main2!"
 
-Simple.hello();
+let() =
+  Easy.hello();
+  Simple.hello()
 

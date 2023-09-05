@@ -1,7 +1,7 @@
 (* token.ml *)
 
 type t =
-  | T_FOO
-  (* | T_BAR *)
+  | INT_CONSTANT of string
+  | EOS
 
 type token = t

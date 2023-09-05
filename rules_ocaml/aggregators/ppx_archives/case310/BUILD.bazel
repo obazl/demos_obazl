@@ -1,6 +1,7 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_test",
     "ppx_module",
@@ -16,17 +17,17 @@ ocaml_module(
     name      = "Test",
     struct    = "test.ml",
     ppx       = ":ppx.exe",
-    ppx_print = "@rules_ocaml//ppx/print:text",
-    deps      = ["@ounit2//ounit2"]
+    ppx_print = "@rules_ocaml//ppx/print:text!",
+    deps      = ["@ounit2//lib/ounit2"]
 )
 
 ###############
 ppx_executable(
     name = "ppx.exe",
     main = ":ppxlib_runner",
-    manifest = [
+    prologue = [
         ":driver",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -51,26 +52,26 @@ ocaml_archive(
 ppx_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
-    deps      = ["@ppxlib//ppxlib"]
+    deps      = ["@ppxlib//lib/ppxlib"]
 )
 
 ppx_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
-    deps      = ["@ppxlib//ppxlib"]
+    deps      = ["@ppxlib//lib/ppxlib"]
 )
 
 ppx_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
-    deps      = ["@ppxlib//ppxlib"]
+    deps      = ["@ppxlib//lib/ppxlib"]
 )
 
 ###########
 ppx_module(
     name = "ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    deps      = ["@ppxlib//ppxlib"]
+    deps      = ["@ppxlib//lib/ppxlib"]
 )
 
 ########

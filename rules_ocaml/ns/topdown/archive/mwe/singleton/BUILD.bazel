@@ -15,7 +15,7 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":nslibGreeting", "@ounit2//ounit2"],
+    deps = [":nslibGreeting", "@ounit2//lib/ounit2"],
     opts = ["-I",
             "bazel-out/darwin-fastbuild-ST-7d1bb9d5a95c/bin/external/rules_ocaml/cfg/ns/__obazl/",
             "-I", " bazel-out/darwin-fastbuild-ST-7d1bb9d5a95c/bin/external/rules_ocaml/cfg/ns/__obazl"
@@ -25,7 +25,7 @@ ocaml_module(
 ocaml_ns_archive(
     name = "nslibGreeting",
     ns   = "greeting",
-    submodules = [
+    manifest = [
         ":Hello",
     ],
 )

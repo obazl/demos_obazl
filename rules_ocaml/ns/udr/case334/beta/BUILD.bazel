@@ -10,25 +10,25 @@ load(
 #################
 ocaml_ns_library(
     name = "beta",
-    submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
     ],
     visibility = ["//ns/obazl/set300/case334:__pkg__"],
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )

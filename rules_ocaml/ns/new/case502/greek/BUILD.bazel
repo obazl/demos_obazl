@@ -9,10 +9,10 @@ load(
 ###################
 ocaml_ns_library(
     name = "greek",
-    submodules = [
-        ":_Alpha",
-        ":_Beta",
-        ":_Gamma",
+    manifest = [
+        ":Alpha",
+        ":Beta",
+        ":Gamma",
     ],
     visibility = [
         "//ns/new/case502/color:__pkg__"
@@ -20,16 +20,16 @@ ocaml_ns_library(
 )
 
 ocaml_module(
-    name = "_Alpha",
+    name = "Alpha",
     struct = "alpha.ml",
 )
 
 ocaml_module(
-    name = "_Beta",
+    name = "Beta",
     struct = "beta.ml",
 )
 
 ocaml_module(
-    name = "_Gamma",
+    name = "Gamma",
     struct = "gamma.ml",
 )

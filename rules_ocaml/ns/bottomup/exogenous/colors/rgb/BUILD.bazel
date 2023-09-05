@@ -11,7 +11,7 @@ package(default_visibility = ["//ns/bottomup/exogenous/colors:__pkg__"])
 ocaml_ns_resolver(
     name = "rgb_ns",
     ns   = "RGB",
-    submodules = [
+    manifest = [
         "Red",
         "Green",
         "Blue"
@@ -52,7 +52,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":olibRGB",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

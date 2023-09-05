@@ -27,7 +27,7 @@ ocaml_test(
 
 ocaml_module(
     name   = "Testa",
-    module = "Testa",
+    module_name = "Testa",
     struct = select({
         "//bzl:linux_en": "test_linux_en.ml",
         "//bzl:linux_fr": "test_linux_fr.ml",
@@ -36,7 +36,7 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/a:Hello",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -48,7 +48,7 @@ ocaml_test(
 
 ocaml_module(
     name   = "Testb",
-    module = "Testb",
+    module_name = "Testb",
     struct = select({
         "//bzl:linux_en": "test_linux_en.ml",
         "//bzl:linux_fr": "test_linux_fr.ml",
@@ -57,7 +57,7 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/b:Hello",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -69,7 +69,7 @@ ocaml_test(
 
 ocaml_module(
     name   = "Testc",
-    module = "Testc",
+    module_name = "Testc",
     struct = select({
         "//bzl:linux_en": "test_linux_en.ml",
         "//bzl:linux_fr": "test_linux_fr.ml",
@@ -78,7 +78,7 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/c:Hello",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -90,7 +90,7 @@ ocaml_test(
 
 ocaml_module(
     name   = "Testd",
-    module = "Testd",
+    module_name = "Testd",
     struct = select({
         "//bzl:linux_en": "test_linux_en.ml",
         "//bzl:linux_fr": "test_linux_fr.ml",
@@ -99,6 +99,6 @@ ocaml_module(
     }),
     deps = [
         "//modules/dyadic/selectstruct/dir_prefix/d:Hello",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )

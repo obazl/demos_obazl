@@ -9,14 +9,33 @@ load(
     "ocaml_test",
 )
 
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":Color", "@ounit2//lib/ounit2"],
+)
+
+#################
 ocaml_ns_library(
-    name = "color",
-    submodules = [
+# ocaml_library(
+    name = "Color",
+    # ns_name = "Color",
+    manifest = [
         ":Red",
         ":Green",
         ":Blue",
-        ":greek"
+        ":Greek"
     ],
+    # aliases = {
+    #     ":libGreek": "Greek"
+    # }
 )
 
 ocaml_module(
@@ -36,13 +55,15 @@ ocaml_module(
 )
 
 ###################
+# ocaml_library(
 ocaml_ns_library(
-    name = "greek",
-    submodules = {
-        ":Alpha": "Alpha",
-        ":Beta": "Beta",
-        ":Gamma": "Gamma",
-    },
+    name = "Greek",
+    # ns_name = "Greek",
+    manifest = [
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
+    ],
 )
 
 ocaml_module(
@@ -60,14 +81,3 @@ ocaml_module(
     struct = "gamma.ml",
 )
 
-###########
-ocaml_test(
-    name = "test",
-    main = "Test",
-)
-
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [":color", "@ounit2//ounit2"],
-)

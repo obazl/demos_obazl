@@ -14,50 +14,50 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps = [":alpha", "@ounit2//ounit2"],
+    deps = [":alpha", "@ounit2//lib/ounit2"],
 )
 
 #################
 ocaml_ns_library(
     name = "alpha",
-    submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue",
-        ":_Alpha",  ## user-provided main module
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":Alpha",  ## user-provided main module
     ],
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
-    name   = "_Alpha",
+    name   = "Alpha",
     struct = "alpha.ml",
     ## module Alpha contains aliasing equations for Red, Green, and Blue,
     ## It _uses_ (references) Red, which must ipso facto be listed as a dep.
     ## It does not alias nslib Beta, but does use it, so it must be listed
     ## as a dep, but not as a submodule.
     deps   = [
-        ":_Red",
+        ":Red",
         "//ns/obazl/set300/case336/beta:beta"
     ]
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
     visibility = [
         "//ns/obazl/class03/case09:__pkg__",
@@ -68,7 +68,7 @@ ocaml_module(
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
     visibility = ["//ns/obazl/set035/case03:__pkg__"],
 )

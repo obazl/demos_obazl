@@ -1,10 +1,5 @@
 ## DO NOT PUT UNDER VERSION CONTROL
-
-common --override_repository=rules_ocaml=/Users/gar/obazl/rules_ocaml
-common --override_repository=opam=/Users/gar/obazl/tools_opam
-common --override_repository=obazl=/Users/gar/obazl/tools_obazl
-common --override_repository=mibl=/Users/gar/obazl/mibl
-common --override_repository=libs7=/Users/gar/obazl/libs7
+try-import .config/dev.bazelrc
 
 query --notool_deps
 query --noimplicit_deps
@@ -29,8 +24,6 @@ query --output package
 common:dbg --subcommands=pretty_print
 common:dbg --verbose_failures
 build:dbgv --@rules_ocaml//cfg/verbose
-
-build --compilation_mode=dbg
 
 # build --subcommands=pretty_print
 # build --verbose_failures

@@ -9,7 +9,7 @@ load(
 
 ocaml_ns_library(
     name = "color",
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue"

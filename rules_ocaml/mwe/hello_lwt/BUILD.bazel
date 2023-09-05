@@ -15,13 +15,13 @@ ocaml_binary(
     ## without -thread:
     ## "ocamlfind: [WARNING] Package `threads': Linking problems may arise because of the missing -thread or -vmthread switch"
     ## followed by "Error: Required module `Condition' is unavailable"
-    deps = [":_Hello_lwt"],
+    main = ":Hello_lwt",
 )
 
 ocaml_module(
-    name = "_Hello_lwt",
+    name = "Hello_lwt",
     opts = ["-thread"],  # avoid warning about possible linking problems
     struct = "hello_lwt.ml",
-    deps = ["@lwt//unix"],
+    deps = ["@lwt//lib/unix"],
     # default visibility is private
 )

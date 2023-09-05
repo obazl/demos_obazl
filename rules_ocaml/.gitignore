@@ -3,10 +3,12 @@
 _opam
 COSWITCH.bzl
 bazel-*
+.bazel
 dev
 logs
 tmp
 *.log
+*.profile.gz
 
 **/*.cmo
 **/*.cmi

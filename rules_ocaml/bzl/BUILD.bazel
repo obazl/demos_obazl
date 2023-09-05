@@ -18,9 +18,16 @@ string_flag(
 ################
 string_flag(
     name = "lang",
-    values = ["en", "fr"],
+    values = ["en", "de", "fr"],
     build_setting_default = "en",
 )
+
+config_setting(name = "lang_en", flag_values = {":lang": "en"})
+config_setting(name = "lang_fr", flag_values = {":lang": "fr"})
+
+config_setting(name = "lang_de?", flag_values = {":lang": "de"})
+config_setting(name = "lang_en?", flag_values = {":lang": "en"})
+config_setting(name = "lang_fr?", flag_values = {":lang": "fr"})
 
 config_setting(
     name = "linux_en",
@@ -42,8 +49,3 @@ config_setting(
     constraint_values = ["@platforms//os:macos"],
     flag_values = {":lang": "fr"}
 )
-
-
-config_setting(name = "lang_en", flag_values = {":lang": "en"})
-config_setting(name = "lang_fr", flag_values = {":lang": "fr"})
-

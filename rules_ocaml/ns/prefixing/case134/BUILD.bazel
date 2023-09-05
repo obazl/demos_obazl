@@ -8,26 +8,26 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w",
         "-27",
     ],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":_Bar__Blue",
-        ":_Bar__Green",
-        ":_Bar__Red",
-        "@ounit2//ounit2"
+        ":Bar__Blue",
+        ":Bar__Green",
+        ":Bar__Red",
+        "@ounit2//lib/ounit2"
     ],
 )
 
 ocaml_module(
-    name = "_Bar__Red",
+    name = "Bar__Red",
     struct = "bar__Red.ml",
     visibility = [
         "//ns/obazl/set400:__subpackages__"
@@ -35,7 +35,7 @@ ocaml_module(
 )
 
 ocaml_module(
-    name = "_Bar__Green",
+    name = "Bar__Green",
     struct = "bar__Green.ml",
     visibility = [
         "//ns/obazl/set400:__subpackages__"
@@ -43,7 +43,7 @@ ocaml_module(
 )
 
 ocaml_module(
-    name = "_Bar__Blue",
+    name = "Bar__Blue",
     struct = "bar__Blue.ml",
     visibility = [
         "//ns/obazl/set400:__subpackages__",

@@ -8,36 +8,37 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test",
+    timeout = "short"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     deps = [
         ## OBazl will automatically reorder these deps to put them in
         ## dependency order. In this case, that is Blue, Green, Red -
         ## to see this run `$ bazel aquery namespaces/obazl/set000/case120:test`
-        ":_Red",
-        ":_Green",
-        ":_Blue",
-        "@ounit2//ounit2"
+        ":Red",
+        ":Green",
+        ":Blue",
+        "@ounit2//lib/ounit2"
     ],
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
-    deps = [":_Green"],
+    deps = [":Green"],
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
-    deps = [":_Blue"],
+    deps = [":Blue"],
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )

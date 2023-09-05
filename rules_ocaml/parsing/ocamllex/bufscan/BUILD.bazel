@@ -27,8 +27,8 @@ ocaml_module(
     ],
     deps = [
         ":Lexer",
-        "@core//core",
-        "@core_unix//command_unix"
+        "@core//lib/core",
+        "@core_unix//lib/command_unix"
     ]
 )
 
@@ -38,7 +38,7 @@ ocaml_module(
 )
 
 ocamllex(
-    name = "_genlexer",
+    name = "genlexer",
     src  = "lexer.mll",
     out  = "lexer.ml"
 )

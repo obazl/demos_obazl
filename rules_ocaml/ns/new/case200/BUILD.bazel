@@ -16,14 +16,14 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    deps = [":libcolor", "@ounit2//ounit2"],
+    deps = [":libcolor", "@ounit2//lib/ounit2"],
 )
 
 #################
 ocaml_ns_library(
     name = "libcolor",
     resolver = ":color", ## user-provided main module
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue"

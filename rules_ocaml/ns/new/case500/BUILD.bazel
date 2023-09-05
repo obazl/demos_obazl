@@ -11,68 +11,68 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test",
+    main = "Test",
 )
 
 ocaml_module(
-    name = "_Test",
+    name = "Test",
     struct = "test.ml",
     opts = [
         "-w", "-27"  ## Error (warning 27): unused variable test_ctxt.
     ],
     deps = [
         ":color",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
 ocaml_ns_library(
     name = "color",
-    submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
         ":greek"
     ],
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
-    deps = [":_Green"],
+    deps = [":Green"],
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )
 
 ###################
 ocaml_ns_library(
     name = "greek",
-    submodules = {
-        ":_Alpha": "Alpha",
-        ":_Beta": "Beta",
-        ":_Gamma": "Gamma",
+    manifest = {
+        ":Alpha": "Alpha",
+        ":Beta": "Beta",
+        ":Gamma": "Gamma",
     },
 )
 
 ocaml_module(
-    name = "_Alpha",
+    name = "Alpha",
     struct = "alpha.ml",
 )
 
 ocaml_module(
-    name = "_Beta",
+    name = "Beta",
     struct = "beta.ml",
 )
 
 ocaml_module(
-    name = "_Gamma",
+    name = "Gamma",
     struct = "gamma.ml",
 )

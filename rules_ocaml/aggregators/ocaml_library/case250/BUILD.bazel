@@ -9,16 +9,16 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     deps = [
         ":color",
         ":greek",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -26,24 +26,24 @@ ocaml_module(
 ocaml_library(
     name = "color",
     manifest = [
-        ":_Red",
-        ":_Green",
-        ":_Blue",
+        ":Red",
+        ":Green",
+        ":Blue",
     ],
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )
 
@@ -51,23 +51,23 @@ ocaml_module(
 ocaml_library(
     name = "greek",
     manifest = [
-        ":_Alpha",
-        ":_Beta",
-        ":_Gamma"
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
     ],
 )
 
 ocaml_module(
-    name = "_Alpha",
+    name = "Alpha",
     struct = "alpha.ml",
 )
 
 ocaml_module(
-    name = "_Beta",
+    name = "Beta",
     struct = "beta.ml",
 )
 
 ocaml_module(
-    name = "_Gamma",
+    name = "Gamma",
     struct = "gamma.ml",
 )

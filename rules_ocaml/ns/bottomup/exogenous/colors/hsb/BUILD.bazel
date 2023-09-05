@@ -11,7 +11,7 @@ package(default_visibility = ["//ns/bottomup/exogenous/colors:__pkg__"])
 ocaml_ns_resolver(
     name = "hsb_ns",
     ns   = "HSB",
-    submodules = [
+    manifest = [
         "Hue",
         "Saturation",
         "Brightness"
@@ -51,7 +51,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":olibHSB",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

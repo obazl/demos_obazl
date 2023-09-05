@@ -11,11 +11,22 @@ LIBNAME="Hello"
 ocaml_test(
     name = "test",
     args = [
+        # "Tests are only executed when both these conditions are met:
+        #  * the executable containing the tests is linked with ppx_inline_test.runner.lib
+        #  * the executable containing the tests is called with command line arguments:
+        #        your.exe inline-test-runner libname [options]"
+
         ## WARNING: the module under test was built with
         ## -inline-test-lib=="Hello"; if you pass anything else with
         ## inline-test-runner, running this test executable will
         ## report success, because it will not run the test.
+
         "inline-test-runner", LIBNAME,
+
+        ## omitting it altogether gives: "You are doing something
+        ## unexpected with the tests. No tests have been run. You
+        ## should use the inline_tests_runner script to run tests."
+
         # "-list-test-names",
         # "-log",
     ],
@@ -23,17 +34,18 @@ ocaml_test(
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
     main = ":Runner",
-    manifest = [
-        "@ppx_inline_test//runner/lib",
-        ":Hello"
+    prologue = [
+        ":Hello",
+        "@ppx_inline_test//lib/runner/lib",
     ],
+    timeout = "short"
 )
 
 ocaml_module(
     name   = "Runner",
     struct = "runner.ml",
     deps   = [
-        "@ppx_inline_test//runtime-lib",
+        "@ppx_inline_test//lib/runtime-lib",
     ],
 )
 
@@ -45,21 +57,20 @@ ocaml_module(
     ],
     struct = "hello.ml",
     deps = [
-        "@ppx_inline_test//runtime-lib",
+        "@ppx_inline_test//lib/runtime-lib",
     ]
 )
 
 ################################################################
 ppx_executable(
     name = "ppx.exe",
-    main = ":Driver",
-    opts = [],
-    manifest = [
-        "@ppx_inline_test//ppx_inline_test",
+    prologue = [
+        "@ppx_inline_test//lib/ppx_inline_test",
     ],
-    ppx_codeps = [
-        "@ppx_inline_test//runtime-lib",
-    ]
+    main = ":Driver",
+    # ppx_codeps = [
+    #     "@ppx_inline_test//lib/runtime-lib",
+    # ]
 )
 
 #############
@@ -67,7 +78,7 @@ ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
-    deps = ["@ppxlib//ppxlib"],
+    deps = ["@ppxlib//lib/ppxlib"],
 )
 
 ########

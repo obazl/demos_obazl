@@ -1,4 +1,5 @@
 {
+open Token
 open Lexing
 open Parser
 
@@ -20,5 +21,5 @@ let int_constant = sign? digit+
 rule token = parse
   | int_constant { INT_CONSTANT (Lexing.lexeme lexbuf) }
   (* etc. *)
-  | eof { EOF }
+  | eof { EOS }
   | _ { raise (Failure ("Character not allowed in source text: '" ^ Lexing.lexeme lexbuf ^ "'")) }

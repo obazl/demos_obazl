@@ -5,14 +5,7 @@ test_suite(
     tests = [
         "//parsing/menhir/mwe:test",
         "//parsing/menhir/ns-topdown:test",
-        ":build_test"
+        "//parsing/menhir/handrolled:test",
+        "//parsing/menhir/token:test"
     ]
 )
-
-build_test(
-    name = "build_test",
-    targets = [
-        "//parsing/menhir/handrolled:Parser"
-    ]
-)
-

@@ -6,12 +6,13 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 
 ocaml_ns_archive(
     name = "color",
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue",
@@ -38,9 +39,10 @@ ocaml_module(
 )
 
 #############
-ocaml_ns_archive(
+# ocaml_ns_archive(
+ocaml_ns_library(
     name = "greek",
-    submodules = [
+    manifest = [
         ":Alpha",
         ":Beta",
         ":Gamma"
@@ -63,9 +65,10 @@ ocaml_module(
 )
 
 #############
-ocaml_ns_archive(
+# ocaml_ns_archive(
+ocaml_ns_library(
     name = "foobar",
-    submodules = [
+    manifest = [
         ":Foo",
         ":Bar",
         ":Baz"
@@ -96,5 +99,5 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//ounit2"],
+    deps = [":color", "@ounit2//lib/ounit2"],
 )

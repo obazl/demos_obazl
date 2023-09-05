@@ -18,7 +18,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@ounit2//ounit2",
+        "@ounit2//lib/ounit2",
         ":Hello_cmi",
     ],
 )
@@ -26,4 +26,5 @@ ocaml_module(
 ocaml_signature(
     name = "Hello_cmi",
     src  = "hello.mli",
+    opts = ["-no-opaque"],
 )

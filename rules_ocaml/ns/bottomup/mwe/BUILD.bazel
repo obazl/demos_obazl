@@ -6,20 +6,28 @@ load(
     "ocaml_test"
 )
 
-ocaml_ns_resolver(
-    name = "hello_ns",
-    ns   = "Hello",
-    submodules = [
-        "Australian",
-        "English",
-        "French",
-        "Spanish"
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":libHello"
     ]
 )
 
+##################
 ocaml_library(
-    name = "olibHello",
+    name = "libHello",
+    archived = True,
+    archive_name = "Hello",
     manifest = [
+        # ":nsHello",
         ":Australian",
         ":English",
         ":French",
@@ -27,38 +35,39 @@ ocaml_library(
     ]
 )
 
+##################
+ocaml_ns_resolver(
+    name = "nsHello",
+    ns   = "Hello",
+    manifest = [
+        "Australian",
+        "English",
+        "French",
+        "Spanish"
+    ]
+)
+
 ## Each submodule must depend on the ns_resolver target
 ocaml_module(
     name = "Australian",
-    ns_resolver = ":hello_ns",
+    ns_resolver = ":nsHello",
     struct  = "australian.ml",
 )
 
 ocaml_module(
     name = "English",
-    ns_resolver = ":hello_ns",
+    ns_resolver = ":nsHello",
     struct  = "english.ml",
 )
 
 ocaml_module(
     name = "French",
-    ns_resolver = ":hello_ns",
+    ns_resolver = ":nsHello",
     struct  = "french.ml",
 )
 
 ocaml_module(
     name = "Spanish",
-    ns_resolver = ":hello_ns",
+    ns_resolver = ":nsHello",
     struct  = "spanish.ml",
-)
-
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [":olibHello", "@ounit2//ounit2"]
-)
-
-ocaml_test(
-    name = "test",
-    main = "Test"
 )

@@ -11,7 +11,7 @@ package(default_visibility = ["//ns/bottomup/exogenous/colors:__pkg__"])
 ocaml_ns_resolver(
     name = "cmyk_ns",
     ns   = "CMYK",
-    submodules = [
+    manifest = [
         "Cyan",
         "Magenta",
         "Yellow",
@@ -61,7 +61,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":olibCMYK",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 

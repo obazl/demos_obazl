@@ -8,42 +8,43 @@ load(
     "ocaml_test",
 )
 
-ocaml_ns_resolver(
-    name = "colors_ns",
-    ns   = "Colors",
-    merge = [
-        ## ns_resolver modules:
-        "//ns/bottomup/merge/colors/rgb:rgb_ns",
-        "//ns/bottomup/merge/colors/hsb:hsb_ns",
-        "//ns/bottomup/merge/colors/cmyk:cmyk_ns"
-    ],
-)
-
-# to make the resolver useful we need to aggregate its components,
-# which are themselves aggregated as libraries.
-# they depend on their resolvers, which need not be listed explicitly.
-ocaml_library(
-    name = "olibColors",
-    manifest = [
-        "//ns/bottomup/merge/colors/rgb:olibRGB",
-        "//ns/bottomup/merge/colors/hsb:olibHSB",
-        "//ns/bottomup/merge/colors/cmyk:olibCMYK",
-    ],
-    visibility = ["//visibility:public"],
-)
-
 #############
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        ":olibColors",
-        ":colors_ns",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2",
+        ":libColors",
     ],
 )
 
-ocaml_test(
-    name = "test",
-    main = ":Test",
+##################
+# to make the resolver useful we need to aggregate its components,
+# which are themselves aggregated as libraries.
+# they depend on their resolvers, which need not be listed explicitly.
+ocaml_library(
+    name = "libColors",
+    manifest = [
+        ":nsColors",
+        "//ns/bottomup/merge/colors/rgb:libRGB",
+        "//ns/bottomup/merge/colors/hsb:libHSB",
+        "//ns/bottomup/merge/colors/cmyk:libCMYK",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_ns_resolver(
+    name = "nsColors",
+    ns   = "Colors",
+    merge = [
+        ## ns_resolver modules:
+        "//ns/bottomup/merge/colors/rgb:nsRGB",
+        "//ns/bottomup/merge/colors/hsb:nsHSB",
+        "//ns/bottomup/merge/colors/cmyk:nsCMYK"
+    ],
 )

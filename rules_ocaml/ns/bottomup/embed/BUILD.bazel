@@ -2,6 +2,9 @@ test_suite(
     name = "test",
     tests = [
         "//ns/bottomup/embed/colors:test",
+        "//ns/bottomup/embed/colors/rgb:test",
+        "//ns/bottomup/embed/colors/hsb:test",
+        "//ns/bottomup/embed/colors/cmyk:test",
         "//ns/bottomup/embed/rgb:test",
     ]
 )

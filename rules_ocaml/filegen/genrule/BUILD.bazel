@@ -7,13 +7,13 @@ load(
 ###########
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
-    deps = [":rgb", "@ounit2//ounit2"]
+    deps = [":rgb", "@ounit2//lib/ounit2"]
 )
 
 ###########

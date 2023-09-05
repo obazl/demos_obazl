@@ -8,15 +8,31 @@ load(
     "ocaml_test",
 )
 
-## :colors_ns is "thunkish", it just conjoins some other namespaces
+#############
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libColors",
+        ":nsColors",
+        "@ounit2//lib/ounit2"
+    ],
+)
+
+## Embedding allows us to rename namespaces
 ocaml_ns_resolver(
-    name = "colors_ns",
+    name = "nsColors",
     ns   = "Colors",
     embed = {
         ## ns_resolver modules:
-        "//ns/bottomup/embed/colors/rgb:rgb_ns": "RGB",
-        "//ns/bottomup/embed/colors/hsb:hsb_ns": "HSB",
-        "//ns/bottomup/embed/colors/cmyk:cmyk_ns": "CMYK"
+        "//ns/bottomup/embed/colors/rgb:nsRGB": "Foo",
+        "//ns/bottomup/embed/colors/hsb:nsHSB": "Bar",
+        "//ns/bottomup/embed/colors/cmyk:nsCMYK": "Baz"
     },
 )
 
@@ -24,27 +40,11 @@ ocaml_ns_resolver(
 # which are themselves aggregated as libraries.
 # they depend on their resolvers, which need not be listed explicitly.
 ocaml_library(
-    name = "olibColors",
+    name = "libColors",
     manifest = [
-        "//ns/bottomup/embed/colors/rgb:olibRGB",
-        "//ns/bottomup/embed/colors/hsb:olibHSB",
-        "//ns/bottomup/embed/colors/cmyk:olibCMYK",
+        "//ns/bottomup/embed/colors/rgb:libRGB",
+        "//ns/bottomup/embed/colors/hsb:libHSB",
+        "//ns/bottomup/embed/colors/cmyk:libCMYK",
     ],
     visibility = ["//visibility:public"],
-)
-
-#############
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        ":olibColors",
-        ":colors_ns",
-        "@ounit2//ounit2"
-    ],
-)
-
-ocaml_test(
-    name = "test",
-    main = ":Test",
 )

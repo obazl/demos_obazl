@@ -6,32 +6,32 @@ load(
     "ocaml_test",
 )
 
-# merge all submodules of exogenous ns RGB into MyRGB namespace
-# e.g. MyRGB.Red => RGB.Red
-ocaml_ns_resolver(
-    name        = "rgb_ns",
-    ns          = "MyRGB",
-    merge  = [
-        "//ns/bottomup/election/rgb:rgb_ns"
-    ]
-)
-
-## aggregate resolver and subnamespace
-ocaml_library(
-    name = "libcolor",
-    manifest = [
-        "//ns/bottomup/election/rgb:olibRGB",
-        ":rgb_ns"
-    ],
+ocaml_test(
+    name = "test",
+    main = "Test"
 )
 
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":libcolor", "@ounit2//ounit2"],
+    deps = ["@ounit2//lib/ounit2", ":libColor"],
 )
 
-ocaml_test(
-    name = "test",
-    main = "Test"
+## aggregate resolvers and subnamespaces
+ocaml_library(
+    name = "libColor",
+    manifest = [
+        ":nsRGB",
+        "//ns/bottomup/election/rgb:libRGB"
+    ],
+)
+
+# merge all submodules of exogenous ns RGB into MyRGB namespace
+# e.g. MyRGB.Red => RGB.Red
+ocaml_ns_resolver(
+    name        = "nsRGB",
+    ns          = "MyRGB",
+    merge  = [
+        "//ns/bottomup/election/rgb:nsRGB"
+    ]
 )

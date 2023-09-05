@@ -11,12 +11,12 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "_Test",
+    main = "Test",
     timeout = "short"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w",
@@ -24,7 +24,7 @@ ocaml_module(
     ],
     deps = [
         ":color",
-        "@ounit2//ounit2",
+        "@ounit2//lib/ounit2",
 
         # "@bigarray//bigarray",
         # "@ocaml//bigarray",
@@ -48,14 +48,14 @@ ocaml_module(
         # "@ocaml//compiler-libs/native-toplevel",
 
         # "@ctypes//stubs"
-        # "@ppx_inline_test//ppx_inline_test"
+        # "@ppx_inline_test//lib/ppx_inline_test_inline_test"
     ],
 )
 
 ocaml_ns_archive(
     name = "color",
-    submodules = [
-        "//ns/obazl/set600/case620/rgb:rgb",
-        "//ns/obazl/set600/case620/cmy:cmy"
+    manifest = [
+        "//ns/topdown/archive/embed/case620/rgb:rgb",
+        "//ns/topdown/archive/embed/case620/cmy:cmy"
     ]
 )

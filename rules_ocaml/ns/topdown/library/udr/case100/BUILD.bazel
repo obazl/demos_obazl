@@ -19,7 +19,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":color",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ],
 )
 
@@ -28,7 +28,7 @@ ocaml_ns_library(
     name = "color",
     # user-defined resolver - not supported
     # resolver = ":Color",
-    submodules = [
+    manifest = [
         ":Color",
         ":Red",
         ":Green",

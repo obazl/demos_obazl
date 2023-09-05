@@ -9,37 +9,37 @@ load(
 
 ocaml_ns_archive(
     name = "color",
-    submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue"
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue"
     ],
 )
 
 #############
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )
 
 ###########
 ocaml_test(
     name = "test",
-    main = ":_Test",
+    main = ":Test",
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//ounit2"],
+    deps = [":color", "@ounit2//lib/ounit2"],
 )

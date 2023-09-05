@@ -9,7 +9,7 @@ load(
 
 ocaml_ns_archive(
     name = "color",
-    submodules = [
+    manifest = [
         ":Red",
         ":Green",
         ":Blue",
@@ -42,5 +42,5 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    deps = [":color", "@ounit2//ounit2"]
+    deps = [":color", "@ounit2//lib/ounit2"]
 )

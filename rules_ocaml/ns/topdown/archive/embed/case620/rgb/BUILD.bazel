@@ -6,30 +6,30 @@ load(
 
 ocaml_ns_archive(
     name = "rgb",
-    submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue"
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue"
     ],
     visibility = ["//visibility:public"],
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
     deps = [
-        ":_Blue",
-        ":_Green",
+        ":Blue",
+        ":Green",
     ],
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
-    deps = [":_Blue"],
+    deps = [":Blue"],
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )

@@ -1,6 +1,6 @@
 (rule
  (targets version.ml.in)
- (deps (:foo a.txt))
+ ;; (deps (:foo a.txt))
  (action
   (with-stdout-to
    %{targets}

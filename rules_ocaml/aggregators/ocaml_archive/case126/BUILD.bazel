@@ -4,85 +4,91 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_archive",
     "ocaml_binary",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_test",
 )
 
 ocaml_test(
     name = "test",
-    main = "_Test"
+    main = "Test",
+    # prologue = ["@ounit2//lib/ounit2"]
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     deps = [
-        ":main",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2",
+        ":Main",
     ],
 )
 
 #############
 ocaml_module(
-    name = "main",
+    name = "Main",
     struct = "main.ml",
     deps = [
-        ":color",
+        ":libColor",
     ]
 )
 
 ##############
 ocaml_archive(
-    name = "color",
+# ocaml_library(
+    name = "libColor",
+    # archive = True,
     manifest = [
-        ":_Red",
-        ":_Green",
-        ":_Blue",
+        ":Red",
+        ":Green",
+        ":Blue",
     ],
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
     opts = ["-linkall"],
     deps   = [
-        ":_Greek"
+        ":libGreek"
     ]
 )
 
 ##############
 ocaml_archive(
-    name = "_Greek",
+# ocaml_library(
+    name = "libGreek",
+    # archive = True,
     opts = ["-linkall"],
     manifest = [
-        ":_Alpha",
-        ":_Beta",
-        ":_Gamma"
+        ":Alpha",
+        ":Beta",
+        ":Gamma"
     ],
 )
 
 ocaml_module(
-    name = "_Alpha",
+    name = "Alpha",
     opts = ["-linkall"],
     struct = "alpha.ml",
 )
 
 ocaml_module(
-    name = "_Beta",
+    name = "Beta",
     struct = "beta.ml",
 )
 
 ocaml_module(
-    name = "_Gamma",
+    name = "Gamma",
     struct = "gamma.ml",
 )

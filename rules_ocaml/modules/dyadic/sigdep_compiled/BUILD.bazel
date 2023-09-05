@@ -10,7 +10,7 @@ load(
 
 ocaml_test(name = "test", main = "Test")
 ocaml_module(name   = "Test", struct = "test.ml",
-             deps = [":Hello", "@ounit2//ounit2"])
+             deps = [":Hello", "@ounit2//lib/ounit2"])
 
 ## depend on compiled sigfile
 ocaml_module(

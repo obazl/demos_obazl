@@ -9,21 +9,21 @@ load(
 
 ocaml_ns_library(
     name = "color",
-    submodules = [
-        ":_Red",
-        ":_Green",
-        ":_Blue"
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue"
     ],
     visibility = ["//ns/new/case520:__pkg__"]
 )
 
 ocaml_module(
-    name = "_Red",
+    name = "Red",
     struct = "red.ml",
 )
 
 ocaml_module(
-    name = "_Green",
+    name = "Green",
     struct = "green.ml",
     deps = [
         "//ns/new/case520/diamond"
@@ -31,6 +31,6 @@ ocaml_module(
 )
 
 ocaml_module(
-    name = "_Blue",
+    name = "Blue",
     struct = "blue.ml",
 )

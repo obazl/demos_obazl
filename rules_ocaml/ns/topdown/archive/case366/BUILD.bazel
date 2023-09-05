@@ -16,32 +16,30 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    opts = [
-        "-w",
-        "-27",
-    ],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color", "@ounit2//ounit2"],
+    deps = [":color", "@ounit2//lib/ounit2"],
 )
 
 #################
 ocaml_ns_archive(
     name = "color",
-    submodules = {
-        ":Red": "Red",
-        ":Green": "Green",
-        ":Blue": "Blue",
-    },
+    manifest = [":Red", ":Green", ":Blue"],
+    # manifest = {
+    #     ":Red": "Red",
+    #     ":Green": "Green",
+    #     ":Blue": "Blue",
+    # },
 )
 
 ocaml_module(
     name = "Red",
-    sig = ":Red.cmi",
+    # sig = "red.mli",
+    sig = ":Red_cmi",
     struct = "red.ml",
     deps = [":Green"],
 )
 
 ocaml_signature(
-    name = "Red.cmi",
+    name = "Red_cmi",
     src = "red.mli",
 )
 

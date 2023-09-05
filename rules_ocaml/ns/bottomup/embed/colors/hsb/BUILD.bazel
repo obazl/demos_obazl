@@ -11,10 +11,26 @@ package(default_visibility = [
     "//ns/bottomup/hybrid:__pkg__"
 ])
 
+#############
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":libHSB",
+    ],
+)
+
+##################
 ocaml_ns_resolver(
-    name = "hsb_ns",
+    name = "nsHSB",
     ns   = "HSB",
-    submodules = [
+    manifest = [
         "Hue",
         "Saturation",
         "Brightness"
@@ -22,7 +38,7 @@ ocaml_ns_resolver(
 )
 
 ocaml_library(
-    name = "olibHSB",
+    name = "libHSB",
     manifest = [
         ":Hue",
         ":Saturation",
@@ -32,33 +48,18 @@ ocaml_library(
 
 ocaml_module(
     name        = "Hue",
-    ns_resolver = ":hsb_ns",
+    ns_resolver = ":nsHSB",
     struct      = "hue.ml",
 )
 
 ocaml_module(
     name = "Saturation",
-    ns_resolver = ":hsb_ns",
+    ns_resolver = ":nsHSB",
     struct = "saturation.ml",
 )
 
 ocaml_module(
     name = "Brightness",
-    ns_resolver = ":hsb_ns",
+    ns_resolver = ":nsHSB",
     struct = "brightness.ml",
-)
-
-#############
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        ":olibHSB",
-        "@ounit2//ounit2"
-    ],
-)
-
-ocaml_test(
-    name = "test",
-    main = ":Test",
 )

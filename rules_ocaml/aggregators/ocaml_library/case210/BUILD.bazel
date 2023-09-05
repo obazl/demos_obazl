@@ -18,13 +18,13 @@ ocaml_module(
     name = "Test",
     struct = "test.ml",
     deps = [
-        ":color",
-        "@ounit2//ounit2"
+        ":libColor",
+        "@ounit2//lib/ounit2"
     ],
 )
 
 ocaml_library(
-    name = "color",
+    name = "libColor",
     manifest = [
         ":Red",
         ":Green",

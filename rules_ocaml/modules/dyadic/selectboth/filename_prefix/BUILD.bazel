@@ -17,21 +17,25 @@ ocaml_test(
 
 ocaml_module(
     name   = "Test",
-    struct = select({
-        ":linux_en": "test_linux_en.ml",
-        ":linux_fr": "test_linux_fr.ml",
-        ":macos_en": "test_macos_en.ml",
-        ":macos_fr": "test_macos_fr.ml",
-    }),
+    struct = ":fg_test",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        ":_Hello",
-        "@ounit2//ounit2"
+        ":Howdy",
+        "@ounit2//lib/ounit2"
     ],
+)
+filegroup(
+    name = "fg_test",
+    srcs = select({
+        ":linux_en": ["test_linux_en.ml"],
+        ":linux_fr": ["test_linux_fr.ml"],
+        ":macos_en": ["test_macos_en.ml"],
+        ":macos_fr": ["test_macos_fr.ml"],
+    }),
 )
 
 ocaml_signature(
-    name = "Hello",
+    name = "$Hello",
     module = "Hello", # force sigfile rename (symlink)
     src  = select({
         ":lang_en": "hello_en.mli",
@@ -41,8 +45,8 @@ ocaml_signature(
 
 ## module name will be derived from sig name, not name attribute.
 ocaml_module(
-    name   = "_Hello",
-    sig    = ":Hello",
+    name   = "Howdy",
+    sig    = ":$Hello",
     # sig    = select({
     #     ":lang_en": "hello_en.mli",
     #     ":lang_fr": "hello_fr.mli",
@@ -51,12 +55,16 @@ ocaml_module(
     # local direct file dep:
     # sig    = "hello.mli",
 
-    struct = select({
-        ":linux_en": "hello_linux_en.ml",
-        ":linux_fr": "hello_linux_fr.ml",
+    struct = "fg_struct_hello",
+)
+filegroup(
+    name = "fg_struct_hello",
+    srcs = select({
+        ":linux_en": ["hello_linux_en.ml"],
+        ":linux_fr": ["hello_linux_fr.ml"],
 
-        ":macos_en": "hello_macos_en.ml",
-        ":macos_fr": "hello_macos_fr.ml",
+        ":macos_en": ["hello_macos_en.ml"],
+        ":macos_fr": ["hello_macos_fr.ml"],
 
     }, no_match_error = "unsupported"),
 )

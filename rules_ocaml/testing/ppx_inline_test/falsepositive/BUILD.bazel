@@ -34,9 +34,9 @@ ocaml_test(
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
     main = ":Runner",
-    manifest = [
+    prologue = [
         # ":Test_ppx_inline",  # the transformed and compiled test code
-        "@ppx_inline_test//runner/lib",
+        "@ppx_inline_test//lib/runner",
         # "//rules/ocaml_module:Hello",
         ":Hello"
     ],
@@ -46,7 +46,7 @@ ocaml_module(
     name   = "Runner",
     struct = "runner.ml",
     deps   = [
-        "@ppx_inline_test//runtime-lib",
+        "@ppx_inline_test//lib/runtime-lib",
     ],
 )
 
@@ -58,8 +58,8 @@ ocaml_module(
     ],
     struct = "hello.ml",
     deps = [
-        # "@core//core",
-        "@ppx_inline_test//runtime-lib", ## not needed -
+        # "@core//lib/core",
+        "@ppx_inline_test//lib/runtime-lib", ## not needed -
         # listed as ppx_codep on the ppx executable
         # "//rules/ocaml_module:Hello"
     ],
@@ -70,8 +70,8 @@ ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
     opts = [],
-    manifest = [
-        # "@ppxlib//ppxlib",
+    prologue = [
+        # "@ppxlib//lib/ppxlib",
     ],
 )
 
@@ -81,11 +81,11 @@ ppx_module(
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
     deps = [
-        "@ppx_inline_test//ppx_inline_test",
-        "@ppxlib//ppxlib"
+        "@ppx_inline_test//lib/ppx_inline_test",
+        "@ppxlib//lib/ppxlib"
     ],
     ppx_codeps = [
-        "@ppx_inline_test//runtime-lib",
+        "@ppx_inline_test//lib/runtime-lib",
     ]
 )
 

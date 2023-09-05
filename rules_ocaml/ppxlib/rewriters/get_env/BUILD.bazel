@@ -14,7 +14,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ocaml_module",
+    "ppx_module",
     "ppx_executable")
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
@@ -41,12 +41,12 @@ config_setting(
 ###########
 ocaml_test(
     name = "test",
-    main = "_Test",
+    main = "Test",
     test = "short"
 )
 
 ocaml_module(
-    name   = "_Test",
+    name   = "Test",
     struct = "test.ml",
     opts = [
         "-w",
@@ -55,7 +55,7 @@ ocaml_module(
     ppx    = ":ppx.exe",
     deps = [
         ":main",
-        "@ounit2//ounit2"
+        "@ounit2//lib/ounit2"
     ]
 )
 
@@ -91,17 +91,17 @@ ppx_executable(
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name      = "ppx_get_env",
     struct    = "ppx_get_env.ml",
-    deps = ["@ppxlib//ppxlib"]
+    deps = ["@ppxlib//lib/ppxlib"]
 )
 
 ###########
-ocaml_module(
+ppx_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@ppxlib//ppxlib"]
+    deps = ["@ppxlib//lib/ppxlib"]
 )
 
 ########

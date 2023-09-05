@@ -9,10 +9,10 @@ load(
 
 ocaml_binary(
     name = "hello_executable",
-    deps = [":_Hello"],
+    main = ":Hello",
 )
 
 ocaml_module(
-    name = "_Hello",
+    name = "Hello",
     struct = "hello.ml",
 )

@@ -1,4 +1,7 @@
 common --color=yes
+common:show --subcommands=pretty_print
+common:show --verbose_failures
+
 common:dbg --subcommands=pretty_print
 common:dbg --verbose_failures
 build:dbgv --@rules_ocaml//cfg/verbose

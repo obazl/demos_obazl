@@ -11,10 +11,36 @@ package(default_visibility = [
     "//ns/bottomup/hybrid:__subpackages__"
 ])
 
+#############
+ocaml_test(
+    name = "test",
+    main = ":Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libCMYK",
+        "@ounit2//lib/ounit2"
+    ],
+)
+
+##################
+ocaml_library(
+    name = "libCMYK",
+    manifest = [
+        ":Cyan",
+        ":Magenta",
+        ":Yellow",
+        ":Key",
+    ],
+)
+
 ocaml_ns_resolver(
-    name = "cmyk_ns",
+    name = "nsCMYK",
     ns   = "CMYK",
-    submodules = [
+    manifest = [
         "Cyan",
         "Magenta",
         "Yellow",
@@ -22,53 +48,27 @@ ocaml_ns_resolver(
         ],
 )
 
-ocaml_library(
-    name = "olibCMYK",
-    manifest = [
-        ":Cyan",
-        ":Magenta",
-        ":Yellow",
-        ":Key",
-        ":cmyk_ns"
-    ],
-)
-
 #############
 ocaml_module(
     name        = "Cyan",
-    ns_resolver = ":cmyk_ns",
+    ns_resolver = ":nsCMYK",
     struct      = "cyan.ml",
 )
 
 ocaml_module(
     name = "Magenta",
-    ns_resolver = ":cmyk_ns",
+    ns_resolver = ":nsCMYK",
     struct = "magenta.ml",
 )
 
 ocaml_module(
     name = "Yellow",
-    ns_resolver = ":cmyk_ns",
+    ns_resolver = ":nsCMYK",
     struct = "yellow.ml",
 )
 
 ocaml_module(
     name = "Key",
-    ns_resolver = ":cmyk_ns",
+    ns_resolver = ":nsCMYK",
     struct = "key.ml",
-)
-
-#############
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        ":olibCMYK",
-        "@ounit2//ounit2"
-    ],
-)
-
-ocaml_test(
-    name = "test",
-    main = ":Test",
 )

@@ -7,7 +7,7 @@ load(
 ppx_module(
     name = "driver",
     struct = ":ppxlib_driver_wrapper.ml",
-    deps   = ["@ppxlib//ppxlib"],
+    deps   = ["@ppxlib//lib/ppxlib"],
     opts = ["-linkall"],
     visibility = ["//visibility:public"]
 )
