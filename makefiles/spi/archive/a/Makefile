@@ -13,7 +13,7 @@ OPAQUE=-opaque
 # considered implementation detail.
 
 # Note that A does not have a (direct) build dependency on either B or
-# C.
+# C; rather, it depends on the archive file.
 
 a: mylib
 	$(COMPILER) $(OPAQUE) \

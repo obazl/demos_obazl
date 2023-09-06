@@ -9,7 +9,9 @@ default:
 	$(MAKE) -C modules;
 	$(MAKE) -C ns;
 	$(MAKE) -C selection;
+	$(MAKE) -C spi;
 	$(MAKE) -C structs;
+
 
 clean:
 	$(MAKE) -C aliasing clean;
@@ -22,3 +24,4 @@ clean:
 	$(MAKE) -C ns clean;
 	$(MAKE) -C selection clean;
 	$(MAKE) -C structs clean;
+	$(MAKE) -C spi clean;

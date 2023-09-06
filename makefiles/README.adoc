@@ -5,7 +5,7 @@ These examples demonstrate the OCaml build discipline using makefiles.
 The Makefile demos depend on an link:https://opam.ocaml.org/[OPAM]
 installation with the following packages installed:
 
-* findlib
+* ocamlfind (findlib)
 * ounit2
 
 To start from scratch, install OPAM and then:
@@ -14,10 +14,8 @@ To start from scratch, install OPAM and then:
 $ opam update
 $ opam switch create 4.14.0
 $ eval $(opam env)
-$ opam install ounit2
+$ opam install ocamlfind ounit2
 ```
-
-This will also install findlib.
 
 You can tell OPAM to list the packages installed in the current
 switch: `$ opam  list`.

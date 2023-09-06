@@ -40,3 +40,4 @@ clean:
 	@-rm -f *.cmi *.cmx *.o *.cmo
 	@-rm -f test*.exe;
 	@-rm -f oUnit*;
+	@-rm -f *.log

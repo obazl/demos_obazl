@@ -28,7 +28,7 @@ default: driver
 	./Driver.exe
 
 driver: ${ALL}
-	ocamlc -w -31 *.cmo Driver.ml -o Driver.exe
+	ocamlc -w -31 ${ALL} Driver.ml -o Driver.exe
 
 ## The leafs have no dependencies, so we can build them all at once in any order:
 leafs: Alpha__Beta1__Gamma__Hello.cmo \

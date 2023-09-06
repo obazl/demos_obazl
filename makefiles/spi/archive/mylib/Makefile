@@ -2,21 +2,23 @@ COMPILER=ocamlopt
 OPAQUE=
 
 ## Here B depends on C, so b.cmx must follow c.cmx on the command
-## line: Note that mylib does NOT depend (directly) on C. However B
-## does depend on C, so if you use ocamlobjinfo to inspect mylib.cmxa
-## you will see that it contains only B, but that B imports the
-## interface of C, and the implementation (but with no crc; ?).
+## line.
 mylib: b
-	$(COMPILER) -I ../b b.cmx -a -o mylib.cmxa;
+	$(COMPILER) -I ../c c.cmx -I ../b b.cmx -a -o mylib.cmxa;
 
-## In order to compile against an archive, the component sigs must be
-## on the search path, so we link them here.
+## In order to (later) link against an archive, the component sigs
+## must not only be on the search path, but evidently must be in the
+## same directory as the archive file. So we symlink b.cmi and c.cmi
+## here. (In practice, the archive will usually be built in the same
+## directory as its components.)
+
 b: c
 	$(MAKE) -C ../b;
 	ln -fs ../b/b.cmi .;
 
 c:
 	$(MAKE) -C ../c;
+	ln -fs ../c/c.cmi .;
 
 clean:
 	@-rm -f *.cmxa *.cmx *.o *.cmi *.cmxa *.a *.exe;

@@ -1,7 +1,27 @@
 = spi
 
+WARNING: this demo does not quite show what it is intended to show wrt
+indirect dependencies. Becaus A depends on an archive file, we cannot
+say that it depends directly on B and indirectly on C. To show that we
+would have to have module-only dependencies, without archives.
+
+Even then it would depend on how the build system expresses things. If
+A depends on B depends on C, then to link A we would have something like
+
+    ocamlopt c.cmx b.cmx a.cmx -o foo.exe
+
+in which case we cannot really distinguish between direct and indirect
+dependencies - a.cmx depends on both b.cmx and c.cmx.
+
+But if in fact A does not depend on C, then the implementation of B
+could be changed to remove its dependency on C, without affecting A.
+
 In this example Module A references modules B and C, but does not directly depend
 on them here. Instead it depends on archive 'mylib', which contains both.
+
+This example also demonstrates building an archive whose components
+are in different directories. In practice they're ususally all in the same
+directory, but this demo shows that that is not a requirement.
 
 Module B depends on module C. Module A is supposed to depend on B but
 not on C. But the user, seeing that B depends on C, and knowing that

@@ -1,5 +1,10 @@
+ALL = Amod.cmo Amod00Bmod.cmo Amod00Bmod00Hello.cmo
+
+default: driver
+	./Driver.exe
+
 driver: Amod00Bmod00Hello.cmo
-	ocamlc *.cmo driver.ml -o driver.exe
+	ocamlc ${ALL} driver.ml -o driver.exe
 
 Amod.cmo:
 	ocamlc -w -49 -c -no-alias-deps Amod.ml
