@@ -34,7 +34,7 @@ genrule(
     name = "menhir1",
     srcs = ["parser.mly"],
     outs = ["parser.mock.ml"],
-    exec_tools = ["@ocaml//bin:menhir"],
+    tools = ["@ocaml//bin:menhir"],
     cmd  = " ".join([
         "$(execpath @ocaml//bin:menhir)",
         "$(SRCS)",
@@ -56,7 +56,7 @@ genrule(
     name = "menhir2",
     srcs = ["parser.mock.ml", ":Ast_outs"],
     outs = ["parser.inferred.mli"],
-    exec_tools = ["@ocaml//bin:ocamlc"],
+    tools = ["@ocaml//bin:ocamlc"],
     cmd  = " ".join([
         # "set -x;",
         "ASTOUTS=($(locations :Ast_outs));",
@@ -73,7 +73,7 @@ genrule(
     name = "menhir3",
     srcs = ["parser.mly", "parser.inferred.mli"],
     outs = ["parser.ml", "parser.mli"],
-    exec_tools = ["@ocaml//bin:menhir"],
+    tools = ["@ocaml//bin:menhir"],
     cmd  = " ".join([
         # "set -x;",
         "$(execpath @ocaml//bin:menhir)",
@@ -103,7 +103,7 @@ genrule(
     name = "menhir_deps",
     srcs = ["parser.mock.ml"],
     outs = ["parser.deps"],
-    exec_tools = ["@ocaml//bin:ocamldep"],
+    tools = ["@ocaml//bin:ocamldep"],
     cmd  = " ".join([
         "$(execpath @ocaml//bin:ocamldep)",
         "-modules",
