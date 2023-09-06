@@ -4,9 +4,11 @@
 *.cmi
 *.a
 *.o
+*.out
 *.cmx
 *.cmxs
 *.cmxa
+log.*
 
 # ocamlbuild working directory
 _build/
