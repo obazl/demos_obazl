@@ -14,7 +14,7 @@ First  `cd rules_ocaml`, then:
 
 3. `$ bazel test test`
 
-WARNING: Steps 1 & 2 may take a whle. OPAM will download and compile the
+WARNING: Steps 1 & 2 may take a while. OPAM will download and compile the
 entire OCaml toolsuite, then use it to compile all the packages listed
 in `.obazl.d/opam/local.manifest`.
 
