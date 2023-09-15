@@ -1,6 +1,11 @@
 = OBazl: demos_obazl
 Demo and test code for the OBazl toolsuite
 
+WARNING: Unstable as of Sept 15 2023. The Makefiles should be fine,
+but for link:rules_ocaml[rules_ocaml], an upgrade to the most recent
+version of the OBazl tools is in process, so things may not work for a
+few days.
+
 Getting started:
 
 * rules_ocaml:  see link:rules_ocaml/README.adoc[README]

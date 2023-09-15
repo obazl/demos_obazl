@@ -1,5 +1,10 @@
 = rules_ocaml demos
 
+WARNING: Unstable as of Sept 15 2023.  Upgrade to the most recent
+version of the OBazl tools is in process, so things may not work for a
+few days.
+
+
 == Getting started
 
 === Using a local switch
