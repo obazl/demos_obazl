@@ -1,0 +1,52 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test"
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":hello", "@ounit2//lib/ounit2"]
+)
+
+ocaml_ns_archive(
+    name = "hello",
+    manifest = [
+        ":Australian",
+        ":English",
+        ":French",
+        ":Spanish"
+    ],
+)
+
+ocaml_module(
+    name = "Australian",
+    struct  = "australian.ml",
+)
+
+ocaml_module(
+    name = "English",
+    struct  = "english.ml",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "French",
+    struct  = "french.ml",
+)
+
+ocaml_module(
+    name = "Spanish",
+    struct  = "spanish.ml",
+)
+

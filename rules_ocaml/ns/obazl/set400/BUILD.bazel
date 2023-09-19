@@ -1,0 +1,17 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        # "//ns/obazl/set400/case410:test",
+        # "//ns/obazl/set400/case416:test",
+        # "//ns/obazl/set400/case420:test",
+        # "//ns/obazl/set400/case426:test",
+        # "//ns/obazl/set400/case428:test",
+        # "//ns/obazl/set400/case440:test",
+        # "//ns/obazl/set400/case446:test",
+
+        ## Not yet updated to latest version:
+        # "//ns/obazl/set400/case460:test",
+        # "//ns/obazl/set400/case470:test",
+    ]
+)

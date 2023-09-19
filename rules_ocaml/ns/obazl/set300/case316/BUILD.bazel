@@ -1,0 +1,45 @@
+## set300/case315: same as case310, with the addition of ns_env aliases.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue"
+    ],
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

@@ -1,0 +1,33 @@
+## set400/case418: depending on multiple exogenous bottomup submodules
+
+## DOES NOT WORK
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":couleur", "@ounit2//lib/ounit2"],
+)
+
+# Use bottomup submodules from three different packages as submodules.
+
+ocaml_ns_library(
+    name = "couleur",
+    manifest = [
+        "//ns/obazl/set100/case110:Red",
+        "//ns/obazl/set200/case210/bottomup:Green",
+        "//ns/obazl/set200/case220:Blue"
+    ],
+)

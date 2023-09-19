@@ -1,0 +1,4 @@
+= namespaces without renaming
+
+These demos show how to use the `include` attribute to incorporate
+exogenous modules into a namespace without renaming them.

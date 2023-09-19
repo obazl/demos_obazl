@@ -1,0 +1,4 @@
+(* resolver *)
+
+let msg = "Greetings!"
+

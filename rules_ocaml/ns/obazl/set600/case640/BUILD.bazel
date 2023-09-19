@@ -1,0 +1,57 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    manifest = [
+        ## one exogenous nslib submodule:
+        "//ns/obazl/set600/case620/rgb:rgb",
+
+        ## one nslib submodule in a local subpackage:
+        "//ns/obazl/set600/case640/cmy:cmy",
+
+        ## three exogenous non-nslib submodules:
+        "//ns/obazl/set200/case210:_Red",
+        "//ns/obazl/set200/case210:_Green",
+        "//ns/obazl/set200/case210:_Blue",
+
+        ## three endogenous non-nslib submodules:
+        ":Hue",
+        ":Saturation",
+        ":Brightness"
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Hue",
+    struct = "hue.ml",
+    deps = [":Brightness"],
+)
+
+ocaml_module(
+    name = "Saturation",
+    struct = "saturation.ml",
+)
+
+ocaml_module(
+    name = "Brightness",
+    struct = "brightness.ml",
+)

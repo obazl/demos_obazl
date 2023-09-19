@@ -1,0 +1,11 @@
+[32mLoading:[0m 
+[32mLoading:[0m 0 packages loaded
+[31m[1mERROR: [0m/Users/gar/obazl/demos_obazl/rules_ocaml/ns/topdown/archive/mwe/greetings/BUILD.bazel:22:1: name 'ocaml_ns_library' is not defined (did you mean 'ocaml_library'?)
+[31m[1mERROR: [0mSkipping 'ns/topdown/archive/mwe/greetings': no such target '//ns/topdown/archive/mwe/greetings:greetings': target 'greetings' not declared in package 'ns/topdown/archive/mwe/greetings' defined by /Users/gar/obazl/demos_obazl/rules_ocaml/ns/topdown/archive/mwe/greetings/BUILD.bazel
+[35mWARNING: [0mTarget pattern parsing failed.
+[31m[1mERROR: [0mno such target '//ns/topdown/archive/mwe/greetings:greetings': target 'greetings' not declared in package 'ns/topdown/archive/mwe/greetings' defined by /Users/gar/obazl/demos_obazl/rules_ocaml/ns/topdown/archive/mwe/greetings/BUILD.bazel
+[32mINFO: [0mElapsed time: 0.129s
+[32mINFO: [0m0 processes.
+[31m[1mFAILED:[0m Build did NOT complete successfully (1 packages loaded)
+[31m[1mFAILED:[0m Build did NOT complete successfully (1 packages loaded)
+[0m

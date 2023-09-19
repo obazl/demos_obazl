@@ -1,0 +1,33 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_resolver",
+)
+
+package(default_visibility = ["//ns/bottomup/festooned:__subpackages__"])
+
+ocaml_ns_resolver(
+    name = "gamma_ns",
+    ns = "Gamma",
+    manifest = ["Goodbye", "Hello"],
+)
+
+ocaml_library(
+    name = "olibGamma",
+    manifest = [":Hello", "Goodbye"]
+)
+
+ocaml_module(
+    name = "Hello",
+    ns_resolver = ":gamma_ns",
+    struct  = "hello.ml",
+    deps = [":Goodbye"],
+    # opts = ["-open", "Gamma"]
+)
+
+ocaml_module(
+    name = "Goodbye",
+    ns_resolver = ":gamma_ns",
+    struct  = "goodbye.ml",
+)

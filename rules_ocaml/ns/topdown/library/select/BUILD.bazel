@@ -1,0 +1,6 @@
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/topdown/library/select/sibdeps100:test",
+    ]
+)

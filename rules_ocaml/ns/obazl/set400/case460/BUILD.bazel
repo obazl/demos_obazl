@@ -1,0 +1,52 @@
+
+## OBSOLETE! not yet updated to latest version...
+
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+## Name clash!  ns module Color depends on same from another package.
+## Result:
+# File "namespaces/obazl/set035/case03/test.ml", line 1:
+# Error: Files namespaces/obazl/set035/case03/test.cmo
+#        and bazel-out/darwin-fastbuild/bin/namespaces/obazl/set035/case03/_obazl_/color.cmo
+#        make inconsistent assumptions over interface Color
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+        # "-open", "Demos_Namespaces_Obazl_Set030_Case01__00_ns_env"
+    deps = [":x", "@ounit2//lib/ounit2"],
+)
+
+ocaml_module(
+    name = "Color_main",
+    struct = "color_main.ml",
+    opts = ["-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+            "-no-alias-deps"]
+)
+
+
+ocaml_ns_library(
+    name = "x",
+    # resolver = "color_main.ml",
+    manifest = [
+        ":Color_main",
+        ## this is a namespace library:
+        "//ns/obazl/set300/case310:color", # : "Color",
+        # # "//ns/obazl/set020ns/case01:_Red": "Red",
+        # "//ns/obazl/set020/case02:_Green": "Green",
+        # # "//ns/obazl/set020ns/case01:_Blue": "Blue",
+        # "//ns/obazl/set030/case01:color": "Color",
+    ],
+)

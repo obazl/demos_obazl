@@ -1,0 +1,42 @@
+## set400/case425: user-provided main maps color names to arbitrary modules
+
+## This example demonstrates that nslib submodule names are decoupled
+## from implementation names. So we can create an nslib containing
+## arbitrary submodules with arbitrary names by providing a custom
+## main nslib module.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    manifest = [
+        ":Color", # user-provided main aliasing equations determine mapping
+        "//ns/obazl/set100/case130:_Demo__Red",
+        "//ns/obazl/set100/case132:_Foo__Green",
+        "//ns/obazl/set100/case134:_Bar__Blue",
+    ],
+)
+
+ocaml_module(
+    ## contains aliasing equations
+    name   = "Color",
+    struct = "color.ml"
+)
+

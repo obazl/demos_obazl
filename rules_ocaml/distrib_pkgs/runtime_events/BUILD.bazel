@@ -1,0 +1,29 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        "@ocaml//lib/dynlink"
+    ],
+)
+
+ocaml_module(
+    name   = "Main",
+    struct = "main.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        "@ocaml//lib/runtime_events"
+    ],
+)

@@ -1,0 +1,53 @@
+## set400/case440: user-provided main contains 'include', which defines a var
+## and references a submodule directly.
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    manifest = [
+        ":Color", # user-defined main, aliases to these submodules:
+        "//ns/obazl/set100/case110:Red",
+        "//ns/obazl/set100/case110:Green",
+        "//ns/obazl/set100/case110:Blue"
+    ],
+)
+
+ocaml_module(
+    name = "Color",
+    struct = "color.ml",
+    deps   = [
+        ":Color_include"
+    ]
+)
+
+ocaml_module(
+    name = "Color_include",
+    struct = "color_include.ml",
+    # color_include.ml wants to access Color.Red; but it cannot depend
+    # on the aliases in the main ns library module, because it isn't
+    # built yet. So it must depend directly on the module, and refer
+    # to it using its own name (see source of color_include.ml for
+    # more comments).
+    deps = [
+        "//ns/obazl/set100/case110:_Red"
+    ]
+
+)

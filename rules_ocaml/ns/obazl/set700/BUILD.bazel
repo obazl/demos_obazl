@@ -1,0 +1,22 @@
+## WARNING:
+
+## The 700 series has not yet been updated to work with the latest nslib design.
+
+## These are anomolous cases, unlikely to be used in the real world.
+## (?) For example, if we have a tree of namespaces, in principal we
+## might want to refer from one submodule to a submodule in a
+## different subtree. If we had first-class namespaces that would be
+## trivial, but we do not, and under the current design we cannot yet
+## support this. The best we can do is allow submodules to refer to
+## sibling submodules, or descendant submodules. But a submodule cannot
+## refer upwards, e.g. no "../" paths.
+
+test_suite(
+    name = "test",
+    tests = [
+        # "//ns/obazl/set700/case710:test",
+        "//ns/obazl/set700/case720:test",
+        # "//ns/obazl/set700/case730:test",
+        # "//ns/obazl/set700/case740:test"
+    ]
+)

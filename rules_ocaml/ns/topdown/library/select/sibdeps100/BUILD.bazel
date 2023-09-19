@@ -1,0 +1,50 @@
+## ns lib with intramural deps - Red depends on Green
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_ns_library(
+    name = "color",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+)
+
+# pass --//bzl:lang=de or fr to select
+ocaml_module(
+    name   = "Red",
+    sig    = "red.mli",
+    struct = select({
+        "//bzl:lang_fr?": "red_fr.ml",
+        "//bzl:lang_de?": "red_de.ml",
+        "//conditions:default": "red_en.ml"
+    }),
+    deps   = [":Green"],
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//lib/ounit2"],
+)

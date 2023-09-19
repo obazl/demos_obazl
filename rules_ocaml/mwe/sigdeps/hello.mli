@@ -1,0 +1,2 @@
+val msg : Goodbye.t
+

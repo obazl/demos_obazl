@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        "//ns/obazl/set500/case510:test",
+        "//ns/obazl/set500/case520:test",
+    ]
+)

@@ -1,0 +1,31 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test",
+)
+
+## Warning 58 [no-cmx-file]: no cmx file was found in path for module
+## Hello, and its interface was not compiled with -opaque
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":Hello_cmi",
+    ],
+)
+
+ocaml_signature(
+    name = "Hello_cmi",
+    src  = "hello.mli",
+    opts = ["-no-opaque"],
+    deps = [":Goodbye_cmi"]
+)
+
+ocaml_signature(
+    name = "Goodbye_cmi",
+    src  = "goodbye.mli",
+    opts = ["-no-opaque"],
+)
+

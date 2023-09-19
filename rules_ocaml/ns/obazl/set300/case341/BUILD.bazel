@@ -1,0 +1,59 @@
+## BROKEN: needs updating
+
+## set300/case341
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
+ocaml_ns_archive(
+    name = "color",
+    includes = [":Color_include"],
+    manifest = {
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "Color_include",
+    # if ns_env includes color_include.ml, then it must be enrolled.
+    # otherwise we get "Internal path is dangling" error.
+    ns_env = ":ns_env",
+    struct = "color_include.ml",
+    deps   = [":Red"]
+)
+
+ocaml_module(
+    name = "Red",
+    ns_env = ":ns_env",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    ns_env = ":ns_env",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_env = ":ns_env",
+    struct = "blue.ml",
+)

@@ -1,0 +1,29 @@
+# to run: $ bazel run cli/sys.argv/kitty -- <filename>
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_binary(
+    name = "tail",
+    opts = ["-verbose"],
+    main = ":Tail"
+)
+
+ocaml_module(
+    name = "Tail",
+    struct = "tail_ex.ml",
+    opts   = [
+        # "-verbose",
+        "-w", "-26", # warning: unused variable
+        "-linkall"
+    ],
+    deps = [
+        "//cli/config",
+        "@ocaml//lib/cmdliner",
+    ]
+)
+

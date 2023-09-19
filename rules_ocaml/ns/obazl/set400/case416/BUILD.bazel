@@ -1,0 +1,47 @@
+## set400/case416: depending on multiple exogenous topdown submodules
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+# Use topdown submodules from three different packages as submodules.
+
+# topdown submodule
+ocaml_ns_library(
+    name = "color",
+    manifest = [
+        "//ns/obazl/set100/case110:Red",
+        "//ns/obazl/set200/case210/topdown:Green",
+        "//ns/obazl/set200/case220:Blue"
+    ],
+)
+
+# exogenous bottomup submodules will not work here, since bottomup
+# submodules directly list their namespaces; in this case, that gives
+# us two clashing ns resolvers, both named 'Color', so the build will
+# fail with "inconsistent assumptions over interface Color'.
+
+# ocaml_ns_library(
+#     name = "color",
+#     manifest = [
+#         "//ns/obazl/set100/case110:Red",
+#         "//ns/obazl/set200/case210/bottomup:Green",
+#         "//ns/obazl/set200/case220:Blue"
+#     ],
+# )
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
