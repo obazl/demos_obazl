@@ -1,0 +1,23 @@
+opam-version: "2.0"
+name: "makeheaders"
+version: "1.0.1"
+synopsis: "makeheaders"
+maintainer: "Name <email>"
+authors: "Name <email>"
+license: "BSC"
+homepage: "https://github.com/obazl/makeheaders"
+build-env: [
+  [BAZELISK_BASE_URL = "https://github.com/bazelbuild/bazel/releases/download"]
+  [USE_BAZEL_VERSION = "6.3.2"]
+]
+# build: [
+#   ["bazel" "--batch" "--output_base=.bazel_build" "--output_user_root=.bazel_user" "build" "--repository_cache=.bazel_repo_cache" "src:makeheaders" "--subcommands=pretty_print" "--verbose_failures"]
+# ]
+messages: ["INSTALLING MAKEHEADERS"]
+install: [
+  ["bazel" "--batch" "--output_base=.bazel_build" "--output_user_root=.bazel_user" "run" "--repository_cache=.bazel_repo_cache" "opam:deploy" "--subcommands=pretty_print" "--verbose_failures"]
+]
+
+url {
+  src: "https://github.com/obazl/makeheaders/archive/refs/heads/opam.zip"
+}
