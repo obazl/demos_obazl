@@ -1,14 +1,16 @@
+.bazelignore
+.bazeliskrc
+.bazelversion
+bazel-*
+.bazel
 .obazl.d
 .opam
 _opam
-COSWITCH.bzl
-bazel-*
-.bazel
-dev
-logs
+log.*
 tmp
-*.log
-*.profile.gz
+*.gz
+_build
+obsolete
 
 **/*.cmo
 **/*.cmi
