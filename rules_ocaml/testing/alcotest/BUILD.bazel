@@ -6,12 +6,13 @@ load(
 
 test_suite(
     name = "test",
-    tests = ["alcotest", "hellotest"]
+    tests = ["alcotest", "hellotest"],
 )
 
 ocaml_test(
     name = "alcotest",
     main = ":Test_alcotest",
+    timeout = "short"
 )
 
 
@@ -28,6 +29,7 @@ ocaml_test(
     prologue = [
         "@alcotest//lib/alcotest",
     ],
+    timeout = "short"
 )
 
 ocaml_module(

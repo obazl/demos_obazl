@@ -1,3 +1,4 @@
+always --incompatible_enable_cc_toolchain_resolution
 always --experimental_cc_shared_library
 always --enable_bzlmod
 
@@ -15,22 +16,29 @@ always --registry=https://bcr.bazel.build
 
 ## IMPORTANT: --host_platform sets buildhost; --platforms sets targethost
 
+# common --announce_rc
+
+# common --toolchain_resolution_debug=".*"
+
 # default platform is sys for both buildhost and targethost
 
-build:vm --platforms=@ocaml//platforms:vm
+build:vm --platforms=@ocaml//platform:vm
 
-# build:vmvm --host_platform=@ocaml//platforms:vm
-# build:vmvm --platforms=@ocaml//platforms:vm
-common:ocamlc.byte --host_platform=@ocaml//platforms/build:vm
-common:ocamlc.byte --platforms=@ocaml//platforms/target:vm
+build --host_platform=@ocaml//platform/build:sys
+build --platforms=@ocaml//platform/target:sys
 
-build:sysvm --host_platform=@ocaml//platforms:sys
-build:sysvm --platforms=@ocaml//platforms:vm
+# build:vmvm --host_platform=@ocaml//platform:vm
+# build:vmvm --platforms=@ocaml//platform:vm
+common:ocamlc.byte --host_platform=@ocaml//platform/build:vm
+common:ocamlc.byte --platforms=@ocaml//platform/target:vm
 
-build:vmsys --host_platform=@ocaml//platforms:vm
-build:vmsys --platforms=@ocaml//platforms:sys
+build:ocamlc.opt --host_platform=@ocaml//platform/build:sys
+build:ocamlc.opt --platforms=@ocaml//platform/target:vm
 
-build:syssys --host_platform=@ocaml//platforms:sys
-build:syssys --platforms=@ocaml//platforms:sys
+build:ocamlopt.byte --host_platform=@ocaml//platform/build:vm
+build:ocamlopt.byte --platforms=@ocaml//platform/target:sys
+
+build:ocamlopt.opt --host_platform=@ocaml//platform/build:sys
+build:ocamlopt.opt --platforms=@ocaml//platform/target:sys
 
 try-import .config/user.bazelrc

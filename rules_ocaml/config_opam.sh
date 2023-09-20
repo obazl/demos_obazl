@@ -5,6 +5,7 @@ opam install \
      core \
      core_unix \
      lwt \
+     menhir \
      menhirLib \
      metaquot \
      ounit2 \

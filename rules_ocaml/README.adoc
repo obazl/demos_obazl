@@ -1,6 +1,15 @@
 = rules_ocaml demos
 
+WARNING: Some of these demos use Janestreet packages. Janestreet
+evidently does not keep their github repos in sync with their master
+copies. Things may break. Example: ppx_inline_test, which is at
+v0.16.0 in the official opam-repository, but which has only two old
+releases on its github page. Naturally, things broke somewhere along
+the way, without documentation (the API for ppx_inline_test_lib
+changed). Sigh.
+
 == Getting started
+
 
 === Using a local switch
 

@@ -53,6 +53,7 @@ ocaml_test(
 
         "@time_now//lib/time_now" ## FIXME: this should automatically be added
     ],
+    timeout = "short"
 )
 
 ocaml_module(
