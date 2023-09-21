@@ -1,0 +1,20 @@
+## copy me to rules_ocaml/.config (private developer's workarea)
+## do not put it under version control
+
+## you might want to put some of  this in ~/.bazelrc so they
+## will apply to all bazel workspaces
+
+build --color=yes
+# build --subcommands=pretty_print
+build --verbose_failures
+# build --sandbox_debug
+
+# build --show_timestamps
+# build --jobs 600
+# build --keep_going
+# query --keep_going
+
+# these two get rid of ld warnings about object file being "built for newer macOS version than being linked". pick your minimum version:
+# build:macos --macos_minimum_os='10.15'
+# build --config=macos
+

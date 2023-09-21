@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "" ]]; then
+    ls -G $(bazel info output_base)/external
+else
+    if [[ $2 == "" ]]; then
+        ls -G $(bazel info output_base)/external/$1/
+    else
+        ls $2 -G $(bazel info output_base)/external/$1/
+    fi
+fi
+
+exit
