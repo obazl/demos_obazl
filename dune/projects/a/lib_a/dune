@@ -1,0 +1,6 @@
+(library
+ (name lib_a)
+ (public_name lib-a)
+ (flags (:standard -open b
+                   -open c))
+ (libraries b c))
