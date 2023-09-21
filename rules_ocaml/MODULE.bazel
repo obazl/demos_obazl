@@ -37,6 +37,7 @@ bazel_dep(name = "ppx_sexp_conv",   version = "0.0.0")
 bazel_dep(name = "ppx_sexp_value",  version = "0.0.0")
 bazel_dep(name = "ppxlib",          version = "0.0.0")
 bazel_dep(name = "sexplib",         version = "0.0.0")
+bazel_dep(name = "stublibs",        version = "0.0.0")
 bazel_dep(name = "time_now",        version = "0.0.0")
 
 ## distrib-pkgs, also accessible under @ocaml//lib:

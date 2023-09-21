@@ -130,7 +130,7 @@ ppx_executable(
 
         ## FIXME: this should be pulled in by the deps on
         ## @ppx_deriving//lib/show and ord in the prologue
-        # "@ppx_deriving//lib/runtime",
+        "@ppx_deriving//lib/runtime",
 
         # "@sexplib//lib/sexplib",
 
