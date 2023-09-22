@@ -22,7 +22,7 @@ an error just install the missing package.
 To bazelize your current switch: `$ bazel run @coswitch//new`.  "Current switch" can mean either shared (typically in `$HOME/.opam`) or local (in `$PWD/_opam`).
 
 WARNING: This may not work; I'm also in the middle of preparing a new
-version of @coswitch with Bazel module support and OPAM integration.
+version of @coswitch with Bazel module support and OPAM integration. You can find mostly up-to-date info about it at link:https://github.com/obazl/coswitch/blob/dev/README.adoc[coswitch].
 
 This will create stuff in $XDG_DATA_HOME/share/obazl (default:
 `$HOME/.local/share/obazl`).
