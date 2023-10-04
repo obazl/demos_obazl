@@ -19,7 +19,8 @@ load(
     "ocaml_test"
 )
 
-string_flag( name = "link", build_setting_default = "default" )
+string_flag(name = "link", build_setting_default = "default",
+            values = ["default", "dynamic", "static"])
 config_setting(name = "dynamic", flag_values = {":link": "dynamic"})
 config_setting(name = "static", flag_values = {":link": "static"})
 

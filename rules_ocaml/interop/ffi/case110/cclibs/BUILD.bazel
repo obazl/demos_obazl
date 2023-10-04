@@ -12,11 +12,15 @@ ocaml_module(
     deps = select({
         "//interop/ffi/case110:dynamic": [":dllalpha.so"],
         "//interop/ffi/case110:static":  [":alpha"],
-        "//conditions:default": [":dllalpha.so"]
+        # FIXME: default depends on platform -
+        # dso for macos, static for linux
+        # "//conditions:default": ["dllalpha.so"]
+        "//conditions:default": [":alpha"]
     }),
+    # cc_deps = [":alpha"],
     opts = [
         "-verbose",
-        "-ccopt", "-Wl,-v"
+        "-ccopt", "-Wl,-v" ## pass verbose to assembler
     ],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
@@ -34,16 +38,19 @@ cc_library(
     linkstatic = True,
     copts = [
         # "version",
-        "-Iexternal/ocaml/c",
+        "-I$(@ocaml)/lib/c",
+        # "-Iexternal/ocaml~0.0.0/lib/c",
         # "-lcamlrun"
     ],
-    deps = ["@ocaml//c"],
+    deps = ["@ocaml//lib/c:sdk"],
+    toolchains = ["//:repo_paths"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
 
 cc_binary(
     name = "dllalpha.so",
     linkshared = True,
-    srcs = [":alpha"],
+    srcs = [":alpha"], # we depend on the static lib
+    toolchains = ["//:repo_paths"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
