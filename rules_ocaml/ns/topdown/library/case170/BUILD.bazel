@@ -87,6 +87,7 @@ ocaml_module(
 
 ###########
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = "Test"
 )

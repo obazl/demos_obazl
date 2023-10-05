@@ -9,6 +9,7 @@ load(
 package(default_visibility = ["//visibility:public"])
 
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = ":Test",
 )

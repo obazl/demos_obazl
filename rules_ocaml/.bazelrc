@@ -5,6 +5,8 @@ always --enable_bzlmod
 try-import %workspace%/.config/toolchains.bazelrc
 try-import %workspace%/.config/platform.bazelrc
 
+try-import %workspace%/.config/coswitch_registry.bazelrc
+
 try-import .config/registries.bazelrc
 
 common --registry=https://raw.githubusercontent.com/obazl/registry/main/

@@ -8,7 +8,9 @@ load(
     "ocaml_test",
 )
 
-ocaml_test(name = "test", main = "Test")
+ocaml_test(
+    timeout = "short",
+    name = "test", main = "Test")
 ocaml_module(name   = "Test", struct = "test.ml",
              deps = [":Hello", "@ounit2//lib/ounit2"])
 

@@ -12,6 +12,7 @@ load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
 ns_env(prefix = "foo")  # "red.ml", "green.ml"]) #, "blue.ml"])
 
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = "test.ml",
     deps = [":color", "@ounit2//lib/ounit2"],

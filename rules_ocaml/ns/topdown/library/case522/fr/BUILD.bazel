@@ -4,7 +4,6 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_ns_library",
-    "ocaml_test",
 )
 
 ocaml_ns_library(

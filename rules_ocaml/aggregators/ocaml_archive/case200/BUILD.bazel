@@ -16,6 +16,7 @@ test_suite(
 )
 
 ocaml_test(
+    timeout = "short",
     name = "test_archive",
     main = ":Test_archive",
 )
@@ -46,6 +47,7 @@ ocaml_archive(
 
 ################
 ocaml_test(
+    timeout = "short",
     name = "test_noarchive",
     main = ":Test_noarchive",
 )

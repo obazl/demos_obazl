@@ -5,7 +5,6 @@ load(
     "ocaml_module",
     "ocaml_ns_archive",
     "ocaml_ns_library",
-    "ocaml_test",
 )
 
 ###################

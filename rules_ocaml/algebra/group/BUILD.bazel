@@ -28,10 +28,12 @@ config_setting(
 )
 
 ocaml_test(
+    timeout = "short",
     name = "group_test",
     main = ":Test",
 )
 ocaml_test(
+    timeout = "short",
     name = "n0_test",
     main = ":Test",
     # constraint_deps = { ## transitions
