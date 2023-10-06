@@ -7,7 +7,9 @@ load("@rules_ocaml//build:rules.bzl",
      "ocaml_test",
 )
 
-load("@obazl//build:rules_ocaml.bzl", "menhir")
+# load("@obazl//build:rules_ocaml.bzl", "menhir")
+
+load("@rules_ocamlx//rules:menhir.bzl", "menhir")
 
 ###########
 ocaml_test(

@@ -4,3 +4,6 @@
 TODO: examples of legacy PPXes, without ppxlib
 
 Low priority, since most PPXes seem to have been upgraded to use ppxlib.  (?)
+
+
+link:https://github.com/janestreet-deprecated/ppx_driver[ppx_driver] deprecated, but documents some obscurities like `(kind ppx_driver)`.
