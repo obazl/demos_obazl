@@ -29,14 +29,17 @@
 #     echo "NOT running BAZELISK"
 # fi
 
-echo "args: $@"
+# echo "args: $@"
 
 SWITCH=`opam switch show`
-while getopts "s:" o; do
+while getopts "vs:" o; do
     echo "OPT: ${o}"
     case "${o}" in
         s)
             SWITCH=${OPTARG}
+            ;;
+        v)
+            VERBOSE=1
             ;;
         *)
             # echo "Unrecognized option: ${o}"
@@ -46,12 +49,12 @@ while getopts "s:" o; do
 done
 shift $((OPTIND-1))
 
-echo "SWITCH: ${SWITCH}"
+# echo "SWITCH: ${SWITCH}"
 
 CMD=$1
 shift 1
 
-echo "CMD: ${CMD}"
+# echo "CMD: ${CMD}"
 
 if [[ $CMD = "help" ]]
 then
@@ -92,6 +95,11 @@ fi
 ## even for non-build cmds like mod or query;
 ## otherwise bazel_deps will go unresolved
 set -- "--registry=file://${reg}" "$@"
+
+if [[ -e $VERBOSE ]]
+then
+    set -x
+fi
 
 set -x
 
