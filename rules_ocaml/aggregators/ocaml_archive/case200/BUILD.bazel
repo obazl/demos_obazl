@@ -1,7 +1,7 @@
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
     "ocaml_binary",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_signature",
     "ocaml_test",
@@ -36,8 +36,9 @@ ocaml_module(
     ],
 )
 
-ocaml_archive(
+ocaml_library(
     name = "arch",
+    archived = True,
     opts = ["-linkall",],
     manifest = [
         ":Easy",
@@ -90,8 +91,9 @@ ocaml_module(
 )
 
 # ## this target compiles sources to an archive:
-# ocaml_archive(
+# ocaml_library(
 #     name = "archive_ml",
+#     archived = True,
 #     message = "Archiving...",
 #     srcs = ["easy.ml", "simple.ml"],
 #     opts = [ "-verbose" ],
@@ -99,8 +101,9 @@ ocaml_module(
 # )
 
 # ## this target mixes compilation and archiving:
-# ocaml_archive(
+# ocaml_library(
 #     name = "archive_mix",
+#     archived = True,
 #     message = "Archiving...",
 #     srcs = ["easy.ml"],
 #     opts = [ "-verbose" ],

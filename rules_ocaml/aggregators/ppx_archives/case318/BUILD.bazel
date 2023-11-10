@@ -4,7 +4,7 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
@@ -47,8 +47,10 @@ ppx_executable(
 )
 
 ############
-ocaml_archive(
+## archived libs cannot be aggregated
+ocaml_library(
     name = "Ppx_aggregated_archives",
+    archived = True,
     # opts = ["-verbose"],
     manifest = [
         ":lib_ppx_color",
@@ -74,8 +76,9 @@ ocaml_module(
 # )
 
 ############
-ocaml_archive(
+ocaml_library(
     name = "lib_ppx_color",
+    # archived = True,
     opts = [
         "-linkall",
         # "-verbose",
@@ -131,8 +134,9 @@ ocaml_module(
 )
 
 ############
-ocaml_archive(
+ocaml_library(
     name = "lib_ppx_greek",
+    # archived = True,
     opts = ["-linkall"],
     manifest = [
         ":Ppx_alpha",

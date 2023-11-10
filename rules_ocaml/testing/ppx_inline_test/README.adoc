@@ -8,6 +8,7 @@ source file, and we need to run `Ppx_inline_test_lib.Runtime.exit ()`
 last. The demos put the latter in `runner.ml` and link it last by
 passing it to the `main` attribute of `ocaml_test`.
 
+NOTE: that's what  "@ppx_inline_test//lib/runner" does, use it instead.
 
 Tests are only executed when both these conditions are met:
 

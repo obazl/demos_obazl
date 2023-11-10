@@ -22,7 +22,7 @@ ocaml_module(
 #################
 ocaml_ns_library(
     name = "libColor",
-    ns = "Color",
+    ns_name = "Color",
     resolver = ":Color_resolver",
     manifest = [
         ":Red",

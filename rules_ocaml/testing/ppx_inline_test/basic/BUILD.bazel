@@ -4,6 +4,7 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
+    "ppx_module",
 )
 
 LIBNAME="Hello"
@@ -74,7 +75,7 @@ ppx_executable(
 )
 
 #############
-ocaml_module(
+ppx_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],

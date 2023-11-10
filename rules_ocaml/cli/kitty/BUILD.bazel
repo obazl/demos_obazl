@@ -8,7 +8,7 @@ load(
 
 ocaml_binary(
     name = "kitty",
-    deps = [":Kitty"]
+    main = ":Kitty"
 )
 
 ocaml_module(

@@ -10,7 +10,8 @@ load(
 
 ocaml_test(
     name = "test",
-    main = ":Test"
+    main = ":Test",
+    timeout = "short"
 )
 
 ocaml_module(
@@ -28,7 +29,7 @@ ocaml_module(
 
 ocaml_binary(
     name = "hello",
-    deps = [":Main"],
+    main = ":Main",
 )
 
 ocaml_module(

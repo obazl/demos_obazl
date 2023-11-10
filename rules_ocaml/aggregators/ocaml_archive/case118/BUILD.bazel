@@ -4,8 +4,8 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
     "ocaml_binary",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_test",
 )
@@ -26,8 +26,9 @@ ocaml_module(
 )
 
 ##############
-ocaml_archive(
+ocaml_library(
     name = "color",
+    archived = True,
     manifest = [
         ":Red",
         ":Green",
@@ -52,8 +53,11 @@ ocaml_module(
 )
 
 ##############
-ocaml_archive(
+# with archived = True we get:
+#  Option -a cannot be used with .cmxa input files.
+ocaml_library(
     name = "greek",
+    archived = False,
     manifest = [
         ":Alpha",
         ":Beta",

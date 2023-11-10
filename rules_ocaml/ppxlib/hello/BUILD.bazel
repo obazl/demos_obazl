@@ -60,7 +60,7 @@ ocaml_module(
     ppx = ":ppx.exe",
     # ppx_debug = ["dsource"],
     struct = "hello.ml",
-    # ppx_print = "@rules_ocaml//ppx/print:text",
+    # ppx_print = "@rules_ocaml//ppx/print:text!",
     deps = [  # see below, ppx_codeps
         # "@sexplib//lib/sexplib",
         # "@metapp//lib/metapp"

@@ -4,19 +4,17 @@ module(
     compatibility_level = 0,
 )
 
-bazel_dep(name = "platforms",       version = "0.0.7")
+bazel_dep(name = "platforms",       version = "0.0.8")
 bazel_dep(name = "bazel_skylib",    version = "1.4.2")
 
-bazel_dep(name = "coswitch",        version = "2.1.1")
-bazel_dep(name = "obazl",           version = "1.0.0",
+bazel_dep(name = "coswitch",        version = "2.3.0")
+bazel_dep(name = "obazl",           version = "2.0.0",
           dev_dependency = True)
 
 bazel_dep(name = "rules_ocaml",     version = "2.0.0")
-bazel_dep(name = "rules_ocamlx",     version = "2.0.0")
-local_path_override(module_name = "rules_ocamlx",
-                    path = "../../rules_ocamlx")
+bazel_dep(name = "tools_ocaml",     version = "2.0.0")
 
-bazel_dep(name = "cc_config",       version = "2.0.0",
+bazel_dep(name = "obazl_tools_cc", version = "2.0.0",
           dev_dependency = True)
 
 bazel_dep(name = "ocaml",           version = "0.0.0")
@@ -25,6 +23,7 @@ register_toolchains("@ocaml//toolchain/profiles:all")
 
 bazel_dep(name = "alcotest",        version = "0.0.0")
 bazel_dep(name = "base",            version = "0.0.0")
+bazel_dep(name = "cmdliner",        version = "0.0.0")
 bazel_dep(name = "core",            version = "0.0.0")
 bazel_dep(name = "core_unix",       version = "0.0.0")
 bazel_dep(name = "menhirlib",       version = "0.0.0")

@@ -17,6 +17,7 @@ ns/obazl/set700/case730
 ns/obazl/set700/case740
 ns/ns-archive
 ns/assisted/hierarchical
+ns/udr
 # ppx/deriving
 ppx/rewriters/get_env
 

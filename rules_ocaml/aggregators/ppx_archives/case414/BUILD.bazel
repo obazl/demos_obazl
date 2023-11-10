@@ -1,10 +1,10 @@
 ## aggregators/ppx_archives/case414:
 ## same as aggregators/ppx_libraries/case414
-## except ocaml_archive instead of ocaml_library
+## except ocaml_library(archived) instead of ocaml_library
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_test",
     "ppx_module",
@@ -44,8 +44,9 @@ ppx_executable(
 )
 
 ############
-ocaml_archive(
+ocaml_library(
     name = "Ppx_color",
+    archived = True,
     manifest = [
         ":Ppx_red",
         ":Ppx_green",
@@ -72,8 +73,9 @@ ppx_module(
 )
 
 ############
-ocaml_archive(
+ocaml_library(
     name = "Ppx_greek",
+    archived = True,
     manifest = [
         ":Ppx_alpha",
         ":Ppx_beta",
