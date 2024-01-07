@@ -3,7 +3,6 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
     "ocaml_library",
     "ocaml_binary",
     "ocaml_module",
@@ -41,7 +40,6 @@ ocaml_module(
 )
 
 ##############
-# ocaml_archive(
 ocaml_library(
     name = "libColor",
     archived = True,
