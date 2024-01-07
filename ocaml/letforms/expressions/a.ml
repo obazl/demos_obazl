@@ -13,7 +13,7 @@
  *)
 
 (* this works, because 'print_endline arg' is an expression *)
-(* let x = 1 in print_endline (string_of_int x) *)
+(* let x = 1 in print_endline ("x = " ^ string_of_int x) *)
 
 (* nesting works *)
 (*
@@ -29,10 +29,9 @@ let y = 2 in () (* syntax error on 'in' *)
  *)
 
 (* removing second 'in' works: *)
-(*
-let x = 1 in () (* ok, evaluates to () *)
-let y = 2       (* ok *)
- *)
+
+(* let x = 1 in () (\* ok, evaluates to () *\) *)
+(* let y = 2       (\* ok *\) *)
 
 (* or use the sequencing op ';'  this makes
    the second let a subsexpression of the first
@@ -42,15 +41,14 @@ let x = 1 in ();
 let y = 2 in ();
  *)
 
-(*
-let y =
-  print_endline (string_of_int 2);
-  print_endline "HI";
-  ();
-  0;
-  "world";
-  4
- *)
+
+(* let y = *)
+(*   print_endline (string_of_int 2); *)
+(*   print_endline "HI"; *)
+(*   (); *)
+(*   0; *)
+(*   "world"; *)
+(*   4 *)
 
 (* let z = *)
 (*   let z = 3 in () *)
@@ -78,12 +76,14 @@ let y =
 (* let a = 1 in let () = print_endline (string_of_int a) ; 7 *)
 (* let a = 1 in 3 *)
 
-(* let b = let x = 1 *)
+(* let b = let x = 1 in x *)
 
-(* let b = *)
-(*     let x = 1 in 5 ; (\* x + 1; 5 *\) *)
-(* let () = print_endline (string_of_int b) ; (\* 5 *\) *)
+let b =
+  let x = 1 in x + 1; (* Warning 10 [non-unit-statement]: this expression should have type unit.*)
+  5
+let () = print_endline ("b = " ^ string_of_int b) (* 5 *)
 
-(* let c = *)
-(*   let x = 1 and y = 2 in x + y ; *)
-(* let () = print_endline (string_of_int c); (\* 3 *\) *)
+let c =
+  let x = 1 and y = 2 in x + y
+
+let () = print_endline ("c = " ^ string_of_int c); (* 3 *)

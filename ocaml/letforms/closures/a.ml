@@ -35,11 +35,13 @@ let () = print_endline ("x = " ^ (string_of_int x)) (* 2 *)
 
 (* close 'x + 1' using global x, which is bound to 2;
    globals x and z are (re)bound AFTER the closure
-   is computed *)
-let x = 1 and z = x + 1
+   is computed.
+   NB: this puts both x and y into the global (module) env.
+ *)
+let x = 1 and y = x + 1
 
 let () = print_endline ("x = " ^ (string_of_int x)) (* 1 *)
-let () = print_endline ("z = " ^ (string_of_int z)) (* 3 *)
+let () = print_endline ("y = " ^ (string_of_int y)) (* 3 *)
 
 
 

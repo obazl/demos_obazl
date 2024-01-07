@@ -8,7 +8,7 @@ test: test.ml a
 	./test.exe;
 
 a: a.ml
-	$(COMPILER) -I dep -c a.ml; # emits a.cmx, a.o, a.cmi
+	$(COMPILER) -c a.ml; # emits a.cmx, a.o, a.cmi
 ################################################################
 clean:
 	@-rm -f *.cmi *.cmx *.o *.cmo

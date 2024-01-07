@@ -26,7 +26,9 @@ output:
 Error: This expression has type int
        This is not a function; it cannot be applied.
  *)
-
+(* This happens because OCaml treats the RHS '1\n7' as
+   an expression.
+*)
 
 (* the 'expr' part of a let stmt can be used for side-effects
    such as printing to stdout.
@@ -39,13 +41,23 @@ let u = print_endline ("x = " ^ (string_of_int x)) (* 1 *)
 
 (*
    so common practice is to write 'let () = ...'
-   Q: does this create a global binding?
+   WARNING: this is special syntax! The symbol '()'
+   is the sole constructor of type unit, so in principle
+   we should not be able to write 'let () = ...',
+   just as we cannot write 'let 3 = ...'.
+   So 'let () = ...' is not really a binding expression;
+   rather it expresses the constraint that the RHS
+   must have type unit; and since unit has only one
+   constructor, the RHS value must be ().
+   In other words 'let () = ...' is a genuine equation
+   rather than a binding expression.
  *)
 let () = print_endline ("x = " ^ (string_of_int x)) (* 1 *)
 
 (* also common is use of the "wildcard", '_',
    which conveys the idea that the bound value is
-   to be discarded, so to speak.
+   to be discarded, so to speak, and the bound name
+   (i.e. '_') is irrelevant.
  *)
 let _  = print_endline ("x = " ^ (string_of_int x)) (* 1 *)
 
@@ -69,7 +81,7 @@ let () = print_endline ("z = " ^ (string_of_int z)) (* 3 *)
 
 (* let bindings are not visibile within the let env. *)
 (* this would fail with "Error: unbound value x",
-   because the binding (x, 1) is not visible
+   because the binding <x=1> is not visible
    elsewhere in the let env.
 let x = 1 and y = x + 1
  *)
@@ -87,7 +99,3 @@ let x = 1 and y = x + 1 (* rebinds x, binds y *)
 
 let () = print_endline (string_of_int x) (* 1 *)
 let () = print_endline (string_of_int y) (* 3 *)
-
-
-
-

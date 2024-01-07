@@ -1,16 +1,24 @@
 COMPILER=ocamlopt
-LINKALL=
 
-test: test.ml a
+test: test.ml data functions
 	ocamlfind $(COMPILER) -w -49 $(LINKALL) -linkpkg -package ounit2 \
-	a.cmx \
+	data.cmx \
+	functions.cmx \
 	-o test.exe test.ml;
 	./test.exe;
 
-a: a.ml
-	$(COMPILER) -I dep -c a.ml; # emits a.cmx, a.o, a.cmi
+data: data.ml
+	$(COMPILER) -c data.ml;
+
+	# $(COMPILER) -o data.out data.ml;
+	# ./data.out
+
+functions: functions.ml
+	$(COMPILER) -c functions.ml;
+
+	# $(COMPILER) -o functions.out functions.ml;
+	# ./functions.out
+
 ################################################################
 clean:
-	@-rm -f *.cmi *.cmx *.o *.cmo
-	@-rm -f test*.exe;
-	@-rm -f oUnit*;
+	@-rm -f *.cmi *.cmx *.o *.cmo *.exe *.log *.cache

@@ -54,6 +54,9 @@ let j x: 'a = x + 1 ;;
 
 let () = print_endline ("j 1 = " ^ string_of_int (j 1)) (* 2 *)
 
-
-
+(* TODO: something about principal types? *)
+(* https://www.cl.cam.ac.uk/teaching/1516/L28/type-inference.pdf
+   "A type A is principal for a term M if every other derivable
+   type for M is a substitution instance of A."
+ *)
 

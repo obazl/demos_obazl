@@ -1,15 +1,14 @@
 (* lexical v. dynamic binding *)
 
 let y = 0
-let foo x = x + y
-let bar y = foo 9
-(* lexical binding: bar 1 == 9 (foo sees global y) *)
-(* dynamic binding: bar 1 == 10 (foo sees the y bound by bar) *)
+let f x = x + y
+let g y = f 9
 
-let () = print_endline ("foo 1 = " ^ string_of_int (foo 1))
+(* lexical binding: g 1 == 9 (f sees global y) *)
+(* OCaml uses lexical binding: *)
+let () = print_endline ("g 1 = " ^ string_of_int (g 1)) (* 9 *)
 
-(* OCaml uses lexical binding: bar 1 == 9 *)
-let () = print_endline ("bar 1 = " ^ string_of_int (bar 1))
+(* dynamic binding: g 1 == 10 (f sees the y bound by g) *)
 
 
 
