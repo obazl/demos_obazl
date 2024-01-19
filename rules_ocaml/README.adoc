@@ -10,7 +10,7 @@ changed). Sigh.
 
 == Getting started
 
-WARNING: these are temporary instructions. I'm working on aligning the demos with the latest versions of the tools, and will provide better guidance when finished.
+Clone this repo to your local disk, then `$ cd demos_obazl/rules_ocaml`.
 
 Your opam switch must be in good order. `.config_opam.sh` lists the
 minimal opam packages needed by the demos but may not be complete; see
@@ -19,11 +19,8 @@ an error just install the missing package.
 
 To bazelize your current switch: `$ bazel run @coswitch//new`.  "Current switch" can mean either shared (typically in `$HOME/.opam`) or local (in `$PWD/_opam`).
 
-WARNING: This may not work; I'm also in the middle of preparing a new
-version of @coswitch with Bazel module support and OPAM integration. You can find mostly up-to-date info about it at link:https://github.com/obazl/coswitch/blob/dev/README.adoc[coswitch].
+See link:https://github.com/obazl/coswitch[coswitch] for details.
 
-This will create stuff in $XDG_DATA_HOME/share/obazl (default:
-`$HOME/.local/share/obazl`).
 
 WARNING: There's a bootstrapping issue. The `bazel_deps` in
 `MODULE.bazel` cannot be resolved until you run `@coswitch//new`, but
@@ -33,16 +30,29 @@ the `bazel_dep` stuff starting with the `ocaml` one before you run
 Thereafter you should not need to repeat that, unless you delete
 something in your switch.
 
-<<<<<<< HEAD
-WARNING: Steps 1 & 2 may take a while. OPAM will download and compile the
-entire OCaml toolsuite, then use it to compile all the packages listed
-in `.obazl.d/opam/local.manifest`.
-=======
 Then you need to tell bazel about the registry created by
 `@coswitch//new`; that's what `.config/coswitch_registry.bazelrc`
-is for.
->>>>>>> dev
+is for.  It should contain something like
 
-NOTE: I'm leaving these files under version control so the intrepid
-can follow along. Ordinarly they would not be under VC.
+    common --registry=file:///home/<uid>/.opam/5.1.1/share/obazl     # linux
+    common --registry=file:///Users/<uid>/.opam/5.1.1/share/obazl    # macos
 
+For details see link:https://github.com/obazl/coswitch[coswitch].
+
+WARNING: This repo uses shell script `tools/bazel` to automatically
+select the coswitch for the current OPAM switch. Bazel auto-detects
+that file; to control coswitch selection using
+`.config/coswitch_registry.bazel` just rename `tools/bazel`.
+
+Once you've run coswitch, run
+
+    $ bazel test test
+
+By default the builds use the `ocamlopt.opt` toolchain. You can explicitly select a toolchain but running one of:
+
+    $ bazel test test --config=ocamlopt.opt
+    $ bazel test test --config=ocamlopt.byte
+    $ bazel test test --config=ocamlc.byte
+    $ bazel test test --config=ocamlc.opt
+
+NOTE: Three demos involving `ppx_inline_test` will fail with `ocamlc` toolchains. These will be fixed eventually; if this is a problem for you now, please file an issue.
