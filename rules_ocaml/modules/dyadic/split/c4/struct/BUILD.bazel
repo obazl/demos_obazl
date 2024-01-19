@@ -1,6 +1,10 @@
 load("@rules_ocaml//build:rules.bzl", "ocaml_module")
 
-# dependency on compiled sig forces module name to match sig name
+# Dependency on compiled sig forces module name to match
+# sig name, so
+#     bazel build modules/dyadic/split/c4/struct:Foo
+# will deliver A.cmx
+
 ocaml_module(
     name = "Foo",
     struct = "foo.ml",

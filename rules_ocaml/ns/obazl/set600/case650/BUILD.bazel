@@ -1,0 +1,86 @@
+
+## NOT YET UPDATED to latest
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [":a", "@ounit2//lib/ounit2"],
+)
+
+# How to support articulated module paths like A.B.Color
+ocaml_ns_library(
+    name = "a",
+    # include = "a_footer.ml",
+    manifest = [
+        # ":foo", ## 'regular' submodule
+        ":b",  ## ns submodule
+    ],
+)
+
+ocaml_ns_library(
+    name = "b",
+    # includes = [":beta"],
+    manifest = [
+        ":Bar", # : "Bar",  ## 'regular' submodule
+        ":color" #: "Color",  ## ns submodule
+    ],
+)
+
+## This module will be accessible directly as 'Color', or indirectly as 'A.Color'
+## But since it has private visibility by default, clients outside of this package
+## cannot depend on it directly.
+ocaml_ns_library(
+    name = "color",
+    # includes = [":color_include"],
+    manifest = [
+        ":Red", #: "Red",
+        ":Green", #: "Green",
+        ":Blue" #: "Blue",
+    ],
+)
+
+ocaml_module(
+    name = "beta",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name = "color_include",
+    struct = "color_include.ml",
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)
+
+ocaml_module(
+    name = "Bar",
+    struct = "bar.ml",
+)

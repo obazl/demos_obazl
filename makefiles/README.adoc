@@ -12,10 +12,11 @@ To start from scratch, install OPAM and then:
 
 ```
 $ opam update
-$ opam switch create 4.14.0
+$ opam switch create <version>           <1>
 $ eval $(opam env)
 $ opam install ocamlfind ounit2
 ```
+<1> Where <version> = 4.14.0, 5.1.1, etc.
 
 You can tell OPAM to list the packages installed in the current
 switch: `$ opam  list`.

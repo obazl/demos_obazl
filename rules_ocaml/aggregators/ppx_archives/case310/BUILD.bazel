@@ -1,6 +1,5 @@
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
     "ocaml_test",
@@ -9,6 +8,7 @@ load(
 )
 
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = "Test"
 )
@@ -40,8 +40,9 @@ ppx_module(
 )
 
 ############
-ocaml_archive(
+ocaml_library(
     name = "ppx_color",
+    archived = True,
     manifest = [
         ":ppx_red",
         ":ppx_green",

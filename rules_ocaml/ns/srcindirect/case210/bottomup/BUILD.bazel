@@ -11,6 +11,7 @@ load(
 SRC = "//ns/srcindirect/case210/src:"
 
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = "Test"
 )

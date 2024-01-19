@@ -1,0 +1,24 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":A",
+    ],
+)
+
+ocaml_module(
+    name = "A",
+    struct = "a.ml",
+)

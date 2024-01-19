@@ -1,0 +1,26 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_resolver",
+)
+
+ocaml_ns_resolver(
+    name = "beta1_ns",
+    ns = "Beta1",
+    manifest = ["Pluto"],
+    imports    = {
+        "//ns/bottomup/festooned/alpha/beta1/gamma:gamma_ns": "Gamma"
+    },
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Pluto",
+    ns_resolver   = ":beta1_ns",
+    struct  = "pluto.ml",
+    deps = [
+        # "//ns/bottomup/festooned/alpha",
+        "//ns/bottomup/festooned/alpha/beta1/gamma:Goodbye"
+    ]
+)

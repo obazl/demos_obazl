@@ -1,0 +1,21 @@
+(executables
+ (names test_a)
+ (libraries lib-a
+            alcotest-lwt)
+ (flags (:standard -open b
+                   -open lib_a)))
+
+(rule
+ (alias buildtest)
+ (deps test_a.exe)
+ (action (progn)))
+
+(rule
+ (alias runtest_a)
+ (action (run %{exe:test_a.exe})))
+
+(rule
+ (alias runtest)
+ (package lib-a)
+ (deps (alias runtest_a))
+ (action (progn)))

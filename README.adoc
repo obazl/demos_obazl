@@ -1,21 +1,16 @@
 = OBazl: demos_obazl
 Demo and test code for the OBazl toolsuite
 
-WARNING: Unstable as of Sept 15 2023. The Makefiles should be fine,
-but for link:rules_ocaml[rules_ocaml], an upgrade to the most recent
-version of the OBazl tools is in process, so things may not work for a
-few days.
-
 Getting started:
 
+* makefiles: demos illustrating OCaml build protocols using only makefiles.  See link:makefiles/README.adoc[README]
+* ocaml: demos illustrating various features of the language.
 * rules_ocaml:  see link:rules_ocaml/README.adoc[README]
-* makefiles: link:makefiles/README.adoc[README]
 
 See also:
 
 * link:https://github.com/obazl/rules_ocaml[rules_ocaml]
-* link:https://github.com/obazl/tools_opam[tools_opam]
-* link:https://obazl.github.io/docs_obazl[docs_obazl]
-* link:https://github.com/obazl/demos_obazl[demos_obazl]
-* link:https://github.com/obazl/tools_obazl[tools_obazl]
+* link:https://github.com/obazl/coswitch[coswitch]
+* link:https://obazl.github.io/docs_obazl[The OBazl Book]
+
 

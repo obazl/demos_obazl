@@ -21,6 +21,7 @@ test_suite(
 
 ###########
 ocaml_test(
+    timeout = "short",
     name = "testa",
     main = "Testa"
 )
@@ -42,6 +43,7 @@ ocaml_module(
 
 ###########
 ocaml_test(
+    timeout = "short",
     name = "testb",
     main = "Testb"
 )
@@ -63,6 +65,7 @@ ocaml_module(
 
 ###########
 ocaml_test(
+    timeout = "short",
     name = "testc",
     main = "Testc"
 )
@@ -84,6 +87,7 @@ ocaml_module(
 
 ###########
 ocaml_test(
+    timeout = "short",
     name = "testd",
     main = "Testd"
 )

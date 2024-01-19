@@ -1,0 +1,8 @@
+= closures
+
+
+ Wikström, Åke (1987). Functional Programming using Standard ML.
+ Prentice Hall. ISBN 0-13-331968-7. "The reason it is called a
+ 'closure' is that an expression containing free variables is called
+ an 'open' expression, and by associating to it the bindings of its
+ free variables, you close it."

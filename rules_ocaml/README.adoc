@@ -1,38 +1,48 @@
 = rules_ocaml demos
 
-WARNING: Unstable as of Sept 15 2023.  Upgrade to the most recent
-version of the OBazl tools is in process, so things may not work for a
-few days.
-
+WARNING: Some of these demos use Janestreet packages. Janestreet
+evidently does not keep their github repos in sync with their master
+copies. Things may break. Example: ppx_inline_test, which is at
+v0.16.0 in the official opam-repository, but which has only two old
+releases on its github page. Naturally, things broke somewhere along
+the way, without documentation (the API for ppx_inline_test_lib
+changed). Sigh.
 
 == Getting started
 
-=== Using a local switch
+WARNING: these are temporary instructions. I'm working on aligning the demos with the latest versions of the tools, and will provide better guidance when finished.
 
-First  `cd rules_ocaml`, then:
+Your opam switch must be in good order. `.config_opam.sh` lists the
+minimal opam packages needed by the demos but may not be complete; see
+also the list of `bazel_dep` directives in `MODULE.bazel`. If you get
+an error just install the missing package.
 
-0. `$ opam update`
+To bazelize your current switch: `$ bazel run @coswitch//new`.  "Current switch" can mean either shared (typically in `$HOME/.opam`) or local (in `$PWD/_opam`).
 
-1. `$ opam switch import .obazl.d/opam/local.manifest --switch .`
+WARNING: This may not work; I'm also in the middle of preparing a new
+version of @coswitch with Bazel module support and OPAM integration. You can find mostly up-to-date info about it at link:https://github.com/obazl/coswitch/blob/dev/README.adoc[coswitch].
 
-2. `$ bazel run @opam//coswitch/local:refresh`
+This will create stuff in $XDG_DATA_HOME/share/obazl (default:
+`$HOME/.local/share/obazl`).
 
-3. `$ bazel test test`
+WARNING: There's a bootstrapping issue. The `bazel_deps` in
+`MODULE.bazel` cannot be resolved until you run `@coswitch//new`, but
+to run that, they must be resolved. So you'll have to comment out all
+the `bazel_dep` stuff starting with the `ocaml` one before you run
+`@coswitch//new`. Once the coswitch is install, uncomment them.
+Thereafter you should not need to repeat that, unless you delete
+something in your switch.
 
+<<<<<<< HEAD
 WARNING: Steps 1 & 2 may take a while. OPAM will download and compile the
 entire OCaml toolsuite, then use it to compile all the packages listed
 in `.obazl.d/opam/local.manifest`.
+=======
+Then you need to tell bazel about the registry created by
+`@coswitch//new`; that's what `.config/coswitch_registry.bazelrc`
+is for.
+>>>>>>> dev
 
-If you get errors involving missing "@something..." it probably means
-your local switch/coswitch is misconfigured. Try rerunning
-
-`$ bazel run @opam//local:refresh`.
-
-
-== OPAM deps
-
-* findlib
-* ounit2
-* ppxlib
-* lwt (only for mwe/hello_lwt)
+NOTE: I'm leaving these files under version control so the intrepid
+can follow along. Ordinarly they would not be under VC.
 

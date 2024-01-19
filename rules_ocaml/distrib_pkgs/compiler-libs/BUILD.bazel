@@ -1,0 +1,29 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        # "@ocaml//lib/compiler-libs:common"
+        # "@ocaml//lib/str"
+    ],
+)
+
+ocaml_module(
+    name   = "ppx",
+    struct = "ppx_demo.ml",
+    deps = [
+        "@ocaml//lib/compiler-libs:common"
+    ],
+)

@@ -1,0 +1,93 @@
+## NOT YET UPDATED to latest
+
+
+# set600/case660
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+ns_env(
+    aliases = glob(["*.ml"])
+)
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":a"],
+)
+
+# How to support articulated module paths like A.B.Color
+ocaml_ns_library(
+    name = "a",
+    manifest = {
+        ":b": "B",  ## ns submodule
+    },
+    visibility = ["//visibility:public"],
+)
+
+## Clients that depend on //ns/obazl/class05/case21/src:a can
+## access this directly as 'B', or indirectly as 'B.Color'.
+## But since it has private visibility by default, clients outside of this package
+## cannot depend on it directly.
+ocaml_ns_library(
+    name = "b",
+    includes = [":b_include"],
+    ns_env = ":ns_env",
+    manifest = {
+        ":color": "Color",  ## ns submodule
+    },
+)
+
+## Clients that depend on //ns/obazl/class05/case21/src:a can
+## can access this directly as 'Color', or indirectly as 'B.Color' and 'A.B.Color'.
+## But since it has private visibility by default, clients outside of this package
+## cannot depend on it directly.
+ocaml_ns_library(
+    name = "color",
+    includes = ["color_include"],
+    ns_env = ":ns_env",
+    manifest = {
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "b_include",
+    ns_env = ":ns_env",
+    struct = "b_include.ml",
+)
+
+ocaml_module(
+    name = "color_include",
+    ns_env = ":ns_env",
+    struct = "color_include.ml",
+)
+
+ocaml_module(
+    name = "Red",
+    ns_env = ":ns_env",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    ns_env = ":ns_env",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_env = ":ns_env",
+    struct = "blue.ml",
+)

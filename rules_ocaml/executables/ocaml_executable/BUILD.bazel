@@ -1,0 +1,50 @@
+# to run: $ bazel test rules/ocaml_interface:test
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocaml_signature",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [
+        ":Hello",
+        "@ounit2//lib/ounit2",
+    ],
+)
+
+ocaml_binary(
+    name = "hello",
+    main = ":Main",
+)
+
+ocaml_module(
+    name = "Main",
+    struct = "main.ml",
+    deps = [":Hello"],
+)
+
+ocaml_module(
+    name = "Hello",
+    sig = ":Hello.cmi",
+    struct = "hello.ml",
+)
+
+ocaml_signature(
+    name = "Hello.cmi",
+    src = "hello.mli",
+)

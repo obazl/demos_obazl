@@ -1,0 +1,59 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_signature",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+# 'test' target will fail without aliases
+ns_env(
+    aliases = glob(["*.ml"]),
+)
+
+ocaml_test(
+    name = "test",
+    deps_opam = ["ounit2"],
+    main = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color"],
+)
+
+ocaml_ns_archive(
+    name = "color",
+    manifest = {
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
+    },
+)
+
+ocaml_module(
+    name = "Red",
+    ns_env = ":ns_env",
+    sig = ":Red.cmi",
+    struct = "red.ml",
+    deps = [":Green"],
+)
+
+ocaml_signature(
+    name = "Red.cmi",
+    src = "red.mli",
+    ns_env = ":ns_env",
+)
+
+ocaml_module(
+    name = "Green",
+    ns_env = ":ns_env",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_env = ":ns_env",
+    struct = "blue.ml",
+)

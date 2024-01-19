@@ -1,0 +1,66 @@
+ppx.exe has on codep and depends on precompiled OPAM resources,
+some of which carry their own codeps. Dep structure:
+
+std deps:
+
+* "@ppx_sexp_conv//lib/ppx_sexp_conv",
+**   subdeps std: "@ppx_sexp_conv//lib/expander", "@ppxlib//lib/ppxlib", "@ppxlib//lib/ast",
+
+* "@ppx_deriving//lib/ord",
+* "@ppx_deriving//lib/show",
+
+ppx_codep: "@sexplib//lib/sexplib",
+subdeps  "@ocaml//bigarray", "@parsexp//parsexp", "@sexplib0//sexplib0",
+
+
+`bazel query 'deps(ppxlib/ppx_codeps:ppx.exe)' --output package --notool_deps --noimplicit_deps`
+
+Show only deps with non-empty ppx_codeps attr:
+
+`bazel query 'attr(ppx_codeps, ".{3,}", deps(ppxlib/ppx_codeps:ppx.exe))' --output package --notool_deps --noimplicit_deps`
+
+This gives us: @ppx_deriving//lib/api, @ppx_sexp_conv//lib/expander, ppxlib/ppx_codeps
+
+Asking for the deps of these (except for ppxlib//ppx_codeps)  gives us the complete list of codeps (except for those on ppxlib/ppx_codeps).
+
+`$ bazel query 'deps(@ppx_deriving//lib/api + @ppx_sexp_conv//lib/expander)'`
+
+Why? Because whatever a codep depends on becomes a codep. If you
+inject a dependency on A, and A depends on B and C, then you've ipso
+facto injected an _indirect_ dependency on B and C.
+
+## To view the providers of any target:
+
+`bazel run @obazl//inspect:providers --@obazl//tgt=<TGT>`
+
+We can use this to verify that codeps are being propagated correctly.
+For example, @ppx_sexp_conv//lib/expander is an indirect std dep of our
+target (ppxlib/ppx_codeps). It has two codeps, so finding the deps of
+those to will give us the list of codeps we expect
+@ppx_sexp_conv//lib/expander to carry:
+
+`bazel query 'deps(@ppx_sexp_conv//lib/runtime-lib + @sexplib0)'`
+
+outputs `@ppx_sexp_conv//lib/runtime-lib`, `@sexplib0//` - no further
+deps. We verify this by hand: the former depends on the latter, the
+latter has no deps. So we expect these two to be the only codeps of
+@ppx_sexp_conv//lib/expander.
+
+
+# You can build each target:
+# $ bazel build ppx/ppx_codeps
+# $ bazel build ppx/ppx_codeps:_Hello
+# $ bazel build ppx/ppx_codeps:ppx
+# $ bazel build ppx/ppx_codeps:_Driver
+# $ bazel build ppx/ppx_codeps:gendriver
+
+# To inspect the result of ppx processing:
+# The easiest thing to do is run `bazel aquery ${TARGET}`, e.g. `bazel aquery ppx/ppx_codeps:_Hello`
+# first, run `source tools/aliases`. this defines an alias `bl` you can use to browse the log.
+# uncomment the `ppx_print` line below to set output format to text
+# then run `bazel clean`, then `bazel build ppx/ppx_codeps/hello:_Hello --subcommands
+# then run `bl` to inspect the command log. search for PpxTransformAction;
+# you will see the command, something like:
+# bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_hello.sh -dump-ast -o ../bazel-out/darwin-fastbuild/bin/ppx/ppx_codeps/hello/_obazl_/hello.ml -impl ppx/ppx_codeps/hello/hello.ml
+# the transformed output is the `-o` parameter (without the leading '../').
+# see the full ppx command, add '-verbose' to the `opts` attribute of the `ocaml_module` rule.

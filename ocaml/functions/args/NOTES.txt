@@ -1,0 +1,28 @@
+Compare:
+
+# let f x = 3 ;;
+val f : 'a -> int = <fun>
+# let f x:int = 3 ;;
+val f : 'a -> int = <fun>
+
+OCaml infers that the bound var has type 'a,
+even if we annotate it as an int. Presumably
+that is because the argument is ignored by the
+definition.
+
+If however we use the arg in the definition,
+OCaml will infer a more precise type:
+
+# let f x = x + 1 ;;
+val f : int -> int = <fun>
+
+# let f x: int = x + 1 ;;
+val f : int -> int = <fun>
+
+Same happens even if we tell OCaml that the arg is
+generically typed:
+
+# let f x: 'a = x + 1 ;;
+val f : int -> int = <fun>
+
+

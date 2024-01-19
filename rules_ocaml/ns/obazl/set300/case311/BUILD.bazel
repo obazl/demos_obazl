@@ -1,0 +1,53 @@
+## set300/case311 - same as case310 but using archive instead of library
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color", "@ounit2//lib/ounit2"]
+)
+
+ocaml_ns_library(
+    name = "color",
+    opts = ["-linkall"],
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Since there are no intramural deps, we do not have to worry about
+# e.g. resolving a reference to Blue within Red's code. That would be
+# a problem under renaming.  Following demos show how to manage it.
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+    visibility = ["//visibility:public"],
+)

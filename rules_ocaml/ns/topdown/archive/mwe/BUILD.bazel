@@ -2,8 +2,12 @@ test_suite(
     name = "test",
     tests = [
         "//ns/topdown/archive/mwe/greetings:test",
+        "//ns/topdown/archive/mwe/greetings_dyads:test",
+        # "//ns/topdown/archive/mwe/greetings_resolver:test",
+        "//ns/topdown/archive/mwe/hello:test",
         "//ns/topdown/archive/mwe/langs:test",
         # "//ns/topdown/archive/mwe/rgbdyads:test",
         "//ns/topdown/archive/mwe/rgborphans:test",
+        "//ns/topdown/archive/mwe/singleton:test",
     ]
 )

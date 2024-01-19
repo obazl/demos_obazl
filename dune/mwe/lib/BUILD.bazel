@@ -1,0 +1,23 @@
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_module",
+     "ocaml_ns_archive",
+)
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_ns_archive(
+    name       = "mwe",
+    submodules = [":A"],
+    opts       = [],
+    visibility = ["//visibility:public"],
+)
+
+#############################
+####  Singleton Targets  ####
+
+ocaml_module(
+    name = "A",
+    struct = "a.ml"
+)

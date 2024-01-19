@@ -10,7 +10,8 @@ load(
 
 ocaml_test(
     name = "test",
-    main = "Test"
+    main = "Test",
+    timeout = "short"
 )
 
 ocaml_module(

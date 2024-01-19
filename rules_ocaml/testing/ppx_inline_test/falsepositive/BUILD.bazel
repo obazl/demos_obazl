@@ -40,6 +40,7 @@ ocaml_test(
         # "//rules/ocaml_module:Hello",
         ":Hello"
     ],
+    timeout = "short"
 )
 
 ocaml_module(

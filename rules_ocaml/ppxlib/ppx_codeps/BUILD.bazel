@@ -29,7 +29,7 @@ ocaml_module(
 
     ppx = ":ppx.exe", # transforms test.ml before compilation
 
-    ## Setting ppx output to text has two effects: it makes it
+    ## Setting ppx_print to text has two effects: it makes it
     ## possible to inspect the ppx output file, and it allows the
     ## compiler to include source code in error messsages. For
     ## example, if we comment out the dependency on
@@ -130,7 +130,7 @@ ppx_executable(
 
         ## FIXME: this should be pulled in by the deps on
         ## @ppx_deriving//lib/show and ord in the prologue
-        # "@ppx_deriving//lib/runtime",
+        "@ppx_deriving//lib/runtime",
 
         # "@sexplib//lib/sexplib",
 

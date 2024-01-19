@@ -1,0 +1,56 @@
+# same as //mwe/hello_archive except uses ocaml_library instead of
+# ocaml_archive
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_archive",
+    "ocaml_binary",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+# $ bazel test //minimal/hello_library:test
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Main",
+        "@ounit2//lib/ounit2"
+    ],
+)
+
+# executable w/o test
+# $ bazel run minimal/hello_library:hello
+ocaml_binary(
+    name = "hello.exe",
+    main = ":Main",
+    # deps = [":Main"]
+)
+
+ocaml_module(
+    name = "Main",
+    struct = "main.ml",
+    deps = [":libHello"],
+)
+
+# ocaml_archive(
+ocaml_library(
+    name = "libHello",
+    manifest = [":Easy", ":Simple"],
+)
+
+ocaml_module(
+    name = "Easy",
+    struct = "easy.ml",
+)
+
+ocaml_module(
+    name = "Simple",
+    struct = "simple.ml",
+)

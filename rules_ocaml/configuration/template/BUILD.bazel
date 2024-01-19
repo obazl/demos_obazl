@@ -69,6 +69,7 @@ int_setting( name = "blue_80",  build_setting_default = 80 )
 
 ###########
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = ":Test"
 )

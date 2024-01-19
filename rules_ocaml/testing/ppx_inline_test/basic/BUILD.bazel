@@ -4,6 +4,7 @@ load(
     "ocaml_module",
     "ocaml_test",
     "ppx_executable",
+    "ppx_module",
 )
 
 LIBNAME="Hello"
@@ -31,13 +32,15 @@ ocaml_test(
         # "-log",
     ],
     # opts = ["-verbose"],
+
+    prologue = [
+        "@ppx_inline_test//lib/runner/lib",
+        ":Hello",
+    ],
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
     main = ":Runner",
-    prologue = [
-        ":Hello",
-        "@ppx_inline_test//lib/runner/lib",
-    ],
+
     timeout = "short"
 )
 
@@ -55,6 +58,7 @@ ocaml_module(
     ppx_args = [
         "-inline-test-lib", LIBNAME
     ],
+    ppx_print = "@rules_ocaml//ppx/print:text!",
     struct = "hello.ml",
     deps = [
         "@ppx_inline_test//lib/runtime-lib",
@@ -74,7 +78,7 @@ ppx_executable(
 )
 
 #############
-ocaml_module(
+ppx_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],

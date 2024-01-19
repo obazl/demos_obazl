@@ -1,0 +1,8 @@
+= distrib pkgs
+
+The standard distributions come with a small set of libraries deemed
+to be part of the "standard library" (not to be confused witht the
+`stdlib` library).
+
+These demos verify that the Bazel targets for these packages generated
+by `@coswitch//new` are in good working order.

@@ -1,0 +1,44 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_ns_library",
+    "ocaml_test"
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        "@ounit2//lib/ounit2",
+        ":greetings"
+    ]
+)
+
+ocaml_ns_archive(
+# ocaml_ns_library(
+    name = "greetings",
+    manifest = [
+        ":Hello",
+        ":Goodbye",
+    ],
+)
+
+ocaml_module(
+    name = "Hello",
+    struct  = "hello.ml",
+)
+
+ocaml_module(
+    name = "Goodbye",
+    struct  = "goodbye.ml",
+    visibility = ["//visibility:public"],
+)

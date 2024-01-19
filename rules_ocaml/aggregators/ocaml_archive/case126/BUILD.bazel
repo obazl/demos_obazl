@@ -2,7 +2,6 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
     "ocaml_binary",
     "ocaml_library",
     "ocaml_module",
@@ -10,6 +9,7 @@ load(
 )
 
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = "Test",
     # prologue = ["@ounit2//lib/ounit2"]
@@ -34,10 +34,9 @@ ocaml_module(
 )
 
 ##############
-ocaml_archive(
-# ocaml_library(
+ocaml_library(
     name = "libColor",
-    # archive = True,
+    archived = True,
     manifest = [
         ":Red",
         ":Green",
@@ -65,10 +64,9 @@ ocaml_module(
 )
 
 ##############
-ocaml_archive(
-# ocaml_library(
+ocaml_library(
     name = "libGreek",
-    # archive = True,
+    archived = True,
     opts = ["-linkall"],
     manifest = [
         ":Alpha",

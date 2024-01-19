@@ -1,0 +1,2 @@
+# source me
+alias "bzlog=less `bazel info command_log`"

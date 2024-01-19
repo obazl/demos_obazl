@@ -1,0 +1,33 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        ## odd numbered cases use ocaml_ns_archive, not yet updated to latest version
+
+        # "//ns/obazl/set300/case310:test",
+        # # "//ns/obazl/set300/case311:test",
+
+        "//ns/obazl/set300/case316:test",
+        # "//ns/obazl/set300/case317:test",
+
+        # "//ns/obazl/set300/case320:test",
+        # "//ns/obazl/set300/case321:test",
+
+        # "//ns/obazl/set300/case326:test",
+        # "//ns/obazl/set300/case327:test",
+
+        # "//ns/obazl/set300/case330:test",
+        # "//ns/obazl/set300/case331:test",
+
+        # "//ns/obazl/set300/case336:test",
+
+        # "//ns/obazl/set300/case340:test",
+        # "//ns/obazl/set300/case341:test",
+
+        # "//ns/obazl/set300/case366:test",
+        # "//ns/obazl/set300/case367:test",
+
+        # "//ns/obazl/set300/case370/foo-bar:test",
+        # "//ns/obazl/set300/case371/foo-bar:test",
+    ]
+)

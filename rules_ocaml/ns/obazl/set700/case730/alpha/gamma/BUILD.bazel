@@ -1,0 +1,31 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = [
+        "-w", "-27",  ## Error (warning 27): unused variable test_ctxt.
+        "-w", "-31",  ## Error (warning 31): files X and Y both define a module named Z
+    ],
+    deps = [":gamma", "@ounit2//lib/ounit2"],
+)
+
+ocaml_ns_library(
+    name = "gamma",
+    manifest = [
+        "//ns/obazl/set700/case730/alpha/gamma/color:color"
+    ],
+    visibility = ["//visibility:public"]
+)

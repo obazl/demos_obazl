@@ -1,0 +1,88 @@
+## currently broken
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_ns_library(
+    name = "color",
+    manifest = [
+        # OBazl will put these in depencency order. E.g. Red depends on
+        # Blue, Green and Subred, and Green depends on Blue, so the order on the
+        # command line will be Blue, Green, Subred, Red, Color.
+        # To see this without building, run:
+        # $ bazel aquery namespaces/obazl/class04/case13:test
+        ":Red",
+        ":Green",
+        ":Blue"
+        # ":CMY"  # include an ns module as a submodule
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+    deps = [
+        ":Blue",
+        ":Green",
+        ":Subred",
+    ],
+)
+
+ocaml_module(
+    name = "Subred",
+    struct = "subred.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)
+
+################################################################
+## Build a different nslib that uses the same submodules.
+
+ocaml_ns_library(
+    name = "couleur",
+    manifest = [
+        ## user-defined main module maps different names to same modules
+        ":Couleur"
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Couleur",
+    struct = "couleur.ml",
+    deps   = [
+        ":Red",
+        ":Green",
+        ":Blue"
+    ]
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":color",
+        ":couleur",
+        "@ounit2//lib/ounit2"
+    ],
+)

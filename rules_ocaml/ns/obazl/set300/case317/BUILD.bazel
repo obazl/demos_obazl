@@ -1,0 +1,62 @@
+## set300/case317:
+
+fail("OBSOLETE CASE - ns_env no longer supported")
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_archive",
+    "ocaml_test",
+)
+# load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+## By default, 'aliases' is empty. A non-empty 'aliases' attribute
+## tells OBazl to generate a "resolver" module containing aliasing
+## equations for the files enumerated - mapping them for their names
+## to their renames (prefixed names). This resolver functions as a
+## compile facilitator for the ocaml_modules that depend on it.
+
+# ns_env(prefix = "demo", aliases = glob(["*.ml"]))
+
+ocaml_test(
+    name = "test",
+    main = "test.ml",
+    opts = ["-w","-27"], ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
+# This will generate a main ns module, which doubles as a resolver
+# module. Since we have enrolled the submodules in an ns_env,
+# the aliasing equations will not be pseudo-recursive.
+ocaml_ns_archive(
+    name = "color",
+    manifest = {
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
+    },
+)
+
+## To enable intramural deps, we specified an aliases list above, for our ns_env.
+# That is what enables these to compile - the ns_env generates a
+# module containing the aliases needed, which these rules -open with
+# -no-alias-deps.
+ocaml_module(
+    name = "Red",
+    ns_env = ":ns_env",
+    struct = "red.ml",
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Green",
+    ns_env = ":ns_env",
+    struct = "green.ml",
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_env = ":ns_env",
+    struct = "blue.ml",
+)

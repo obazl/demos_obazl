@@ -1,5 +1,6 @@
 ## This example demonstrates how to use `genrule` to run a PPX
-## transformation. Normally you would not need to do this.
+## transformation. Normally you would not want to do this,
+## for obvious reasons.
 
 # $ bazel test ppx/genrule:test
 
@@ -70,17 +71,29 @@ ocaml_module(
 PPX_PRINT=""  # text output
 # PPX_PRINT = "-dump-ast"  # binary output
 
+# In this case, our ppx.exe depends on the 'base' pkg, which wants to
+# dlopen some "stublibs". The ocaml rules know how to deal with this automatically,
+# but genrule does not, so we have to list those libs as inputs and tell Bazel where to find them.
+
+# (This is necessary when using ocamlc.opt or ocamlc.byte.)
+
 ########
 genrule(
     name = "transform",
     outs = ["tmp/hello.ml"],
-    srcs = ["hello.ml"],
+    srcs = ["hello.ml",
+            "@stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so",
+            "@stublibs//lib/stublibs:dllbase_stubs.so"],
     ## due to filename->module_name rules, output must be hello.ml, not e.g. hello.pp.ml
     ## $(location :ppx.exe) resolves to wherever Bazel placed ppx.exe
     ## {print_fmt} is for string interpolation
-    cmd = "$(location :ppx.exe) {print_fmt} $< > $@".format(
-        print_fmt = PPX_PRINT
-    ),
+    cmd = " ".join([
+        "STUBLIBS=`dirname $(execpath @stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so)`;",
+        "export DYLD_LIBRARY_PATH=$$STUBLIBS;", ## MacOS
+        "$(location :ppx.exe)",
+        "{}".format(PPX_PRINT),
+        "$(location hello.ml) > $@"
+    ]),
     tools = [":ppx.exe"],
 )
 

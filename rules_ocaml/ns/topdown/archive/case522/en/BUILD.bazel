@@ -2,7 +2,6 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_ns_archive",
-    "ocaml_test",
 )
 
 ocaml_ns_archive(

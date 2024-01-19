@@ -1,11 +1,11 @@
 ## aggregators/ppx_archives/case424:
 ## same as aggregators/ppx_libraries/case424
-## except ocaml_archive instead of ocaml_library
+## except ocaml_library(archived) instead of ocaml_library
 
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_binary",
-    "ocaml_archive",
+    "ocaml_library",
     "ocaml_module",
     "ocaml_test",
     "ppx_module",
@@ -13,6 +13,7 @@ load(
 )
 
 ocaml_test(
+    timeout = "short",
     name = "test",
     main = "Test"
 )
@@ -52,7 +53,7 @@ ppx_executable(
 )
 
 ############
-ocaml_archive(
+ocaml_library(
     name = "Ppx_color",
     manifest = [
         ":Ppx_red",
@@ -80,8 +81,9 @@ ppx_module(
 )
 
 ############
-ocaml_archive(
+ocaml_library(
     name = "Ppx_greek",
+    archived = True,
     manifest = [
         ":Ppx_alpha",
         ":Ppx_beta",

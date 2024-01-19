@@ -1,0 +1,34 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+#################
+ocaml_ns_library(
+    name = "gamma",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue"
+    ],
+    visibility = ["//ns/obazl/set600/case614/alpha/beta:__pkg__"]
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

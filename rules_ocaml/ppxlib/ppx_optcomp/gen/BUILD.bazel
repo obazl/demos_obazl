@@ -1,0 +1,103 @@
+# $ bazel test ppx/ppx_optcomp:test
+
+load("@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+    "ocaml_binary",
+    "ppx_module",
+    "ppx_executable")
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+string_flag(
+    name = "msg",
+    build_setting_default = "hello",
+    values = [
+        "hello",
+        "goodbye",
+    ],
+)
+
+config_setting(
+    name = "hello",
+    flag_values = {":msg": "hello"},
+)
+
+config_setting(
+    name = "goodbye",
+    flag_values = {":msg": "goodbye"},
+)
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    deps = [
+        ":Hello",
+        "@ounit2//lib/ounit2"
+    ]
+)
+
+#############
+ARG = select({
+    ":hello": [":genhello"],
+    ":goodbye": [":gengoodbye"],
+})
+
+ocaml_module(
+    name = "Hello",
+    struct = "hello.ml",
+    ppx = ":ppx.exe",
+    # ppx_data = ARG,
+    ppx_data = [  # this is our runtime dep
+        ":config.mlh" ## generated below by :genconfig
+    ],
+    # ppx_print = "@rules_ocaml//ppx/print:text", # or :binary
+)
+
+########
+## WARNING: due to Bazel restrictions on the way 'select()' can be used, we
+## can only select the entire command string here. we cannot use it to
+## select a parameter, for example.
+
+## here {...} is for string interpolation, and $@ is the genrule outfile
+CMD = "echo [%%define greeting {cmd}] > \"$@\""
+
+genrule(
+    name = "genconfig",
+    outs = ["config.mlh"],
+    cmd = select({
+        ":hello": CMD.format(cmd = 1),
+        ":goodbye": CMD.format(cmd = 2),
+    }),
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Driver",
+    prologue = ["@ppx_optcomp//lib/ppx_optcomp"]
+)
+
+###########
+ppx_module(
+    name = "Driver",
+    struct = ":ppxlib_driver.ml",
+    deps = ["@ppxlib//lib/ppxlib"]
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppxlib_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

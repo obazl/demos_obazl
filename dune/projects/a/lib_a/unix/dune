@@ -1,0 +1,5 @@
+(library
+ (name lib_a_unix)
+ (public_name lib-a.unix)
+ (flags (:standard -open b -open a))
+ (libraries a b))

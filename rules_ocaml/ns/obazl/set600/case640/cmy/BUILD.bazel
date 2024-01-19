@@ -1,0 +1,30 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_ns_library",
+)
+
+ocaml_ns_library(
+    name = "cmy",
+    manifest = [
+        ":Cyan",
+        ":Magenta",
+        ":Yellow"
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Cyan",
+    struct = "cyan.ml",
+)
+
+ocaml_module(
+    name = "Magenta",
+    struct = "magenta.ml",
+)
+
+ocaml_module(
+    name = "Yellow",
+    struct = "yellow.ml",
+)

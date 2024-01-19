@@ -1,0 +1,326 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_archive",
+     "ocaml_ns_archive",
+     "ocaml_module",
+     "ocaml_signature",
+     "ppx_executable",
+     "ppx_module",
+)
+
+
+LIBNAME = "PPX_INLINE_TESTS"
+PPX_ARGS = ["-inline-test-lib", LIBNAME]
+DEPS_1 = [
+    "@core//lib/core",
+    "@async//lib/async"
+]
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_ns_archive(  #1
+    name       = "expect_test_examples",
+    ns_name    = "expect_test_examples",
+    manifest = [
+        ":Chdir",
+        ":Control_chars",
+        ":Escaping",
+        ":Flexible_whitespace",
+        ":Function",
+        ":Function_with_pattern_outputs",
+        ":Functor",
+        ":Hello_async",
+        ":Nine",
+        ":Reordered",
+        ":Space_nine",
+        ":Tabs",
+        ":Tests",
+        ":Three",
+        ":Xnine"
+    ],
+)
+
+######################## Modules & Signatures ########################
+ocaml_signature(
+    name          = "Chdir.cmi",
+    src           = "chdir.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Chdir",
+    struct        = "chdir.ml",
+    sig           = ":Chdir.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Control_chars.cmi",
+    src           = "control_chars.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Control_chars",
+    struct        = "control_chars.ml",
+    sig           = ":Control_chars.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Escaping.cmi",
+    src           = "escaping.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Escaping",
+    struct        = "escaping.ml",
+    sig           = ":Escaping.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Flexible_whitespace.cmi",
+    src           = "flexible_whitespace.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Flexible_whitespace",
+    struct        = "flexible_whitespace.ml",
+    sig           = ":Flexible_whitespace.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Function.cmi",
+    src           = "function.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Function",
+    struct        = "function.ml",
+    sig           = ":Function.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Function_with_pattern_outputs.cmi",
+    src           = "function_with_pattern_outputs.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Function_with_pattern_outputs",
+    struct        = "function_with_pattern_outputs.ml",
+    sig           = ":Function_with_pattern_outputs.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Hello_async.cmi",
+    src           = "hello_async.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Hello_async",
+    struct        = "hello_async.ml",
+    sig           = ":Hello_async.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Nine.cmi",
+    src           = "nine.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Nine",
+    struct        = "nine.ml",
+    sig           = ":Nine.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Reordered.cmi",
+    src           = "reordered.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Reordered",
+    struct        = "reordered.ml",
+    sig           = ":Reordered.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Space_nine.cmi",
+    src           = "space_nine.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Space_nine",
+    struct        = "space_nine.ml",
+    sig           = ":Space_nine.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Tabs.cmi",
+    src           = "tabs.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Tabs",
+    struct        = "tabs.ml",
+    sig           = ":Tabs.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Tests.cmi",
+    src           = "tests.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Tests",
+    struct        = "tests.ml",
+    sig           = ":Tests.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Three.cmi",
+    src           = "three.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Three",
+    struct        = "three.ml",
+    sig           = ":Three.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_signature(
+    name          = "Xnine.cmi",
+    src           = "xnine.mli",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+)
+
+ocaml_module(
+    name          = "Xnine",
+    struct        = "xnine.ml",
+    sig           = ":Xnine.cmi",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+ocaml_module(
+    name          = "Functor",
+    struct        = "functor.ml",
+    deps          = DEPS_1,
+    ppx           = ":ppx_1.exe",
+    ppx_args      = PPX_ARGS + []
+)
+
+
+###############
+ppx_executable(
+    name    = "ppx_1.exe",
+    main    = ":Ppx_driver",
+    prologue = [
+        "@ppx_jane//lib/ppx_jane"
+    ],
+)
+
+#############
+ppx_module(
+    name       = "Ppx_driver",
+    struct     = ":ppx_driver.ml",
+    visibility = ["//visibility:public"],
+    deps       = ["@ppxlib//lib/ppxlib"],
+)
+
+########
+genrule(
+    name = "__ppx_driver__",
+    outs = ["ppx_driver.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ])
+)
+
+############################# Rules ##################################
+
+########
+# genrule(
+#     outs  = [
+#         "tabs.ml"
+#     ],
+#     name  = "__tabs.ml__",
+#     srcs  = [
+#         ":tabs.ml.in",
+#         ":jbuild"
+#     ],
+#     cmd_bash   = " ".join([
+#         "$(execpath (:FOO))",
+#         "$(SRCS);",
+#         "cp tabs.ml  $@",
+#     ]),
+#     tools   = [(:FOO)]
+# )
+

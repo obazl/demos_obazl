@@ -1,0 +1,61 @@
+# embed exogenous modules in namespace
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns_resolver",
+    "ocaml_test",
+)
+
+ocaml_test(
+    timeout = "short",
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [":libColor", "@ounit2//lib/ounit2"],
+)
+
+## aggregate resolver and submodules
+ocaml_library(
+    name = "libColor",
+    manifest = [
+        "//ns/prefixing/resolver/a:Foo__Red",
+        "//ns/prefixing/resolver/b:Bar__Green",
+        "//ns/prefixing/resolver/b:Baz__Blue",
+        ":Grue",
+        ":color_ns"
+    ],
+)
+
+ocaml_ns_resolver(
+    name        = "color_ns",
+    ns          = "Color",
+    submodules  = [
+        ":Grue",
+        # ":Color"
+    ],
+    id_aliasing = {":NsColor": "Color"}
+)
+
+## hard-coded resolver, aliases exogenous modules:
+# Red   = "//ns/prefixing/resolver/a:Foo__Red",
+# Green = "//ns/prefixing/resolver/b:Bar__Green",
+# Blue  = "//ns/prefixing/resolver/b:Baz__Blue",
+ocaml_module(
+    name        = "NsColor",
+    forcename = True,
+    # ns_resolver = ":color_ns",
+    struct      = "color.ml",
+    opts = ["-no-alias-deps", "-w", "-49"]
+)
+
+ocaml_module(
+    name        = "Grue",
+    ns_resolver = ":color_ns",
+    struct      = "color__grue.ml",
+)

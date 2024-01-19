@@ -1,0 +1,37 @@
+opam-version: "2.0"
+name: "coswitch"
+version: "1.0.0"
+synopsis: "One-line description"
+maintainer: "Name <email>"
+authors: "Name <email>"
+license: "BSC"
+homepage: "https://github.com/obazl/coswitch"
+# bug-reports: "bar"
+build-env: [
+  [BAZELISK_BASE_URL = "https://github.com/bazelbuild/bazel/releases/download"]
+  [USE_BAZEL_VERSION = "6.3.2"]
+  [BAZEL_CACHE="/Users/gar/.cache/bazel"]
+]
+build: [
+  ["bazel"
+   "--bazelrc=.config/opam.bazelrc"
+   "--nosystem_rc"
+   "--nohome_rc"
+   "--noworkspace_rc"
+   "build" "new"
+  ]
+]
+install: [
+  ["bazel"
+   "--bazelrc=.config/opam.bazelrc"
+   "--nosystem_rc"
+   "--nohome_rc"
+   "--noworkspace_rc"
+   "run" "opam:install"
+   "--sandbox_debug"
+  ]
+]
+
+url {
+  src: "/Users/gar/obazl/coswitch"
+}

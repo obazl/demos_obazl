@@ -1,0 +1,63 @@
+## set300/case345
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    main = "Test"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    opts = [
+        "-w",
+        "-27",
+    ],  ## Error (warning 27): unused variable test_ctxt.
+    deps = [":color", "@ounit2//lib/ounit2"],
+)
+
+ocaml_ns_library(
+    name = "color",
+    # main = ":Color",
+    manifest = [
+        ":Red",
+        ":Green",
+        ":Blue",
+        ":Color"
+    ],
+)
+
+ocaml_module(
+    name = "Color",
+    struct = "color.ml",
+    deps   = [":Color_include"]
+)
+
+ocaml_module(
+    name = "Color_include",
+    struct = "color_include.ml",
+    deps   = [":Red"]
+)
+
+ocaml_module(
+    name = "Red",
+    struct = "red.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    struct = "blue.ml",
+)

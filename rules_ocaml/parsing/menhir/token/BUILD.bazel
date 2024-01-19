@@ -9,7 +9,7 @@ load("@rules_ocaml//build:rules.bzl",
      "ocaml_test",
 )
 
-load("@obazl//build:rules_ocaml.bzl", "menhir")
+load("@tools_ocaml//rules:menhir.bzl", "menhir")
 
 ###########
 ocaml_test(

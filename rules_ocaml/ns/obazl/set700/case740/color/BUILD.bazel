@@ -1,0 +1,76 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_archive",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns_library",
+)
+load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
+
+# To demonstate sticky deps, we do not want to include subred.ml as a namespaced submodule.
+# defines target :_ns_init, which must be reference by the ns_init attrib of each submodule.
+ns_env(aliases = glob(
+    ["*.ml"],
+    exclude = ["subred.ml", "color.ml"],
+))
+
+ocaml_ns_library(
+    name = "color",
+    # main = "color.ml",
+    # footer  = "color_frag.ml",
+    manifest = {
+        # OBazl will put these in depencency order. E.g. Red depends on
+        # Blue and Green, and Green depends on Blue, so the order on the
+        # command line will be Blue, Green, Red, Color.
+        # To see this run '$ bazel aquery namepaces/set700/case740:test'
+        ":Red": "Red",
+        ":Green": "Green",
+        ":Blue": "Blue",
+        # ":CMY"  # include an ns module as a submodule
+    },
+    visibility = ["//visibility:public"],
+)
+
+ocaml_ns_library(
+    name = "kolor",
+    # include  = "kolor.ml",  # or: append?
+    ## OBazl decouples (sub)module name and file name.
+    ## Here module Byed maps to file red.ml, Grue maps to green.ml
+    manifest = {
+        ":Red": "Byed",
+        ":Green": "Grue",
+    },
+    visibility = ["//visibility:public"],
+)
+
+ocaml_module(
+    name = "Red",
+    ns_env = ":ns_env",
+    struct = "red.ml",
+    deps = [
+        ":Blue",
+        ":Green",
+        ":Subred",
+    ],
+)
+
+# Module Red depends on Subred, but Subred is not namespaced (see 'exclude' in
+# ns() above). It will automatically be listed as a (transitive) dep for anything
+# that depends on the Red module, such as the Color module of this demo.
+ocaml_module(
+    name = "Subred",
+    struct = "subred.ml",
+)
+
+ocaml_module(
+    name = "Green",
+    ns_env = ":ns_env",
+    struct = "green.ml",
+    deps = [":Blue"],
+)
+
+ocaml_module(
+    name = "Blue",
+    ns_env = ":ns_env",
+    struct = "blue.ml",
+)
