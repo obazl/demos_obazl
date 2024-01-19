@@ -2,12 +2,15 @@ common --incompatible_enable_cc_toolchain_resolution
 always --experimental_cc_shared_library
 always --enable_bzlmod
 
-try-import %workspace%/.config/toolchains.bazelrc
-try-import %workspace%/.config/platform.bazelrc
-
+## WARNINIG: tools/bazel overrides this coswitch reg setting:
 try-import %workspace%/.config/coswitch_registry.bazelrc
 
+try-import %workspace%/.config/toolchains.bazelrc
 try-import .config/registries.bazelrc
+common --config=ocamlopt.opt
+#common --config=ocamlc.byte
+#common --config=ocamlopt.byte
+#common --config=ocamlc.opt
 
 common --registry=https://raw.githubusercontent.com/obazl/registry/main/
 common --registry=https://bcr.bazel.build

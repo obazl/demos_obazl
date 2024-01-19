@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+## defaults to current switch. to use another switch:
+##   bazel -s 4.14.0 test test
+## add verbosity (just prints the cmd):
+##   bazel -v test test
+
 # https://github.com/bazelbuild/bazel/blob/80f7e529eafcaa6f7395b9bfbbe8cac07bc41406/scripts/packages/bazel.sh#L34
 # In addition, if an executable called "tools/bazel" is found in the current
 # workspace, this script will not directly execute Bazel, but instead store
@@ -33,7 +38,7 @@
 
 SWITCH=`opam switch show`
 while getopts "vs:" o; do
-    echo "OPT: ${o}"
+    # echo "OPT: ${o}"
     case "${o}" in
         s)
             SWITCH=${OPTARG}
@@ -68,7 +73,7 @@ if [[ -e $reg1 ]]
 then
     reg=$reg1
 else
-    reg2="${HOME}/.local/share/obazl/opam/${SWITCH}"
+    reg2="${HOME}/.local/share/obazl/registry/${SWITCH}"
     if [[ -e $reg2 ]]
     then
         reg=$reg2
@@ -96,11 +101,11 @@ fi
 ## otherwise bazel_deps will go unresolved
 set -- "--registry=file://${reg}" "$@"
 
-if [[ -e $VERBOSE ]]
+if [[ -n $VERBOSE ]]
 then
     set -x
 fi
 
-set -x
+# set -x
 
 ${BAZEL_REAL} ${CMD} $@
