@@ -3,9 +3,9 @@ Demo and test code for the OBazl toolsuite
 
 Getting started:
 
-* makefiles: demos illustrating OCaml build protocols using only makefiles.  See link:makefiles/README.adoc[README]
+* makefiles: demos illustrating OCaml build protocols using only makefiles.  See link:makefiles/README.adoc[makefiles/README]
 * ocaml: demos illustrating various features of the language.
-* rules_ocaml:  see link:rules_ocaml/README.adoc[README]
+* rules_ocaml:  see link:rules_ocaml/README.adoc[rules_ocaml/README]
 
 See also:
 

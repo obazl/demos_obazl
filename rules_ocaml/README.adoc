@@ -30,6 +30,8 @@ the `bazel_dep` stuff starting with the `ocaml` one before you run
 Thereafter you should not need to repeat that, unless you delete
 something in your switch.
 
+WARNING: A small number of tests may fail in some build environments. Pass `--keep_going` to make sure all tests run.
+
 Then you need to tell bazel about the registry created by
 `@coswitch//new`; that's what `.config/coswitch_registry.bazelrc`
 is for.  It should contain something like
