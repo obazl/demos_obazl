@@ -2,7 +2,7 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ocaml_archive",
+    # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
     "ocaml_exec_module",
