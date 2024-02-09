@@ -15,7 +15,7 @@ run: test.exe
 # ocamlfind -linkpkg -package adds ounit2.cmx
 # and all of its deps to the cmd line
 test.exe: test
-	ocamlfind $(COMPILER) -w -49 \
+	ocamlfind $(COMPILER) \
 	$(SHOW) \
 	-linkpkg -package ounit2 \
 	a.cmx \
