@@ -2,6 +2,8 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
+    "ppx_executable",
+    "ppx_module"
 )
 
 ocaml_test(
@@ -15,14 +17,62 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         "@ounit2//lib/ounit2",
-        # "@ocaml//lib/compiler-libs:common"
         # "@ocaml//lib/str"
+        "@str//lib/str"
     ],
 )
 
 ocaml_module(
-    name   = "ppx",
-    struct = "ppx_demo.ml",
+    name   = "Sample_input",
+    struct = "sample_input.ml",
+    ppx    = ":ppx_test_simple.exe"
+    # deps = [
+    #     "@ocaml//lib/compiler-libs:common"
+    # ],
+)
+
+genrule(
+    name = "Sample_input_ppxed",
+    outs = ["tmp/sample_input.ml"],
+    srcs = ["sample_input.ml"],
+    tools = [":ppx_test_simple.exe"],
+    cmd = " ".join([
+        "$(execpath :ppx_test_simple.exe)",
+        "$(location sample_input.ml)",
+        "$@"
+    ]),
+)
+
+# ocamlc -I +compiler-libs ocamlcommon.cma ppx_test_simple.ml -o ppx_test_simple
+
+ppx_executable(
+    name = "ppx_test_simple.exe",
+    main = ":Ppx_runner",
+    prologue = [":Ppx_test_simple"]
+)
+
+ppx_module(
+    name = "Ppx_runner",
+    struct = ":ppx_runner.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@ppxlib//lib/ppxlib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppx_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        ## either of the following will work:
+        "echo \"Ppxlib.Driver.standalone ()\" >> \"$@\"",
+        # "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)
+
+ppx_module(
+    name   = "Ppx_test_simple",
+    struct = "ppx_test_simple.ml",
     deps = [
         "@ocaml//lib/compiler-libs:common"
     ],

@@ -23,6 +23,7 @@ test_suite(
         "//algebra/group:test",
         "//configuration:test",
         "//deps:test",
+        "//distrib_pkgs:test",
         "//filegen:test",
         "//interop:test",
         "//modules:test",
