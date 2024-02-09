@@ -4,6 +4,8 @@ opam install \
      alcotest \
      core \
      core_unix \
+     ctypes \
+     ctypes-foreign \
      lwt \
      menhir \
      menhirLib \

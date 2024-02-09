@@ -7,6 +7,7 @@ module(
 ## bcr:
 bazel_dep(name = "platforms",       version = "0.0.8")
 bazel_dep(name = "bazel_skylib",    version = "1.5.0")
+bazel_dep(name = "rules_cc",        version = "0.0.9")
 
 ## obazl:
 bazel_dep(name = "coswitch",        version = "2.3.0",
