@@ -1,0 +1,4 @@
+= ffi
+
+
+link:https://docencia.ac.upc.edu/FIB/USO/Bibliografia/unix-c-libraries.html#:~:text=Thus%2C%20we%20need%20to%20use%20the%20compiler%20(either%20the%20compiler's,shared'%20flag%20with%20other%20compilers[Building And Using Static And Shared "C" Libraries]
