@@ -7,7 +7,7 @@ libalpha.a: alpha
 libalpha.so: alpha
 	$(CC) -shared \
 	alpha.o \
-	-install_name cclibs/libalpha.so \
+	-install_name ../cclibs/libalpha.so \
 	-o libalpha.so;
 
 

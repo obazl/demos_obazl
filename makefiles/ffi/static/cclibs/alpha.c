@@ -8,9 +8,13 @@ int my_int_fn()
     return my_int;
 }
 
-char *my_str = "hello from alph.c";
+char *my_str = "I am returned by alpha.c:my_str_fn()";
 
 char* my_str_fn()
 {
     return my_str;
+}
+
+void my_void_fn()
+{
 }

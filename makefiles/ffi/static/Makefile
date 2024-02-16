@@ -1,38 +1,50 @@
-RANLIB=ranlib
+# to make build targets independent, each depends on clean
+.PHONY: clean
 
-vm:
+# We have 2*2*2 = eight build methods for each target (vm, sys).
+# Two methods for listing deps (directly or using -cclib/-ccopt),
+# Two methods for building the C stublib (with or without
+# embedding the foreign lib (libalpha.a).
+# And then we have two possibilities for the foreign lib
+# itself: libalpha.a and libalpha.so
+
+## direct deps (w/o -ccopt, -cclib) ##
+# link with both libalpha_stubs.a and libalpha.a
+vm: clean
 	$(MAKE) -f VM.mk alpha.vm
 
-vm2:
-	$(MAKE) -f VM.mk alpha.vm2
+# link with libalpha_stubs_bundled.a (embeds libalpha.a)
+vm.bundled: clean
+	$(MAKE) -f VM.mk alpha.vm.bundled
 
-sys:
+## using -ccopt, --cclib ##
+# link with both libalpha_stubs.a and libalpha.a
+vm.cclib: clean
+	$(MAKE) -f VM.mk alpha.vm.cclib
+
+# link with libalpha_stubs_bundled.a (embeds libalpha.a)
+vm.cclib.bundled: clean
+	$(MAKE) -f VM.mk alpha.vm.cclib.bundled
+
+sys: clean
 	$(MAKE) -f Native.mk alpha.sys
 
-sys2:
-	$(MAKE) -f Native.mk alpha.sys2
+sys.bundled: clean
+	$(MAKE) -f Native.mk alpha.sys.bundled
 
-alphastub:
-	$(COMPILER) -c alphastub.ml;
+sys.cclib: clean
+	$(MAKE) -f Native.mk alpha.sys.cclib
 
-# compile stub files
-alpha_stubs: alpha
-	$(CC) -c stub_int.c \
-	-c stub_str.c \
-	-I`ocamlc -where` \
-	-I cclibs;
+sys.cclib.bundled: clean
+	$(MAKE) -f Native.mk alpha.sys.cclib.bundled
 
-# archive them
-libalpha_stubs: alpha_stubs
-	$(AR) rc libalpha_stubs.a stub_int.o stub_str.o;
-	$(RANLIB) libalpha_stubs.a
-
-alpha:
-	$(MAKE) -C cclibs alpha
+sys.cclib.x: clean
+	$(MAKE) -f Native.mk alpha.sys.cclib.x
 
 ################################################################
 clean:
 	$(MAKE) -C cclibs clean
+	$(MAKE) -C stublibs clean
 	@-rm -f *.cmx *.cmo *.o *.cmi
-	@-rm -f *.exe *.out *.a *.vm *.sys;
+	@-rm -f *.exe *.out *.a *.so *.vm *.sys;
 	@-rm -f oUnit*;
