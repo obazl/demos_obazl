@@ -1,52 +1,42 @@
 # to make build targets independent, each depends on clean
 .PHONY: clean
 
-RANLIB=ranlib
+vm.bundled.shared: clean
+	$(MAKE) -f VM.mk alpha.vm.bundled.shared
+vm.bundled.shared.dllib: clean
+	$(MAKE) -f VM.mk alpha.vm.bundled.shared.dllib
 
-vm: clean
-	$(MAKE) -f VM.mk alpha.vm
+vm.bundled.static: clean
+	$(MAKE) -f VM.mk alpha.vm.bundled.static
+vm.bundled.static.dllib: clean
+	$(MAKE) -f VM.mk alpha.vm.bundled.static.dllib
 
-vm2:
-	$(MAKE) -f VM.mk alpha.vm2
+vm.unbundled.shared: clean
+	$(MAKE) -f VM.mk alpha.vm.unbundled.shared
+vm.unbundled.shared.dllib: clean
+	$(MAKE) -f VM.mk alpha.vm.unbundled.shared.dllib
+
+vm.unbundled.static: clean
+	$(MAKE) -f VM.mk alpha.vm.unbundled.static
+vm.unbundled.static.dllib: clean
+	$(MAKE) -f VM.mk alpha.vm.unbundled.static.dllib
 
 ################
+sys.bundled.shared: clean
+	$(MAKE) -f Native.mk alpha.sys.bundled.shared
 
-sys: clean
-	$(MAKE) -f Native.mk alpha.sys
+sys.bundled.static: clean
+	$(MAKE) -f Native.mk alpha.sys.bundled.static
 
-sys.bundled: clean
-	$(MAKE) -f Native.mk alpha.sys.bundled
+sys.unbundled.shared: clean
+	$(MAKE) -f Native.mk alpha.sys.unbundled.shared
 
-sys3:
+sys.unbundled.static: clean
+	$(MAKE) -f Native.mk alpha.sys.unbundled.static
+
+sys.broken:
 	$(MAKE) clean;
-	$(MAKE) -f Native.mk alpha.sys3
-
-# alphastub:
-# 	$(COMPILER) -c alphastub.ml;
-
-# # compile stub files for shared lib (-fPIC)
-# # '-I`ocamlc -where` exposes ocaml sdk headers
-# # (in <switch>/lib/ocaml/caml)
-# alpha_stubs:
-# 	$(CC) -fPIC -c stub_int.c \
-# 	-c stub_str.c \
-# 	-I cclibs \
-# 	-I`ocamlc -where`;
-
-#### build shared lib from stub files ####
-
-# # for vm executable: name it dll<name>.so,
-# # and link against libcamlrun_shared.so
-# # link it using -dlpath "-L." and -dllib -lalpha_stubs
-# dllalpha_stubs: libalpha alpha_stubs
-# 	$(CC) -shared \
-# 	-o dllalpha_stubs.so \
-# 	stub_int.o stub_str.o \
-# 	cclibs/libalpha.a \
-# 	`ocamlc -where`/libcamlrun_shared.so;
-
-# libalpha:
-# 	$(MAKE) -C cclibs libalpha
+	$(MAKE) -f Native.mk alpha.sys.broken
 
 ################################################################
 clean:

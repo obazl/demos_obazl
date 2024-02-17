@@ -12,7 +12,7 @@ alpha_cstubs:
 	-I`ocamlc -where` \
 	-I ../cclibs;
 
-#### archive stubs ####
+#### static (archive) stubs ####
 
 # 2 options: complete (bundled) or partial archive
 # complete archive includes stubs plus user libalpha.a
@@ -49,19 +49,54 @@ libalpha_stubs_bundled.a: alpha_cstubs libalpha.a
 # add them to the new archive.
 #	../cclibs/libalpha.a;
 
-####  shared libs ####
+################  shared lib stubs ###################
+## build methods:
+## a. bundled foreign lib (stublib links against archive)
+##    1. linked to static rt
+##    2. linked to shared rt
+## b. unbundled foreignlib (stublib links against dso)
+##    1. linked to static rt
+##    2. linked to shared rt
 
-################
 # for vm executable: name it dll<name>.so,
 # and link against libcamlrun_shared.so
 # link it using -dlpath "-L." and -dllib -lalpha_stubs
-dllalpha_stubs.so: libalpha.a alpha_cstubs
+dllalpha_stubs_bundled_lib_shared_rt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
-	-o dllalpha_stubs.so \
-	-install_name ../stublibs/dllalpha_stubs.so \
+	-o dllalpha_stubs_bundled_lib_shared_rt.so \
+	-install_name ../stublibs/dllalpha_stubs_bundled_lib_shared_rt.so \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.a \
 	`ocamlc -where`/libcamlrun_shared.so;
+
+dllalpha_stubs_bundled_lib_static_rt.so: libalpha.a alpha_cstubs
+	$(CC) -shared \
+	-o dllalpha_stubs_bundled_lib_static_rt.so \
+	-install_name ../stublibs/dllalpha_stubs_bundled_lib_static_rt.so \
+	stub_int.o stub_str.o \
+	../cclibs/libalpha.a \
+	-undefined dynamic_lookup \
+	-Wl,-no_compact_unwind \
+	-Wl,-force_load,`ocamlc -where`/libcamlrun_pic.a ;
+
+################
+dllalpha_stubs_unbundled_lib_shared_rt.so: libalpha.so alpha_cstubs
+	$(CC) -shared \
+	-o dllalpha_stubs_unbundled_lib_shared_rt.so \
+	-install_name ../stublibs/dllalpha_stubs_unbundled_lib_shared_rt.so \
+	stub_int.o stub_str.o \
+	../cclibs/libalpha.so \
+	`ocamlc -where`/libcamlrun_shared.so;
+
+dllalpha_stubs_unbundled_lib_static_rt.so: libalpha.so alpha_cstubs
+	$(CC) -shared \
+	-o dllalpha_stubs_unbundled_lib_static_rt.so \
+	-install_name ../stublibs/dllalpha_stubs_unbundled_lib_static_rt.so \
+	stub_int.o stub_str.o \
+	../cclibs/libalpha.so \
+	-undefined dynamic_lookup \
+	-Wl,-no_compact_unwind \
+	-Wl,-force_load,`ocamlc -where`/libcamlrun_pic.a ;
 
 
 ################
@@ -70,26 +105,69 @@ dllalpha_stubs.so: libalpha.a alpha_cstubs
 # user lib is libalpha.so, which makes it
 # a runtime dep (its install name is embedded
 # within libalpha_stubs.so)
-libalpha_stubs.so: libalpha.so alpha_cstubs
+
+libalpha_stubs_unbundled_lib_shared_rt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \
-	-o libalpha_stubs.so \
-	-install_name ../stublibs/libalpha_stubs.so \
+	-o libalpha_stubs_unbundled_lib_shared_rt.so \
+	-install_name ../stublibs/libalpha_stubs_unbundled_lib_shared_rt.so \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
-	`ocamlc -where`/libasmrun_shared.so;
+	-Wl,-force_load,`ocamlc -where`/libasmrun_shared.so ;
+
+## unbundled foreign lib, static runtime
+libalpha_stubs_unbundled_lib_static_rt.so: libalpha.so alpha_cstubs
+	$(CC) -shared \
+	-o libalpha_stubs_unbundled_lib_static_rt.so \
+	-install_name ../stublibs/libalpha_stubs_unbundled_lib_static_rt.so \
+	stub_int.o stub_str.o \
+	../cclibs/libalpha.so \
+	-undefined dynamic_lookup \
+	-Wl,-no_compact_unwind \
+	-Wl,-force_load,`ocamlc -where`/libasmrun_pic.a ;
+
+# #NB: linking against a static runtime fails with undefined syms
+# 	# -Wl,-force_load \
+# 	# `ocamlc -where`/libasmrun_pic.a;
+# # https://v2.ocaml.org/releases/5.1/htmlman/intfc.html#ss%3Ac-embedded-code
+# # -output-obj cause[s] the ocamlc compiler to output a C object file (.o file, .obj under Windows) containing the bytecode for the OCaml part of the program, as well as a caml_startup function.
+# # this allows us to create a dso depending on a static
+# # runtime lib; however it will crash at runtime because:
+# # "The caml_startup function must be called from the main C program in order to initialize the OCaml runtime and execute the OCaml initialization code."
+# libalpha_stubs.crash: startup libalpha.so alpha_cstubs
+# 	$(CC) -shared \
+# 	-o libalpha_stubs.so \
+# 	-install_name ../stublibs/libalpha_stubs.so \
+# 	stub_int.o stub_str.o \
+# 	startup.o \
+# 	../cclibs/libalpha.so \
+# 	`ocamlc -where`/libasmrun_pic.a;
+
+# startup:
+# 	ocamlopt -output-complete-obj -o startup.o dummy.ml
 
 # user lib is static libalpha.a (or its *.o files)
 # link using -ccopt "-L." and -cclib -lalpha_stubs
-libalpha_stubs_bundled.so: libalpha.a alpha_cstubs
+
+## bundled foreign lib, static runtime
+libalpha_stubs_bundled_lib_shared_rt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
-	-o libalpha_stubs_bundled.so \
-	-install_name ../stublibs/libalpha_stubs_bundled.so \
+	-o libalpha_stubs_bundled_lib_shared_rt.so \
+	-install_name ../stublibs/libalpha_stubs_bundled_lib_shared_rt.so \
 	stub_int.o stub_str.o \
 	../cclibs/*.o \
 	`ocamlc -where`/libasmrun_shared.so;
 
-# or:	../cclibs/libalpha.a \
+libalpha_stubs_bundled_lib_static_rt.so: libalpha.a alpha_cstubs
+	$(CC) -shared \
+	-o libalpha_stubs_bundled_lib_static_rt.so \
+	-install_name ../stublibs/libalpha_stubs_bundled_lib_static_rt.so \
+	stub_int.o stub_str.o \
+	../cclibs/*.o \
+	-Wl,-undefined -Wl,dynamic_lookup \
+	-Wl,-no_compact_unwind \
+	-Wl,-force_load,`ocamlc -where`/libasmrun_pic.a ;
 
+# or:	../cclibs/libalpha.a instead of ../cclibs/*o \
 
 #linux: do we need --whole-archive/--no-whole-archive pair?
 # (macos:  -all_load, -noall_load? -force_load?)

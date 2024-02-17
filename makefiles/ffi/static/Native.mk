@@ -9,9 +9,9 @@ LINKALL=
 # link both archives:
 alpha.sys: main libalpha.a libalpha_stubs.a
 	$(COMPILER) \
-	stublibs/libalpha_stubs.a \
-	cclibs/libalpha.a \
-	-I stublibs alpha.cmx \
+	../stublibs/libalpha_stubs.a \
+	../cclibs/libalpha.a \
+	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 
@@ -19,8 +19,8 @@ alpha.sys: main libalpha.a libalpha_stubs.a
 # we only link it:
 alpha.sys.bundled: main libalpha_stubs_bundled.a
 	$(COMPILER) \
-	stublibs/libalpha_stubs_bundled.a \
-	-I stublibs alpha.cmx \
+	../stublibs/libalpha_stubs_bundled.a \
+	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 
@@ -29,11 +29,11 @@ alpha.sys.bundled: main libalpha_stubs_bundled.a
 # -cclib -llibname
 alpha.sys.cclib: main libalpha.a libalpha_stubs.a
 	$(COMPILER) \
-	-ccopt "-Lcclibs" \
+	-ccopt "-L../cclibs" \
 	-cclib -lalpha \
 	-ccopt "-L." \
 	-cclib -lalpha_stubs \
-	-I stublibs alpha.cmx \
+	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 
@@ -41,7 +41,7 @@ alpha.sys.cclib.bundled: main libalpha_stubs_bundled.a
 	$(COMPILER) \
 	-ccopt "-L." \
 	-cclib -lalpha_stubs_bundled \
-	-I stublibs alpha.cmx \
+	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 
@@ -49,11 +49,11 @@ alpha.sys.cclib.bundled: main libalpha_stubs_bundled.a
 # now build against shared foriegn lib (libalpha.so)
 alpha.sys.cclib.x: main libalpha.a libalpha_stubs.a
 	$(COMPILER) \
-	-ccopt "-Lcclibs" \
+	-ccopt "-L../cclibs" \
 	-cclib -lalpha \
 	-ccopt "-L." \
 	-cclib -lalpha_stubs \
-	-I stublibs alpha.cmx \
+	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 

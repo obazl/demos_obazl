@@ -43,8 +43,8 @@ sys.cclib.x: clean
 
 ################################################################
 clean:
-	$(MAKE) -C cclibs clean
-	$(MAKE) -C stublibs clean
+	$(MAKE) -C ../cclibs clean
+	$(MAKE) -C ../stublibs clean
 	@-rm -f *.cmx *.cmo *.o *.cmi
 	@-rm -f *.exe *.out *.a *.so *.vm *.sys;
 	@-rm -f oUnit*;

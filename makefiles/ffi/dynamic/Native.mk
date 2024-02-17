@@ -12,17 +12,32 @@ LINKALL=
 # static clibs may be directly listed on cmd line,
 # without using -ccopt, -cclib, but shared libs
 # must be passed with -cclib -lname.
-alpha.sys: main libalpha_stubs.so
+alpha.sys.unbundled.shared: main libalpha_stubs_unbundled_lib_shared_rt.so
 	$(COMPILER) \
-	-cclib -lalpha_stubs \
+	-cclib -lalpha_stubs_unbundled_lib_shared_rt \
 	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 
-alpha.sys.bundled: main libalpha_stubs_bundled.so
+alpha.sys.unbundled.static: main libalpha_stubs_unbundled_lib_static_rt.so
+	$(COMPILER) \
+	-cclib -lalpha_stubs_unbundled_lib_static_rt \
+	-I ../stublibs alpha.cmx \
+	main.cmx \
+	-o alpha.sys;
+
+alpha.sys.bundled.shared: main libalpha_stubs_bundled_lib_shared_rt.so
 	$(COMPILER) \
 	-ccopt "-L." \
-	-cclib -lalpha_stubs_bundled \
+	-cclib -lalpha_stubs_bundled_lib_shared_rt \
+	-I ../stublibs alpha.cmx \
+	main.cmx \
+	-o alpha.sys;
+
+alpha.sys.bundled.static: main libalpha_stubs_bundled_lib_static_rt.so
+	$(COMPILER) \
+	-ccopt "-L." \
+	-cclib -lalpha_stubs_bundled_lib_static_rt \
 	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
@@ -42,15 +57,19 @@ alpha.sys2: main libalpha_stubs
 # use for vm executables.
 # ocamlopt does not understand -dllpath or -dllib,
 # and -l<name> will search for lib<name>.so, not dll<name>.so;
-# so this would fail with "ld: library 'alpha_stubs' not found":
-alpha.sys3: main dllalpha_stubs
+# so this would fail with "ld: library 'alpha_stubs..etc' not found":
+alpha.sys.broken: main dllalpha_stubs_bundled_lib_shared_rt.so
 	$(COMPILER) \
-	-ccopt "-Lcclibs" \
+	-ccopt "-L../cclibs" \
 	-cclib -lalpha \
-	-ccopt "-L." \
-	-cclib -lalpha_stubs \
+	-ccopt "-L../stublibs" \
+	-cclib -lalpha_stubs_bundled_lib_shared_rt \
+	-I ../stublibs \
 	alpha.cmx \
 	-o alpha.sys;
+
+dllalpha_stubs_bundled_lib_shared_rt.so:
+	$(MAKE) -C ../stublibs dllalpha_stubs_bundled_lib_shared_rt.so
 
 # furthermore putting a .so file directly on the cmd line
 # results in "don't know what to do with <name>.so"
@@ -69,13 +88,18 @@ libalpha.a:
 libalpha.so:
 	$(MAKE) -C ../cclibs libalpha.so
 
-####
+#### native
+libalpha_stubs_unbundled_lib_shared_rt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_unbundled_lib_shared_rt.so
 
-libalpha_stubs.so:
-	$(MAKE) -C ../stublibs libalpha_stubs.so
+libalpha_stubs_unbundled_lib_static_rt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_unbundled_lib_static_rt.so
 
-libalpha_stubs_bundled.so:
-	$(MAKE) -C ../stublibs libalpha_stubs_bundled.so
+libalpha_stubs_bundled_lib_shared_rt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_bundled_lib_shared_rt.so
+
+libalpha_stubs_bundled_lib_static_rt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_bundled_lib_static_rt.so
 
 # libalpha_stubs_x.so:
 # 	$(MAKE) -C ../stublibs libalpha_stubs_x.so
