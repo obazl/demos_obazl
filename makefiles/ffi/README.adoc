@@ -56,7 +56,6 @@ ocamlc -custom \
 	../stublibs/libalpha_stubs_bundled.a \
 	-I ../stublibs alpha.cmo \
 	main.cmo \
-	-custom \
 	-o alpha.vm;
 
 static $ make.vm.bundled.cclib

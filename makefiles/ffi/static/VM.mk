@@ -10,7 +10,6 @@ alpha.vm.bundled: main libalpha_stubs_bundled.a
 	../stublibs/libalpha_stubs_bundled.a \
 	-I ../stublibs alpha.cmo \
 	main.cmo \
-	-custom \
 	-o alpha.vm;
 libalpha_stubs_bundled.a:
 	$(MAKE) -C ../stublibs libalpha_stubs_bundled.a
@@ -34,7 +33,6 @@ alpha.vm.unbundled: main libalpha.a libalpha_stubs_unbundled.a
 	../cclibs/libalpha.a \
 	-I ../stublibs alpha.cmo \
 	main.cmo \
-	-custom \
 	-o alpha.vm;
 libalpha_stubs_unbundled.a:
 	$(MAKE) -C ../stublibs libalpha_stubs_unbundled.a
@@ -49,7 +47,6 @@ alpha.vm.unbundled.cclib: main libalpha.a libalpha_stubs_unbundled.a
 	-cclib -lalpha_stubs_unbundled \
 	alpha.cmo \
 	main.cmo \
-	-custom \
 	-o alpha.vm;
 
 ################
