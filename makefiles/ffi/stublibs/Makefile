@@ -1,5 +1,18 @@
 RANLIB=ranlib
 
+UNAME := $(shell uname)
+
+INSTALL_NAME=
+
+ifeq ($(UNAME), Linux)
+# do something Linux-y
+endif
+ifeq ($(UNAME), Darwin)
+INSTALL_NAME=-install_name ../stublibs/$@
+LINKFLAGS=-undefined dynamic_lookup -Wl,-no_compact_unwind
+LINKFORCE=-Wl,-force_load,
+endif
+
 alphastub:
 	$(COMPILER) -c alpha.ml;
 
@@ -91,13 +104,14 @@ dllalpha_stubs_unbundled_lib_shared_rt.so: libalpha.so alpha_cstubs
 dllalpha_stubs_unbundled_lib_static_rt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \
 	-o dllalpha_stubs_unbundled_lib_static_rt.so \
-	-install_name ../stublibs/dllalpha_stubs_unbundled_lib_static_rt.so \
+	$(INSTALL_NAME)
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
 	-undefined dynamic_lookup \
 	-Wl,-no_compact_unwind \
 	-Wl,-force_load,`ocamlc -where`/libcamlrun_pic.a ;
 
+	# -install_name ../stublibs/dllalpha_stubs_unbundled_lib_static_rt.so \
 
 ################
 # for native executable: name it lib<name>.so,
@@ -117,13 +131,12 @@ libalpha_stubs_unbundled_lib_shared_rt.so: libalpha.so alpha_cstubs
 ## unbundled foreign lib, static runtime
 libalpha_stubs_unbundled_lib_static_rt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \
-	-o libalpha_stubs_unbundled_lib_static_rt.so \
-	-install_name ../stublibs/libalpha_stubs_unbundled_lib_static_rt.so \
+	-o $@ \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
-	-undefined dynamic_lookup \
-	-Wl,-no_compact_unwind \
-	-Wl,-force_load,`ocamlc -where`/libasmrun_pic.a ;
+	$(LINKFLAGS) \
+	$(LINKFORCE)`ocamlc -where`/libasmrun_pic.a ;
 
 # #NB: linking against a static runtime fails with undefined syms
 # 	# -Wl,-force_load \
