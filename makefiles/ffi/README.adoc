@@ -1,6 +1,8 @@
 = ffi - linking foreign libs
 :toc: true
 
+20 different ways (MWEs) to build an executable that links to a foreign library.
+
 NOTE:  MacOS only; Linux version under development.
 
 WARNING: MacOS builds of the shared libraries in the OCaml distributions have a bug. They include the `install name` associated with the build environment rather than the installation.  For example, the install name for `libcamlrun_shared.so` is `runtime/libcamlrun_shared.so`.  See below for a workaround.
