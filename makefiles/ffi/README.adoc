@@ -39,7 +39,7 @@ For example:
 * `dynamic $ ./alpha.vm`
 
 * `dynamic $ make sys.unbundled.static`
-* `dynamic $ ./alpha.vm`
+* `dynamic $ ./alpha.sys`
 
 In `dynamic`, for target `vm`, suffix `.dllib` may be added. These targets use `-dlpath` and `-dllib` options:
 
