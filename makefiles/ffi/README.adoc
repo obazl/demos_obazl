@@ -1,4 +1,195 @@
-= ffi
+= ffi - linking foreign libs
+:toc: true
 
+NOTE:  MacOS only; Linux version under development.
+
+WARNING: MacOS builds of the shared libraries in the OCaml distributions have a bug. They include the `install name` associated with the build environment rather than the installation.  For example, the install name for `libcamlrun_shared.so` is `runtime/libcamlrun_shared.so`.  See below for a workaround.
+
+== Build targets
+
+`make` must be run from `dynamic` and `static` directories.
+
+* `static` builds: for `vm` targets, builds `-custom` (freestanding) vm executable that may be run without `ocamlrun`.
+* `dynamic` builds: for `vm` targets, builds with `-dlllib` etc. to create a vm executable that must be run with `ocamlrun`.
+
+Targets have the form <exec target>.<foreign lib>.<runtime>
+
+* <exec target> == `vm` or `sys` (native); controls which compiler will be used (`ocamlc` v. `ocamlopt`)
+
+* <foreign lib> == `bundled` or `unbundled`. `bundled` means statically linked foreign library (objects are embedded in stublib). `unbundled` means stublib is linked against shared lib (libapha.so). To verify use `ar t ../stublibs/lib<...>.a`; for shared stublibs use `otool` on macos (see below).
+
+* <runtime> == `shared` or `static`.  `shared` means stublib is linked agains shared runtime lib (`libcamlrun_shared.so` or `libasmrun_shared.so`); `static` means linking against static runtime lib (`libcamlrun_pic.a`, `libasmrun_pic.a`) **Applies to targets in `dynamic` only; for targets in `static`, the compiler automatically links the runtime.**
+
+For example, dyamic target `vm.unbundled.static` means: stublib is linked against shared foreign lib (`cclibs/libalpha.so`) and static runtime (`libcamlrun_pic.a`)
+
+Stublib name is derived from build target name. If <exec target> == `vm`, prefix is `dll`; if <exec target> == `sys`, prefix is `lib`.
+
+Examples (under `dynamic` directory):
+
+* `vm.unbundled.static` builds `stublibs/dllalpha_stubs_unbundled_lib_static_rt.so`
+* `sys.unbundled.static` builds `stublibs/libalpha_stubs_unbundled_lib_static_rt.so`
+
+Output executable will be named `alpha.vm` or `alpha.sys`.
+
+For example:
+
+* `dynamic $ make vm.bundled.shared`
+* `dynamic $ ./alpha.vm`
+
+* `dynamic $ make sys.unbundled.static`
+* `dynamic $ ./alpha.vm`
+
+In `dynamic`, for target `vm`, suffix `.dllib` may be added. These targets use `-dlpath` and `-dllib` options:
+
+* `dynamic $ make vm.bundled.shared.dllib`
+* `dynamic $ make vm.unbundled.static.dllib`
+* etc.
+
+Under `static` directory, suffix `.cclib` may be added; these targets use `-ccopt` and `-cclib` options.  Targets without this suffix put libraries directly on the command line.  For example:
+
+----
+static $ make vm.bundled
+...
+ocamlc -custom \
+	../stublibs/libalpha_stubs_bundled.a \
+	-I ../stublibs alpha.cmo \
+	main.cmo \
+	-custom \
+	-o alpha.vm;
+
+static $ make.vm.bundled.cclib
+...
+ocamlc -custom \
+	-ccopt "-L." \
+	-cclib -lalpha_stubs_bundled \
+	-I ../stublibs alpha.cmo \
+	main.cmo \
+	-o alpha.vm;
+----
+
+
+=== Summary
+
+Targets under `dynamic`:
+
+* vm.bundled.shared
+* vm.bundled.shared.dllib
+* vm.bundled.static
+* vm.bundled.static.dllib
+* vm.unbundled.shared
+* vm.unbundled.shared.dllib
+* vm.unbundled.static
+* vm.unbundled.static.dllib
+* sys.bundled.shared
+* sys.bundled.static
+* sys.unbundled.shared
+* sys.unbundled.static
+
+Targets under `static` (runtime automatically linked):
+
+* vm.bundled
+* vm.bundled.cclib
+* vm.unbundled
+* vm.unbundled.cclib
+* sys.bundled
+* sys.bundled.cclib
+* sys.unbundled
+* sys.unbundled.cclib
+
+== Shared libs
+
+On Macos, you can use `otool` to inspect the configuration of shared libs, to confirm the build matches the target name.
+
+For example, this shows that `sys.unbundled.shared` creates a stublib that is dynamically linked against both the foreign library (`libalpha.so`) and the runtime (`libasmrun_shared.so`)
+
+----
+dynamic $ make sys.unbundled.shared
+dynamic $ otool -L ../stublibs/libalpha_stubs_unbundled_lib_shared_rt.so
+../stublibs/libalpha_stubs_unbundled_lib_shared_rt.so:
+	../stublibs/libalpha_stubs_unbundled_lib_shared_rt.so (compatibility version 0.0.0, current version 0.0.0)
+	../cclibs/libalpha.so (compatibility version 0.0.0, current version 0.0.0)  <1>
+	/Users/<uid>/.opam/5.1.1/lib/ocaml/libasmrun_shared.so (compatibility version 0.0.0, current version 0.0.0)  <2>
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1336.61.1)
+----
+<1> foreign lib
+<2> runtime lib (path depends on current OPAM switch)
+
+This example shows that `vm.bundled.static` is statically linked against both (`cclibs/libapha.a` and `libcamlrun_pic.a`):
+
+----
+dynamic $ make vm.bundled.static
+dynamic $ otool -L ../stublibs/dllalpha_stubs_bundled_lib_static_rt.so
+../stublibs/dllalpha_stubs_bundled_lib_static_rt.so:
+	../stublibs/dllalpha_stubs_bundled_lib_static_rt.so (compatibility version 0.0.0, current version 0.0.0)  <1>
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1336.61.1)
+----
+<1> Shows that stublib has no shared lib dependencies (except the system dylib)
+
+
+You can also use `otool` with `sys` executables:
+
+----
+dynamic $ make sys.bundled.static
+dynamic $ otool -L alpha.sys
+alpha.sys:
+	../stublibs/libalpha_stubs_bundled_lib_static_rt.so (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1336.61.1)
+----
+
+== MacOS install name bug
+
+On MacOS, shared libraries embed an "install name" as well as a list
+of shared library dependencies.  They can be inspected with `otool -L`.
+
+In OPAM installations of the OCaml distribution, the install names are
+incorrect.  For example:
+
+----
+~ $ otool -L .opam/5.0.0/lib/ocaml/libasmrun_shared.so
+.opam/5.0.0/lib/ocaml/libasmrun_shared.so:
+	runtime/libasmrun_shared.so (compatibility version 0.0.0, current version 0.0.0) <1>
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1319.0.0)
+----
+<1> The install name is `runtime/libasmrun_shared.so`
+
+Similarly for `libcamlrun_shared.so`.
+
+This breaks shared libraries that link against these libraries.  This is because such libraries embed the install name.  For example, if we build shared library `dllalpha_stubs_bundled_lib_shared_rt.so` against `libcamlrun_shared.so` we get something like this:
+
+----
+$ otool -L ../stublibs/dllalpha_stubs_bundled_lib_shared_rt.so
+../stublibs/dllalpha_stubs_bundled_lib_shared_rt.so:
+	../stublibs/dllalpha_stubs_bundled_lib_shared_rt.so (compatibility version 0.0.0, current version 0.0.0)
+	runtime/libcamlrun_shared.so (compatibility version 0.0.0, current version 0.0.0) <1>
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1336.61.1)
+----
+<1> install name of dependency treated as path
+
+Then when we try to load `dllalpha_stubs_bundled_lib_shared_rt.so` we will get an error: _... Library not loaded: runtime/libcamlrun_shared.so...Reason: tried: 'runtime/libcamlrun_shared.so' (no such file)..._
+
+I'm not sure what the proper fix for this is.  A workaround that will only work during development is to change the install name to the absolute path of the library. This can be done with the `install_name_tool` utility; for example:
+
+     ~ $ install_name_tool -id "$HOME/.opam/5.0.0/lib/ocaml/libcamlrun_shared.so" .opam/5.0.0/lib/ocaml/libcamlrun_shared.so
+
+== Resources
 
 link:https://docencia.ac.upc.edu/FIB/USO/Bibliografia/unix-c-libraries.html#:~:text=Thus%2C%20we%20need%20to%20use%20the%20compiler%20(either%20the%20compiler's,shared'%20flag%20with%20other%20compilers[Building And Using Static And Shared "C" Libraries]
+
+link:https://www.thegeekstuff.com/2010/08/ar-command-examples[UNIX ar Examples: How To Create, View, Extract, Modify C Archive Files (*.a)]
+
+
+=== macos
+
+link:https://forums.developer.apple.com/forums/thread/736719[Dynamic Library Identification]
+
+link:https://christianfscott.com/change-shared-library-path/[Changing Shared Library Paths on MacOS] (blog, March 2023)
+
+link:https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath[@executable path, @load path and @rpath] Old but useful
+
+link:https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html[Friday Q&A 2009-11-06: Linking and Install Names] Old but useful.
+
+link:https://www.unix.com/man-page/osx/1/install_name_tool/[install_name_tool]
+
+link:https://llvm.org/docs/CommandGuide/llvm-install-name-tool.html[llvm-install-name-tool] "For most scenarios, it works as a drop-in replacement for Apple’s install_name_tool."
+
+link:https://developer.apple.com/documentation/xcode/embedding-nonstandard-code-structures-in-a-bundle[Embedding nonstandard code structures in a bundle] (Apple dev docs)

@@ -5,15 +5,6 @@ export COMPILER=ocamlc
 
 # clibs may be directly listed on cmd line,
 # without using -ccopt, -cclib:
-alpha.vm: main libalpha.a libalpha_stubs.a
-	$(COMPILER) -custom \
-	../stublibs/libalpha_stubs.a \
-	../cclibs/libalpha.a \
-	-I ../stublibs alpha.cmo \
-	main.cmo \
-	-custom \
-	-o alpha.vm;
-
 alpha.vm.bundled: main libalpha_stubs_bundled.a
 	$(COMPILER) -custom \
 	../stublibs/libalpha_stubs_bundled.a \
@@ -21,25 +12,44 @@ alpha.vm.bundled: main libalpha_stubs_bundled.a
 	main.cmo \
 	-custom \
 	-o alpha.vm;
+libalpha_stubs_bundled.a:
+	$(MAKE) -C ../stublibs libalpha_stubs_bundled.a
 
 # clibs may also be passed using -ccopt -Lpath and
 # -cclib -llibname
-alpha.vm.cclib: main libalpha.a libalpha_stubs.a
+# in this case, both libalpha_stubs_bundle.a and alpha.cmo
+# are in ../stublibs, so -I suffices (-ccopt -L not needed)
+alpha.vm.bundled.cclib: main libalpha.a libalpha_stubs_bundled.a
 	$(COMPILER) -custom \
-	-ccopt "-L../cclibs" \
-	-cclib -lalpha \
-	-ccopt "-L." \
-	-cclib -lalpha_stubs \
-	-I ../stublibs alpha.cmo \
+	-I ../stublibs \
+	-cclib -lalpha_stubs_bundled \
+	alpha.cmo \
 	main.cmo \
 	-o alpha.vm;
 
-alpha.vm.cclib.bundled: main libalpha.a libalpha_stubs_bundled.a
+###################
+alpha.vm.unbundled: main libalpha.a libalpha_stubs_unbundled.a
 	$(COMPILER) -custom \
-	-ccopt "-L." \
-	-cclib -lalpha_stubs_bundled \
+	../stublibs/libalpha_stubs_unbundled.a \
+	../cclibs/libalpha.a \
 	-I ../stublibs alpha.cmo \
 	main.cmo \
+	-custom \
+	-o alpha.vm;
+libalpha_stubs_unbundled.a:
+	$(MAKE) -C ../stublibs libalpha_stubs_unbundled.a
+
+# here, because stublib does not embed foreign lib libalpha.a,
+# we must list the latter on the command line:
+alpha.vm.unbundled.cclib: main libalpha.a libalpha_stubs_unbundled.a
+	$(COMPILER) -custom \
+	-ccopt "-L../cclibs" \
+	-cclib -lalpha \
+	-I ../stublibs \
+	-cclib -lalpha_stubs_unbundled \
+	alpha.cmo \
+	main.cmo \
+	-custom \
 	-o alpha.vm;
 
 ################
@@ -51,11 +61,5 @@ alphastub:
 
 libalpha.a:
 	$(MAKE) -C ../cclibs libalpha.a
-
-libalpha_stubs.a:
-	$(MAKE) -C ../stublibs libalpha_stubs.a
-
-libalpha_stubs_bundled.a:
-	$(MAKE) -C ../stublibs libalpha_stubs_bundled.a
 
 include Makefile

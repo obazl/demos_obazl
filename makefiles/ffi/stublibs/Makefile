@@ -14,22 +14,22 @@ alpha_cstubs:
 
 #### static (archive) stubs ####
 
-# 2 options: complete (bundled) or partial archive
+# 2 options: complete (bundled) or partial (unbundled) archive
 # complete archive includes stubs plus user libalpha.a
 # partial contains just the stubs
 # in the latter case linking must include both libs
 
 # partial:
-libalpha_stubs.a: alpha_cstubs
-	$(AR) rcs libalpha_stubs.a \
+libalpha_stubs_unbundled.a: alpha_cstubs
+	$(AR) rcs libalpha_stubs_unbundled.a \
 	stub_int.o stub_str.o;
-	$(RANLIB) libalpha_stubs.a;
+	$(RANLIB) libalpha_stubs_unbundled.a;
 
 # using shared lib (libalpha.so)
-libalpha_stubs_x.a: alpha_cstubs libalpha.so
-	$(AR) rcs libalpha_stubs_x.a \
-	stub_int.o stub_str.o;
-	$(RANLIB) libalpha_stubs_x.a;
+# libalpha_stubs_x.a: alpha_cstubs libalpha.so
+# 	$(AR) rcs libalpha_stubs_x.a \
+# 	stub_int.o stub_str.o;
+# 	$(RANLIB) libalpha_stubs_x.a;
 
 # bundled:
 # to include libalpha.a in libalpha_stubs.a
