@@ -5,7 +5,8 @@ UNAME := $(shell uname)
 INSTALL_NAME=
 
 ifeq ($(UNAME), Linux)
-# do something Linux-y
+LINKFLAGS=
+LINKFORCE=
 endif
 ifeq ($(UNAME), Darwin)
 INSTALL_NAME=-install_name ../stublibs/$@
@@ -123,9 +124,8 @@ dllalpha_stubs_unbundled_lib_static_camlrt.so: libalpha.so alpha_cstubs
 	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
-	-undefined dynamic_lookup \
-	-Wl,-no_compact_unwind \
-	-Wl,-force_load,`ocamlc -where`/libcamlrun_pic.a ;
+	$(LINKFLAGS) \
+	$(LINKFORCE)`ocamlc -where`/libcamlrun_pic.a ;
 
 libalpha_stubs_unbundled_lib_static_camlrt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \

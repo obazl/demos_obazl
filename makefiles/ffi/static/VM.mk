@@ -41,10 +41,10 @@ libalpha_stubs_unbundled.a:
 # we must list the latter on the command line:
 alpha.vm.unbundled.cclib: main libalpha.a libalpha_stubs_unbundled.a
 	$(COMPILER) -custom \
-	-ccopt "-L../cclibs" \
-	-cclib -lalpha \
 	-I ../stublibs \
 	-cclib -lalpha_stubs_unbundled \
+	-ccopt "-L../cclibs" \
+	-cclib -lalpha \
 	alpha.cmo \
 	main.cmo \
 	-o alpha.vm;

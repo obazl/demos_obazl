@@ -21,10 +21,10 @@ libalpha_stubs_unbundled.a:
 # now build against shared foreign lib (libalpha.so)
 alpha.sys.unbundled.cclib: main libalpha.a libalpha_stubs_unbundled.a
 	$(COMPILER) \
-	-ccopt "-L../cclibs" \
-	-cclib -lalpha \
 	-I ../stublibs \
 	-cclib -lalpha_stubs_unbundled \
+	-ccopt "-L../cclibs" \
+	-cclib -lalpha \
 	alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
