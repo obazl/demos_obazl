@@ -202,3 +202,16 @@ link:https://www.unix.com/man-page/osx/1/install_name_tool/[install_name_tool]
 link:https://llvm.org/docs/CommandGuide/llvm-install-name-tool.html[llvm-install-name-tool] "For most scenarios, it works as a drop-in replacement for Apple’s install_name_tool."
 
 link:https://developer.apple.com/documentation/xcode/embedding-nonstandard-code-structures-in-a-bundle[Embedding nonstandard code structures in a bundle] (Apple dev docs)
+
+=== linux
+
+Show DSO loading: ` LD_DEBUG=libs ./alpha.sys`
+
+Add the missing dir: `LD_DEBUG=libs LD_LIBRARY_PATH=../stublibs ./alpha.sys`
+
+
+link:https://www.simplified.guide/linux/show-shared-library-dependency[How to show shared library dependencies in Linux]  - `ldd`, `readelf`, `lsof`, etc.
+
+link:https://medium.com/obscure-system/rpath-vs-runpath-883029b17c45[rpath vs runpath]
+
+link:https://nehckl0.medium.com/creating-relocatable-linux-executables-by-setting-rpath-with-origin-45de573a2e98[Creating relocatable Linux executables by setting RPATH with $ORIGIN]
