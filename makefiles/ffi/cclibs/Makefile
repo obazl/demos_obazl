@@ -1,11 +1,13 @@
-INSTALL_NAME=
+UNAME := $(shell uname)
 
-ifeq ($(UNAME), Linux)
+INSTALL_NAME=
 LINKFLAGS=
 LINKFORCE=
+
+ifeq ($(UNAME), Linux)
 endif
 ifeq ($(UNAME), Darwin)
-INSTALL_NAME=-install_name ../cclibs/libalpha.so \
+INSTALL_NAME=-install_name ../cclibs/libalpha.so
 LINKFLAGS=-undefined dynamic_lookup -Wl,-no_compact_unwind
 LINKFORCE=-Wl,-force_load,
 endif
