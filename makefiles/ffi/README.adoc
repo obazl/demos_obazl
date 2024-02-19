@@ -73,14 +73,22 @@ ocamlc -custom \
 
 Targets under `dynamic`:
 
-* vm.bundled.shared
-* vm.bundled.shared.dllib
-* vm.bundled.static
-* vm.bundled.static.dllib
-* vm.unbundled.shared
-* vm.unbundled.shared.dllib
-* vm.unbundled.static
-* vm.unbundled.static.dllib
+* vm.libstublib.bundled.shared
+* vm.dlstublib.bundled.shared
+* vm.dlstublib.bundled.shared.dllib
+
+* vm.libstublib.bundled.static
+* vm.dlstublib.bundled.static
+* vm.dlstublib.bundled.static.dllib
+
+* vm.libstublib.unbundled.shared
+* vm.dlstublib.unbundled.shared
+* vm.dlstublib.unbundled.shared.dllib
+
+* vm.libstublib.unbundled.static
+* vm.dlstublib.unbundled.static
+* vm.dlstublib.unbundled.static.dllib
+
 * sys.bundled.shared
 * sys.bundled.static
 * sys.unbundled.shared

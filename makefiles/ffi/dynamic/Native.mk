@@ -12,32 +12,45 @@ LINKALL=
 # static clibs may be directly listed on cmd line,
 # without using -ccopt, -cclib, but shared libs
 # must be passed with -cclib -lname.
-alpha.sys.unbundled.shared: main libalpha_stubs_unbundled_lib_shared_rt.so
+alpha.sys.unbundled.shared: main libalpha_stubs_unbundled_lib_shared_asmrt.so
 	$(COMPILER) \
-	-cclib -lalpha_stubs_unbundled_lib_shared_rt \
+	-cclib -lalpha_stubs_unbundled_lib_shared_asmrt \
+	-I ../stublibs alpha.cmx \
+	main.cmx \
+	-o alpha.sys;
+libalpha_stubs_unbundled_lib_shared_asmrt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_unbundled_lib_shared_asmrt.so
+
+alpha.sys.unbundled.static: main libalpha_stubs_unbundled_lib_static_asmrt.so
+	$(COMPILER) \
+	-cclib -lalpha_stubs_unbundled_lib_static_asmrt \
 	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 
-alpha.sys.unbundled.static: main libalpha_stubs_unbundled_lib_static_rt.so
-	$(COMPILER) \
-	-cclib -lalpha_stubs_unbundled_lib_static_rt \
-	-I ../stublibs alpha.cmx \
-	main.cmx \
-	-o alpha.sys;
+libalpha_stubs_unbundled_lib_static_asmrt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_unbundled_lib_static_asmrt.so
 
-alpha.sys.bundled.shared: main libalpha_stubs_bundled_lib_shared_rt.so
+
+alpha.sys.bundled.shared: main libalpha_stubs_bundled_lib_shared_asmrt.so
 	$(COMPILER) \
 	-ccopt "-L." \
-	-cclib -lalpha_stubs_bundled_lib_shared_rt \
-	-I ../stublibs alpha.cmx \
+	-cclib -lalpha_stubs_bundled_lib_shared_asmrt \
+	-I ../stublibs \
+	alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
 
-alpha.sys.bundled.static: main libalpha_stubs_bundled_lib_static_rt.so
+	# ../stublibs/libalpha_stubs_bundled_lib_shared_asmrt.so \
+
+libalpha_stubs_bundled_lib_shared_asmrt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_bundled_lib_shared_asmrt.so
+
+
+alpha.sys.bundled.static: main libalpha_stubs_bundled_lib_static_asmrt.so
 	$(COMPILER) \
 	-ccopt "-L." \
-	-cclib -lalpha_stubs_bundled_lib_static_rt \
+	-cclib -lalpha_stubs_bundled_lib_static_asmrt \
 	-I ../stublibs alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
@@ -58,18 +71,18 @@ alpha.sys2: main libalpha_stubs
 # ocamlopt does not understand -dllpath or -dllib,
 # and -l<name> will search for lib<name>.so, not dll<name>.so;
 # so this would fail with "ld: library 'alpha_stubs..etc' not found":
-alpha.sys.broken: main dllalpha_stubs_bundled_lib_shared_rt.so
+alpha.sys.broken: main dllalpha_stubs_bundled_lib_shared_asmrt.so
 	$(COMPILER) \
 	-ccopt "-L../cclibs" \
 	-cclib -lalpha \
 	-ccopt "-L../stublibs" \
-	-cclib -lalpha_stubs_bundled_lib_shared_rt \
+	-cclib -lalpha_stubs_bundled_lib_shared_asmrt \
 	-I ../stublibs \
 	alpha.cmx \
 	-o alpha.sys;
 
-dllalpha_stubs_bundled_lib_shared_rt.so:
-	$(MAKE) -C ../stublibs dllalpha_stubs_bundled_lib_shared_rt.so
+dllalpha_stubs_bundled_lib_shared_asmrt.so:
+	$(MAKE) -C ../stublibs dllalpha_stubs_bundled_lib_shared_asmrt.so
 
 # furthermore putting a .so file directly on the cmd line
 # results in "don't know what to do with <name>.so"
@@ -89,17 +102,8 @@ libalpha.so:
 	$(MAKE) -C ../cclibs libalpha.so
 
 #### native
-libalpha_stubs_unbundled_lib_shared_rt.so:
-	$(MAKE) -C ../stublibs libalpha_stubs_unbundled_lib_shared_rt.so
-
-libalpha_stubs_unbundled_lib_static_rt.so:
-	$(MAKE) -C ../stublibs libalpha_stubs_unbundled_lib_static_rt.so
-
-libalpha_stubs_bundled_lib_shared_rt.so:
-	$(MAKE) -C ../stublibs libalpha_stubs_bundled_lib_shared_rt.so
-
-libalpha_stubs_bundled_lib_static_rt.so:
-	$(MAKE) -C ../stublibs libalpha_stubs_bundled_lib_static_rt.so
+libalpha_stubs_bundled_lib_static_asmrt.so:
+	$(MAKE) -C ../stublibs libalpha_stubs_bundled_lib_static_asmrt.so
 
 # libalpha_stubs_x.so:
 # 	$(MAKE) -C ../stublibs libalpha_stubs_x.so
