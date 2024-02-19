@@ -20,6 +20,7 @@ ocaml_test(
     #     "-ccopt", "-lalpha",
     #     "-ccopt", "-lalphastub"
     # ]
+    timeout = "short"
 )
 
 ocaml_module(
@@ -60,13 +61,12 @@ cc_library(
     ],
     copts = [
         "-Iinterop/ffi/case120/cclibs",
-        "-Iexternal/ocaml/c",
     ],
     linkstatic = True,
     linkopts   = ["-lalpha"],
     deps = [
         "//interop/ffi/case120/cclibs:alpha",
-        "@ocaml//c",
+        "@ocaml//lib/sdk",
     ],
 )
 

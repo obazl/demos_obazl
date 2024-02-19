@@ -43,11 +43,10 @@ ocaml_module(
 cc_library(
     name = "libprint_stuff",
     srcs = [
-        "print_stuff_adapter.c",
-        "print_stuff.c",
-        "print_stuff.h",
+        "beta_adapter.c",
+        "beta.c",
+        "beta.h",
     ],
-    copts = ["-Iexternal/ocaml/c"],
-    deps = ["@ocaml//c"],
+    deps = ["@ocaml//lib/sdk"],
     visibility = ["//interop/ffi/simple:__pkg__"],
 )

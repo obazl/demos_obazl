@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "print_stuff.h"
+#include "beta.h"
 
 int my_int = 17;
 

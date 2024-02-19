@@ -9,14 +9,22 @@ load(
 ocaml_module(
     name = "Alpha",
     struct = "alpha.ml",
-    deps = select({
-        "//interop/ffi/case110:dynamic": [":dllalpha.so"],
-        "//interop/ffi/case110:static":  [":alpha"],
-        # FIXME: default depends on platform -
-        # dso for macos, static for linux
-        # "//conditions:default": ["dllalpha.so"]
-        "//conditions:default": [":alpha"]
-    }),
+    # data = select({
+    #     "//interop/ffi/case110:dynamic": [":dllalpha.so"],
+    #     "//conditions:default": []
+    # }),
+    deps = [
+        # "@ocaml//runtime:camlrun_shared", # libcamlrun_shared.so
+        ":dllalpha.so",
+    ],
+    # deps = select({
+    #     "//interop/ffi/case110:dynamic": [":dllalpha.so"],
+    #     "//interop/ffi/case110:static":  [":alpha"],
+    #     # FIXME: default depends on platform -
+    #     # dso for macos, static for linux
+    #     # "//conditions:default": ["dllalpha.so"]
+    #     "//conditions:default": [":alpha"]
+    # }),
     # cc_deps = [":alpha"],
     opts = [
         "-verbose",
@@ -38,19 +46,36 @@ cc_library(
     linkstatic = True,
     copts = [
         # "version",
-        "-I$(@ocaml)/lib/c",
+        # "-I$(@ocaml)/lib/c",
         # "-Iexternal/ocaml~0.0.0/lib/c",
         # "-lcamlrun"
     ],
-    deps = ["@ocaml//lib/c:sdk"],
-    toolchains = ["//:repo_paths"],
+    deps = ["@ocaml//lib/sdk"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
 
+## for bytecode dynlinking, libname dllfoo.so, not libfoo.so
+## (ocamlrun will try to load dllfoo.so, from dllpaths)
 cc_binary(
     name = "dllalpha.so",
+    # name = "libalpha.so",
     linkshared = True,
-    srcs = [":alpha"], # we depend on the static lib
-    toolchains = ["//:repo_paths"],
+    # linkstatic = True,
+    # srcs = [":alpha"], # we depend on the static lib
+    srcs = [
+        "alpha_adapter.c",
+        "alpha.c",
+        "alpha.h",
+    ],
+    deps = [
+        "@ocaml//lib/sdk",
+        "@zstd",
+        #"@ocaml//runtime:camlrun",  # libcamlrun.a
+        #"@ocaml//runtime:camlrun_pic", # libcamlrun_pic.a
+
+        #"@ocaml//runtime:camlrun_shared", # libcamlrun_shared.so
+        "@ocaml//runtime:asmrun_shared", # libasmrun_shared.so
+    ],
+    # data = ["@ocaml//runtime:camlrun_shared"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )

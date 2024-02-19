@@ -38,7 +38,6 @@ cc_library(
         "alpha.c",
         "alpha.h",
     ],
-    copts = ["-Iexternal/ocaml/c"],
-    deps = ["@ocaml//c"],
+    deps = ["@ocaml//lib/sdk"],
     visibility = ["//interop/ffi/simple:__pkg__"],
 )

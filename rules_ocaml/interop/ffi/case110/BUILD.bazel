@@ -33,14 +33,21 @@ ocaml_test(
         ":static": "@rules_ocaml//cfg/runtime:static",   # -custom
         "//conditions:default": "@rules_ocaml//cfg/runtime:dynamic" # default
         # vm_runtime = "//foo/bar:rt" ## standalone rt, -use-runtime=...
-    })
+    }),
+    timeout = "short",
+    # opts = ["-cclib", "-lfoo"]
+    # cc_deps = {
+    #     "//interop/ffi/case110/cclibs:dllalpha.so": "dynamic",
+    #     "@ocaml//runtime:camlrun_shared": "dynamic"
+    # }
 )
 
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    opts = ["-linkall"],
+    # opts = ["-linkall"],
     deps = [
+        # "@ocaml//lib/sdk",
         "//interop/ffi/case110/cclibs:Alpha",
         "@ounit2//lib/ounit2",
     ]

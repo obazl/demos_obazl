@@ -3,7 +3,6 @@ test_suite(
     name = "test",
     tests = [
         ## broken on vm platform
-        # "//interop/ffi/case110:test",
-        # "//interop/ffi/case120:test",
+        "//interop/ffi:test",
     ]
 )

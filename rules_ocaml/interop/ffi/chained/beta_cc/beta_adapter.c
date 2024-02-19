@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <caml/mlvalues.h>
-#include "print_stuff.h"
+#include "beta.h"
 
 CAMLprim value
 caml_print_hello(value unit)

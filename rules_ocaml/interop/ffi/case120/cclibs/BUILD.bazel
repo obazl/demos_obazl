@@ -3,9 +3,8 @@ cc_library(
     srcs = ["alpha.c"],
     hdrs = ["alpha.h"],
     linkstatic = True,
-    copts = ["-Iexternal/ocaml/c"],
     deps = [
-        "@ocaml//c",
+        "@ocaml//lib/sdk",
     ],
     visibility = ["//interop/ffi/case120:__pkg__"],
 )
