@@ -60,7 +60,6 @@ libalpha_stubs_bundled_lib_shared_asmrt.so:
 alpha.sys.bundled.static: main libalpha_stubs_bundled_lib_static_asmrt.so
 	$(COMPILER) \
 	$(STUBLIBS_RPATH) \
-	-ccopt "-L." \
 	-cclib -lalpha_stubs_bundled_lib_static_asmrt \
 	-I ../stublibs alpha.cmx \
 	main.cmx \
