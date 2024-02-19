@@ -2,6 +2,15 @@ export COMPILER=ocamlopt
 SFX="cmx"
 LINKALL=
 
+UNAME := $(shell uname)
+
+STUBLIBS_RPATH=
+
+ifeq ($(UNAME), Linux)
+STUBLIBS_RPATH=-ccopt "-Wl,-rpath,../stublibs"
+endif
+
+
 # Macos: DSOs and native executables embed paths to dso deps,
 # so we do not need -I or --ccopt -L for those.
 # But to build our executable we must pass
@@ -14,6 +23,7 @@ LINKALL=
 # must be passed with -cclib -lname.
 alpha.sys.unbundled.shared: main libalpha_stubs_unbundled_lib_shared_asmrt.so
 	$(COMPILER) \
+	$(STUBLIBS_RPATH) \
 	-cclib -lalpha_stubs_unbundled_lib_shared_asmrt \
 	-I ../stublibs alpha.cmx \
 	main.cmx \
@@ -23,6 +33,7 @@ libalpha_stubs_unbundled_lib_shared_asmrt.so:
 
 alpha.sys.unbundled.static: main libalpha_stubs_unbundled_lib_static_asmrt.so
 	$(COMPILER) \
+	$(STUBLIBS_RPATH) \
 	-cclib -lalpha_stubs_unbundled_lib_static_asmrt \
 	-I ../stublibs alpha.cmx \
 	main.cmx \
@@ -34,14 +45,13 @@ libalpha_stubs_unbundled_lib_static_asmrt.so:
 
 alpha.sys.bundled.shared: main libalpha_stubs_bundled_lib_shared_asmrt.so
 	$(COMPILER) \
-	-ccopt "-L." \
+	$(STUBLIBS_RPATH) \
+	-ccopt "-L../stublibs" \
 	-cclib -lalpha_stubs_bundled_lib_shared_asmrt \
 	-I ../stublibs \
 	alpha.cmx \
 	main.cmx \
 	-o alpha.sys;
-
-	# ../stublibs/libalpha_stubs_bundled_lib_shared_asmrt.so \
 
 libalpha_stubs_bundled_lib_shared_asmrt.so:
 	$(MAKE) -C ../stublibs libalpha_stubs_bundled_lib_shared_asmrt.so
@@ -49,6 +59,7 @@ libalpha_stubs_bundled_lib_shared_asmrt.so:
 
 alpha.sys.bundled.static: main libalpha_stubs_bundled_lib_static_asmrt.so
 	$(COMPILER) \
+	$(STUBLIBS_RPATH) \
 	-ccopt "-L." \
 	-cclib -lalpha_stubs_bundled_lib_static_asmrt \
 	-I ../stublibs alpha.cmx \

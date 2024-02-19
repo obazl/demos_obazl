@@ -14,6 +14,12 @@ LINKFLAGS=-undefined dynamic_lookup -Wl,-no_compact_unwind
 LINKFORCE=-Wl,-force_load,
 endif
 
+# NB: linux and macos treat DSO deps differently. The MacOS linker
+# records the "install name" extracted from the DSO; the linux linker
+# seems to record the path to the dep.  On the mac this can be overridden
+# by listing the DSO file on the cmd line.
+
+
 alphastub:
 	$(COMPILER) -c alpha.ml;
 
@@ -86,7 +92,7 @@ libalpha_stubs_bundled.a: alpha_cstubs libalpha.a
 dllalpha_stubs_bundled_lib_shared_camlrt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
 	-o dllalpha_stubs_bundled_lib_shared_camlrt.so \
-	-install_name ../stublibs/dllalpha_stubs_bundled_lib_shared_camlrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.a \
 	`ocamlc -where`/libcamlrun_shared.so;
@@ -94,26 +100,25 @@ dllalpha_stubs_bundled_lib_shared_camlrt.so: libalpha.a alpha_cstubs
 dllalpha_stubs_bundled_lib_static_camlrt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
 	-o dllalpha_stubs_bundled_lib_static_camlrt.so \
-	-install_name ../stublibs/dllalpha_stubs_bundled_lib_static_camlrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.a \
-	-undefined dynamic_lookup \
-	-Wl,-no_compact_unwind \
-	-Wl,-force_load,`ocamlc -where`/libcamlrun_pic.a ;
+	$(LINKARGS) \
+	$(LINKFORCE)`ocamlc -where`/libcamlrun_pic.a ;
 
 ################
 libalpha_stubs_unbundled_lib_shared_camlrt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \
 	-o libalpha_stubs_unbundled_lib_shared_camlrt.so \
-	-install_name ../stublibs/libalpha_stubs_unbundled_lib_shared_camlrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
-	-Wl,-force_load,`ocamlc -where`/libcamlrun_shared.so ;
+	$(LINKFORCE)`ocamlc -where`/libcamlrun_shared.so ;
 
 dllalpha_stubs_unbundled_lib_shared_camlrt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \
 	-o dllalpha_stubs_unbundled_lib_shared_camlrt.so \
-	-install_name ../stublibs/dllalpha_stubs_unbundled_lib_shared_camlrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
 	`ocamlc -where`/libcamlrun_shared.so;
@@ -133,12 +138,9 @@ libalpha_stubs_unbundled_lib_static_camlrt.so: libalpha.so alpha_cstubs
 	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
-	-undefined dynamic_lookup \
-	-Wl,-no_compact_unwind \
-	-Wl,-force_load,`ocamlc -where`/libcamlrun_pic.a ;
+	$(LINKARGS) \
+	$(LINKFORCE)`ocamlc -where`/libcamlrun_pic.a ;
 
-
-	# -install_name ../stublibs/dllalpha_stubs_unbundled_lib_static_rt.so \
 
 ################
 # for native executable: name it lib<name>.so,
@@ -150,20 +152,21 @@ libalpha_stubs_unbundled_lib_static_camlrt.so: libalpha.so alpha_cstubs
 libalpha_stubs_unbundled_lib_shared_asmrt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \
 	-o libalpha_stubs_unbundled_lib_shared_asmrt.so \
-	-install_name ../stublibs/libalpha_stubs_unbundled_lib_shared_asmrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
-	-Wl,-force_load,`ocamlc -where`/libasmrun_shared.so ;
+	$(LINKFORCE)`ocamlc -where`/libasmrun_shared.so ;
 
 ## unbundled foreign lib, static runtime
 libalpha_stubs_unbundled_lib_static_asmrt.so: libalpha.so alpha_cstubs
 	$(CC) -shared \
 	-o $@ \
 	$(INSTALL_NAME) \
-	stub_int.o stub_str.o \
-	../cclibs/libalpha.so \
 	$(LINKFLAGS) \
-	$(LINKFORCE)`ocamlc -where`/libasmrun_pic.a ;
+	$(LINKFORCE)`ocamlc -where`/libasmrun_pic.a \
+	stub_int.o stub_str.o \
+	../cclibs/libalpha.so;
+
 
 # #NB: linking against a static runtime fails with undefined syms
 # 	# -Wl,-force_load \
@@ -192,7 +195,7 @@ libalpha_stubs_unbundled_lib_static_asmrt.so: libalpha.so alpha_cstubs
 libalpha_stubs_bundled_lib_shared_asmrt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
 	-o libalpha_stubs_bundled_lib_shared_asmrt.so \
-	-install_name ../stublibs/libalpha_stubs_bundled_lib_shared_asmrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/*.o \
 	`ocamlc -where`/libasmrun_shared.so;
@@ -201,7 +204,7 @@ libalpha_stubs_bundled_lib_shared_asmrt.so: libalpha.a alpha_cstubs
 libalpha_libstubs_bundled_lib_shared_camlrt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
 	-o libalpha_stubs_bundled_lib_shared_camlrt.so \
-	-install_name ../stublibs/libalpha_stubs_bundled_lib_shared_camlrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.a \
 	`ocamlc -where`/libcamlrun_shared.so;
@@ -210,22 +213,20 @@ libalpha_libstubs_bundled_lib_shared_camlrt.so: libalpha.a alpha_cstubs
 libalpha_stubs_bundled_lib_static_asmrt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
 	-o libalpha_stubs_bundled_lib_static_asmrt.so \
-	-install_name ../stublibs/libalpha_stubs_bundled_lib_static_asmrt.so \
+	$(INSTALL_NAME) \
+	$(LINKARGS) \
+	$(LINKFORCE)`ocamlc -where`/libasmrun_pic.a \
 	stub_int.o stub_str.o \
-	../cclibs/*.o \
-	-Wl,-undefined -Wl,dynamic_lookup \
-	-Wl,-no_compact_unwind \
-	-Wl,-force_load,`ocamlc -where`/libasmrun_pic.a ;
+	../cclibs/*.o;
 
 libalpha_stubs_bundled_lib_static_camlrt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
 	-o libalpha_stubs_bundled_lib_static_camlrt.so \
-	-install_name ../stublibs/libalpha_stubs_bundled_lib_static_camlrt.so \
+	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/*.o \
-	-Wl,-undefined -Wl,dynamic_lookup \
-	-Wl,-no_compact_unwind \
-	-Wl,-force_load,`ocamlc -where`/libcamlrun_pic.a ;
+	$(LINKARGS) \
+	$(LINKFORCE)`ocamlc -where`/libcamlrun_pic.a ;
 
 # or:	../cclibs/libalpha.a instead of ../cclibs/*o \
 
