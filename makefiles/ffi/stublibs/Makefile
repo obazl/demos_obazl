@@ -103,7 +103,7 @@ dllalpha_stubs_bundled_lib_static_camlrt.so: libalpha.a alpha_cstubs
 	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.a \
-	$(LINKARGS) \
+	$(LINKFLAGS) \
 	$(LINKFORCE)`ocamlc -where`/libcamlrun_pic.a ;
 
 ################
@@ -138,7 +138,7 @@ libalpha_stubs_unbundled_lib_static_camlrt.so: libalpha.so alpha_cstubs
 	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/libalpha.so \
-	$(LINKARGS) \
+	$(LINKFLAGS) \
 	$(LINKFORCE)`ocamlc -where`/libcamlrun_pic.a ;
 
 
@@ -214,7 +214,7 @@ libalpha_stubs_bundled_lib_static_asmrt.so: libalpha.a alpha_cstubs
 	$(CC) -shared \
 	-o libalpha_stubs_bundled_lib_static_asmrt.so \
 	$(INSTALL_NAME) \
-	$(LINKARGS) \
+	$(LINKFLAGS) \
 	$(LINKFORCE)`ocamlc -where`/libasmrun_pic.a \
 	stub_int.o stub_str.o \
 	../cclibs/*.o;
@@ -225,7 +225,7 @@ libalpha_stubs_bundled_lib_static_camlrt.so: libalpha.a alpha_cstubs
 	$(INSTALL_NAME) \
 	stub_int.o stub_str.o \
 	../cclibs/*.o \
-	$(LINKARGS) \
+	$(LINKFLAGS) \
 	$(LINKFORCE)`ocamlc -where`/libcamlrun_pic.a ;
 
 # or:	../cclibs/libalpha.a instead of ../cclibs/*o \
