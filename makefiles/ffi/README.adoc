@@ -1,7 +1,7 @@
 = ffi - linking foreign libs
 :toc: true
 
-20 different ways (MWEs) to build an executable that links to a foreign library.
+24 different ways (MWEs) to build an executable that links to a foreign library.
 
 NOTE:  MacOS only; Linux version under development.
 
