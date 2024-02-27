@@ -1,3 +1,26 @@
+default:
+	@echo "Available build targets:"
+	@echo "\tvm.libstublib.bundled.shared"
+	@echo "\tvm.dlstublib.bundled.shared"
+	@echo "\tvm.dlstublib.bundled.shared.dllib"
+	@echo
+	@echo "\tvm.libstublib.bundled.static"
+	@echo "\tvm.dlstublib.bundled.static"
+	@echo "\tvm.dlstublib.bundled.static.dllib"
+	@echo
+	@echo "\tvm.libstublib.unbundled.shared"
+	@echo "\tvm.dlstublib.unbundled.shared"
+	@echo "\tvm.dlstublib.unbundled.shared.dllib"
+	@echo
+	@echo "\tvm.libstublib.unbundled.static"
+	@echo "\tvm.dlstublib.unbundled.static"
+	@echo "\tvm.dlstublib.unbundled.static.dllib"
+	@echo
+	@echo "\tsys.bundled.shared"
+	@echo "\tsys.bundled.static"
+	@echo "\tsys.unbundled.shared"
+	@echo "\tsys.unbundled.static"
+
 # to make build targets independent, each depends on clean
 .PHONY: clean
 

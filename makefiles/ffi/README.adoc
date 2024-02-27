@@ -193,7 +193,7 @@ link:https://forums.developer.apple.com/forums/thread/736719[Dynamic Library Ide
 
 link:https://christianfscott.com/change-shared-library-path/[Changing Shared Library Paths on MacOS] (blog, March 2023)
 
-link:https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath[@executable path, @load path and @rpath] Old but useful
+link:https://wincent.com/wiki/%40executable_path%2C_%40load_path_and_%40rpath[@executable path, @load path and @rpath] brief blog, 3/2020
 
 link:https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html[Friday Q&A 2009-11-06: Linking and Install Names] Old but useful.
 
