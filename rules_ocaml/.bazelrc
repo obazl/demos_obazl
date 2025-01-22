@@ -1,9 +1,7 @@
-common --incompatible_enable_cc_toolchain_resolution
-always --experimental_cc_shared_library
-always --enable_bzlmod
+# common --noincompatible_disallow_empty_glob
 
 ## WARNINIG: tools/bazel overrides this coswitch reg setting:
-try-import %workspace%/.config/coswitch_registry.bazelrc
+# try-import %workspace%/.config/coswitch_registry.bazelrc
 
 try-import %workspace%/.config/toolchains.bazelrc
 try-import .config/registries.bazelrc

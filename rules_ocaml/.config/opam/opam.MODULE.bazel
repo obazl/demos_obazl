@@ -1,0 +1,59 @@
+opam = use_extension(
+    "@tools_opam//extensions:opam.bzl",
+    "opam",
+)
+use_repo(opam, "opam.menhir")
+use_repo(opam, "opam.menhirLib")
+
+opam.dep(
+    pkgs = {
+        "ocamlsdk": "",
+        "alcotest": "",
+        "cmdliner": "",
+        "core_unix.command_unix": "",
+        "metapp": "",
+        "metaquot": "",
+        "ounit2": "2.2.7",
+        "ppx_deriving": "",
+        "ppx_expect": "",
+        "ppx_here": "",
+        "ppx_inline_test": "",
+        "ppx_optcomp": "",
+        "ppx_sexp_conv": "",
+        "ppx_sexp_value": "",
+        "ppx_show": "",
+        "ppxlib": "",
+        "ppxlib_jane": "",
+        "sexplib": "",
+        "stublibs": "",
+        "threads": "",
+        "time_now": "",
+    },
+)
+use_repo(opam, "stublibs")
+# use_repo(opam, "threads")
+use_repo(opam, "opam.alcotest")
+use_repo(opam, "opam.cmdliner")
+use_repo(opam, "opam.core")
+use_repo(opam, "opam.core_unix")
+use_repo(opam, "opam.metapp")
+use_repo(opam, "opam.metaquot")
+use_repo(opam, "opam.ounit2")
+use_repo(opam, "opam.ppx_deriving")
+use_repo(opam, "opam.ppx_here")
+use_repo(opam, "opam.ppx_inline_test")
+use_repo(opam, "opam.ppx_optcomp")
+use_repo(opam, "opam.ppx_sexp_conv")
+use_repo(opam, "opam.ppx_sexp_value")
+use_repo(opam, "opam.ppx_show")
+use_repo(opam, "opam.ppxlib")
+use_repo(opam, "opam.ppxlib_jane")
+use_repo(opam, "opam.sexplib")
+use_repo(opam, "opam.time_now")
+
+use_repo(opam, "ocamlsdk")
+
+register_toolchains("@ocamlsdk//toolchain/selectors/local:all")
+
+register_toolchains("@ocamlsdk//toolchain/profiles:all")
+

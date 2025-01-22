@@ -1,19 +1,80 @@
-# load("@cc_config//:MACROS.bzl", "repo_paths")
+load("@tools_opam//build:rules.bzl", "opam_pkg")
 
-# PROD_REPOS = [
-#     "@ocaml//version"
+opam_pkg(
+    out  = "project.opam",
+    name = "project",
+    version = "0.1",
+    opam_version = "2.0",
+    maintainer = ["Name <email>"],
+    authors = [
+        "François Pottier <francois.pottier@inria.fr>",
+        "Yann Régis-Gianas <yrg@pps.univ-paris-diderot.fr>"
+    ],
+    description = """
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tristique hendrerit ex placerat cursus. Donec quis enim ornare, pretium ex nec, semper mi. Aliquam molestie interdum sem. Nam viverra mauris eros, sit amet cursus lectus pulvinar id. Integer varius convallis leo, eget laoreet metus lacinia vel.
+    """,
+
+    build = {"dev": ["dune", "subst", "$${dev}"],
+             "prod": ["dune",
+                      "build",
+                      "-p",
+                      '$name', #
+                      "-j",
+                      '$jobs', #
+                      "@install",
+                      "@runtest",
+                      "{with-test}",
+                      "@doc",
+                      "{with-doc}"],
+             "test": ["dune", "runtest",
+                      "-p", "$name",
+                      "-j", "$jobs",
+                      "$${with-test}"],
+             "install": ["dune", "install", "-p", "$name",
+                        "--create-install-files", "$name"],
+             "pinned": ["dune", "subst", "$${pinned}"],
+             "llvm": [
+                 "ocaml", "tools/configure.ml",
+                 "--with-llvm-config=%{conf-bap-llvm:config}%"
+             ]
+
+             },
+    depends = {
+        # "dune" {>= "2.7"}
+        'dune': '{>= "2.7"}',
+        'ocaml': '{>= "4.04.1" & < "5.1.0"}',
+        'ocaml-compiler-libs': '{>= "v0.11.0"}',
+        'ppx_derivers': '{>= "1.0"}',
+        'sexplib0': '{>= "v0.12"}',
+        'stdlib-shims': '',
+        'ocamlfind': '{with-test}',
+        'ounit': '{with-test & >= "2.0.0"}'
+    },
+    depexts = {
+        "ubuntu": ["clang", "libncurses5-dev",
+                   '{os-distribution = "ubuntu"}'],
+        "debian": ["clang", '{os-distribution = "debian"}'],
+        "alpine": ["clang", "libxml2-dev",
+                   '{os-distribution = "alpine"}'],
+        "fedora": ["clang", '{os-distribution = "fedora"}']
+        },
+
+    ## orsetto opam file:
+#     install: [
+#     [ "omake" "--dotomake.omake" "--force-dotomake" "install" ] { !dev }
+#     [ "omake" "--dotomake.omake" "--force-dotomake" "install" "MODE=develop" ] { dev }
 # ]
 
-# repo_paths(
-#     name = "repo_paths",
-#     repos = PROD_REPOS
-# )
+#     extra-source "NormalizationTest.txt" {
+#     src: "http://www.unicode.org/Public/15.0.0/ucd/NormalizationTest.txt"
+#     checksum: "sha512=7ccac7770efec63ea8071b611895cacd676e11896bc898d49219baf42b146c3e914ff27c5f8228775ccbcb433850ee71cca62afa498fbaf3afd3e405c9c3a0db"
+# }
+# extra-source "PropertyAliases.txt" {
+#     src: "https://www.unicode.org/Public/15.0.0/ucd/PropertyAliases.txt"
+#     checksum: "sha512=6138bfe5d3112a777328d7271cb62bdf14bcd4385d64cfd31ac42f5636c807f922cda363362a1db9767dfb0b544e05804f523bdb4b9a078531efec7d078b616d"
+# }
 
-# repo_paths(
-#     name = "test_repo_paths",
-#     repos = PROD_REPOS + [
-#     ]
-# )
+)
 
 ################################################################
 test_suite(
@@ -27,12 +88,12 @@ test_suite(
         "//filegen:test",
         "//interop:test",
         "//modules:test",
-        "//mwe:test",
-        "//ns:test",
+        "//mwe",
+        "//ns",
         "//parsing:test",
-        "//ppxlib:test",
+        "//ppxlib",
         "//signatures:test",
-        "//testing:test",
+        "//testing",
     ]
 )
 

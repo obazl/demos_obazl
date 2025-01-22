@@ -13,16 +13,16 @@ common --incompatible_enable_cc_toolchain_resolution
 # default platform is sys for both buildhost and targethost
 
 ## endocompilers
-common:ocamlc.byte --host_platform=@ocaml//platform:ocamlc.byte
-#common:ocamlc.byte --platforms=@ocaml//platform:ocamlc.byte
+common:ocamlc.byte --host_platform=@rules_ocaml//platform:ocamlc.byte
+#common:ocamlc.byte --platforms=@rules_ocaml//platform:ocamlc.byte
 
-common:ocamlopt.opt --host_platform=@ocaml//platform:ocamlopt.opt
-# common:ocamlopt.opt --platforms=@ocaml//platform:sys
+common:ocamlopt.opt --host_platform=@rules_ocaml//platform:ocamlopt.opt
+# common:ocamlopt.opt --platforms=@rules_ocaml//platform:sys
 
 ## exocompilers
-common:ocamlc.opt --host_platform=@ocaml//platform:ocamlc.opt
-common:ocamlc.opt --platforms=@ocaml//platform:ocamlc.byte
+common:ocamlc.opt --host_platform=@rules_ocaml//platform:ocamlc.opt
+common:ocamlc.opt --platforms=@rules_ocaml//platform:ocamlc.byte
 
-common:ocamlopt.byte --host_platform=@ocaml//platform:ocamlopt.byte
-common:ocamlopt.byte --platforms=@ocaml//platform:ocamlopt.opt
+common:ocamlopt.byte --host_platform=@rules_ocaml//platform:ocamlopt.byte
+common:ocamlopt.byte --platforms=@rules_ocaml//platform:ocamlopt.opt
 

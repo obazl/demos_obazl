@@ -1,66 +1,50 @@
 module(
     name = "demos",
     version = "0.0.0",
+    bazel_compatibility = [">=8.0.0"],
     compatibility_level = 0,
 )
 
 ## bcr:
-bazel_dep(name = "platforms",       version = "0.0.8")
-bazel_dep(name = "bazel_skylib",    version = "1.5.0")
-bazel_dep(name = "rules_cc",        version = "0.0.9")
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_cc", version = "0.0.17")
 
 ## obazl:
-bazel_dep(name = "coswitch",        version = "2.3.0",
-          dev_dependency = True)
-bazel_dep(name = "obazl",           version = "2.0.0",
-          dev_dependency = True)
+bazel_dep(name = "rules_ocaml", version = "5.0.0")
+bazel_dep(name = "rules_ppx",   version = "5.0.0")
+bazel_dep(name = "tools_ocaml", version = "2.0.0.bzl.8")
+bazel_dep(name = "tools_opam",  version = "5.0.0")
 
-bazel_dep(name = "rules_ocaml",     version = "2.1.0")
-bazel_dep(name = "tools_ocaml",     version = "2.0.0")
+bazel_dep(
+    name = "obazl",
+    version = "3.0.0",
+    dev_dependency = True,
+)
 
-bazel_dep(name = "obazl_tools_cc", version = "2.0.0",
-          dev_dependency = True)
+# bazel_dep(name = "ocamlsdk",  version = "0.0.0")
+# register_toolchains("@ocamlsdk//toolchain/selectors/local:all")
+# register_toolchains("@ocamlsdk//toolchain/profiles:all")
 
-bazel_dep(name = "ocaml",           version = "0.0.0")
-register_toolchains("@ocaml//toolchain/selectors/local:all")
-register_toolchains("@ocaml//toolchain/profiles:all")
+bazel_dep(name = "obazl_menhir",  version = "5.0.0")
+## - if you want to explicitly depend on e.g.
+##   "@opam.menhir//bin:menhir" then you must
+##   explicitly 'use' the module. See
+##   parsing/menhir/handrolled for an example
+##   using genrule instead of custom rule 'menhir'.
+## - not needed if you use rule 'menhir'
+##   as in demo parsing/menhir/mwe
+##   In that case the above bazel_dep is sufficient.
+# uncomment the following three lines to make @opam.menhir available
 
-bazel_dep(name = "alcotest",        version = "0.0.0")
-bazel_dep(name = "base",            version = "0.0.0")
-bazel_dep(name = "cmdliner",        version = "0.0.0")
-bazel_dep(name = "core",            version = "0.0.0")
-bazel_dep(name = "core_unix",       version = "0.0.0")
-bazel_dep(name = "menhirlib",       version = "0.0.0")
-bazel_dep(name = "metapp",          version = "0.0.0")
-bazel_dep(name = "metaquot",        version = "0.0.0")
-bazel_dep(name = "ounit2",          version = "0.0.0")
-bazel_dep(name = "ppx_cold",        version = "0.0.0")
-bazel_dep(name = "ppx_compare",     version = "0.0.0")
-bazel_dep(name = "ppx_deriving",    version = "0.0.0")
-bazel_dep(name = "ppx_here",        version = "0.0.0")
-bazel_dep(name = "ppx_inline_test", version = "0.0.0")
-bazel_dep(name = "ppx_optcomp",     version = "0.0.0")
-bazel_dep(name = "ppx_sexp_conv",   version = "0.0.0")
-bazel_dep(name = "ppx_sexp_value",  version = "0.0.0")
-bazel_dep(name = "ppxlib",          version = "0.0.0")
-bazel_dep(name = "sexplib",         version = "0.0.0")
-bazel_dep(name = "stublibs",        version = "0.0.0")
-bazel_dep(name = "time_now",        version = "0.0.0")
+# opam = use_extension( "@tools_opam//extensions:opam.bzl", "opam")
+# use_repo(opam, "opam.menhir")
+# use_repo(opam, "opam.menhirLib")
 
-## distrib-pkgs, also accessible under @ocaml//lib:
-# bazel_dep(name = "compiler-libs",   version = "0.0.0")
-bazel_dep(name = "dynlink",         version = "0.0.0")
-#bazel_dep(name = "ocamldoc",        version = "0.0.0")
-#bazel_dep(name = "stdlib",          version = "0.0.0")
-bazel_dep(name = "str",             version = "0.0.0")
-bazel_dep(name = "threads",         version = "0.0.0")
-bazel_dep(name = "unix",            version = "0.0.0")
+# bazel_dep(name = "coswitch",        version = "5.0.0",
+#           dev_dependency = True)
+# bazel_dep(name = "obazl_tools_cc", version = "2.0.0",
+#           dev_dependency = True)
 
-# v 5 and up only:
-# bazel_dep(name = "runtime_events",  version = "0.0.0")
+include("//.config/opam:opam.MODULE.bazel")
 
-## to demo bundling, e.g. @menhir//bin:menhir
-bazel_dep(name = "cppo",            version = "0.0.0")
-bazel_dep(name = "menhir",          version = "0.0.0")
-
-bazel_dep(name = "zstd",          version = "1.5.5.bcr.1")
