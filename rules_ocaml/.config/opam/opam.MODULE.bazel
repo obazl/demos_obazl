@@ -1,3 +1,8 @@
+bazel_dep(name = "obazl_menhir", version = "5.0.0")
+opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
+use_repo(opam, "opam.menhir")
+use_repo(opam, "opam.menhirLib")
+
 opam.dep(
     pkgs = {
         "ocamlsdk": "",
