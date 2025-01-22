@@ -24,7 +24,7 @@ ocaml_module(
     deps = [
         ":color",
         ":greek",
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
     ],
 )
 

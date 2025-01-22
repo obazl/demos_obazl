@@ -3,9 +3,8 @@
 load("@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
-    "ocaml_binary",
-    "ppx_module",
-    "ppx_executable")
+    "ocaml_binary")
+load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
@@ -40,7 +39,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ]
 )
 
@@ -58,7 +57,7 @@ ocaml_module(
     ppx_data = [  # this is our runtime dep
         ":config.mlh" ## generated below by :genconfig
     ],
-    # ppx_print = "@rules_ocaml//ppx/print:text", # or :binary
+    # ppx_print = "@rules_ppx//print:text", # or :binary
 )
 
 ########
@@ -82,14 +81,14 @@ genrule(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
-    prologue = ["@ppx_optcomp//lib/ppx_optcomp"]
+    prologue = ["@opam.ppx_optcomp//lib/ppx_optcomp"]
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@ppxlib//lib/ppxlib"]
+    deps = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ########

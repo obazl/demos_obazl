@@ -1,0 +1,10 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        # "//distrib_pkgs/dynlink:test", # UNFINISHED
+        # "//distrib_pkgs/runtime_events:test", # UNFINISHED
+        "//distrib_pkgs/str:test",
+        "//distrib_pkgs/unix:test",
+    ]
+)

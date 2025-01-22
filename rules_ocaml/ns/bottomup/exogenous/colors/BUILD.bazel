@@ -45,7 +45,7 @@ ocaml_module(
     deps = [
         ":olibColors",
         ":colors_ns",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 

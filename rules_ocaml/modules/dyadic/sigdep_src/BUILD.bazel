@@ -11,7 +11,7 @@ ocaml_test(
     timeout = "short",
     name = "test", main = "Test")
 ocaml_module(name   = "Test",struct = "test.ml",
-    deps = [":Hello", "@ounit2//lib/ounit2"]
+    deps = [":Hello", "@opam.ounit2//lib/ounit2"]
 )
 
 ## depend directly on sig source file

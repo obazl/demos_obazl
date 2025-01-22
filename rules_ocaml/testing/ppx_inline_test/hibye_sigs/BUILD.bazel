@@ -1,0 +1,66 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocaml_module",
+    "ocaml_test",
+)
+load("@rules_ppx//build:rules.bzl",
+     "ppx_inline_test_suite",
+     "ppx_inline_test_ppx",
+     "ppx_inline_test")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+# To select a testsuite to run, pass on the cmd line:
+# --//ppxlib/ppx_inline_test/macro:t=Goodbye
+# (default: --//ppxlib/ppx_inline_test/macro:t=Hello)
+
+# string_flag(name = "t",
+#             values = ["Hello", "Goodbye"],
+#             build_setting_default = "Hello")
+# config_setting(name = "Hello", flag_values = {":t": "Hello"})
+# config_setting(name = "Goodbye", flag_values = {":t": "Goodbye"})
+
+ppx_inline_test(
+    name = "test",
+    prologue = [
+        # syntax: <testsuite>_<module>
+        "hi_hello.ml", "hi_bonjour.ml",
+        "bye_goodbye.ml", "bye_adieu.ml",
+    ],
+    testsuites = ["hi", "bye"],
+    timeout = "short",
+)
+
+ppx_inline_test_suite(
+    name    = "hi",
+    structs = ["hello.ml", "bonjour.ml"],
+    ppx     = "ppx",
+)
+
+ppx_inline_test_suite(
+    name = "bye",
+    sigs    = ["goodbye.mli", "adieu.mli"],
+    structs = ["goodbye.ml", "adieu.ml"],
+    ppx  = "ppx",
+)
+
+ppx_inline_test_ppx(name = "ppx")
+
+
+# we also build and run an ordinary executable
+ocaml_binary(
+    name = "testbin",
+    main = "@opam.ppx_inline_test//lib/runner",
+    args = select({
+        ":Hello": ["inline-test-runner", "Hello"],
+        ":Goodbye": ["inline-test-runner", "Goodbye"],
+        "//conditions:default": ["inline-test-runner", "Hello"]
+    }),
+    prologue = [
+        # NB: names are prefixed by the ppx_* name
+        "t1_hello.ml",
+        "t1_bonjour.ml",
+        "t2_adieu.ml",
+        "t2_goodbye.ml",
+    ]
+)

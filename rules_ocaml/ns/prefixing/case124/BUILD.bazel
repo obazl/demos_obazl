@@ -27,7 +27,7 @@ ocaml_module(
         ":Demo__Green",
         ":Demo__Red",
         ":Demo",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 
@@ -40,7 +40,7 @@ ocaml_module(
         "-no-alias-deps",
     ],
     deps = [
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 

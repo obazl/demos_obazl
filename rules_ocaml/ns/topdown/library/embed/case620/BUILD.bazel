@@ -24,7 +24,7 @@ ocaml_module(
     ],
     deps = [
         ":color",
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
 
         # "@bigarray//bigarray",
         # "@ocaml//bigarray",
@@ -48,7 +48,7 @@ ocaml_module(
         # "@ocaml//compiler-libs/native-toplevel",
 
         # "@ctypes//stubs"
-        # "@ppx_inline_test//lib/ppx_inline_test_inline_test"
+        # "@opam.ppx_inline_test//lib/ppx_inline_test_inline_test"
     ],
 )
 

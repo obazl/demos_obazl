@@ -1,13 +1,14 @@
 test_suite(
-    name = "test",
+    name = "ppxlib",
     tests = [
+        "//ppxlib/codeps:test",
         # "//ppx/derivers:test",
 
         "//ppxlib/genrule:test",
         "//ppxlib/hello:test",
         "//ppxlib/metaquot:test",
-        "//ppxlib/ppx_codeps:test",
-        "//ppxlib/ppx_optcomp:test",
-        "//ppxlib/rewriters/greeting:test",
+        "//ppxlib/ppx_optcomp",
+        "//ppxlib/ppx_show:test",
+        "//ppxlib/rewriters",
     ]
 )

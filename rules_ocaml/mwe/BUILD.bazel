@@ -1,5 +1,5 @@
 test_suite(
-    name = "test",
+    name = "mwe",
     tests = [
         # "//mwe/hello_archive:test",
         "//mwe/hello_dyad:test",

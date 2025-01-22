@@ -1,6 +1,6 @@
 
 test_suite(
-    name = "test",
+    name = "ppx_archives",
     tests = [
         "//aggregators/ppx_archives/case310:test",
         "//aggregators/ppx_archives/case314:test",

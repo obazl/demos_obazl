@@ -8,7 +8,9 @@ module type A_t = sig
   val amsg : string
 end
 
-module A : A_t = struct
+(* let n = 3; *)
+
+module A = struct
   let amsg = "hello a"
   let bmsg = "hello b"
   let cmsg = "hello c"

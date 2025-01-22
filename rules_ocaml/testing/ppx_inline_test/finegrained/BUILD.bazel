@@ -1,0 +1,87 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocaml_module",
+    "ocaml_test",
+)
+load("@rules_ppx//build:rules.bzl",
+     "ppx_inline_test_module",
+     "ppx_inline_test_signature",
+     "ppx_inline_test_ppx",
+     "ppx_inline_test")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+
+# To select a testsuite to run, pass on the cmd line:
+# --//ppxlib/ppx_inline_test/macro:t=Goodbye
+# (default: --//ppxlib/ppx_inline_test/macro:t=Hello)
+
+# string_flag(name = "t",
+#             values = ["Hello", "Goodbye"],
+#             build_setting_default = "Hello")
+# config_setting(name = "Hello", flag_values = {":t": "Hello"})
+# config_setting(name = "Goodbye", flag_values = {":t": "Goodbye"})
+
+ppx_inline_test(
+    name = "test",
+    prologue = [
+        "Hello", "Bonjour",
+        "Goodbye", "Adieu",
+    ],
+    testsuites = ["hi", "bye"],
+    timeout = "short",
+)
+
+ppx_inline_test_module(
+    name      = "Hello",
+    struct    = "hello.ml",
+    ppx       = "ppx",
+    testsuite = "hi"
+)
+
+ppx_inline_test_module(
+    name      = "Bonjour",
+    struct    = "bonjour.ml",
+    ppx       = "ppx",
+    testsuite = "hi"
+)
+
+# ocaml_signature would suffice if no ppx xform needed
+ppx_inline_test_signature(
+    name      = "Adieu_sig",
+    src       = "adieu.mli",
+    ppx       = "ppx",
+    testsuite = "bye"
+)
+ppx_inline_test_module(
+    name      = "Adieu",
+    struct    = "adieu.ml",
+    sig       = "Adieu_sig",
+    ppx       = "ppx",
+    testsuite = "bye"
+)
+
+ppx_inline_test_signature(
+    name      = "Goodbye_sig",
+    src       = "goodbye.mli",
+    ppx       = "ppx",
+    testsuite = "bye"
+)
+
+ppx_inline_test_module(
+    name      = "Goodbye",
+    struct    = "goodbye.ml",
+    sig       = "Goodbye_sig",
+    args      = [], # for ocaml compiler
+    deps      = [], # for compilation
+    data      = [], # runtime data deps of this module
+    ppx       = "ppx",
+    ppx_args  = [], # for ppx transformer
+    ppx_data = [], # needed by ppx transformer
+    testsuite = "bye"
+)
+
+ppx_inline_test_ppx(
+    name = "ppx"
+    # ppx_args = []
+    # ppx_runtime_data = [] # needed by ppx transformer
+)

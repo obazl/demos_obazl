@@ -18,7 +18,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = [":main", "@ounit2//lib/ounit2"],
+    deps = [":main", "@opam.ounit2//lib/ounit2"],
 )
 
 ocaml_ns_library(
@@ -33,7 +33,7 @@ ocaml_module(
     struct = "main.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
         "//ns/obazl/set300/case310:color"
     ],
 )

@@ -1,8 +1,11 @@
 test_suite(
-    name = "test",
+    name = "ppx_inline_test",
     tests = [
         "//testing/ppx_inline_test/basic:test",
         "//testing/ppx_inline_test/compound:test",
         "//testing/ppx_inline_test/falsepositive:test",
+        "//testing/ppx_inline_test/finegrained:test",
+        "//testing/ppx_inline_test/hibye:test",
+        "//testing/ppx_inline_test/hibye_sigs:test",
     ]
 )

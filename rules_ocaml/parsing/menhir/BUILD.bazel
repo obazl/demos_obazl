@@ -1,11 +1,11 @@
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
 
 test_suite(
-    name = "test",
+    name = "menhir",
     tests = [
+        "//parsing/menhir/handrolled:test",
         "//parsing/menhir/mwe:test",
         "//parsing/menhir/ns-topdown:test",
-        "//parsing/menhir/handrolled:test",
         "//parsing/menhir/token:test"
     ]
 )

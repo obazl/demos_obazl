@@ -49,7 +49,7 @@ ocaml_module(
     ## so we must move the select to a filegroup
     struct = ":fg_test",
     deps = [":mygroup",
-            "@ounit2//lib/ounit2"]
+            "@opam.ounit2//lib/ounit2"]
 )
 
 filegroup(
@@ -67,7 +67,7 @@ ocaml_module(
     struct = ":fg_mygroup",
     sig = "group_cmi",
     deps = [
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
     ],
 )
 

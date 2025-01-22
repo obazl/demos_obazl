@@ -23,7 +23,7 @@ ocaml_module(
         ":Bar__Blue",
         ":Bar__Green",
         ":Bar__Red",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 

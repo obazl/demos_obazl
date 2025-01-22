@@ -1,6 +1,6 @@
 
 test_suite(
-    name = "test",
+    name = "ppx_libraries",
     tests = [
         "//aggregators/ppx_libraries/case410:test",
         "//aggregators/ppx_libraries/case414:test",

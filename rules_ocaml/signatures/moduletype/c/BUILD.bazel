@@ -8,14 +8,16 @@ load(
 ocaml_test(name = "test", main = ":Test", timeout="short")
 
 ocaml_module(name   = "Test", struct = "testbzl.ml",
-             deps = [":A1", ":A2", "@ounit2//lib/ounit2"])
+             deps = [":A1", ":A2", "@opam.ounit2//lib/ounit2"])
 
 ocaml_module(name = "A2",
              struct = "a.ml", # <= OBazl will symlink this to <work>/a2.ml
              sig = ":A2_cmi")
 ocaml_signature(name = "A2_cmi", src  = "a2.mli", open=[":B_cmi", ":C_cmi"])
 
-ocaml_module(name = "A1", struct = "a.ml", sig = ":A1_cmi")
+ocaml_module(name = "A1",
+             struct = "a.ml", # <= OBazl will symlink this to <work>/a1.ml
+             sig = ":A1_cmi")
 ocaml_signature(name = "A1_cmi", src  = "a1.mli", open=[":B_cmi", ":C_cmi"])
 
 ocaml_signature(name = "B_cmi", src  = "b.mli")

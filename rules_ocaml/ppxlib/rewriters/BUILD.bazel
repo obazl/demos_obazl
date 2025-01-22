@@ -1,7 +1,7 @@
 test_suite(
-    name = "test",
+    name = "rewriters",
     tests = [
-        # "//ppx/rewriters/get_env:test",
-        "//ppx/rewriters/greeting:test",
+        # "//ppxlib/rewriters/get_env:test",
+        "//ppxlib/rewriters/greeting:test",
     ]
 )

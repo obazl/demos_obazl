@@ -7,9 +7,9 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_test",
-    "ppx_executable",
-)
+    "ocaml_test")
+load("@rules_ppx//build:rules.bzl", "ppx_executable")
+
 # load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 ###########
@@ -24,7 +24,7 @@ ocaml_module(
     struct = "test.ml",
     ppx  = "ppx.exe",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = ["@ounit2//lib/ounit2"]
+    deps = ["@opam.ounit2//lib/ounit2"]
 )
 
 ###############
@@ -44,14 +44,14 @@ ppx_executable(
 ocaml_module(
     name      = "ppx_greeting",
     struct    = ":ppx_greeting.ml",
-    deps = ["@ppxlib//lib/ppxlib"]
+    deps = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ###########
 ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@ppxlib//lib/ppxlib"]
+    deps = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ########

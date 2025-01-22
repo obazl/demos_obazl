@@ -3,54 +3,54 @@ load(
     "ocaml_binary",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
-    "ppx_module",
 )
+load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 LIBNAME="Hello"
+
+# "Code using this extension must be compiled and linked using the ppx_inline_test.runtime-lib library"
+# i.e. ppx_inline_test.runtime-lib is a codep.  This is handled transparently by the module
+# @opam.ppx_inline_test//lib/ppx_inline_test, which lists as a ppx_codep.
+
+# "Tests are only executed when both these conditions are met:
+#  * the executable containing the tests is linked with ppx_inline_test.runner.lib
+#  * the executable containing the tests is called with command line arguments:
+#        your.exe inline-test-runner libname [options]"
+
+## WARNING: the module under test was built with
+## -inline-test-lib=="Hello"; if you pass anything else with
+## inline-test-runner, running this test executable will
+## report success, because it will not run the test.
+
+## omitting -inline-test-lib altogether gives: "You are doing something
+## unexpected with the tests. No tests have been run. You
+## should use the inline_tests_runner script to run tests."
 
 ocaml_test(
     name = "test",
     args = [
-        # "Tests are only executed when both these conditions are met:
-        #  * the executable containing the tests is linked with ppx_inline_test.runner.lib
-        #  * the executable containing the tests is called with command line arguments:
-        #        your.exe inline-test-runner libname [options]"
-
-        ## WARNING: the module under test was built with
-        ## -inline-test-lib=="Hello"; if you pass anything else with
-        ## inline-test-runner, running this test executable will
-        ## report success, because it will not run the test.
-
         "inline-test-runner", LIBNAME,
-
-        ## omitting it altogether gives: "You are doing something
-        ## unexpected with the tests. No tests have been run. You
-        ## should use the inline_tests_runner script to run tests."
-
         # "-list-test-names",
         # "-log",
     ],
     # opts = ["-verbose"],
 
     prologue = [
-        "@ppx_inline_test//lib/runner/lib",
+        "@opam.ppx_inline_test//lib/runner/lib",
         ":Hello",
     ],
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
-    main = ":Runner",
-
+    # main = ":Runner",
+    main = "@opam.ppx_inline_test//lib/runner",
     timeout = "short"
 )
 
-ocaml_module(
-    name   = "Runner",
-    struct = "runner.ml",
-    deps   = [
-        "@ppx_inline_test//lib/runtime-lib",
-    ],
-)
+# ocaml_module(
+#     name   = "Runner",
+#     struct = "runner.ml",
+#     deps   = [ ],
+# )
 
 ocaml_module(
     name = "Hello",
@@ -58,31 +58,29 @@ ocaml_module(
     ppx_args = [
         "-inline-test-lib", LIBNAME
     ],
-    ppx_print = "@rules_ocaml//ppx/print:text!",
+    ppx_print = "@rules_ppx//print:text",
     struct = "hello.ml",
-    deps = [
-        "@ppx_inline_test//lib/runtime-lib",
-    ]
+    deps = [ ]
 )
 
 ################################################################
 ppx_executable(
     name = "ppx.exe",
     prologue = [
-        "@ppx_inline_test//lib/ppx_inline_test",
+        "@opam.ppx_inline_test//lib/ppx_inline_test",
     ],
     main = ":Driver",
     # ppx_codeps = [
-    #     "@ppx_inline_test//lib/runtime-lib",
+    #     "@opam.ppx_inline_test//lib/runtime-lib",
     # ]
 )
 
 #############
-ppx_module(
+ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
-    deps = ["@ppxlib//lib/ppxlib"],
+    deps = ["@opam.ppxlib//lib/ppxlib"],
 )
 
 ########

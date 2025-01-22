@@ -21,7 +21,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
         ":Hello",
     ],
 )
@@ -38,5 +38,5 @@ ocaml_module(
         # "-dtypedtree",
         # "-dlambda",
         # "-dclambda",
-    ]
+    ],
 )

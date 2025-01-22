@@ -1,5 +1,5 @@
 test_suite(
-    name = "test",
+    name = "archive",
     tests = [
         "//ns/topdown/archive/case100:test",
         "//ns/topdown/archive/case110:test",

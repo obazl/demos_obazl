@@ -12,5 +12,5 @@ ocaml_test(
         "//ns/obazl/set700/case740/color",
         # "//ns/obazl/set700/case740/color:kolor",
     ],
-    deps = ["@ounit2//lib/ounit2"]
+    deps = ["@opam.ounit2//lib/ounit2"]
 )

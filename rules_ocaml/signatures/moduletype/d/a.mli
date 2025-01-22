@@ -8,6 +8,9 @@ module type A_t = sig
   val amsg : string
 end
 
+(* val n : int *)
+
+(* module type A_t *)
 (* declare a token of the module type *)
 module A : A_t
 

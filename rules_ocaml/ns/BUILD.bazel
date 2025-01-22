@@ -1,12 +1,12 @@
 
 test_suite(
-    name = "test",
+    name = "ns",
     tests = [
         "//ns/bottomup:test",
         "//ns/new:test",
         "//ns/prefixing:test",
         "//ns/srcindirect:test",
-        "//ns/topdown:test",
+        "//ns/topdown",
 
         # "//ns/udr:test"
 

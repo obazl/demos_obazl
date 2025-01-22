@@ -5,15 +5,13 @@ load("@rules_ocaml//build:rules.bzl",
      "ocaml_ns_archive",
      "ocaml_module",
      "ocaml_signature",
-     "ppx_executable",
-     "ppx_module",
 )
-
+load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 LIBNAME = "PPX_INLINE_TESTS"
 PPX_ARGS = ["-inline-test-lib", LIBNAME]
 DEPS_1 = [
-    "@core//lib/core",
+    "@opam.core//lib/core",
     "@async//lib/async"
 ]
 
@@ -287,11 +285,11 @@ ppx_executable(
 )
 
 #############
-ppx_module(
+ocaml_module(
     name       = "Ppx_driver",
     struct     = ":ppx_driver.ml",
     visibility = ["//visibility:public"],
-    deps       = ["@ppxlib//lib/ppxlib"],
+    deps       = ["@opam.ppxlib//lib/ppxlib"],
 )
 
 ########

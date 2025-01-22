@@ -27,8 +27,8 @@ ocaml_module(
     ],
     deps = [
         ":Lexer",
-        "@core//lib/core",
-        "@core_unix//lib/command_unix"
+        "@opam.core//lib/core",
+        "@opam.core_unix//lib/command_unix"
     ]
 )
 

@@ -20,7 +20,7 @@ ocaml_module(
     #     "-w", "-31"  ## files x and y both define a module named Z
     # ],
     deps = [
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
         ":Main"
     ],
 )
@@ -32,7 +32,7 @@ ocaml_module(
     #     "-w", "-31"  ## files x and y both define a module named Z
     # ],
     deps = [
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
         ":Main"
     ],
 )

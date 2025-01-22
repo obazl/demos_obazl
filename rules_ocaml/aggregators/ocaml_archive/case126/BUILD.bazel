@@ -12,14 +12,14 @@ ocaml_test(
     timeout = "short",
     name = "test",
     main = "Test",
-    # prologue = ["@ounit2//lib/ounit2"]
+    # prologue = ["@opam.ounit2//lib/ounit2"]
 )
 
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
         ":Main",
     ],
 )

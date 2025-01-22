@@ -1,8 +1,8 @@
 test_suite(
-    name = "test",
+    name = "testing",
     tests = [
         "//testing/alcotest:test",
         "//testing/ounit2:test",
-        "//testing/ppx_inline_test:test",
+        "//testing/ppx_inline_test",
     ]
 )

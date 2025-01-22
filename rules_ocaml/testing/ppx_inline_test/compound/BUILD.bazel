@@ -3,8 +3,8 @@ load(
     "ocaml_binary",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
 )
+load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 # In this example we have three modules, Main, Hello, and Goodbye,
 # each compiled with a different ppx_inline_test "libname". This
@@ -48,10 +48,10 @@ ocaml_test(
     ## puts 'main' last
     main = ":Runner",
     prologue = [
-        "@ppx_inline_test//lib/runner",
+        "@opam.ppx_inline_test//lib/runner",
         ":Main",
 
-        "@time_now//lib/time_now" ## FIXME: this should automatically be added
+        "@opam.time_now//lib/time_now" ## FIXME: this should automatically be added
     ],
     timeout = "short"
 )
@@ -60,7 +60,7 @@ ocaml_module(
     name   = "Runner",
     struct = "runner.ml",
     deps   = [
-        "@ppx_inline_test//lib/runtime-lib",
+        "@opam.ppx_inline_test//lib/runtime-lib",
     ],
 )
 
@@ -98,15 +98,15 @@ ppx_executable(
     main = ":Driver",
     opts = [],
     prologue = [
-        "@ppx_inline_test//lib/ppx_inline_test",
+        "@opam.ppx_inline_test//lib/ppx_inline_test",
         ## NB! ppx_inline_test itself depends on the runtime-lib
-        "@ppx_inline_test//lib/runtime-lib",
+        "@opam.ppx_inline_test//lib/runtime-lib",
     ],
     ppx_codeps = [
         ## FIXME: these are listed as codeps in the ppx_inline_test
         ## pkg, so we should not need to list them here.
-        "@ppx_inline_test//lib/runtime-lib",
-        "@ppx_inline_test//lib/config",
+        "@opam.ppx_inline_test//lib/runtime-lib",
+        "@opam.ppx_inline_test//lib/config",
     ]
 )
 
@@ -115,7 +115,7 @@ ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
-    deps = ["@ppxlib//lib/ppxlib"],
+    deps = ["@opam.ppxlib//lib/ppxlib"],
 )
 
 ########

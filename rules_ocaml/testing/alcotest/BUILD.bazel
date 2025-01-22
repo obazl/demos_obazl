@@ -19,7 +19,7 @@ ocaml_test(
 ocaml_module(
     name   = "Test_alcotest",
     struct = "test_alcotest.ml",
-    deps   = ["@alcotest//lib/alcotest"]
+    deps   = ["@opam.alcotest//lib/alcotest"]
 )
 
 ###########
@@ -27,7 +27,7 @@ ocaml_test(
     name = "hellotest",
     main = "Test_hello",
     prologue = [
-        "@alcotest//lib/alcotest",
+        "@opam.alcotest//lib/alcotest",
     ],
     timeout = "short"
 )
@@ -36,7 +36,7 @@ ocaml_module(
     name   = "Test_hello",
     struct = "test_hello.ml",
     deps = [
-        "@alcotest//lib/alcotest",
+        "@opam.alcotest//lib/alcotest",
         ":Hello",
     ],
 )

@@ -20,7 +20,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":a", "@ounit2//lib/ounit2"],
+    deps = [":a", "@opam.ounit2//lib/ounit2"],
 )
 
 # How to support articulated module paths like A.B.Color

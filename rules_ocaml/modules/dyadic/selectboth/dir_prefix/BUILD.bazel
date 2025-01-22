@@ -22,7 +22,7 @@ ocaml_module(
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
     deps = [
         ":Hello",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 
@@ -90,7 +90,7 @@ ocaml_test(name = "test1_linux_en", main = "Test1_linux_en")
 ocaml_module(name   = "Test1_linux_en", struct = "test_linux_en.ml",
              module_name = "Test1_linux_en",
              opts = ["-w", "-27"],
-             deps = [":Hello_test1_linux_en", "@ounit2//lib/ounit2"]
+             deps = [":Hello_test1_linux_en", "@opam.ounit2//lib/ounit2"]
 )
 ocaml_module(
     name   = "Hello_test1_linux_en",
@@ -103,7 +103,7 @@ ocaml_test(name = "test2_linux_en", main = "Test2_linux_en")
 ocaml_module(name   = "Test2_linux_en", struct = "test_linux_en.ml",
              module_name = "Test2_linux_en",
              opts = ["-w", "-27"],
-             deps = [":Hello_test2_linux_en", "@ounit2//lib/ounit2"]
+             deps = [":Hello_test2_linux_en", "@opam.ounit2//lib/ounit2"]
 )
 ocaml_module(
     name   = "Hello_test2_linux_en",
@@ -115,7 +115,7 @@ ocaml_test(name = "test1_macos_en", main = "Test1_macos_en")
 ocaml_module(name   = "Test1_macos_en", struct = "test_macos_en.ml",
              module_name = "Test1_macos_en",
              opts = ["-w", "-27"],
-             deps = [":Hello_test1_macos_en", "@ounit2//lib/ounit2"]
+             deps = [":Hello_test1_macos_en", "@opam.ounit2//lib/ounit2"]
 )
 ocaml_module(name   = "Hello_test1_macos_en",
              module_name = "Hello_test1_macos_en",
@@ -127,7 +127,7 @@ ocaml_test(name = "test2_macos_en", main = "Test2_macos_en")
 ocaml_module(name   = "Test2_macos_en", struct = "test_macos_en.ml",
              module_name = "Test2_macos_en",
              opts = ["-w", "-27"],
-             deps = [":Hello_test2_macos_en", "@ounit2//lib/ounit2"]
+             deps = [":Hello_test2_macos_en", "@opam.ounit2//lib/ounit2"]
 )
 ocaml_module(name   = "Hello_test2_macos_en",
     sig    = "//modules/dyadic/selectboth/dir_prefix/sig/en:Hello",

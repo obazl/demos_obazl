@@ -1,6 +1,6 @@
 
 test_suite(
-    name = "test",
+    name = "ocaml_library",
     tests = [
         "//aggregators/ocaml_library/case210:test",
         "//aggregators/ocaml_library/case214:test",

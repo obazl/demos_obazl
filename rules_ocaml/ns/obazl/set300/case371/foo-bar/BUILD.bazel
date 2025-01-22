@@ -15,7 +15,7 @@ ns_env(
 ocaml_test(
     name = "test",
     main = "test.ml",
-    deps = [":color", "@ounit2//lib/ounit2],
+    deps = [":color", "@opam.ounit2//lib/ounit2],
 )
 
 ocaml_ns_archive(

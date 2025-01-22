@@ -1,7 +1,7 @@
 test_suite(
-    name = "test",
+    name = "topdown",
     tests = [
-        "//ns/topdown/archive:test",
-        "//ns/topdown/library:test",
+        "//ns/topdown/archive",
+        "//ns/topdown/library",
     ]
 )

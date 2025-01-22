@@ -1,13 +1,13 @@
 load(
     "@rules_ocaml//build:rules.bzl",
-    "ppx_module",
+    "ocaml_module",
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "driver",
     struct = ":ppxlib_driver_wrapper.ml",
-    deps   = ["@ppxlib//lib/ppxlib"],
+    deps   = ["@opam.ppxlib//lib/ppxlib"],
     opts = ["-linkall"],
     visibility = ["//visibility:public"]
 )

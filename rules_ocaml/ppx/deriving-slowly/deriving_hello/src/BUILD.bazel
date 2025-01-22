@@ -10,18 +10,18 @@ load(
 ppx_executable(
     name = "ppx.exe",
     main = ":Deriving_hello",
-    # deps = [":ppx_color", "@ppxlib//lib/ppxlib"]
+    # deps = [":ppx_color", "@opam.ppxlib//lib/ppxlib"]
 )
 
 ocaml_module(
     name   = "Deriving_hello",
     struct = "deriving_hello.ml",
-    ppx = "@ppxlib//metaquot:exe",
-    ppx_print = "@rules_ocaml//ppx/print:text",
+    ppx = "@opam.ppxlib//metaquot:exe",
+    ppx_print = "@rules_ppx//print:text",
     # opts = ["-w", "-27"],
     deps = [
         "@base//base",
-        "@ppxlib//lib/ppxlib"
+        "@opam.ppxlib//lib/ppxlib"
     ]
 )
 

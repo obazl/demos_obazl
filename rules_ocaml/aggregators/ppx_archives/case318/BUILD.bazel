@@ -7,9 +7,8 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_test",
-    "ppx_executable",
-    "ppx_module",
 )
+load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 ocaml_test(
     timeout = "short",
@@ -22,10 +21,10 @@ ocaml_module(
     struct = "test.ml",
     ppx  = ":ppx.exe",
     # ppx_args = ["-reconcile"],
-    ppx_print = "@rules_ocaml//ppx/print:text!",
+    ppx_print = "@rules_ppx//print:text",
     # ppx_verbose = True,
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
-    deps = ["@ounit2//lib/ounit2"]
+    deps = ["@opam.ounit2//lib/ounit2"]
 )
 
 ###############
@@ -42,7 +41,7 @@ ppx_executable(
         # ":ppx_driver",
         # ":ppx_color_driver",
         ":Ppx_greek_driver",
-        "@ppxlib//lib/ppxlib"
+        "@opam.ppxlib//lib/ppxlib"
     ],
 )
 
@@ -100,21 +99,21 @@ ocaml_module(
     name      = "Ppx_red",
     struct    = "ppx_red.ml",
     opts = ["-linkall"],
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ocaml_module(
     name      = "Ppx_green",
     struct    = "ppx_green.ml",
     opts = ["-linkall"],
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ocaml_module(
     name      = "Ppx_blue",
     struct    = "ppx_blue.ml",
     opts = ["-linkall"],
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ###########
@@ -150,29 +149,28 @@ ocaml_module(
     name      = "Ppx_alpha",
     opts = ["-linkall"],
     struct    = "ppx_alpha.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ocaml_module(
     name      = "Ppx_beta",
     opts = ["-linkall"],
     struct    = "ppx_beta.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ocaml_module(
     name      = "Ppx_gamma",
     opts = ["-linkall"],
     struct    = "ppx_gamma.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
-################################################################
-###########
-ppx_module(
+#############
+ocaml_module(
     name = "Runner",
     struct = ":ppxlib_runner.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ########

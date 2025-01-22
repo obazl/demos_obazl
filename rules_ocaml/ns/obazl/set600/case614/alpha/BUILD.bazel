@@ -19,7 +19,7 @@ ocaml_module(
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps = [":Alpha", "@ounit2//lib/ounit2"],
+    deps = [":Alpha", "@opam.ounit2//lib/ounit2"],
 )
 
 #################

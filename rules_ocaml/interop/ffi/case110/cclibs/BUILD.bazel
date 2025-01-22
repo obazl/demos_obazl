@@ -50,7 +50,7 @@ cc_library(
         # "-Iexternal/ocaml~0.0.0/lib/c",
         # "-lcamlrun"
     ],
-    deps = ["@ocaml//lib/sdk"],
+    deps = ["@ocamlsdk//lib/ffi"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
 
@@ -68,13 +68,13 @@ cc_binary(
         "alpha.h",
     ],
     deps = [
-        "@ocaml//lib/sdk",
+        "@ocamlsdk//lib/ffi",
         "@zstd",
         #"@ocaml//runtime:camlrun",  # libcamlrun.a
         #"@ocaml//runtime:camlrun_pic", # libcamlrun_pic.a
 
         #"@ocaml//runtime:camlrun_shared", # libcamlrun_shared.so
-        "@ocaml//runtime:asmrun_shared", # libasmrun_shared.so
+        # "@ocaml//runtime:asmrun_shared", # libasmrun_shared.so
     ],
     # data = ["@ocaml//runtime:camlrun_shared"],
     visibility = ["//interop/ffi/case110:__pkg__"],

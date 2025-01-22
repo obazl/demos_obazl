@@ -1,12 +1,8 @@
 test_suite(
     name = "test",
     tests = [
+        "//ppx/broken:test",
         "//ppx/derivers:test",
-        "//ppx/genrule:test",
-        "//ppx/hello:test",
-        "//ppx/metaquot:test",
-        "//ppx/ppx_codeps:test",
-        "//ppx/ppx_optcomp:test",
-        "//ppx/rewriters/greeting:test",
+        "//ppx/deriving-slowly:test",
     ]
 )

@@ -23,7 +23,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":libCMYK",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 

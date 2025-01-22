@@ -1,5 +1,5 @@
 test_suite(
-    name = "test",
+    name = "ppx_optcomp",
     tests = [
         "//ppxlib/ppx_optcomp/fixed:test",
         "//ppxlib/ppx_optcomp/gen:test"

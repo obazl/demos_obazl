@@ -27,7 +27,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 
@@ -40,7 +40,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 

@@ -8,13 +8,13 @@ source file, and we need to run `Ppx_inline_test_lib.Runtime.exit ()`
 last. The demos put the latter in `runner.ml` and link it last by
 passing it to the `main` attribute of `ocaml_test`.
 
-NOTE: that's what  "@ppx_inline_test//lib/runner" does, use it instead.
+NOTE: that's what  "@opam.ppx_inline_test//lib/runner" does, use it instead.
 
 Tests are only executed when both these conditions are met:
 
 * Code using this extension must be compiled and linked using the
   `ppx_inline_test.runtime-lib` library.
-  (`@ppx_inline_test//lib/runtime-lib`)
+  (`@opam.ppx_inline_test//lib/runtime-lib`)
 
 * the module under test is compiled with `-inline-test-lib <libname>`.
 ** This tags the ppx inline tests  in the module with `<libname>`.
@@ -22,7 +22,7 @@ Tests are only executed when both these conditions are met:
 * the executable linked with the modules under test is linked with
   `ppx_inline_test.runner.lib` (see `runtime lib` below for more on this)
 
-    ppx_link_codeps = ["@ppx_inline_test//lib/runner/lib"]
+    ppx_link_codeps = ["@opam.ppx_inline_test//lib/runner/lib"]
 
 
 * the executable (e.g. `your.exe`) linked with the modules under test
@@ -37,7 +37,7 @@ is called with command line arguments: 'your.exe inline-test-runner
 should be called (to exit with an error and a summary of the number of
 failed tests if there were errors or exit normally otherwise)."
 
-The lib provides this precompiled: `@ppx_inline_test//lib/runner`
+The lib provides this precompiled: `@opam.ppx_inline_test//lib/runner`
 
 
 WARNING: If you pass the wrong <libname> on the command line (as arg

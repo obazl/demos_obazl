@@ -14,7 +14,7 @@ ocaml_module(
     name   = "Main",
     struct = "main.ml",
     deps = [
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
         "@ocaml//lib/runtime_events"
     ],
 )

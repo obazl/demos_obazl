@@ -3,14 +3,14 @@ some of which carry their own codeps. Dep structure:
 
 std deps:
 
-* "@ppx_sexp_conv//lib/ppx_sexp_conv",
-**   subdeps std: "@ppx_sexp_conv//lib/expander", "@ppxlib//lib/ppxlib", "@ppxlib//lib/ast",
+* "@opam.ppx_sexp_conv//lib/ppx_sexp_conv",
+**   subdeps std: "@opam.ppx_sexp_conv//lib/expander", "@opam.ppxlib//lib/ppxlib", "@opam.ppxlib//lib/ast",
 
-* "@ppx_deriving//lib/ord",
-* "@ppx_deriving//lib/show",
+* "@opam.ppx_deriving//lib/ord",
+* "@opam.ppx_deriving//lib/show",
 
-ppx_codep: "@sexplib//lib/sexplib",
-subdeps  "@ocaml//bigarray", "@parsexp//parsexp", "@sexplib0//sexplib0",
+ppx_codep: "@opam.sexplib//lib/sexplib",
+subdeps  "@ocaml//bigarray", "@parsexp//parsexp", "@opam.sexplib0//sexplib0",
 
 
 `bazel query 'deps(ppxlib/ppx_codeps:ppx.exe)' --output package --notool_deps --noimplicit_deps`
@@ -19,11 +19,11 @@ Show only deps with non-empty ppx_codeps attr:
 
 `bazel query 'attr(ppx_codeps, ".{3,}", deps(ppxlib/ppx_codeps:ppx.exe))' --output package --notool_deps --noimplicit_deps`
 
-This gives us: @ppx_deriving//lib/api, @ppx_sexp_conv//lib/expander, ppxlib/ppx_codeps
+This gives us: @opam.ppx_deriving//lib/api, @opam.ppx_sexp_conv//lib/expander, ppxlib/ppx_codeps
 
 Asking for the deps of these (except for ppxlib//ppx_codeps)  gives us the complete list of codeps (except for those on ppxlib/ppx_codeps).
 
-`$ bazel query 'deps(@ppx_deriving//lib/api + @ppx_sexp_conv//lib/expander)'`
+`$ bazel query 'deps(@opam.ppx_deriving//lib/api + @opam.ppx_sexp_conv//lib/expander)'`
 
 Why? Because whatever a codep depends on becomes a codep. If you
 inject a dependency on A, and A depends on B and C, then you've ipso
@@ -34,17 +34,17 @@ facto injected an _indirect_ dependency on B and C.
 `bazel run @obazl//inspect:providers --@obazl//tgt=<TGT>`
 
 We can use this to verify that codeps are being propagated correctly.
-For example, @ppx_sexp_conv//lib/expander is an indirect std dep of our
+For example, @opam.ppx_sexp_conv//lib/expander is an indirect std dep of our
 target (ppxlib/ppx_codeps). It has two codeps, so finding the deps of
 those to will give us the list of codeps we expect
-@ppx_sexp_conv//lib/expander to carry:
+@opam.ppx_sexp_conv//lib/expander to carry:
 
-`bazel query 'deps(@ppx_sexp_conv//lib/runtime-lib + @sexplib0)'`
+`bazel query 'deps(@opam.ppx_sexp_conv//lib/runtime-lib + @opam.sexplib0)'`
 
-outputs `@ppx_sexp_conv//lib/runtime-lib`, `@sexplib0//` - no further
+outputs `@opam.ppx_sexp_conv//lib/runtime-lib`, `@opam.sexplib0//` - no further
 deps. We verify this by hand: the former depends on the latter, the
 latter has no deps. So we expect these two to be the only codeps of
-@ppx_sexp_conv//lib/expander.
+@opam.ppx_sexp_conv//lib/expander.
 
 
 # You can build each target:

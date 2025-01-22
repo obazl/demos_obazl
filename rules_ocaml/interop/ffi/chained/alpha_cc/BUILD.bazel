@@ -38,6 +38,6 @@ cc_library(
         "alpha.c",
         "alpha.h",
     ],
-    deps = ["@ocaml//lib/sdk"],
+    deps = ["@ocaml//lib/ffi"],
     visibility = ["//interop/ffi/simple:__pkg__"],
 )

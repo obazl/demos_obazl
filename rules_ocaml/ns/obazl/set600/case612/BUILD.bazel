@@ -21,6 +21,6 @@ ocaml_module(
     ],
     deps = [
         "//ns/obazl/set600/case612/src:alpha",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )

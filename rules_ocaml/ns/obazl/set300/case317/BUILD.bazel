@@ -22,7 +22,7 @@ ocaml_test(
     name = "test",
     main = "test.ml",
     opts = ["-w","-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":color", "@ounit2//lib/ounit2"],
+    deps = [":color", "@opam.ounit2//lib/ounit2"],
 )
 
 # This will generate a main ns module, which doubles as a resolver

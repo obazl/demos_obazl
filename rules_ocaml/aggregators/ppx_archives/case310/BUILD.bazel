@@ -3,9 +3,8 @@ load(
     "ocaml_library",
     "ocaml_module",
     "ocaml_test",
-    "ppx_module",
-    "ppx_executable",
 )
+load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 ocaml_test(
     timeout = "short",
@@ -17,8 +16,8 @@ ocaml_module(
     name      = "Test",
     struct    = "test.ml",
     ppx       = ":ppx.exe",
-    ppx_print = "@rules_ocaml//ppx/print:text!",
-    deps      = ["@ounit2//lib/ounit2"]
+    ppx_print = "@rules_ppx//print:text",
+    deps      = ["@opam.ounit2//lib/ounit2"]
 )
 
 ###############
@@ -27,12 +26,12 @@ ppx_executable(
     main = ":ppxlib_runner",
     prologue = [
         ":driver",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name      = "driver",
     struct    = "driver.ml",
     deps      = [":ppx_color"],
@@ -50,29 +49,29 @@ ocaml_library(
     ],
 )
 
-ppx_module(
+ocaml_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
-ppx_module(
+ocaml_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
-ppx_module(
+ocaml_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    deps      = ["@ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib/ppxlib"]
 )
 
 ########

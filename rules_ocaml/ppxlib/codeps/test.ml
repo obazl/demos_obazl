@@ -2,9 +2,9 @@ open OUnit2
 
 let test1 _ = assert_equal "((1 one)(2 two))" (Hello.x)
 
-(* the %derive extensions here (from @ppx_deriving//lib/ord and
-   @ppx_deriving//lib/show) induce a compile-time dependency on
-   @ppx_sexp_conv//lib/runtime-lib *)
+(* the %derive extensions here (from @opam.ppx_deriving//lib/ord and
+   @opam.ppx_deriving//lib/show) induce a compile-time dependency on
+   @opam.ppx_sexp_conv//lib/runtime-lib *)
 let test_with_ppx _ =
   let sort = List.sort [%derive.ord: int * int] in
   assert_equal ~printer:[%derive.show: (int * int) list]

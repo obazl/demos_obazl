@@ -116,7 +116,7 @@ ocaml_module(
         "-linkall",
         "-no-opaque",
     ],
-    deps = [":Config", "@ounit2//lib/ounit2"]
+    deps = [":Config", "@opam.ounit2//lib/ounit2"]
 )
 
 #############

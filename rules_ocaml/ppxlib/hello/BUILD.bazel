@@ -26,9 +26,12 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_test",
-    "ppx_module",
-    "ppx_executable")
+    "ocaml_test")
+
+load("@rules_ppx//build:rules.bzl",
+     "ppx_module",
+     "ppx_executable",
+     "ppx_transform")
 
 ###########
 ocaml_test(
@@ -44,50 +47,69 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",  # the transformed and compiled test code
-        "@ounit2//lib/ounit2",
+        "@opam.ounit2//lib/ounit2",
     ],
 )
 
 #############
-ocaml_module(
-    name = "Hello",
-    opts = [
-        # "-verbose",  ## to print the expanded ppx transform command, etc.
+# ocaml_module(
+#     name = "Hello",
+#     opts = [
+#         # "-verbose",  ## to print the expanded ppx transform command, etc.
 
-        # "-dsource"
-        # or pass: --@rules_ocaml//cfg/module:opts=-dsource
-    ],
+#         # "-dsource"
+#         # or pass: --@rules_ocaml//cfg/module:opts=-dsource
+#     ],
+#     # ppx = ":ppx.exe",
+#     # ppx_debug = ["dsource"],
+#     # struct = "hello.ml",
+#     # ppx_print = "@rules_ppx//print:text",
+#     deps = [  # see below, ppx_codeps
+#         # "@opam.sexplib//lib/sexplib",
+#         # "@opam.metapp//lib/metapp"
+#     ],
+#     struct = "hello_ppx"
+# )
+
+ppx_module(
+    name = "Hello",
     ppx = ":ppx.exe",
-    # ppx_debug = ["dsource"],
     struct = "hello.ml",
-    # ppx_print = "@rules_ocaml//ppx/print:text!",
-    deps = [  # see below, ppx_codeps
-        # "@sexplib//lib/sexplib",
-        # "@metapp//lib/metapp"
-    ],
+    # print = "@rules_ppx//print:text!",
+    # deps = [  # see below, ppx_codeps
+    #     # "@opam.sexplib//lib/sexplib",
+    #     # "@opam.metapp//lib/metapp"
+    # ],
 )
+
+# ppx_transform(
+#     name = "hello_ppx",
+#     src = "hello.ml",
+#     ppx = ":ppx.exe",
+#     # print = "@rules_ppx//print:text"
+# )
 
 ###############
 ppx_executable(
     name = "ppx.exe",
     main = ":Ppx_runner",  ## hand-rolled, see below
     prologue = [
-        "@ppx_sexp_value//lib/ppx_sexp_value", #contains handler for `[%sexp ]`
+        "@opam.ppx_sexp_value//lib/ppx_sexp_value", #contains handler for `[%sexp ]`
         # tmp, till bug fixed:
-        "@ppx_here//lib/runtime-lib",
-        "@ppx_sexp_conv//lib/runtime-lib"
+        "@opam.ppx_here//lib/runtime-lib",
+        "@opam.ppx_sexp_conv//lib/runtime-lib"
     ],
     ppx_codeps = [
-        "@sexplib//lib/sexplib",
+        "@opam.sexplib//lib/sexplib",
     ],
 )
 
 ###########
-ppx_module(
+ocaml_module(
     name = "Ppx_runner",
     struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
-    deps = ["@ppxlib//lib/ppxlib"],
+    deps = ["@opam.ppxlib//lib/ppxlib"],
 )
 
 ########

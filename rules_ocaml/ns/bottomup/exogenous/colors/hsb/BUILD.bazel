@@ -51,7 +51,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":olibHSB",
-        "@ounit2//lib/ounit2"
+        "@opam.ounit2//lib/ounit2"
     ],
 )
 
