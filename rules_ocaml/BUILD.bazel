@@ -1,5 +1,26 @@
 load("@tools_opam//build:rules.bzl", "opam_pkg")
 
+test_suite(
+    name = "test",
+    tests = [
+        "//aggregators:test",
+        "//algebra/group:test",
+        "//configuration:test",
+        "//deps:test",
+        "//distrib_pkgs:test",
+        "//filegen:test",
+        "//interop:test",
+        "//modules:test",
+        "//mwe",
+        "//ns",
+        "//parsing",
+        "//ppxlib",
+        "//signatures:test",
+        "//testing",
+    ]
+)
+
+##########################
 opam_pkg(
     out  = "project.opam",
     name = "project",
@@ -77,25 +98,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tristique hendreri
 )
 
 ################################################################
-test_suite(
-    name = "test",
-    tests = [
-        "//aggregators:test",
-        "//algebra/group:test",
-        "//configuration:test",
-        "//deps:test",
-        "//distrib_pkgs:test",
-        "//filegen:test",
-        "//interop:test",
-        "//modules:test",
-        "//mwe",
-        "//ns",
-        "//parsing:test",
-        "//ppxlib",
-        "//signatures:test",
-        "//testing",
-    ]
-)
 
 alias(
     name = "gensig",
