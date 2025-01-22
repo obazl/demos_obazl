@@ -1,8 +1,8 @@
 module(
     name = "demos",
-    version = "0.0.0",
+    version = "5.0.0",
     bazel_compatibility = [">=8.0.0"],
-    compatibility_level = 0,
+    compatibility_level = 5,
 )
 
 ## bcr:
@@ -22,28 +22,9 @@ bazel_dep(
     dev_dependency = True,
 )
 
-# bazel_dep(name = "ocamlsdk",  version = "0.0.0")
-# register_toolchains("@ocamlsdk//toolchain/selectors/local:all")
-# register_toolchains("@ocamlsdk//toolchain/profiles:all")
-
 bazel_dep(name = "obazl_menhir", version = "5.0.0")
-## - if you want to explicitly depend on e.g.
-##   "@opam.menhir//bin:menhir" then you must
-##   explicitly 'use' the module. See
-##   parsing/menhir/handrolled for an example
-##   using genrule instead of custom rule 'menhir'.
-## - not needed if you use rule 'menhir'
-##   as in demo parsing/menhir/mwe
-##   In that case the above bazel_dep is sufficient.
-# uncomment the following three lines to make @opam.menhir available
-
-# opam = use_extension( "@tools_opam//extensions:opam.bzl", "opam")
-# use_repo(opam, "opam.menhir")
-# use_repo(opam, "opam.menhirLib")
-
-# bazel_dep(name = "coswitch",        version = "5.0.0",
-#           dev_dependency = True)
-# bazel_dep(name = "obazl_tools_cc", version = "2.0.0",
-#           dev_dependency = True)
+opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
+use_repo(opam, "opam.menhir")
+use_repo(opam, "opam.menhirLib")
 
 include("//.config/opam:opam.MODULE.bazel")
