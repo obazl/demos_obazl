@@ -1,0 +1,10 @@
+# here registry
+#common --registry=file:///Users/gar/obazl/demos_obazl/rules_ocaml/_opam/share/obazl/registry
+
+# local registry
+common --registry=file:///Users/gar/.local/share/registry
+
+# local dev registry
+common --registry=file:///Users/gar/obazl/registry
+# common --registry=https://raw.githubusercontent.com/obazl/registry/dev/
+

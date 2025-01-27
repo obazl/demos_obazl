@@ -1,0 +1,62 @@
+module(
+    name = "hello",
+    version = "0.1.0",
+    bazel_compatibility = [">=8.0.0"],
+    compatibility_level = 0,
+)
+
+# opam_install = use_extension("@tools_opam//extensions:opam_install_2.bzl", "opam_install")
+# opam_install.install(
+#     # switch = "";
+#     compiler_version = "5.1.1",
+#     # root = "",
+#     opam_version = "2.3.0",
+# )
+# use_repo(opam_install, "opam_root")
+
+## bcr:
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_cc", version = "0.0.17")
+
+## obazl:
+bazel_dep(name = "rules_ocaml", version = "5.0.0")
+local_path_override(
+    module_name = "rules_ocaml",
+    path = "/Users/gar/obazl/rules_ocaml",
+)
+
+# bazel_dep(name = "tools_ocaml", version = "2.0.0.bzl.8")
+bazel_dep(name = "tools_opam", version = "5.0.0")
+local_path_override(
+    module_name = "tools_opam",
+    path = "/Users/gar/obazl/tools_opam",
+)
+
+opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
+opam.deps(
+    #debug = 2,
+    # local_toolchain = True,
+    ocaml_version = "5.0.0",
+    opam_version = "2.3.0",
+    direct_deps = {
+        "ounit2": "2.2.7",
+    },
+    indirect_deps = {
+        "seq": "",
+        "stdlib-shims": "",
+    },
+    #verbosity = 2,
+)
+use_repo(opam, "opam.ounit2")
+use_repo(opam, "opam.seq", "opam.stdlib-shims")
+
+## opam, opam.ocamlsdk and opam.stublibs are always configured,
+## but we need to import them explicitly:
+use_repo(opam, "opam")
+use_repo(opam, "opam.ocamlsdk")
+use_repo(opam, "opam.stublibs")
+
+register_toolchains("@opam.ocamlsdk//toolchain/selectors/local:all")
+
+register_toolchains("@opam.ocamlsdk//toolchain/profiles:all")

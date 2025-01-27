@@ -1,0 +1,28 @@
+common --incompatible_enable_cc_toolchain_resolution
+# common --toolchain_resolution_debug='@rules_ocaml~1.0.0//toolchain/type:std'
+
+# common --toolchain_resolution_debug='.*'
+
+################
+# toolchain selection: vm (bytecode), sys (nativecode) E.g. to compile
+# with ocamlc.opt, pass --config=sysvm (sys to vm). this means:
+# cross-compile from sys platform (native code) to vm (bytecode).
+
+## IMPORTANT: --host_platform sets buildhost; --platforms sets targethost
+
+# default platform is sys for both buildhost and targethost
+
+## endocompilers
+common:ocamlc.byte --host_platform=@rules_ocaml//platform:ocamlc.byte
+#common:ocamlc.byte --platforms=@rules_ocaml//platform:ocamlc.byte
+
+common:ocamlopt.opt --host_platform=@rules_ocaml//platform:ocamlopt.opt
+# common:ocamlopt.opt --platforms=@rules_ocaml//platform:sys
+
+## exocompilers
+common:ocamlc.opt --host_platform=@rules_ocaml//platform:ocamlc.opt
+common:ocamlc.opt --platforms=@rules_ocaml//platform:ocamlc.byte
+
+common:ocamlopt.byte --host_platform=@rules_ocaml//platform:ocamlopt.byte
+common:ocamlopt.byte --platforms=@rules_ocaml//platform:ocamlopt.opt
+
