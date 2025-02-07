@@ -17,13 +17,13 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
         ":Hello",     # the transformed and compiled test code
 
         # codeps - compile-time (post-ppx) deps, provided by ppx
         # executable:
-        # "@opam.ppx_sexp_conv//lib/runtime-lib",
-        # "@opam.ppx_deriving//lib/runtime",
+        # "@opam.ppx_sexp_conv//runtime-lib/lib",
+        # "@opam.ppx_deriving//runtime/lib",
     ],
 
     ppx = ":ppx.exe", # transforms test.ml before compilation
@@ -32,7 +32,7 @@ ocaml_module(
     ## possible to inspect the ppx output file, and it allows the
     ## compiler to include source code in error messsages. For
     ## example, if we comment out the dependency on
-    ## @opam.ppx_deriving//lib/runtime:
+    ## @opam.ppx_deriving//runtime/lib:
     # 6 |       (let __1 () (a : int) b = Ppx_deriving_runtime.compare a b
     #                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # Error: Unbound module Ppx_deriving_runtime
@@ -42,7 +42,7 @@ ocaml_module(
     ppx_print = "@rules_ppx//print:text",
 
     ## Module Ppx_deriving_runtime is provided by
-    ## @opam.ppx_deriving//lib/runtime, so if we fail to list that as a
+    ## @opam.ppx_deriving//runtime/lib, so if we fail to list that as a
     ## compile-time dep of this module, we'll see that Unbound module
     ## error.
 
@@ -69,7 +69,7 @@ ocaml_module(
     # open = [
     # we don't need to do this since this is listed as a ppx_codep of :ppx
     # but we still need to pass -open
-    #     "@opam.sexplib//lib/sexplib",
+    #     "@opam.sexplib//lib",
     # ],
     ppx = ":ppx.exe",
     # ppx_print = "@rules_ppx//print:text",  # uncomment to get readable output
@@ -77,9 +77,9 @@ ocaml_module(
     deps = [
         # src file contains ref to "Sexp.to_string" so we need to
         # depend on this lib:
-        "@opam.sexplib//lib/sexplib",
+        "@opam.sexplib//lib",
 
-        # "@opam.ppx_sexp_conv//lib/runtime-lib",
+        # "@opam.ppx_sexp_conv//runtime-lib/lib",
         # we do not need to depend on them here, since they are
         # listed as ppx_codeps of the ppx.
     ],
@@ -99,15 +99,15 @@ ppx_executable(
         ## hello.ml above, since it contains extension point
         ## "[@@deriving sexp]".
         ## introduces codeps
-        ## "@opam.ppx_sexp_conv//lib/runtime-lib", and "@opam.sexplib0"
-        "@opam.ppx_sexp_conv//lib/ppx_sexp_conv",
+        ## "@opam.ppx_sexp_conv//runtime-lib/lib", and "@opam.sexplib0"
+        "@opam.ppx_sexp_conv//lib",
 
         ## without the following two derivers, ppx transformation of
         ## test.ml fails. they indirectly introduce a ppx_codep: they
         ## depend on @opam.ppx_deriving//lib/api, which has a ppx_codep on
-        ## @opam.ppx_deriving//lib/runtime:
-        "@opam.ppx_deriving//lib/ord",
-        "@opam.ppx_deriving//lib/show",
+        ## @opam.ppx_deriving//runtime/lib:
+        "@opam.ppx_deriving//ord/lib",
+        "@opam.ppx_deriving//show/lib",
         ## Note that although these are needed for test.ml, they are
         ## ppx deps, not dependencies of test.ml. That is, they are
         ## needed by the ppx executable to transform test.ml, but they
@@ -125,18 +125,18 @@ ppx_executable(
         ## without this, compilation of hello.ml will fail with
         ## "Unbound module" errors (unless the source file lists them
         ## as direct deps).
-        # "@opam.ppx_sexp_conv//lib/runtime-lib",
+        # "@opam.ppx_sexp_conv//runtime-lib/lib",
 
         ## FIXME: this should be pulled in by the deps on
-        ## @opam.ppx_deriving//lib/show and ord in the prologue
-        "@opam.ppx_deriving//lib/runtime",
+        ## @opam.ppx_deriving//show/lib and ord in the prologue
+        "@opam.ppx_deriving//runtime/lib",
 
-        # "@opam.sexplib//lib/sexplib",
+        # "@opam.sexplib//lib",
 
         ## HOWEVER: we do not need to list it, because the transitive
         ## closure of the deps includes some ppx_codeps, including
         ## this one, as you can see by running
-        ##  bazel query 'deps(@opam.ppx_sexp_conv//lib/ppx_sexp_conv)'
+        ##  bazel query 'deps(@opam.ppx_sexp_conv//lib)'
         ##  bazel query 'deps(@opam.ppx_sexp_conv//lib/expander)'
     ],
 
@@ -147,7 +147,7 @@ ppx_executable(
 ocaml_module(
     name = "driver",
     struct = ":ppxlib_driver_wrapper.ml",
-    deps   = ["@opam.ppxlib//lib/ppxlib"],
+    deps   = ["@opam.ppxlib//lib"],
     opts = ["-linkall"],
     visibility = ["//visibility:public"]
 )

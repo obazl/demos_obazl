@@ -24,31 +24,31 @@ ocaml_module(
     ],
     deps = [
         ":color",
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
 
         # "@bigarray//bigarray",
-        # "@ocaml//bigarray",
+        # "@opam.ocamlsdk//bigarray",
 
         # "@dynlink//dynlink",
-        # "@ocaml//dynlink",
+        # "@opam.ocamlsdk//dynlink",
 
         # "@str//str",
-        # "@ocaml//str",
+        # "@opam.ocamlsdk//str",
 
-        # "@ocaml//threads",
+        # "@opam.ocamlsdk//threads",
         # "@threads//threads",
 
-        # "@ocaml//unix",
+        # "@opam.ocamlsdk//unix",
         # "@unix//unix",
 
-        # "@ocaml//compiler-libs/common",
-        # "@ocaml//compiler-libs/bytecomp",
-        # "@ocaml//compiler-libs/optcomp",
-        # "@ocaml//compiler-libs/toplevel",
-        # "@ocaml//compiler-libs/native-toplevel",
+        # "@opam.ocamlsdk//compiler-libs/common",
+        # "@opam.ocamlsdk//compiler-libs/bytecomp",
+        # "@opam.ocamlsdk//compiler-libs/optcomp",
+        # "@opam.ocamlsdk//compiler-libs/toplevel",
+        # "@opam.ocamlsdk//compiler-libs/native-toplevel",
 
         # "@ctypes//stubs"
-        # "@opam.ppx_inline_test//lib/ppx_inline_test_inline_test"
+        # "@opam.ppx_inline_test//lib"
     ],
 )
 

@@ -26,7 +26,7 @@ ocaml_module(
     struct = "test.ml",
     opts = ["-w", "-27"],  ## Error (warning 27): unused variable test_ctxt.
         # "-open", "Demos_Namespaces_Obazl_Set030_Case01__00_ns_env"
-    deps = [":x", "@opam.ounit2//lib/ounit2"],
+    deps = [":x", "@opam.ounit2//lib"],
 )
 
 ocaml_module(

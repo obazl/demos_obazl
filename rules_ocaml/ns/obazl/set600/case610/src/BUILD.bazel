@@ -19,7 +19,7 @@ ocaml_module(
         "-w",
         "-27",  ## Error (warning 27): unused variable test_ctxt.
     ],
-    deps = [":alpha", "@opam.ounit2//lib/ounit2"],
+    deps = [":alpha", "@opam.ounit2//lib"],
 )
 
 # How to support articulated module paths like Alpha.Beta.Gamma

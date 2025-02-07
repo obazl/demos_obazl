@@ -7,7 +7,7 @@ load("@rules_ocaml//build:rules.bzl",
      "ocaml_test",
 )
 
-load("@obazl_menhir//build:menhir.bzl", "menhir")
+load("@menhir//build/rules:menhir.bzl", "menhir")
 
 ###########
 ocaml_test(
@@ -21,7 +21,7 @@ ocaml_module(
     struct        = "parserTest.ml",
     deps          = [
         ":LibMwe",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ]
 )
 
@@ -81,10 +81,6 @@ ocaml_module(
     ],
 )
 
-##############################
-########################
-####  File Generators  ####
-
 ##########
 ocamllex(
     name  = "lex_Lexer",
@@ -92,8 +88,7 @@ ocamllex(
     out   = "lexer.ml",
 )
 
-#######  emitting menhir ####
-##########
+#######
 menhir(
     name  = "menhir_Parser",
     grammars = ["parser.mly"],

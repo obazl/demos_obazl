@@ -1,4 +1,3 @@
-common --incompatible_enable_cc_toolchain_resolution
 # common --toolchain_resolution_debug='@rules_ocaml~1.0.0//toolchain/type:std'
 
 # common --toolchain_resolution_debug='.*'

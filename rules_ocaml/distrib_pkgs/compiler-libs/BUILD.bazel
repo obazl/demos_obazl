@@ -16,8 +16,8 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@opam.ounit2//lib/ounit2",
-        # "@ocamlsdk//lib/str"
+        "@opam.ounit2//lib",
+        # "@opam.ocamlsdk//lib/str"
         "@str//lib/str"
     ],
 )
@@ -27,7 +27,7 @@ ocaml_module(
     struct = "sample_input.ml",
     ppx    = ":ppx_test_simple.exe"
     # deps = [
-    #     "@ocamlsdk//lib/compiler-libs:common"
+    #     "@opam.ocamlsdk//lib/compiler-libs:common"
     # ],
 )
 
@@ -55,7 +55,7 @@ ppx_module(
     name = "Ppx_runner",
     struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
-    deps = ["@opam.ppxlib//lib/ppxlib"],
+    deps = ["@opam.ppxlib//lib"],
 )
 
 ########
@@ -74,6 +74,6 @@ ppx_module(
     name   = "Ppx_test_simple",
     struct = "ppx_test_simple.ml",
     deps = [
-        "@ocamlsdk//lib/compiler-libs:common"
+        "@opam.ocamlsdk//lib/compiler-libs:common"
     ],
 )

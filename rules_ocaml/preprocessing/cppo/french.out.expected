@@ -1,0 +1,121 @@
+
+
+
+# 16 "preprocessing/cppo/french.ml"
+ let  
+# 16 "preprocessing/cppo/french.ml"
+     rec 
+# 16 "preprocessing/cppo/french.ml"
+          split  
+# 16 "preprocessing/cppo/french.ml"
+                    x = 
+# 16 "preprocessing/cppo/french.ml"
+                         function 
+    
+# 17 "preprocessing/cppo/french.ml"
+    y :: l ->
+      
+# 18 "preprocessing/cppo/french.ml"
+       let  
+# 18 "preprocessing/cppo/french.ml"
+           l1, l2 = 
+# 18 "preprocessing/cppo/french.ml"
+                     split  
+# 18 "preprocessing/cppo/french.ml"
+                               x l 
+# 18 "preprocessing/cppo/french.ml"
+                                    in 
+      
+# 19 "preprocessing/cppo/french.ml"
+       if  
+# 19 "preprocessing/cppo/french.ml"
+         y < x 
+# 19 "preprocessing/cppo/french.ml"
+                then  
+# 19 "preprocessing/cppo/french.ml"
+                     (y :: l1), l2
+      
+# 20 "preprocessing/cppo/french.ml"
+       else  
+# 20 "preprocessing/cppo/french.ml"
+            l1, (y :: l2)
+  | [] ->
+      [], []
+
+# 24 "preprocessing/cppo/french.ml"
+ let  
+# 24 "preprocessing/cppo/french.ml"
+     rec 
+# 24 "preprocessing/cppo/french.ml"
+          sort  
+# 24 "preprocessing/cppo/french.ml"
+             = 
+# 24 "preprocessing/cppo/french.ml"
+                function 
+    
+# 25 "preprocessing/cppo/french.ml"
+    x :: l ->
+      
+# 26 "preprocessing/cppo/french.ml"
+       let  
+# 26 "preprocessing/cppo/french.ml"
+           l1, l2 = 
+# 26 "preprocessing/cppo/french.ml"
+                     split  
+# 26 "preprocessing/cppo/french.ml"
+                               x l 
+# 26 "preprocessing/cppo/french.ml"
+                                    in 
+      
+# 27 "preprocessing/cppo/french.ml"
+       sort  
+# 27 "preprocessing/cppo/french.ml"
+          l1 @ [x] @ 
+# 27 "preprocessing/cppo/french.ml"
+                      sort  
+# 27 "preprocessing/cppo/french.ml"
+                         l2
+  | [] ->
+      []
+
+# 31 "preprocessing/cppo/french.ml"
+ let  
+# 31 "preprocessing/cppo/french.ml"
+     () =
+  
+# 32 "preprocessing/cppo/french.ml"
+   let  
+# 32 "preprocessing/cppo/french.ml"
+       l = 
+# 32 "preprocessing/cppo/french.ml"
+            sort  
+# 32 "preprocessing/cppo/french.ml"
+               [ 5; 3; 7; 1; 7; 4; 99; 22 ] 
+# 32 "preprocessing/cppo/french.ml"
+                                             in 
+  
+# 33 "preprocessing/cppo/french.ml"
+   List 
+# 33 "preprocessing/cppo/french.ml"
+       .iter (
+# 33 "preprocessing/cppo/french.ml"
+               fun  
+# 33 "preprocessing/cppo/french.ml"
+                  i -> 
+# 33 "preprocessing/cppo/french.ml"
+                        Printf 
+# 33 "preprocessing/cppo/french.ml"
+                               .
+# 33 "preprocessing/cppo/french.ml"
+                                 printf  
+# 33 "preprocessing/cppo/french.ml"
+                                         "%i " i) l;
+  
+# 34 "preprocessing/cppo/french.ml"
+   Printf 
+# 34 "preprocessing/cppo/french.ml"
+          .
+# 34 "preprocessing/cppo/french.ml"
+            printf  
+# 34 "preprocessing/cppo/french.ml"
+                    "\n"

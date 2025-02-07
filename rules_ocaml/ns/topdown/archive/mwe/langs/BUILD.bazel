@@ -16,7 +16,7 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":hello", "@opam.ounit2//lib/ounit2"]
+    deps = [":hello", "@opam.ounit2//lib"]
 )
 
 ocaml_ns_archive(

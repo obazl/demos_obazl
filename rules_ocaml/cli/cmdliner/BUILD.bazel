@@ -23,7 +23,7 @@ ocaml_module(
     ],
     deps = [
         "//cli/config",
-        "@cmdliner//lib/cmdliner",
+        "@opam.cmdliner//lib",
     ]
 )
 

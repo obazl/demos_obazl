@@ -13,10 +13,10 @@ ocaml_ppx_pipeline(
             "-linkpkg",
              "-predicates", "ppx_driver", ## <== DON'T FORGET THIS
             "-verbose"],
-    deps = ["@ocaml//pkg:base",
-            "@ocaml//pkg:ppxlib",
-            "@ocaml//pkg:ppxlib.metaquot",
-            "@ocaml//pkg:ppxlib.runner",
+    deps = ["@opam.ocamlsdk//pkg:base",
+            "@opam.ocamlsdk//pkg:ppxlib",
+            "@opam.ocamlsdk//pkg:ppxlib.metaquot",
+            "@opam.ocamlsdk//pkg:ppxlib.runner",
     ],
 )
 
@@ -45,8 +45,8 @@ ocaml_ppx_pipeline(
             "-predicates", "ppx_deriving",
             "-predicates", "native",
             "-linkpkg"],
-    deps = ["@ocaml//pkg:base",
-            "@ocaml//pkg:ppxlib",
+    deps = ["@opam.ocamlsdk//pkg:base",
+            "@opam.ocamlsdk//pkg:ppxlib",
             # ":preproc"
     ]
 )

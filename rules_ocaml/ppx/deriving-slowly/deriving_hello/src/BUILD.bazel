@@ -10,7 +10,7 @@ load(
 ppx_executable(
     name = "ppx.exe",
     main = ":Deriving_hello",
-    # deps = [":ppx_color", "@opam.ppxlib//lib/ppxlib"]
+    # deps = [":ppx_color", "@opam.ppxlib//lib"]
 )
 
 ocaml_module(
@@ -21,7 +21,7 @@ ocaml_module(
     # opts = ["-w", "-27"],
     deps = [
         "@base//base",
-        "@opam.ppxlib//lib/ppxlib"
+        "@opam.ppxlib//lib"
     ]
 )
 
@@ -34,10 +34,10 @@ ocaml_module(
 #             "-linkpkg",
 #              "-predicates", "ppx_driver", ## <== DON'T FORGET THIS
 #             "-verbose"],
-#     deps = ["@ocaml//pkg:base",
-#             "@ocaml//pkg:ppxlib",
-#             "@ocaml//pkg:ppxlib.metaquot",
-#             "@ocaml//pkg:ppxlib.runner",
+#     deps = ["@opam.ocamlsdk//pkg:base",
+#             "@opam.ocamlsdk//pkg:ppxlib",
+#             "@opam.ocamlsdk//pkg:ppxlib.metaquot",
+#             "@opam.ocamlsdk//pkg:ppxlib.runner",
 #     ],
 # )
 
@@ -69,8 +69,8 @@ ocaml_module(
 #              # tell ocamlfind we want native libs:
 #              "-predicates", "native",
 #              "-a"],  # produce a .cmxa file
-#     deps = ["@ocaml//pkg:base",
-#             "@ocaml//pkg:ppxlib"]
+#     deps = ["@opam.ocamlsdk//pkg:base",
+#             "@opam.ocamlsdk//pkg:ppxlib"]
 # )
 
 # ## Turn the lib into an executable pipeline:
@@ -89,16 +89,16 @@ ocaml_module(
 #             # of creating an executable:
 #              "-linkpkg",
 #     ],
-#     deps = ["@ocaml//pkg:base",
-#             "@ocaml//pkg:ppxlib",
+#     deps = ["@opam.ocamlsdk//pkg:base",
+#             "@opam.ocamlsdk//pkg:ppxlib",
 #             ":deriving_hello_lib",
 
 #             ## WARNING: adding either of the following two driver libs results in:
 #             ## Error: Ppxlib.Deriving: 'hello_world' is not a supported type deriving generator
 #             ## when we use the pipeline to process the test code.
 
-#             # "@ocaml//pkg:ocaml-migrate-parsetree.driver-main"
-#             # "@ocaml//pkg:ppxlib.runner"
+#             # "@opam.ocamlsdk//pkg:ocaml-migrate-parsetree.driver-main"
+#             # "@opam.ocamlsdk//pkg:ppxlib.runner"
 
 #             # OTOH, compiling the shims above seems to work - yet they
 #             # contain the same code as those two libs, i.e.
@@ -134,8 +134,8 @@ ocaml_module(
 # ocaml_binary(
 #     name = "test",
 #     srcs = [":preproc_test"],
-#     deps = ["@ocaml//pkg:base",
-#             "@ocaml//pkg:ppxlib",
+#     deps = ["@opam.ocamlsdk//pkg:base",
+#             "@opam.ocamlsdk//pkg:ppxlib",
 #             ":preproc_test"
 #     ],
 #     copts = [

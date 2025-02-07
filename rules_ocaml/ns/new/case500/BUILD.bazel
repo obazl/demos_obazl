@@ -23,7 +23,7 @@ ocaml_module(
     ],
     deps = [
         ":color",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 

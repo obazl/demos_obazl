@@ -47,6 +47,6 @@ cc_library(
         "beta.c",
         "beta.h",
     ],
-    deps = ["@ocaml//lib/ffi"],
+    deps = ["@opam.ocamlsdk//lib/ffi"],
     visibility = ["//interop/ffi/simple:__pkg__"],
 )

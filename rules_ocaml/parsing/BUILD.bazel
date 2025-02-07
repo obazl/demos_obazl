@@ -5,6 +5,6 @@ test_suite(
     tests = [
         "//parsing/menhir",
         # "//parsing/ocamllex:test",
-        "//parsing/ocamlyacc",
+        # "//parsing/ocamlyacc", # <5.3.0
     ]
 )

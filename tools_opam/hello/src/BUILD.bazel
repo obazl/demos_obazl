@@ -1,18 +1,11 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_test",
 )
 
-cc_library(
-    name = "hello",
-    srcs = ["hello.c"],
-    visibility = ["//visibility:public"]
-)
-
 ocaml_test(
-    name = "test",
+    name = "hello",
     main = "Test",
     opts = [
         # "-verbose",
@@ -25,7 +18,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
         ":Hello",
     ],
 )
@@ -33,6 +26,10 @@ ocaml_module(
 ocaml_module(
     name = "Hello",
     struct = "hello.ml",
+    ## for testing opam extension:
+    # deps = ["@opam.ppx_expect//lib/ppx_expect",
+    #         "@opam.base//lib/base"],
+    # data = ["@opam.menhir//bin:menhir"],
     opts = [
         # "-opaque"
         # "-dlocations",

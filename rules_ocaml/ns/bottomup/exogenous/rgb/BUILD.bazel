@@ -15,7 +15,7 @@ ocaml_test(
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":olibRGB", "@opam.ounit2//lib/ounit2"],
+    deps = [":olibRGB", "@opam.ounit2//lib"],
 )
 
 ## aggregate resolver and submodules

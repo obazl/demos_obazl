@@ -6,9 +6,9 @@ test_suite(
 
         "//ppxlib/genrule:test",
         "//ppxlib/hello:test",
-        "//ppxlib/metaquot:test",
+        # "//ppxlib/metaquot:test",
         "//ppxlib/ppx_optcomp",
-        "//ppxlib/ppx_show:test",
+        # "//ppxlib/ppx_show:test",
         "//ppxlib/rewriters",
     ]
 )

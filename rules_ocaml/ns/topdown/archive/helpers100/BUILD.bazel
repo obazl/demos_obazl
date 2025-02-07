@@ -23,7 +23,7 @@ ocaml_exec_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
         ":color"
     ]
 )

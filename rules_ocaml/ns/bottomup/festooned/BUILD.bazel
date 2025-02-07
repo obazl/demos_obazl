@@ -1,4 +1,4 @@
-WARNING: outdated code. won't work.
+fail("WARNING: outdated code. won't work.")
 
 load("@obazl_rules_ocaml//ocaml:build.bzl",
      "ocaml_archive",

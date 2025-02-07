@@ -18,7 +18,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":color",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 

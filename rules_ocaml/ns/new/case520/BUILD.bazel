@@ -13,10 +13,8 @@ load(
 ocaml_test(
     timeout = "short",
     name = "test",
-    deps = [
-        "Test1",
-        "Test2"
-    ]
+    prologue = ["Test1"],
+    main ="Test2"
 )
 
 ocaml_module(
@@ -27,7 +25,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 
@@ -40,7 +38,7 @@ ocaml_module(
     ],
     deps = [
         ":main",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 

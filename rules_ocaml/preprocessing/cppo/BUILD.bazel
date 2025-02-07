@@ -1,0 +1,85 @@
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@rules_ocaml//build:rules.bzl", "ocamllex")
+load("@obazl_cppo//build/rules:cppo.bzl", "cppo")
+
+test_suite(
+    name = "cppo",
+    tests = [
+        ":ocamllex_test",
+        ":cppo_lexer_test",
+        ":cppo_french_test",
+        ":cppo_debug_test"
+    ]
+)
+
+## https://github.com/ocaml-community/cppo
+## example code: https://github.com/ocaml-community/cppo/tree/master/examples
+
+# $ bazel build tools/cppo:debug
+# $ bazel build tools/cppo/...:*
+
+# To see the command line:
+# $ bazel aquery tools/cppo:debug
+
+# Note that you can run cppo at the command line. Pass args to cppo after '--'.
+# This will run the version of cppo installed in the OPAM switch configured
+# for your project.
+
+# $ bazel run @opam.cppo//bin:cppo -- --help
+
+diff_test(
+    "cppo_debug_test",
+    "debug.out.expected",
+    "debug.out",
+    "cppo failure",
+    timeout = "short"
+)
+
+cppo(
+    name  = "debug",
+    src   = "debug.ml",
+    out   = "debug.out",
+    defines = ["foo"]
+)
+
+diff_test(
+    "cppo_french_test",
+    "french.out.expected",
+    "french.out",
+    "cppo failure",
+    timeout = "short"
+)
+
+cppo(
+    name  = "french",
+    src   = "french.ml",
+    out   = "french.out",
+)
+
+diff_test(
+    "cppo_lexer_test",
+    "lexer.out.expected",
+    "lexer.out",
+    "cppo failure",
+    timeout = "short"
+)
+
+cppo(
+    name  = "lexer",
+    src   = "lexer.ml",
+    out   = "lexer.out",
+)
+
+diff_test(
+    "ocamllex_test",
+    "lexer.ml.expected",
+    "lexer.ml",
+    "ocamllex failure",
+    timeout = "short"
+)
+
+ocamllex(
+    name = "lexis",
+    src = "lexer.mll",
+    out = "lexer.ml"
+)

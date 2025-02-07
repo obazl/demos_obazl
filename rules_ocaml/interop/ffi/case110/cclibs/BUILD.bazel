@@ -14,7 +14,7 @@ ocaml_module(
     #     "//conditions:default": []
     # }),
     deps = [
-        # "@ocaml//runtime:camlrun_shared", # libcamlrun_shared.so
+        # "@opam.ocamlsdk//runtime:camlrun_shared", # libcamlrun_shared.so
         ":dllalpha.so",
     ],
     # deps = select({
@@ -50,7 +50,7 @@ cc_library(
         # "-Iexternal/ocaml~0.0.0/lib/c",
         # "-lcamlrun"
     ],
-    deps = ["@ocamlsdk//lib/ffi"],
+    deps = ["@opam.ocamlsdk//lib/ffi"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )
 
@@ -68,14 +68,14 @@ cc_binary(
         "alpha.h",
     ],
     deps = [
-        "@ocamlsdk//lib/ffi",
+        "@opam.ocamlsdk//lib/ffi",
         "@zstd",
-        #"@ocaml//runtime:camlrun",  # libcamlrun.a
-        #"@ocaml//runtime:camlrun_pic", # libcamlrun_pic.a
+        #"@opam.ocamlsdk//runtime:camlrun",  # libcamlrun.a
+        #"@opam.ocamlsdk//runtime:camlrun_pic", # libcamlrun_pic.a
 
-        #"@ocaml//runtime:camlrun_shared", # libcamlrun_shared.so
-        # "@ocaml//runtime:asmrun_shared", # libasmrun_shared.so
+        #"@opam.ocamlsdk//runtime:camlrun_shared", # libcamlrun_shared.so
+        # "@opam.ocamlsdk//runtime:asmrun_shared", # libasmrun_shared.so
     ],
-    # data = ["@ocaml//runtime:camlrun_shared"],
+    # data = ["@opam.ocamlsdk//runtime:camlrun_shared"],
     visibility = ["//interop/ffi/case110:__pkg__"],
 )

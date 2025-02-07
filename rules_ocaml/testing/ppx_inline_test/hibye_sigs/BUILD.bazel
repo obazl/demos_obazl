@@ -11,14 +11,8 @@ load("@rules_ppx//build:rules.bzl",
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
 # To select a testsuite to run, pass on the cmd line:
-# --//ppxlib/ppx_inline_test/macro:t=Goodbye
-# (default: --//ppxlib/ppx_inline_test/macro:t=Hello)
-
-# string_flag(name = "t",
-#             values = ["Hello", "Goodbye"],
-#             build_setting_default = "Hello")
-# config_setting(name = "Hello", flag_values = {":t": "Hello"})
-# config_setting(name = "Goodbye", flag_values = {":t": "Goodbye"})
+# --//ppxlib/ppx_inline_test/hibye:t=Goodbye
+# (default: --//ppxlib/ppx_inline_test/hibye:t=Hello)
 
 ppx_inline_test(
     name = "test",
@@ -46,21 +40,20 @@ ppx_inline_test_suite(
 
 ppx_inline_test_ppx(name = "ppx")
 
-
 # we also build and run an ordinary executable
 ocaml_binary(
     name = "testbin",
-    main = "@opam.ppx_inline_test//lib/runner",
+    main = "@opam.ppx_inline_test//runner/lib",
     args = select({
-        ":Hello": ["inline-test-runner", "Hello"],
-        ":Goodbye": ["inline-test-runner", "Goodbye"],
+        "//testing/ppx_inline_test/hibye:Hello": ["inline-test-runner", "Hello"],
+        "//testing/ppx_inline_test/hibye:Goodbye": ["inline-test-runner", "Goodbye"],
         "//conditions:default": ["inline-test-runner", "Hello"]
     }),
     prologue = [
         # NB: names are prefixed by the ppx_* name
-        "t1_hello.ml",
-        "t1_bonjour.ml",
-        "t2_adieu.ml",
-        "t2_goodbye.ml",
+        "hi_hello.ml",
+        "hi_bonjour.ml",
+        "bye_adieu.ml",
+        "bye_goodbye.ml",
     ]
 )

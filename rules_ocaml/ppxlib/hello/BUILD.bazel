@@ -47,7 +47,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",  # the transformed and compiled test code
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
     ],
 )
 
@@ -65,8 +65,8 @@ ocaml_module(
 #     # struct = "hello.ml",
 #     # ppx_print = "@rules_ppx//print:text",
 #     deps = [  # see below, ppx_codeps
-#         # "@opam.sexplib//lib/sexplib",
-#         # "@opam.metapp//lib/metapp"
+#         # "@opam.sexplib//lib",
+#         # "@opam.metapp//lib"
 #     ],
 #     struct = "hello_ppx"
 # )
@@ -77,8 +77,8 @@ ppx_module(
     struct = "hello.ml",
     # print = "@rules_ppx//print:text!",
     # deps = [  # see below, ppx_codeps
-    #     # "@opam.sexplib//lib/sexplib",
-    #     # "@opam.metapp//lib/metapp"
+    #     # "@opam.sexplib//lib",
+    #     # "@opam.metapp//lib"
     # ],
 )
 
@@ -92,15 +92,16 @@ ppx_module(
 ###############
 ppx_executable(
     name = "ppx.exe",
+    # opts = ["-verbose"],
     main = ":Ppx_runner",  ## hand-rolled, see below
     prologue = [
-        "@opam.ppx_sexp_value//lib/ppx_sexp_value", #contains handler for `[%sexp ]`
+        "@opam.ppx_sexp_value//lib", #contains handler for `[%sexp ]`
         # tmp, till bug fixed:
-        "@opam.ppx_here//lib/runtime-lib",
-        "@opam.ppx_sexp_conv//lib/runtime-lib"
+        "@opam.ppx_here//runtime-lib/lib",
+        "@opam.ppx_sexp_conv//runtime-lib/lib"
     ],
     ppx_codeps = [
-        "@opam.sexplib//lib/sexplib",
+        "@opam.sexplib//lib",
     ],
 )
 
@@ -109,7 +110,7 @@ ocaml_module(
     name = "Ppx_runner",
     struct = ":ppx_runner.ml",
     visibility = ["//visibility:public"],
-    deps = ["@opam.ppxlib//lib/ppxlib"],
+    deps = ["@opam.ppxlib//lib"],
 )
 
 ########

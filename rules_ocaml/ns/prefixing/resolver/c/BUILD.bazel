@@ -19,7 +19,7 @@ ocaml_module(
         "//ns/prefixing/resolver/b:Bar__Green",
         "//ns/prefixing/resolver/b:Baz__Blue",
         ":Grue",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 

@@ -3,6 +3,9 @@ test_suite(
     tests = [
         # "//mwe/hello_archive:test",
         "//mwe/hello_dyad:test",
+        # "//mwe/hello_lwt:test",
+        "//mwe/hello_ns_archive:test",
+        "//mwe/hello_ns_library:test",
         "//mwe/hello_singleton:test",
         "//mwe/intradeps:test",
         "//mwe/rgb:test",

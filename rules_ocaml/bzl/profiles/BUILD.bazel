@@ -10,7 +10,7 @@ toolchain_profile_selector(
     name                   = "myprofile",
     profile                = ":my_profile",
     # toolchain_type         = "@rules_ocaml//toolchain/type:profile",
-    # target_compatible_with = ["@ocaml//host/target:sys"],
+    # target_compatible_with = ["@opam.ocamlsdk//host/target:sys"],
     # visibility             = ["//visibility:public"],
 )
 

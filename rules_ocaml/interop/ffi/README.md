@@ -1,6 +1,6 @@
 # FFI demos
 
-* case110:  basic cc dep
+* case110:  basic cc dep on zstd
 
 * case120: one module depends on two wrapped cc deps
 

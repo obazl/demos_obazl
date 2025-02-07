@@ -1,5 +1,18 @@
-_opamX
+_opam*
+bzl/profiles
+distrib_pkgs/compiler-libs
 
+interop/ffi/case110
+interop/ffi/chained
+
+ns/bottomup/embedx
+ns/bottomup/festooned
+ns/new/case200
+
+ns/topdown/library/embed/case620
+ns/topdown/library/udr/case100:Color
+ns/topdown/library/udr/case200
+ns/topdown/library/udr/sibdeps100
 ns/new/case336x
 ns/new/case610x
 ns/obazl
@@ -19,7 +32,23 @@ ns/obazl/set700/case740
 ns/ns-archive
 ns/assisted/hierarchical
 ns/udr
-# ppx/deriving
-ppx/rewriters/get_env
+
+# depends on core_unix which does not build under 5.3.0:
+parsing/ocamllex
+
+ppx
+ppx/broken
+ppx/derivers/simple_deriver
+ppx/deriving-slowly
+ppx/obsolete
+ppxlib/rewriters/get_env
+ppxlib//rewriters/get_env/_build
+
+signatures/moduletype/fail
+signatures/moduletypeof/d
+signatures/moduletypeof/fail
+
+# depends on core_unix which does not build under 5.3.0:
+testing/ppx_expect
 
 obsolete

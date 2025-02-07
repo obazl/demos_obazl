@@ -1,42 +1,81 @@
-bazel_dep(name = "obazl_menhir", version = "5.0.0")
-opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
-use_repo(opam, "opam.menhir")
-use_repo(opam, "opam.menhirLib")
+# for //interop/ffi
+bazel_dep(name = "zstd", version = "1.5.6")
 
-opam.dep(
-    pkgs = {
-        "ocamlsdk": "",
+opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
+
+# 'repo_name' here means in your BUILD files you can write:
+# load("@menhir//build/rules:menhir.bzl", "menhir")
+# instead of
+# load("@obazl_menhir//build/rules:menhir.bzl", "menhir")
+# (not to be confused with @opam.menhir)
+bazel_dep(name = "obazl_menhir", repo_name="menhir")
+use_repo(opam, "opam.menhir", "opam.menhirLib")
+archive_override(
+    module_name = "obazl_menhir",
+    url="https://github.com/obazl/obazl_menhir/releases/download/0.1.0.beta.1/obazl_menhir-0.1.0.beta.1.tar.gz",
+    strip_prefix = "obazl_menhir-0.1.0"
+)
+
+bazel_dep(name = "obazl_cppo")
+use_repo(opam, "opam.cppo")
+archive_override(
+    module_name = "obazl_cppo",
+    url="https://github.com/obazl/obazl_cppo/releases/download/1.8.0.beta.1/obazl_cppo-1.8.0.beta.1.tar.gz",
+    strip_prefix = "obazl_cppo-1.8.0"
+)
+
+opam.deps(
+    # toolchain = "xdg",     # default
+    # xdg_switch = {"id": "ocaml_version"}
+    # opam_version = "2.3.0",
+
+    toolchain = "local",
+    # toolchain = "global",
+
+    # ocaml_version = "5.3.0",
+
+    # debug = 2,
+    # verbosity = 2,
+    deps = {
         "alcotest": "",
         "cmdliner": "",
-        "core_unix.command_unix": "",
-        "metapp": "",
-        "metaquot": "",
+        "core": "",
+        "lwt": "",
         "ounit2": "2.2.7",
         "ppx_deriving": "",
-        "ppx_expect": "",
+        # "ppx_expect": "",
         "ppx_here": "",
         "ppx_inline_test": "",
         "ppx_optcomp": "",
         "ppx_sexp_conv": "",
         "ppx_sexp_value": "",
-        "ppx_show": "",
         "ppxlib": "",
         "ppxlib_jane": "",
         "sexplib": "",
         "stublibs": "",
-        "threads": "",
         "time_now": "",
-    },
-)
-use_repo(opam, "stublibs")
 
-# use_repo(opam, "threads")
+        # "async": "",  # //testing/ppx_expect demo, <5.3.0
+        # "ppx_jane": "",  # //testing/ppx_expect demo, <5.3.0
+        # "core_unix": "", # <5.3.0
+        # "metapp": "",   # <5.3.0?
+        # "metaquot": "",   # <5.3.0?
+        # "ppx_show": "",        # <5.3.0
+    },
+    # dev_deps = {
+    # },
+)
+
+use_repo(opam, "opam.ocamlsdk")
+register_toolchains(
+    "@opam.ocamlsdk//toolchain/selectors/local:all",
+    "@opam.ocamlsdk//toolchain/profiles:all",
+)
+
 use_repo(opam, "opam.alcotest")
 use_repo(opam, "opam.cmdliner")
 use_repo(opam, "opam.core")
-use_repo(opam, "opam.core_unix")
-use_repo(opam, "opam.metapp")
-use_repo(opam, "opam.metaquot")
+use_repo(opam, "opam.lwt")
 use_repo(opam, "opam.ounit2")
 use_repo(opam, "opam.ppx_deriving")
 use_repo(opam, "opam.ppx_here")
@@ -44,13 +83,15 @@ use_repo(opam, "opam.ppx_inline_test")
 use_repo(opam, "opam.ppx_optcomp")
 use_repo(opam, "opam.ppx_sexp_conv")
 use_repo(opam, "opam.ppx_sexp_value")
-use_repo(opam, "opam.ppx_show")
 use_repo(opam, "opam.ppxlib")
 use_repo(opam, "opam.ppxlib_jane")
 use_repo(opam, "opam.sexplib")
+use_repo(opam, "opam.stublibs")
 use_repo(opam, "opam.time_now")
-use_repo(opam, "ocamlsdk", "opam.astring", "opam.base", "opam.base_bigstring", "opam.base_quickcheck", "opam.bin_prot", "opam.compiler-libs", "opam.core_kernel", "opam.fieldslib", "opam.findlib", "opam.fmt", "opam.gel", "opam.int_repr", "opam.jane-street-headers", "opam.ocaml-compiler-libs", "opam.ocaml_intrinsics_kernel", "opam.parsexp", "opam.ppx_assert", "opam.ppx_bench", "opam.ppx_compare", "opam.ppx_derivers", "opam.ppx_diff", "opam.ppx_enumerate", "opam.ppx_expect", "opam.ppx_hash", "opam.ppx_log", "opam.ppx_module_timer", "opam.ppx_stable_witness", "opam.ppx_string", "opam.re", "opam.seq", "opam.sexplib0", "opam.spawn", "opam.splittable_random", "opam.stdcompat", "opam.stdio", "opam.stdlib-shims", "opam.threads", "opam.timezone", "opam.typerep", "opam.unix", "opam.uutf", "opam.variantslib", "threads")
 
-register_toolchains("@ocamlsdk//toolchain/selectors/local:all")
-
-register_toolchains("@ocamlsdk//toolchain/profiles:all")
+# use_repo(opam, "opam.async")
+# use_repo(opam, "opam.core_unix") # <5.3.0
+# use_repo(opam, "opam.ppx_jane")
+# use_repo(opam, "opam.metapp")    # <5.3.0
+# use_repo(opam, "opam.metaquot")  # <5.3.0
+# use_repo(opam, "opam.ppx_show")  # <5.3.0

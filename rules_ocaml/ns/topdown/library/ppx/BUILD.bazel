@@ -53,14 +53,14 @@ ppx_executable(
 ocaml_module(
     name      = "ppx_hex_of_dec",
     struct    = ":ppx_hex_of_dec.ml",
-    deps = ["@opam.ppxlib//lib/ppxlib"]
+    deps = ["@opam.ppxlib//lib"]
 )
 
 ###########
 ocaml_module(
     name = "Ppxlib_runner",
     struct = ":ppxlib_runner.ml",
-    deps = ["@opam.ppxlib//lib/ppxlib"]
+    deps = ["@opam.ppxlib//lib"]
 )
 
 ########
@@ -83,5 +83,5 @@ ocaml_test(
 ocaml_module(
     name = "Test",
     struct = "test.ml",
-    deps = [":color", "@opam.ounit2//lib/ounit2"],
+    deps = [":color", "@opam.ounit2//lib"],
 )

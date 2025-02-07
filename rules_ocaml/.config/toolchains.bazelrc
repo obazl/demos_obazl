@@ -1,4 +1,4 @@
-common --incompatible_enable_cc_toolchain_resolution
+# common --incompatible_enable_cc_toolchain_resolution
 # common --toolchain_resolution_debug='@rules_ocaml~1.0.0//toolchain/type:std'
 
 # common --toolchain_resolution_debug='.*'
@@ -12,12 +12,15 @@ common --incompatible_enable_cc_toolchain_resolution
 
 # default platform is sys for both buildhost and targethost
 
-## endocompilers
-common:ocamlc.byte --host_platform=@rules_ocaml//platform:ocamlc.byte
-#common:ocamlc.byte --platforms=@rules_ocaml//platform:ocamlc.byte
+## WARNING: user must specify one of these configs,
+## else build fails with "no matching toolchain"
 
+## endocompilers
 common:ocamlopt.opt --host_platform=@rules_ocaml//platform:ocamlopt.opt
 # common:ocamlopt.opt --platforms=@rules_ocaml//platform:sys
+
+common:ocamlc.byte --host_platform=@rules_ocaml//platform:ocamlc.byte
+#common:ocamlc.byte --platforms=@rules_ocaml//platform:ocamlc.byte
 
 ## exocompilers
 common:ocamlc.opt --host_platform=@rules_ocaml//platform:ocamlc.opt
@@ -25,4 +28,14 @@ common:ocamlc.opt --platforms=@rules_ocaml//platform:ocamlc.byte
 
 common:ocamlopt.byte --host_platform=@rules_ocaml//platform:ocamlopt.byte
 common:ocamlopt.byte --platforms=@rules_ocaml//platform:ocamlopt.opt
+
+common --flag_alias=tc=@rules_ocaml//toolchain
+#cmd line: --tc=ocamlopt.opt
+
+# @rules_ocaml//toolchain is a label flag containing
+# e.g @rules_ocaml//platform:ocamlopt.opt
+# common --host_platform=@rules_ocaml//toolchain
+
+## NB: --platforms means target platforms
+# common --platforms=@rules_ocaml//toolchain
 

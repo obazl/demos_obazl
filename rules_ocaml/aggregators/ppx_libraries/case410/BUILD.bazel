@@ -18,7 +18,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     ppx = ":ppx.exe",
-    deps = ["@opam.ounit2//lib/ounit2"]
+    deps = ["@opam.ounit2//lib"]
 )
 
 ###############
@@ -41,26 +41,26 @@ ocaml_library(
 ocaml_module(
     name      = "ppx_red",
     struct    = "ppx_red.ml",
-    deps      = ["@opam.ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib"]
 )
 
 ocaml_module(
     name      = "ppx_green",
     struct    = "ppx_green.ml",
-    deps      = ["@opam.ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib"]
 )
 
 ocaml_module(
     name      = "ppx_blue",
     struct    = "ppx_blue.ml",
-    deps      = ["@opam.ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib"]
 )
 
 ###########
 ocaml_module(
     name = "Ppxlib_driver",
     struct = ":ppxlib_driver.ml",
-    deps      = ["@opam.ppxlib//lib/ppxlib"]
+    deps      = ["@opam.ppxlib//lib"]
 )
 
 ########

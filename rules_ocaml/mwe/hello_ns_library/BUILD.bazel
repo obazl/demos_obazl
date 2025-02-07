@@ -1,6 +1,3 @@
-# same as //mwe/hello_library except uses ocaml_archive instead of
-# ocaml_library
-
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_binary",
@@ -12,15 +9,16 @@ load(
 # $ bazel test //minimal/hello_ns_library:test
 ocaml_test(
     name = "test",
-    main = "Test"
+    main = "Test",
+    timeout = "short"
 )
 
 ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        ":main",
-        "@opam.ounit2//lib/ounit2"
+        ":Main",
+        "@opam.ounit2//lib"
     ],
 )
 

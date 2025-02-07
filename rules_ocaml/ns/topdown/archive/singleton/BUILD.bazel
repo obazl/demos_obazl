@@ -20,7 +20,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":color",
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
     ],
 )
 
@@ -31,7 +31,7 @@ ocaml_module(
 
 ocaml_ns_archive(
     name = "color",
-    ns = "Color",
+    # ns = "Color",
     manifest = [
         ":Color"
     ],

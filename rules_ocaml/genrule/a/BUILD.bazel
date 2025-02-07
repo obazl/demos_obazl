@@ -19,7 +19,7 @@ ocaml_module(
     ],
     deps = [
         ":rgb",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 
@@ -44,16 +44,15 @@ genrule(
     ]),
 )
 
-################################################################
 ########
-genrule(
-    name  = "ocamlc",
-    tools = ["@ocaml//tools:ocamlc"],
-    outs  = ["rgb.cmo"],
-    cmd   = "\n".join([
-        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
-        "echo \"let r = 255\" >> \"$@\"",
-        "echo \"let g = 127\" >> \"$@\"",
-        "echo \"let b = 80\"  >> \"$@\"",
-    ]),
-)
+# genrule(
+#     name  = "ocamlc",
+#     tools = ["@opam.ocamlsdk//bin:ocamlc"],
+#     outs  = ["rgb.cmo"],
+#     cmd   = "\n".join([
+#         "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+#         "echo \"let r = 255\" >> \"$@\"",
+#         "echo \"let g = 127\" >> \"$@\"",
+#         "echo \"let b = 80\"  >> \"$@\"",
+#     ]),
+# )

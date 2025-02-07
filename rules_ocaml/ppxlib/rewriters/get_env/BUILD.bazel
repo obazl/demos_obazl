@@ -41,7 +41,7 @@ config_setting(
 ocaml_test(
     name = "test",
     main = "Test",
-    test = "short"
+    timeout = "short"
 )
 
 ocaml_module(
@@ -54,7 +54,7 @@ ocaml_module(
     ppx    = ":ppx.exe",
     deps = [
         ":main",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ]
 )
 
@@ -86,21 +86,21 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
-    deps = [":ppx_get_env"]
+    prologue = [":ppx_get_env"]
 )
 
 ###########
 ocaml_module(
     name      = "ppx_get_env",
     struct    = "ppx_get_env.ml",
-    deps = ["@opam.ppxlib//lib/ppxlib"]
+    deps = ["@opam.ppxlib//lib"]
 )
 
 ###########
 ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
-    deps = ["@opam.ppxlib//lib/ppxlib"]
+    deps = ["@opam.ppxlib//lib"]
 )
 
 ########

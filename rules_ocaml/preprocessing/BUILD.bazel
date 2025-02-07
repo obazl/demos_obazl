@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "preprocessing",
+    tests = [
+        "//preprocessing/cppo",
+    ]
+)
+

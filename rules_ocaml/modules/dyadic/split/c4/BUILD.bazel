@@ -19,7 +19,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
         "//modules/dyadic/split/c4/struct:Foo" # module name is A
     ],
 )

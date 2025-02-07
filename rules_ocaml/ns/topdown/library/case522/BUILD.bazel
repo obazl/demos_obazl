@@ -21,7 +21,7 @@ ocaml_module(
     struct = "test1.ml",
     deps = [
         ":main",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 
@@ -33,7 +33,7 @@ ocaml_module(
     # ],
     deps = [
         ":main",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ],
 )
 

@@ -5,7 +5,7 @@ bazel-*
 .bazel
 .obazl.d
 .opam
-_opam
+_opam*
 log.*
 tmp
 *.gz

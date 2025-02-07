@@ -1,22 +1,12 @@
 module(
     name = "hello",
     version = "0.1.0",
-    bazel_compatibility = [">=8.0.0"],
     compatibility_level = 0,
 )
 
-# opam_install = use_extension("@tools_opam//extensions:opam_install_2.bzl", "opam_install")
-# opam_install.install(
-#     # switch = "";
-#     compiler_version = "5.1.1",
-#     # root = "",
-#     opam_version = "2.3.0",
-# )
-# use_repo(opam_install, "opam_root")
-
 ## bcr:
-bazel_dep(name = "platforms", version = "0.0.11")
-bazel_dep(name = "bazel_skylib", version = "1.7.1")
+# bazel_dep(name = "platforms", version = "0.0.11")
+# bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.0.17")
 
 ## obazl:
@@ -26,37 +16,53 @@ local_path_override(
     path = "/Users/gar/obazl/rules_ocaml",
 )
 
-# bazel_dep(name = "tools_ocaml", version = "2.0.0.bzl.8")
-bazel_dep(name = "tools_opam", version = "5.0.0")
-local_path_override(
-    module_name = "tools_opam",
-    path = "/Users/gar/obazl/tools_opam",
-)
+bazel_dep(name = "tools_opam", version = "1.0.0")
+# local_path_override(
+#     module_name = "tools_opam",
+#     path = "/Users/gar/obazl/tools_opam",
+# )
 
 opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
 opam.deps(
-    #debug = 2,
-    # local_toolchain = True,
-    ocaml_version = "5.0.0",
-    opam_version = "2.3.0",
+    # verbosity = 1,
+    # debug = 1,
     direct_deps = {
         "ounit2": "2.2.7",
+        # "alcotest": "",
+        # "batteries": "",
     },
     indirect_deps = {
-        "seq": "",
-        "stdlib-shims": "",
+        # "seq": "",
+        # "stdlib-shims": "",
     },
-    #verbosity = 2,
+    ocaml_version = "5.0.0",
+    opam_version = "2.3.0",
+    # toolchain = "local",  # default
+    # toolchain = "global",
+    toolchain = "embedded",
 )
-use_repo(opam, "opam.ounit2")
-use_repo(opam, "opam.seq", "opam.stdlib-shims")
-
-## opam, opam.ocamlsdk and opam.stublibs are always configured,
-## but we need to import them explicitly:
-use_repo(opam, "opam")
 use_repo(opam, "opam.ocamlsdk")
-use_repo(opam, "opam.stublibs")
 
+## always register toolchains:
 register_toolchains("@opam.ocamlsdk//toolchain/selectors/local:all")
 
 register_toolchains("@opam.ocamlsdk//toolchain/profiles:all")
+
+# direct deps:
+use_repo(opam, "opam.ounit2")
+## if you prefer to use non-prefixed pkg names in this module,
+## or a different name altogether,
+## e.g. @ounit2 or @foobar instead of @opam.ounit2,
+## then this syntax will configure the aliasing within
+## the scope of this module:
+#use_repo(opam, ounit2 = "opam.ounit2")
+## in the following case your build files would have
+## to use @foobar instead of @opam.ounit2
+# use_repo(opam, foobar = "opam.ounit2")
+
+## IOW, the Bazel repos always use the "opam." prefix,
+## yielding e.g. tools_opam++opam+opam.ounit2
+## but you can use any alias within your module
+## to refer to them. E.g. given
+## use_repo(opam, ounit2 = "opam.ounit2")
+## then @ounit2 will resolve to tools_opam++opam+opam.ounit2.

@@ -19,7 +19,7 @@ ocaml_module(
     name   = "Test",
     struct = SRC + "test.ml",
     opts = ["-w", "-27"], ## Error (warning 27): unused variable test_ctxt.
-    deps = [":libcolor", "@opam.ounit2//lib/ounit2"],
+    deps = [":libcolor", "@opam.ounit2//lib"],
 )
 
 ## By default, ns name == target name (normalized). Use 'ns' attrib to

@@ -11,7 +11,7 @@ load("@rules_ppx//build:rules.bzl", "ppx_executable")
 LIBNAME = "PPX_INLINE_TESTS"
 PPX_ARGS = ["-inline-test-lib", LIBNAME]
 DEPS_1 = [
-    "@opam.core//lib/core",
+    "@opam.core//lib",
     "@async//lib/async"
 ]
 
@@ -280,7 +280,7 @@ ppx_executable(
     name    = "ppx_1.exe",
     main    = ":Ppx_driver",
     prologue = [
-        "@ppx_jane//lib/ppx_jane"
+        "@opam.ppx_jane//lib"
     ],
 )
 
@@ -289,7 +289,7 @@ ocaml_module(
     name       = "Ppx_driver",
     struct     = ":ppx_driver.ml",
     visibility = ["//visibility:public"],
-    deps       = ["@opam.ppxlib//lib/ppxlib"],
+    deps       = ["@opam.ppxlib//lib"],
 )
 
 ########

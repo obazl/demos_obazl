@@ -17,7 +17,7 @@ ocaml_test(
 ocaml_exec_module(
     name   = "Test",
     struct = "test.ml",
-    deps = [":nslibGreeting", "@opam.ounit2//lib/ounit2"],
+    deps = [":nslibGreeting", "@opam.ounit2//lib"],
 )
 
 ocaml_ns_library(

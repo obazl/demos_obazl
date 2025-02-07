@@ -56,13 +56,13 @@ genrule(
     name = "menhir2",
     srcs = ["parser.mock.ml", ":Ast_outs"],
     outs = ["parser.inferred.mli"],
-    tools = ["@ocamlsdk//bin:ocamlc"],
+    tools = ["@opam.ocamlsdk//bin:ocamlc"],
     cmd  = " ".join([
         # "set -x;",
         "ASTOUTS=($(locations :Ast_outs));",
         # we need the dir so any output file will do
         "DEP=`dirname $${ASTOUTS[0]}`;",
-        "$(execpath @ocamlsdk//bin:ocamlc)",
+        "$(execpath @opam.ocamlsdk//bin:ocamlc)",
         "-I $$DEP",
         "-i $(location parser.mock.ml)",
         "> $@;"
@@ -103,9 +103,9 @@ genrule(
     name = "menhir_deps",
     srcs = ["parser.mock.ml"],
     outs = ["parser.deps"],
-    tools = ["@opam.menhir//bin:ocamldep"],
+    tools = ["@opam.ocamlsdk//bin:ocamldep"],
     cmd  = " ".join([
-        "$(execpath @opam.menhir//bin:ocamldep)",
+        "$(execpath @opam.ocamlsdk//bin:ocamldep)",
         "-modules",
         "$(SRCS)",
         "> $@"

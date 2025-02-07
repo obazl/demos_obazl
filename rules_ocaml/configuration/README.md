@@ -24,4 +24,4 @@ at the command line to generate a source file.
 
 ## TODO
 
-Demo all of the predefined config rules: --@ocaml//verbose, etc.
+Demo all of the predefined config rules: --@opam.ocamlsdk//verbose, etc.

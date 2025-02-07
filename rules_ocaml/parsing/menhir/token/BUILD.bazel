@@ -9,7 +9,7 @@ load("@rules_ocaml//build:rules.bzl",
      "ocaml_test",
 )
 
-load("@obazl_menhir//build:menhir.bzl", "menhir")
+load("@menhir//build/rules:menhir.bzl", "menhir")
 
 ###########
 ocaml_test(
@@ -23,7 +23,7 @@ ocaml_module(
     struct        = "parserTest.ml",
     deps          = [
         ":libMwe",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ]
 )
 
@@ -112,7 +112,7 @@ menhir(
     outs  = ["parser.ml", "parser.mli"],
     grammars = ["parser.mly"],
     deps  = [":Ast", ":Token"],
-    codeps = ["@opam.menhirLib//lib/menhirLib"],
+    codeps = ["@opam.menhirLib//lib"],
     # base = "Parser",
     tokens_unused = [ # suppress unused symbol warnings
         "TUnknown",

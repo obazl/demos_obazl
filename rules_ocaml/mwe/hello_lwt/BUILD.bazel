@@ -22,6 +22,6 @@ ocaml_module(
     name = "Hello_lwt",
     opts = ["-thread"],  # avoid warning about possible linking problems
     struct = "hello_lwt.ml",
-    deps = ["@lwt//lib/unix"],
+    deps = ["@opam.lwt//unix/lib"],
     # default visibility is private
 )

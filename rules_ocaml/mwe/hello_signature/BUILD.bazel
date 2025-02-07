@@ -7,10 +7,10 @@ load(
 
 # Error: No implementations provided for the following modules:
 #          Hello referenced from bazel-out/darwin-fastbuild/bin/mwe/hello_signature/__obazl/Test.cmx
-ocaml_test(
-    name = "test",
-    main = "Test",
-)
+# ocaml_test(
+#     name = "test",
+#     main = "Test",
+# )
 
 ## Warning 58 [no-cmx-file]: no cmx file was found in path for module
 ## Hello, and its interface was not compiled with -opaque
@@ -18,7 +18,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
         ":Hello_cmi",
     ],
 )

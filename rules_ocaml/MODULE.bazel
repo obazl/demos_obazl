@@ -1,5 +1,5 @@
 module(
-    name = "demos",
+    name = "demos_obazl",
     version = "5.0.0",
     bazel_compatibility = [">=8.0.0"],
     compatibility_level = 5,
@@ -11,15 +11,29 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.0.17")
 
 ## obazl:
-bazel_dep(name = "rules_ocaml", version = "5.0.0")
-bazel_dep(name = "rules_ppx", version = "5.0.0")
-bazel_dep(name = "tools_ocaml", version = "2.0.0.bzl.8")
-bazel_dep(name = "tools_opam", version = "5.0.0")
+bazel_dep(name = "rules_ocaml") # , version = "5.0.0")
+git_override(module_name = "rules_ocaml",
+             branch  = "5.0.0.alpha",
+             remote = "https://github.com/obazl/rules_ocaml.git")
 
-bazel_dep(
-    name = "obazl",
-    version = "3.0.0",
-    dev_dependency = True,
-)
+bazel_dep(name = "rules_ppx", version = "5.0.0")
+git_override(module_name = "rules_ppx",
+             branch  = "5.0.0.alpha",
+             remote = "https://github.com/obazl/rules_ppx.git")
+
+# bazel_dep(name = "tools_ocaml", version = "2.0.0.bzl.8")
+
+bazel_dep(name = "tools_opam") # , version = "1.0.0")
+# archive_override(
+#     module_name = "tools_opam",
+#     url="https://github.com/obazl/tools_opam/releases/download/1.0.0.beta.1/tools_opam-1.0.0.beta.1.tar.gz",
+#     strip_prefix = "tools_opam-1.0.0"
+# )
+
+# bazel_dep(
+#     name = "obazl",
+#     version = "3.0.0",
+#     dev_dependency = True,
+# )
 
 include("//.config/opam:opam.MODULE.bazel")

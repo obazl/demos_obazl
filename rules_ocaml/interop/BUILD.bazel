@@ -1,6 +1,6 @@
 
 test_suite(
-    name = "test",
+    name = "interop",
     tests = [
         ## broken on vm platform
         "//interop/ffi:test",

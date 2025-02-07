@@ -38,7 +38,7 @@ ocaml_test(
     # opts = ["-cclib", "-lfoo"]
     # cc_deps = {
     #     "//interop/ffi/case110/cclibs:dllalpha.so": "dynamic",
-    #     "@ocaml//runtime:camlrun_shared": "dynamic"
+    #     "@opam.ocamlsdk//runtime:camlrun_shared": "dynamic"
     # }
 )
 
@@ -48,7 +48,7 @@ ocaml_module(
     # opts = ["-linkall"],
     deps = [
         "//interop/ffi/case110/cclibs:Alpha",
-        "@opam.ounit2//lib/ounit2",
+        "@opam.ounit2//lib",
     ]
 )
 

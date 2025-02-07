@@ -10,7 +10,7 @@ LIBNAME="Hello"
 
 # "Code using this extension must be compiled and linked using the ppx_inline_test.runtime-lib library"
 # i.e. ppx_inline_test.runtime-lib is a codep.  This is handled transparently by the module
-# @opam.ppx_inline_test//lib/ppx_inline_test, which lists as a ppx_codep.
+# @opam.ppx_inline_test//lib, which lists as a ppx_codep.
 
 # "Tests are only executed when both these conditions are met:
 #  * the executable containing the tests is linked with ppx_inline_test.runner.lib
@@ -36,13 +36,13 @@ ocaml_test(
     # opts = ["-verbose"],
 
     prologue = [
-        "@opam.ppx_inline_test//lib/runner/lib",
+        "@opam.ppx_inline_test//runner/lib/lib",
         ":Hello",
     ],
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
     # main = ":Runner",
-    main = "@opam.ppx_inline_test//lib/runner",
+    main = "@opam.ppx_inline_test//runner/lib",
     timeout = "short"
 )
 
@@ -67,11 +67,11 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     prologue = [
-        "@opam.ppx_inline_test//lib/ppx_inline_test",
+        "@opam.ppx_inline_test//lib",
     ],
     main = ":Driver",
     # ppx_codeps = [
-    #     "@opam.ppx_inline_test//lib/runtime-lib",
+    #     "@opam.ppx_inline_test//runtime-lib/lib",
     # ]
 )
 
@@ -80,7 +80,7 @@ ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml",
     visibility = ["//visibility:public"],
-    deps = ["@opam.ppxlib//lib/ppxlib"],
+    deps = ["@opam.ppxlib//lib"],
 )
 
 ########

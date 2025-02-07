@@ -46,7 +46,7 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         ":Hello",
-        "@opam.ounit2//lib/ounit2"
+        "@opam.ounit2//lib"
     ]
 )
 
@@ -57,7 +57,7 @@ ocaml_module(
     ## use output of genrule that runs the ppx
     struct = "tmp/hello.ml",  # output of genrule, which will be triggered
     deps = [
-        "@opam.core//lib/core"
+        "@opam.core//lib"
     ],
 
     ## normally you would use these convenience attribs to tell the
@@ -81,13 +81,13 @@ genrule(
     name = "transform",
     outs = ["tmp/hello.ml"],
     srcs = ["hello.ml",
-            "@stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so",
-            "@stublibs//lib/stublibs:dllbase_stubs.so"],
+            "@opam.stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so",
+            "@opam.stublibs//lib/stublibs:dllbase_stubs.so"],
     ## due to filename->module_name rules, output must be hello.ml, not e.g. hello.pp.ml
     ## $(location :ppx.exe) resolves to wherever Bazel placed ppx.exe
     ## {print_fmt} is for string interpolation
     cmd = " ".join([
-        "STUBLIBS=`dirname $(execpath @stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so)`;",
+        "STUBLIBS=`dirname $(execpath @opam.stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so)`;",
         "export DYLD_LIBRARY_PATH=$$STUBLIBS;", ## MacOS
         "$(location :ppx.exe)",
         "{}".format(PPX_PRINT),
@@ -102,7 +102,7 @@ ppx_executable(
     main = ":Driver",  # obazl will place main last in the list of deps
     prologue = [
         # contains handler for `[%sexp ]` extension
-        "@opam.ppx_sexp_value//lib/ppx_sexp_value",
+        "@opam.ppx_sexp_value//lib",
     ],
 )
 
@@ -110,7 +110,7 @@ ppx_executable(
 ocaml_module(
     name = "Driver",
     struct = ":ppxlib_driver.ml", # this is in the 'outs' of the genrule
-    deps = ["@opam.ppxlib//lib/ppxlib"],
+    deps = ["@opam.ppxlib//lib"],
 )
 
 ########
