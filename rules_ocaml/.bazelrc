@@ -1,12 +1,10 @@
+## during development:
 common --lockfile_mode=off
 
 try-import %workspace%/.config/toolchains.bazelrc
 try-import .config/registries.bazelrc
 
-common --flag_alias=tc=@rules_ocaml//toolchain
-#cmd line: --tc=ocamlopt.opt
-
-#common --config=ocamlopt.opt
+#common --config=ocamlopt.opt  ## default
 #common --config=ocamlc.byte
 #common --config=ocamlopt.byte
 #common --config=ocamlc.opt
