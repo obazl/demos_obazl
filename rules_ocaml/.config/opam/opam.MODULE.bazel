@@ -3,11 +3,6 @@ bazel_dep(name = "zstd", version = "1.5.6")
 
 opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
 
-# 'repo_name' here means in your BUILD files you can write:
-# load("@menhir//build/rules:menhir.bzl", "menhir")
-# instead of
-# load("@obazl_menhir//build/rules:menhir.bzl", "menhir")
-# (not to be confused with @opam.menhir)
 bazel_dep(name = "obazl_menhir", repo_name="menhir")
 use_repo(opam, "opam.menhir", "opam.menhirLib")
 archive_override(
@@ -25,18 +20,12 @@ archive_override(
 )
 
 opam.deps(
-    # toolchain = "xdg",     # default
-    # xdg_switch = {"id": "ocaml_version"}
-    # opam_version = "2.3.0",
-
-    toolchain = "local",
-    # toolchain = "global",
-
-    # ocaml_version = "5.3.0",
-
+    toolchain = "local", # | "global" | "xdg"
+    ocaml_version = "5.3.0",
     # debug = 2,
-    # verbosity = 2,
-    deps = {
+    # verbosity = 1,
+    # opam_verbosity = 1,
+    pkgs = {
         "alcotest": "",
         "cmdliner": "",
         "core": "",
@@ -50,9 +39,8 @@ opam.deps(
         "ppx_sexp_conv": "",
         "ppx_sexp_value": "",
         "ppxlib": "",
-        "ppxlib_jane": "",
+        # "ppxlib_jane": "",  # >= 5.1.0
         "sexplib": "",
-        "stublibs": "",
         "time_now": "",
 
         # "async": "",  # //testing/ppx_expect demo, <5.3.0
@@ -67,6 +55,7 @@ opam.deps(
 )
 
 use_repo(opam, "opam.ocamlsdk")
+# use_repo(opam, "opam.stublibs")
 register_toolchains(
     "@opam.ocamlsdk//toolchain/selectors/local:all",
     "@opam.ocamlsdk//toolchain/profiles:all",
@@ -84,10 +73,11 @@ use_repo(opam, "opam.ppx_optcomp")
 use_repo(opam, "opam.ppx_sexp_conv")
 use_repo(opam, "opam.ppx_sexp_value")
 use_repo(opam, "opam.ppxlib")
-use_repo(opam, "opam.ppxlib_jane")
+# use_repo(opam, "opam.ppxlib_jane")
 use_repo(opam, "opam.sexplib")
-use_repo(opam, "opam.stublibs")
 use_repo(opam, "opam.time_now")
+
+
 
 # use_repo(opam, "opam.async")
 # use_repo(opam, "opam.core_unix") # <5.3.0
