@@ -5,19 +5,15 @@ opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
 
 bazel_dep(name = "obazl_menhir", repo_name="menhir")
 use_repo(opam, "opam.menhir", "opam.menhirLib")
-archive_override(
-    module_name = "obazl_menhir",
-    url="https://github.com/obazl/obazl_menhir/releases/download/0.1.0.beta.1/obazl_menhir-0.1.0.beta.1.tar.gz",
-    strip_prefix = "obazl_menhir-0.1.0"
-)
+git_override(module_name = "obazl_menhir",
+             branch  = "2024.07.15.beta",
+             remote = "https://github.com/obazl/obazl_menhir.git")
 
 bazel_dep(name = "obazl_cppo")
 use_repo(opam, "opam.cppo")
-archive_override(
-    module_name = "obazl_cppo",
-    url="https://github.com/obazl/obazl_cppo/releases/download/1.8.0.beta.1/obazl_cppo-1.8.0.beta.1.tar.gz",
-    strip_prefix = "obazl_cppo-1.8.0"
-)
+git_override(module_name = "obazl_cppo",
+             branch  = "1.8.0.beta",
+             remote = "https://github.com/obazl/obazl_cppo.git")
 
 opam.deps(
     toolchain = "local", # | "global" | "xdg"
