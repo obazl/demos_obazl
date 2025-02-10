@@ -2,7 +2,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_signature",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
@@ -18,8 +18,9 @@ ocaml_test(
     deps = [":color", "@opam.ounit2//lib],
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
+    archived = True,
     manifest = {
         ":Red": "Red",
         ":Green": "Green",

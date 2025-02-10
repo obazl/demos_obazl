@@ -7,7 +7,6 @@ load(
     "ocaml_module",
     "ocaml_exec_module",
     "ocaml_ns_library",
-    "ocaml_ns_archive",
     "ocaml_test",
 )
 
@@ -30,6 +29,7 @@ ocaml_exec_module(
 
 ocaml_ns_library( # archive(
     name = "color",
+    archived = True,
     manifest = [
         ":Red",
         ":Green",

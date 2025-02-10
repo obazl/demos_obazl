@@ -5,7 +5,7 @@ fail("OBSOLETE CASE - ns_env no longer supported")
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 # load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
@@ -28,8 +28,9 @@ ocaml_test(
 # This will generate a main ns module, which doubles as a resolver
 # module. Since we have enrolled the submodules in an ns_env,
 # the aliasing equations will not be pseudo-recursive.
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
+    archived = True,
     manifest = {
         ":Red": "Red",
         ":Green": "Green",

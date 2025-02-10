@@ -1,15 +1,14 @@
-# same as //mwe/hello_library except uses ocaml_archive instead of
-# ocaml_library
+# same as //mwe/hello_library except uses ocaml_library with archived = True
 
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_binary",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 
-# $ bazel test //minimal/hello_ns_archive:test
+# $ bazel test //minimal/hello_ns_library:test
 ocaml_test(
     name = "test",
     main = "Test",
@@ -26,7 +25,7 @@ ocaml_module(
 )
 
 # executable w/o test
-# $ bazel run minimal/hello_ns_archive:hello
+# $ bazel run minimal/hello_ns_library:hello
 ocaml_binary(
     name = "hello",
     main = ":Main",
@@ -39,8 +38,9 @@ ocaml_module(
     deps = [":libHello"],
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "libHello",
+    archived = True,
     manifest = [":Easy", ":Simple"],
 )
 
@@ -54,9 +54,9 @@ ocaml_module(
     struct = "simple.ml",
 )
 
-# ## this target compiles sources to an archive:
-# ocaml_archive(
-#     name = "archive_ml",
+# ## this target compiles sources to an library:
+# ocaml_library(
+#     name = "library_ml",
 #     message = "Archiving...",
 #     srcs = ["easy.ml", "simple.ml"],
 #     opts = [ "-verbose" ],
@@ -64,8 +64,8 @@ ocaml_module(
 # )
 
 # ## this target mixes compilation and archiving:
-# ocaml_archive(
-#     name = "archive_mix",
+# ocaml_library(
+#     name = "library_mix",
 #     message = "Archiving...",
 #     srcs = ["easy.ml"],
 #     opts = [ "-verbose" ],

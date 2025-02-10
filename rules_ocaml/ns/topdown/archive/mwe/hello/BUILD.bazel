@@ -3,7 +3,6 @@ load(
     # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
     "ocaml_ns_library",
     "ocaml_test"
 )
@@ -23,9 +22,9 @@ ocaml_module(
     ]
 )
 
-ocaml_ns_archive(
-# ocaml_ns_library(
+ocaml_ns_library(
     name = "libHello",
+    archived = True,
     ns_name = "Hello",
     # archived = True,
     # archive_name =  "Hello",

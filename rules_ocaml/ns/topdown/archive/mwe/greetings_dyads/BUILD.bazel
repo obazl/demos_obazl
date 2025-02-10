@@ -3,7 +3,6 @@ load(
     # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
     "ocaml_ns_library",
     "ocaml_signature",
     "ocaml_test"
@@ -24,9 +23,9 @@ ocaml_module(
     ]
 )
 
-ocaml_ns_archive(
-# ocaml_ns_library(
+ocaml_ns_library(
     name = "greetings",
+    archived = True,
     manifest = [
         ":Hello",
         ":Goodbye",

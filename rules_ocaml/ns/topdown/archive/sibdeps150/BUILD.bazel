@@ -3,7 +3,7 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 
@@ -21,7 +21,7 @@ ocaml_test(
 )
 
 #################
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
     manifest = {
         ":Red": "Red",

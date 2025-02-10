@@ -2,10 +2,8 @@
 
 load(
     "@rules_ocaml//build:rules.bzl",
-    # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
     "ocaml_ns_library",
     "ocaml_test",
 )
@@ -26,8 +24,9 @@ ocaml_module(
     ]
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "libColor",
+    archived = True,
     ns_name = "Color",
     manifest = [
         ":Red", # ":RedModule",
@@ -58,10 +57,11 @@ ocaml_module(
 )
 
 ###################
-# ocaml_ns_archive(  # nope
+# ocaml_ns_library(  # nope
 # ocaml_library(  # nope
 ocaml_ns_library(  # ok
     name = "Greek", # "libGreek",
+    # archived = True,
     # ns_name = "Greek",
     manifest = [
         ":Alpha", # ":AlphaModule",

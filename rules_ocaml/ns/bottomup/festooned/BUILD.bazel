@@ -1,16 +1,17 @@
 fail("WARNING: outdated code. won't work.")
 
 load("@obazl_rules_ocaml//ocaml:build.bzl",
-     "ocaml_archive",
-     "ocaml_ns_archive",
+     "ocaml_library",
+     "ocaml_ns_library",
      "ocaml_binary",
      "ocaml_module",
 )
 
 package(default_visibility = ["//visibility:public"])
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "archive",
+    archived = True,
     # module_name = "foo",
     manifest = glob(["alpha/**/*.ml"]),
     # manifest = [

@@ -2,7 +2,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
 )
 
 ## IMPORTANT IMPORTANT
@@ -22,8 +22,9 @@ ocaml_library(
     visibility = ["//ns/topdown/archive/case522:__subpackages__"]
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "gem",
+    archived = True,
     manifest = [
         ":Alpha",
         ":Beta",

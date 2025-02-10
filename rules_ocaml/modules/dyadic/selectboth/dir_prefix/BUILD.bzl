@@ -1,7 +1,7 @@
 load("@rules_ocaml//providers:ocaml.bzl",
      "OcamlModuleMarker",
      "OcamlProvider",
-     "OcamlSignatureProvider",
+     "OCamlSignatureProvider",
      "OcamlNsResolverProvider")
 
 debug = False
@@ -13,14 +13,14 @@ def _impl(ctx):
     for s in ctx.attr.selection:
         if debug:
             print("DefaultInfo: %s" % s[DefaultInfo])
-            if OcamlSignatureProvider in s:
-                print("OcamlSignatureProvider: %s" % s[OcamlSignatureProvider])
+            if OCamlSignatureProvider in s:
+                print("OCamlSignatureProvider: %s" % s[OCamlSignatureProvider])
 
     s = ctx.attr.selection[0]
     if OcamlProvider in s:
         providers.append(s[OcamlProvider])
-        if OcamlSignatureProvider in s:
-            providers.append(s[OcamlSignatureProvider])
+        if OCamlSignatureProvider in s:
+            providers.append(s[OCamlSignatureProvider])
             providers.append(s[DefaultInfo])
     else:
         ## input is a source file

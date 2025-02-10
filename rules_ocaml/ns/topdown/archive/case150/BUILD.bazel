@@ -5,12 +5,13 @@ load(
     # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
+    archived = True,
     manifest = [
         ":Red",
         ":Green",
@@ -18,8 +19,9 @@ ocaml_ns_archive(
     ],
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "greek",
+    archived = True,
     manifest = [
         ":Alpha",
         ":Beta",

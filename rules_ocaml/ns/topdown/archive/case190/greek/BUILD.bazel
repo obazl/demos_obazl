@@ -3,14 +3,14 @@ load(
     # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
     "ocaml_ns_library",
 )
 
 ###################
-# ocaml_ns_archive(
+# ocaml_ns_library(
 ocaml_ns_library(
     name = "greek",
+    archived = True,
     manifest = [
         ":Alpha",
         ":Beta",

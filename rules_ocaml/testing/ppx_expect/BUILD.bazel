@@ -1,8 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@rules_ocaml//build:rules.bzl",
-     "ocaml_archive",
-     "ocaml_ns_archive",
+     "ocaml_ns_library",
      "ocaml_module",
      "ocaml_signature",
 )
@@ -19,8 +18,9 @@ DEPS_1 = [
 ####  Aggregate Targets  ####
 
 #################
-ocaml_ns_archive(  #1
+ocaml_ns_library(  #1
     name       = "expect_test_examples",
+    archived   = True,
     ns_name    = "expect_test_examples",
     manifest = [
         ":Chdir",

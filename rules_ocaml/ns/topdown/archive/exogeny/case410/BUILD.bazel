@@ -3,12 +3,12 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 
 # exogenous submodulues - modules from another package
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
     manifest = [
         "//mwe/rgb:R",

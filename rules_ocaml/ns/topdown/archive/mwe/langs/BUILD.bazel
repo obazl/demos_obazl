@@ -3,7 +3,7 @@ load(
     # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test"
 )
 
@@ -19,8 +19,9 @@ ocaml_module(
     deps = [":hello", "@opam.ounit2//lib"]
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "hello",
+    archived = True,
     manifest = [
         ":Australian",
         ":English",

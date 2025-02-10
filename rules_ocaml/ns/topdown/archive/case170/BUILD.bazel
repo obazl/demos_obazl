@@ -5,7 +5,6 @@ load(
     # "ocaml_archive",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_archive",
     "ocaml_ns_library",
     "ocaml_test",
 )
@@ -23,8 +22,9 @@ ocaml_module(
     opts = ["-w", "-58"] # Warning [no-cmx-file]
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
+    archived = True,
     manifest = [
         ":Red",
         ":Green",
@@ -33,9 +33,9 @@ ocaml_ns_archive(
     ],
 )
 
-# ocaml_ns_archive(
 ocaml_ns_library(
     name = "greek",
+    # archived = True,
     manifest = [
         ":Alpha",
         ":Beta",
@@ -44,9 +44,9 @@ ocaml_ns_library(
     ],
 )
 
-# ocaml_ns_archive(
 ocaml_ns_library(
     name = "foobar",
+    # archived = True,
     manifest = [
         ":Foo",
         ":Bar",

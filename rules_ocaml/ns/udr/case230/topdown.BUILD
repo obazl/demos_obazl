@@ -3,7 +3,6 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_ns_archive",
     "ocaml_ns_library",
     "ocaml_test",
 )
@@ -26,8 +25,8 @@ ocaml_module(
 
 #################
 ocaml_ns_library(
-#ocaml_ns_archive(
     name = "libColor",
+    archived = True,
     resolver   = ":Color",
     ns = "Color",
     manifest = [

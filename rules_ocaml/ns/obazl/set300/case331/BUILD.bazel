@@ -3,7 +3,7 @@ fail("OBSOLETE CASE - ns_env etc. no longer supported")
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 # load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
@@ -21,8 +21,9 @@ ocaml_test(
     deps = [":color"],
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
+    archived = True,
     # use user-provided file as main ns module:
     main = "color.ml",  ## Notice that we do NOT have a compile rule for color.ml
     manifest = {

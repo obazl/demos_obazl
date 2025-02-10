@@ -3,7 +3,7 @@ load("@bazel_skylib//rules:build_test.bzl", "build_test")
 package(default_visibility = ["//visibility:public"])
 
 load("@rules_ocaml//build:rules.bzl",
-     "ocaml_archive",
+     "ocaml_library",
      "ocamllex",
      "ocaml_module",
      "ocaml_test",
@@ -30,8 +30,9 @@ ocaml_module(
 #############################
 ####  Aggregate Targets  ####
 
-ocaml_archive(
+ocaml_library(
     name     = "libMwe",
+    archived = True,
     manifest = [
         ":Ast",
         ":Lexer",

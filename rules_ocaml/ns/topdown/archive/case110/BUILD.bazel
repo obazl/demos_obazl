@@ -3,7 +3,7 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 
@@ -19,8 +19,9 @@ ocaml_module(
     deps = [":color", "@opam.ounit2//lib"],
 )
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
+    archived = True,
     manifest = [
         ":Grue",
     ]

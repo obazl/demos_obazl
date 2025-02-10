@@ -3,12 +3,12 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
-    "ocaml_ns_archive",
+    "ocaml_ns_library",
     "ocaml_test",
 )
 load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
-ocaml_ns_archive(
+ocaml_ns_library(
     name = "color",
     manifest = [
         ":Red",

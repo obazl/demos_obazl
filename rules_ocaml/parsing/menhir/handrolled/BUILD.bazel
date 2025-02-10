@@ -7,7 +7,6 @@ load("@bazel_skylib//rules:build_test.bzl", "build_test")
 package(default_visibility = ["//visibility:public"])
 
 load("@rules_ocaml//build:rules.bzl",
-     "ocaml_ns_archive",
      "ocamllex",
      "ocaml_module",
      "ocaml_test",
