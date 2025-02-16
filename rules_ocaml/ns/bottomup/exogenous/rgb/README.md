@@ -1,4 +1,4 @@
-Demonstrates use of the `modules` attribute of the `ocaml_ns_resolver`
+Demonstrates use of the `modules` attribute of the `ocaml_ns`
 rule, to embed exogenous non-namespaced modules (i.e. modules not
 submodules) in a namespace. "Exogenous" meaning they are targets in a
 different package.

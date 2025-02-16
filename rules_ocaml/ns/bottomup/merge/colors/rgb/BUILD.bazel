@@ -2,7 +2,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
@@ -37,7 +37,7 @@ ocaml_library(
     ],
 )
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "nsRGB",
     ns   = "RGB",
     manifest = [
@@ -50,18 +50,18 @@ ocaml_ns_resolver(
 #############
 ocaml_module(
     name        = "Red",
-    ns_resolver = ":nsRGB",
+    ns          = ":nsRGB",
     struct      = "red.ml",
 )
 
 ocaml_module(
     name = "Green",
-    ns_resolver = ":nsRGB",
+    ns          = ":nsRGB",
     struct = "green.ml",
 )
 
 ocaml_module(
     name = "Blue",
-    ns_resolver = ":nsRGB",
+    ns          = ":nsRGB",
     struct = "blue.ml",
 )

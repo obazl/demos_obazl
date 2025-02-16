@@ -2,7 +2,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
@@ -29,7 +29,7 @@ ocaml_library(
 
 # put exogenous ns RGB in Colors namespace, and alias it as Mycolors.
 # e.g. Mycolors.Red => RGB.Red
-ocaml_ns_resolver(
+ocaml_ns(
     name        = "nsRGB",
     ns          = "Colors",
     embed  = {

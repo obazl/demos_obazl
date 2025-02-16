@@ -4,7 +4,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
@@ -32,7 +32,7 @@ ocaml_library(
     ],
 )
 
-ocaml_ns_resolver(
+ocaml_ns(
     name        = "color_ns",
     ns          = "Color",
     submodules  = [
@@ -49,13 +49,13 @@ ocaml_ns_resolver(
 ocaml_module(
     name        = "NsColor",
     forcename = True,
-    # ns_resolver = ":color_ns",
+    # ns          = ":color_ns",
     struct      = "color.ml",
     opts = ["-no-alias-deps", "-w", "-49"]
 )
 
 ocaml_module(
     name        = "Grue",
-    ns_resolver = ":color_ns",
+    ns          = ":color_ns",
     struct      = "color__grue.ml",
 )

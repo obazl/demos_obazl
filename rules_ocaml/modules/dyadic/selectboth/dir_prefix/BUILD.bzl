@@ -1,8 +1,8 @@
-load("@rules_ocaml//providers:ocaml.bzl",
+load("@rules_ocaml//build:providers.bzl",
+     "OCamlDepsProvider",
      "OcamlModuleMarker",
-     "OcamlProvider",
      "OCamlSignatureProvider",
-     "OcamlNsResolverProvider")
+     "OCamlNsResolverProvider")
 
 debug = False
 
@@ -17,8 +17,8 @@ def _impl(ctx):
                 print("OCamlSignatureProvider: %s" % s[OCamlSignatureProvider])
 
     s = ctx.attr.selection[0]
-    if OcamlProvider in s:
-        providers.append(s[OcamlProvider])
+    if OCamlDepsProvider in s:
+        providers.append(s[OCamlDepsProvider])
         if OCamlSignatureProvider in s:
             providers.append(s[OCamlSignatureProvider])
             providers.append(s[DefaultInfo])

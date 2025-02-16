@@ -2,16 +2,16 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
 package(default_visibility = ["//visibility:public"])
 
 ocaml_test(
-    timeout = "short",
     name = "test",
     main = ":Test",
+    timeout = "short",
 )
 
 ocaml_module(
@@ -35,7 +35,7 @@ ocaml_library(
     ],
 )
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "nsRGB",  # target name, not (necessarily) ns name
     ## By default, ns name == target name (normalized)
     ## Use 'ns' attrib to override.
@@ -51,18 +51,18 @@ ocaml_ns_resolver(
 
 ocaml_module(
     name        = "Red",
-    ns_resolver = ":nsRGB",
+    ns          = ":nsRGB",
     struct      = "red.ml",
 )
 
 ocaml_module(
     name = "Green",
-    ns_resolver = ":nsRGB",
+    ns          = ":nsRGB",
     struct = "green.ml",
 )
 
 ocaml_module(
     name = "Blue",
-    ns_resolver = ":nsRGB",
+    ns          = ":nsRGB",
     struct = "blue.ml",
 )

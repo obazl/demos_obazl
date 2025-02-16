@@ -4,7 +4,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
@@ -39,7 +39,7 @@ ocaml_library(
     visibility = ["//visibility:public"],
 )
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "nsColors",
     ns   = "Colors",
     merge = [

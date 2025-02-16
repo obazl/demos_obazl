@@ -16,7 +16,7 @@ test_suite(
         "//parsing",
         # "//ppxlib",
         "//preprocessing",
-        "//signatures:test",
+        "//signatures",
         "//testing",
     ]
 )

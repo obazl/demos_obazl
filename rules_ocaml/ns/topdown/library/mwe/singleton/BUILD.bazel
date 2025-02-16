@@ -2,8 +2,8 @@ load(
     "@rules_ocaml//build:rules.bzl",
     # "ocaml_archive",
     "ocaml_library",
+    # "ocaml_exec_module",
     "ocaml_module",
-    "ocaml_exec_module",
     "ocaml_ns_library",
     "ocaml_test"
 )
@@ -14,7 +14,8 @@ ocaml_test(
     main = "Test"
 )
 
-ocaml_exec_module(
+# ocaml_exec_module(
+ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [":nslibGreeting", "@opam.ounit2//lib"],

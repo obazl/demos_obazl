@@ -2,14 +2,14 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
 ## instead of composing namespaces, we fuse their submodules, so we
 ## can refer to them without using their ns names.
 ## E.g. Colors.R => RGB.Red
-ocaml_ns_resolver(
+ocaml_ns(
     name = "colors_ns",
     ns   = "Colors",
     include = {

@@ -2,7 +2,7 @@
 test_suite(
     name = "ns",
     tests = [
-        "//ns/bottomup:test",
+        "//ns/bottomup",
         "//ns/new:test",
         "//ns/prefixing:test",
         "//ns/srcindirect:test",

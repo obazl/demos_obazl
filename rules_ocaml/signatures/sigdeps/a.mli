@@ -1,0 +1,1 @@
+val msg : B.t

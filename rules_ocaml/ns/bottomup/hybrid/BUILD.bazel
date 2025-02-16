@@ -2,11 +2,44 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
-ocaml_ns_resolver(
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libGreek",
+        "@opam.ounit2//lib",
+    ],
+)
+
+
+# package resolver and submodules in one library
+ocaml_library(
+    name = "libGreek",
+    manifest = [
+        ":nsGreek",
+        ":Alpha",
+        ":Beta",
+        ":Gamma",
+        "//mwe/rgb:R",
+        "//mwe/rgb:G",
+        "//mwe/rgb:B",
+        "//ns/bottomup/election/rgb:libRGB",
+        "//ns/bottomup/embed/colors/cmyk:libCMYK",
+    ],
+)
+
+##################
+ocaml_ns(
     name = "nsGreek",
     ns   = "Greek",
     manifest = [
@@ -30,54 +63,21 @@ ocaml_ns_resolver(
     }
 )
 
-# package resolver and submodules in one library
-ocaml_library(
-    name = "libGreek",
-    manifest = [
-        # ":nsGreek",
-        ":Alpha",
-        ":Beta",
-        ":Gamma",
-        "//mwe/rgb:R",
-        "//mwe/rgb:G",
-        "//mwe/rgb:B",
-        "//ns/bottomup/election/rgb:libRGB",
-        "//ns/bottomup/embed/colors/cmyk:libCMYK",
-    ],
-)
-
 #############
 ocaml_module(
     name        = "Alpha",
-    ns_resolver = ":nsGreek",
+    ns          = ":nsGreek",
     struct      = "alpha.ml",
 )
 
 ocaml_module(
     name        = "Beta",
-    ns_resolver = ":nsGreek",
+    ns          = ":nsGreek",
     struct      = "beta.ml",
 )
 
 ocaml_module(
     name        = "Gamma",
-    ns_resolver = ":nsGreek",
+    ns          = ":nsGreek",
     struct      = "gamma.ml",
 )
-
-#############
-ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
-        ":libGreek",
-        "@opam.ounit2//lib",
-    ],
-)
-
-ocaml_test(
-    timeout = "short",
-    name = "test",
-    main = "Test"
-)
-

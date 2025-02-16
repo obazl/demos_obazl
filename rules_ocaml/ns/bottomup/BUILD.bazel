@@ -1,5 +1,5 @@
 test_suite(
-    name = "test",
+    name = "bottomup",
     tests = [
         "//ns/bottomup/election:test",
         "//ns/bottomup/embed:test",

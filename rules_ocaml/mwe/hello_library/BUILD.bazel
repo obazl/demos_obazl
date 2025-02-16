@@ -4,7 +4,6 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
-    "ocaml_archive",
     "ocaml_binary",
     "ocaml_module",
     "ocaml_test",
@@ -13,7 +12,8 @@ load(
 # $ bazel test //minimal/hello_library:test
 ocaml_test(
     name = "test",
-    main = "Test"
+    main = "Test",
+    timeout = "short"
 )
 
 ocaml_module(
@@ -48,9 +48,16 @@ ocaml_library(
 ocaml_module(
     name = "Easy",
     struct = "easy.ml",
+    deps = [":Common"]
 )
 
 ocaml_module(
     name = "Simple",
     struct = "simple.ml",
+    deps = [":Common"]
+)
+
+ocaml_module(
+    name = "Common",
+    struct = "common.ml",
 )

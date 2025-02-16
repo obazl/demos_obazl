@@ -2,13 +2,13 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
 package(default_visibility = ["//ns/bottomup/exogenous/colors:__pkg__"])
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "hsb_ns",
     ns   = "HSB",
     manifest = [
@@ -29,19 +29,19 @@ ocaml_library(
 
 ocaml_module(
     name        = "Hue",
-    ns_resolver = ":hsb_ns",
+    ns          = ":hsb_ns",
     struct      = "hue.ml",
 )
 
 ocaml_module(
     name = "Saturation",
-    ns_resolver = ":hsb_ns",
+    ns          = ":hsb_ns",
     struct = "saturation.ml",
 )
 
 ocaml_module(
     name = "Brightness",
-    ns_resolver = ":hsb_ns",
+    ns          = ":hsb_ns",
     struct = "brightness.ml",
 )
 

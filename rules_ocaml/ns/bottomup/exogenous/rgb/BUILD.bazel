@@ -2,7 +2,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
@@ -31,7 +31,7 @@ ocaml_library(
     ],
 )
 
-ocaml_ns_resolver(
+ocaml_ns(
     name        = "rgb_ns",
     ns          = "RGB",
     # fuse non-namespaced exogenous modules

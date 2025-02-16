@@ -2,7 +2,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
@@ -28,7 +28,7 @@ ocaml_module(
 )
 
 ##################
-ocaml_ns_resolver(
+ocaml_ns(
     name = "nsCMYK",
     ns   = "CMYK",
     manifest = [
@@ -53,24 +53,24 @@ ocaml_library(
 #############
 ocaml_module(
     name        = "Cyan",
-    ns_resolver = ":nsCMYK",
+    ns          = ":nsCMYK",
     struct      = "cyan.ml",
 )
 
 ocaml_module(
     name = "Magenta",
-    ns_resolver = ":nsCMYK",
+    ns          = ":nsCMYK",
     struct = "magenta.ml",
 )
 
 ocaml_module(
     name = "Yellow",
-    ns_resolver = ":nsCMYK",
+    ns          = ":nsCMYK",
     struct = "yellow.ml",
 )
 
 ocaml_module(
     name = "Key",
-    ns_resolver = ":nsCMYK",
+    ns          = ":nsCMYK",
     struct = "key.ml",
 )

@@ -3,5 +3,5 @@ load("@rules_ocaml//build:rules.bzl", "ocaml_signature")
 ocaml_signature(
     name = "mwe",
     src  = "hello.mli",
-    opts = ["-no-opaque"],
+    opts = ["-no-opaque"] # , "-bin-annot"],
 )

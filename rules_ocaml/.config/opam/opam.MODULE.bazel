@@ -16,8 +16,10 @@ git_override(module_name = "obazl_cppo",
              remote = "https://github.com/obazl/obazl_cppo.git")
 
 opam.deps(
-    toolchain = "local", # | "global" | "xdg"
-    ocaml_version = "5.3.0",
+    # toolchain = "local", # | "global" | "xdg"
+    toolchain = "xdg",
+    ocaml_version = "5.1.1",
+    opam_version = "2.3.0",
     # debug = 2,
     # verbosity = 1,
     # opam_verbosity = 1,
@@ -44,7 +46,7 @@ opam.deps(
         # "core_unix": "", # <5.3.0
         # "metapp": "",   # <5.3.0?
         # "metaquot": "",   # <5.3.0?
-        # "ppx_show": "",        # <5.3.0
+        "ppx_show": "",        # <5.3.0
     },
     # dev_deps = {
     # },
@@ -80,4 +82,4 @@ use_repo(opam, "opam.time_now")
 # use_repo(opam, "opam.ppx_jane")
 # use_repo(opam, "opam.metapp")    # <5.3.0
 # use_repo(opam, "opam.metaquot")  # <5.3.0
-# use_repo(opam, "opam.ppx_show")  # <5.3.0
+use_repo(opam, "opam.ppx_show")  # <5.3.0

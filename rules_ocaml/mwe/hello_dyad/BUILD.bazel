@@ -24,6 +24,7 @@ ocaml_module(
     name = "Hello",
     struct = "hello.ml",
     sig    = ":Hello_cmi",
+    # sig    = "hello.mli",
 )
 
 ocaml_signature(

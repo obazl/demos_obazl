@@ -2,10 +2,10 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_library",
     "ocaml_module",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
 )
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "beta1_ns",
     ns = "Beta1",
     manifest = ["Pluto"],

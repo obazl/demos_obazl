@@ -1,9 +1,12 @@
 ## DO NOT PUT UNDER VERSION CONTROL
-try-import .config/dev.bazelrc
+# common --announce_rc
+try-import .config/overrides.bazelrc
 
-query --notool_deps
-query --noimplicit_deps
-query --output package
+# try-import .config/dev.bazelrc
+
+# query --notool_deps
+# query --noimplicit_deps
+# query --output package
 
 #build --toolchain_resolution_debug=@rules_ocaml//toolchain:type
 #build --toolchain_resolution_debug=@bazel_tools//tools/cpp:toolchain_type
@@ -13,17 +16,9 @@ query --output package
 ## Fetching @local_config_cc; Running xcode-locator 7s
 # build --xcode_version_config=//private/macos:host_xcodes
 
-# common --override_repository=sunlark=/Users/gar/obazl/sunlark
-# common --override_repository=sealark=/Users/gar/obazl/sealark
-
-
-# common --override_repository=rules_ppx=/Users/gar/obazl/rules_ppx
-
-# common --override_repository=bootstrap_opam=/Users/gar/obazl/bootstrap_opam
-
-common:dbg --subcommands=pretty_print
-common:dbg --verbose_failures
-build:dbgv --@rules_ocaml//cfg/verbose
+# common:dbg --subcommands=pretty_print
+# common:dbg --verbose_failures
+# build:dbgv --@rules_ocaml//cfg/verbose
 
 # build --subcommands=pretty_print
 # build --verbose_failures
@@ -36,7 +31,7 @@ build:dbgv --@rules_ocaml//cfg/verbose
 
 # pass --config=trace to enable this:
 # common --config=trace
-common:trace --@opam//bzl/debug:trace
+# common:trace --@opam//bzl/debug:trace
 
 # build --@tools_opam//bootstrap:ast-dump
 # build --@tools_opam//bootstrap:yydebug

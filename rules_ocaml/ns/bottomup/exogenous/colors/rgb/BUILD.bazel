@@ -2,13 +2,13 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
 package(default_visibility = ["//ns/bottomup/exogenous/colors:__pkg__"])
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "rgb_ns",
     ns   = "RGB",
     manifest = [
@@ -30,19 +30,19 @@ ocaml_library(
 #############
 ocaml_module(
     name        = "Red",
-    ns_resolver = ":rgb_ns",
+    ns          = ":rgb_ns",
     struct      = "red.ml",
 )
 
 ocaml_module(
     name = "Green",
-    ns_resolver = ":rgb_ns",
+    ns          = ":rgb_ns",
     struct = "green.ml",
 )
 
 ocaml_module(
     name = "Blue",
-    ns_resolver = ":rgb_ns",
+    ns          = ":rgb_ns",
     struct = "blue.ml",
 )
 

@@ -1,0 +1,30 @@
+load("@rules_ocaml//build:rules.bzl", "ocaml_signature")
+
+load("@rules_ocaml//toolchain:profiles.bzl",
+     "toolchain_profile_selector",
+     "ocaml_toolchain_profile")
+
+toolchain_profile_selector(
+    name                    = "profile",
+    profile                 = ":sigdeps_profile",
+    constraints             = ["@rules_ocaml//cfg/cmt:enabled"],
+)
+
+ocaml_toolchain_profile(
+    name         = "sigdeps_profile",
+    compile_opts = ["-bin-annot"],
+    # link_opts    = []
+)
+
+ocaml_signature(
+    name = "A_cmi",
+    src  = "a.mli",
+    opts = ["-no-opaque"], # "-bin-annot"],
+    deps = [":B_cmi"]
+)
+
+ocaml_signature(
+    name = "B_cmi",
+    src  = "b.mli",
+    opts = ["-no-opaque"] #, "-bin-annot"]
+)

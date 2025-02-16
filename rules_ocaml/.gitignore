@@ -8,6 +8,8 @@ bazel-*
 _opam*
 log.*
 tmp
+*.cmt
+*.cmti
 *.gz
 _build
 obsolete

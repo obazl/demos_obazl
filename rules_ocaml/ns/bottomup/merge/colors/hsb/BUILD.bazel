@@ -2,7 +2,7 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
@@ -37,7 +37,7 @@ ocaml_library(
     ],
 )
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "nsHSB",
     ns   = "HSB",
     manifest = [
@@ -49,18 +49,18 @@ ocaml_ns_resolver(
 
 ocaml_module(
     name        = "Hue",
-    ns_resolver = ":nsHSB",
+    ns          = ":nsHSB",
     struct      = "hue.ml",
 )
 
 ocaml_module(
     name = "Saturation",
-    ns_resolver = ":nsHSB",
+    ns          = ":nsHSB",
     struct = "saturation.ml",
 )
 
 ocaml_module(
     name = "Brightness",
-    ns_resolver = ":nsHSB",
+    ns          = ":nsHSB",
     struct = "brightness.ml",
 )

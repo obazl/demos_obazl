@@ -1,4 +1,4 @@
-ppx.exe has on codep and depends on precompiled OPAM resources,
+ppx.exe has one codep and depends on precompiled OPAM resources,
 some of which carry their own codeps. Dep structure:
 
 std deps:

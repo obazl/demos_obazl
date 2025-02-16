@@ -1,0 +1,77 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_signature",
+    "ocaml_test")
+
+load("@rules_ppx//build:rules.bzl",
+     "ppx_module",
+     "ppx_executable",
+     "ppx_transform")
+
+###########
+ocaml_test(
+    name = "test",
+    main = "Test",
+    timeout = "short",
+    # prologue = [":Show"]
+    tags = ["v5.1"]
+)
+
+###########
+ocaml_module(
+    name = "Test",
+    ppx  = ":ppx.exe",
+    struct = "test.ml",
+    deps = [
+        ":Show",  # the transformed and compiled test code
+        "@opam.ounit2//lib",
+    ],
+)
+
+ocaml_module(
+    name = "Show",
+    ppx = ":ppx.exe",
+    struct = "show.ml",
+    sig = "Show.sig",
+    # sig = "show.mli"
+    # print = "@rules_ppx//print:text!",
+)
+
+ocaml_signature(
+    name = "Show.sig",
+    src  = "show.mli",
+    ppx  = ":ppx.exe",
+)
+
+###############
+ppx_executable(
+    name = "ppx.exe",
+    main = ":Ppx_runner",  ## hand-rolled, see below
+    prologue = [
+        "@opam.ppx_show//lib",
+    ],
+    ppx_codeps = [
+        "@opam.ppx_show//runtime/lib",
+    ],
+)
+
+###########
+ocaml_module(
+    name = "Ppx_runner",
+    struct = ":ppx_runner.ml",
+    visibility = ["//visibility:public"],
+    deps = ["@opam.ppxlib//lib"],
+)
+
+########
+genrule(
+    name = "gendriver",
+    outs = ["ppx_runner.ml"],
+    cmd = "\n".join([
+        "echo \"(* GENERATED FILE - DO NOT EDIT *)\" > \"$@\"",
+        ## either of the following will work:
+        "echo \"Ppxlib.Driver.standalone ()\" >> \"$@\"",
+        # "echo \"let () = Ppxlib.Driver.standalone ()\" >> \"$@\"",
+    ]),
+)

@@ -2,13 +2,13 @@ load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
     "ocaml_library",
-    "ocaml_ns_resolver",
+    "ocaml_ns",
     "ocaml_test",
 )
 
 package(default_visibility = ["//ns/bottomup/exogenous/colors:__pkg__"])
 
-ocaml_ns_resolver(
+ocaml_ns(
     name = "cmyk_ns",
     ns   = "CMYK",
     manifest = [
@@ -33,25 +33,25 @@ ocaml_library(
 #############
 ocaml_module(
     name        = "Cyan",
-    ns_resolver = ":cmyk_ns",
+    ns          = ":cmyk_ns",
     struct      = "cyan.ml",
 )
 
 ocaml_module(
     name = "Magenta",
-    ns_resolver = ":cmyk_ns",
+    ns          = ":cmyk_ns",
     struct = "magenta.ml",
 )
 
 ocaml_module(
     name = "Yellow",
-    ns_resolver = ":cmyk_ns",
+    ns          = ":cmyk_ns",
     struct = "yellow.ml",
 )
 
 ocaml_module(
     name = "Key",
-    ns_resolver = ":cmyk_ns",
+    ns          = ":cmyk_ns",
     struct = "key.ml",
 )
 
