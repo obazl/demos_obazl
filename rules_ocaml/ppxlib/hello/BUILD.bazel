@@ -95,6 +95,7 @@ ppx_executable(
     # opts = ["-verbose"],
     main = ":Ppx_runner",  ## hand-rolled, see below
     prologue = [
+        "@opam.stublibs//lib",
         "@opam.ppx_sexp_value//lib", #contains handler for `[%sexp ]`
         # tmp, till bug fixed:
         "@opam.ppx_here//runtime-lib/lib",

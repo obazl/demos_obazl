@@ -43,7 +43,6 @@ ocaml_test(
         # "-log",
         "-verbose"
     ],
-    # opts = ["-verbose"],
     ## :Runner contains Ppx_inline_test_lib.Runtime.exit (); obazl
     ## puts 'main' last
     main = ":Runner",

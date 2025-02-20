@@ -18,13 +18,14 @@ git_override(module_name = "obazl_cppo",
 opam.deps(
     # toolchain = "local", # | "global" | "xdg"
     toolchain = "xdg",
-    ocaml_version = "5.1.1",
+    ocaml_version = "5.1.0",
     opam_version = "2.3.0",
     # debug = 2,
     # verbosity = 1,
     # opam_verbosity = 1,
     pkgs = {
         "alcotest": "",
+        "base": "",
         "cmdliner": "",
         "core": "",
         "lwt": "",
@@ -39,6 +40,7 @@ opam.deps(
         "ppxlib": "",
         # "ppxlib_jane": "",  # >= 5.1.0
         "sexplib": "",
+        "stublibs": "",
         "time_now": "",
 
         # "async": "",  # //testing/ppx_expect demo, <5.3.0
@@ -53,13 +55,14 @@ opam.deps(
 )
 
 use_repo(opam, "opam.ocamlsdk")
-# use_repo(opam, "opam.stublibs")
+use_repo(opam, "opam.stublibs")
 register_toolchains(
     "@opam.ocamlsdk//toolchain/selectors/local:all",
     "@opam.ocamlsdk//toolchain/profiles:all",
 )
 
 use_repo(opam, "opam.alcotest")
+use_repo(opam, "opam.base")
 use_repo(opam, "opam.cmdliner")
 use_repo(opam, "opam.core")
 use_repo(opam, "opam.lwt")

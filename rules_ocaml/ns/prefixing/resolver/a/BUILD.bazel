@@ -12,9 +12,9 @@ load(
 )
 
 ocaml_test(
-    timeout = "short",
     name = "test",
-    main = "Test"
+    main = "Test",
+    timeout = "short",
 )
 
 ## we do not package the ns (and its components) as an aggregate,

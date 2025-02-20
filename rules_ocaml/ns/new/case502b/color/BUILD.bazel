@@ -1,0 +1,51 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+)
+
+ocaml_library(
+    name = "color",
+    manifest = [
+        ":nsColor",
+        ":Red",
+        ":Green",
+        ":Blue"
+    ],
+    visibility = ["//ns/new/case502b:__pkg__"]
+)
+
+ocaml_ns(
+    name = "nsColor",
+    ns   = "Color",
+    manifest = [
+        "Red",    # module Red   = Color__Red
+        "Green",  # module Green = Color__Green
+        "Blue",   # module Blue  = Color__Blue
+    ],
+    ns_deps = [
+        # "Greek"   # module Greek = Greek
+        "//ns/new/case502b/greek:greek", # nslib as submodule
+    ],
+    visibility = ["//ns/new/case502b:__pkg__"]
+)
+
+ocaml_module(
+    name = "Red",
+    ns   = ":nsColor",
+    struct = "red.ml",
+    deps = [":Green"],
+)
+
+ocaml_module(
+    name = "Green",
+    ns   = ":nsColor",
+    struct = "green.ml",
+)
+
+ocaml_module(
+    name = "Blue",
+    ns   = ":nsColor",
+    struct = "blue.ml",
+)

@@ -10,7 +10,7 @@ ns/bottomup/festooned
 ns/new/case200
 
 ns/topdown/library/embed/case620
-ns/topdown/library/udr/case100:Color
+ns/topdown/library/udr/case100:test
 ns/topdown/library/udr/case200
 ns/topdown/library/udr/sibdeps100
 ns/new/case336x

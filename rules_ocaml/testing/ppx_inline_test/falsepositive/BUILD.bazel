@@ -69,7 +69,7 @@ ocaml_module(
 ppx_executable(
     name = "ppx.exe",
     main = ":Driver",
-    opts = [],
+    # opts = ["-verbose"],
     prologue = [
         # "@opam.ppxlib//lib",
     ],

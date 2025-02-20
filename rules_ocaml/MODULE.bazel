@@ -1,8 +1,8 @@
 module(
-    name = "demos_obazl",
-    version = "5.0.0",
+    name                = "demos_obazl",
+    version             = "3.0.0",
+    compatibility_level = 3,
     bazel_compatibility = [">=8.0.0"],
-    compatibility_level = 5,
 )
 
 ## bcr:
@@ -11,9 +11,9 @@ bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.0.17")
 
 ## obazl:
-bazel_dep(name = "rules_ocaml") # , version = "5.0.0")
+bazel_dep(name = "rules_ocaml", version = "3.0.0")
 git_override(module_name = "rules_ocaml",
-             branch  = "5.0.0.alpha",
+             branch  = "3.0.0.beta",
              remote = "https://github.com/obazl/rules_ocaml.git")
 
 bazel_dep(name = "rules_ppx", version = "5.0.0")
@@ -25,6 +25,12 @@ bazel_dep(name = "tools_opam", version = "1.0.0")
 git_override(module_name = "tools_opam",
              branch  = "1.0.0.alpha",
              remote = "https://github.com/obazl/tools_opam.git")
+
+bazel_dep(name = "tools_obazl", version = "3.0.0",
+          repo_name = "obazl")
+# git_override(module_name = "tools_obazl",
+#              branch  = "3.0.0.alpha",
+#              remote = "https://github.com/obazl/tools_obazl.git")
 
 include("//.config/opam:opam.MODULE.bazel")
 

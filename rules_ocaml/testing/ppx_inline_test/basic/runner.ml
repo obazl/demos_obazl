@@ -1,5 +1,6 @@
 (* runner *)
 
+let () = print_endline "Hello from Runner!"
 
 (* Ppx_inline_test_lib.Runtime.exit () *)
 

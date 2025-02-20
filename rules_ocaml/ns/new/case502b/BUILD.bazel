@@ -16,7 +16,7 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
-        "//ns/new/case502/color:color",
+        "//ns/new/case502b/color:color",
         "@opam.ounit2//lib"
     ],
 )

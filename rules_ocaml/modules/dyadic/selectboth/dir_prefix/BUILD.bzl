@@ -1,6 +1,5 @@
 load("@rules_ocaml//build:providers.bzl",
      "OCamlDepsProvider",
-     "OcamlModuleMarker",
      "OCamlSignatureProvider",
      "OCamlNsResolverProvider")
 

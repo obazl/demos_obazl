@@ -15,16 +15,35 @@ string_flag( name = "link", build_setting_default = "default" )
 config_setting(name = "dynamic", flag_values = {":link": "dynamic"})
 config_setting(name = "static", flag_values = {":link": "static"})
 
-OPTS = [] # "-verbose"]
+OPTS = ["-verbose"]
 
 ocaml_test(
     name = "test",
     main = "Test",
     vm_linkage = "@rules_ocaml//vm/linkage:static",
-    runtime = "@rules_ocaml//rt:dbg",
+    # runtime = "@rules_ocaml//rt:dbg",
     # runtime = "@rules_ocaml//rt:instrumented",
-    opts = OPTS,
+    runtime = ":myrt",
+    opts = OPTS + [
+        # "-custom",
+        # "-ccopt", "-lunix",
+        # "-ccopt", "-lalphastub"
+    ],
     timeout = "short"
+)
+
+## FIXME: only valid for *>vm toolchains, ocamlc.*
+ocaml_runtime(
+    name = "myrt",
+    opts = OPTS,
+    # sys_runtime = "@rules_ocaml//rt:dbg",
+    deps = [
+        "@opam.base//lib:base",
+        "@opam.ocamlsdk//lib/unix",
+        ":mylib"
+        # ":Alpha",
+        # ":alphastub"
+    ]
 )
 
 ocaml_module(
@@ -33,16 +52,16 @@ ocaml_module(
     deps = ["Main", "@opam.ounit2//lib"]
 )
 
-# ocaml_binary(
-#     name = "hello",
-#     main = ":Main",
-# )
+ocaml_binary(
+    name = "hello",
+    main = ":Main",
+)
 
 ocaml_module(
     name = "Main",
     struct = "main.ml",
     opts = OPTS,
-    deps   = [":Alpha"],
+    deps   = ["mylib"], # ":alphastub"]
     # deps = select({
     #     ":dynamic": [":alpha_dynamic"],
     #     ":static" : [":alpha_static"],

@@ -37,7 +37,7 @@ filegroup(
 
 ocaml_signature(
     name = "$Hello",
-    module = "Hello", # force sigfile rename (symlink)
+    module_name = "Hello", # force sigfile rename (symlink)
     src  = select({
         ":lang_en": "hello_en.mli",
         ":lang_fr": "hello_fr.mli",

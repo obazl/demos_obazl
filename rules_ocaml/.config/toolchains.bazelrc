@@ -29,7 +29,6 @@ common:ocamlc.opt --platforms=@rules_ocaml//platform:ocamlc.byte
 common:ocamlopt.byte --host_platform=@rules_ocaml//platform:ocamlopt.byte
 common:ocamlopt.byte --platforms=@rules_ocaml//platform:ocamlopt.opt
 
-common --flag_alias=tc=@rules_ocaml//toolchain
 #cmd line: --tc=ocamlopt.opt
 
 # @rules_ocaml//toolchain is a label flag containing
