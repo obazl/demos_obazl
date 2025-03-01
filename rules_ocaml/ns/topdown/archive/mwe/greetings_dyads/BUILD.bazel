@@ -25,7 +25,7 @@ ocaml_module(
 
 ocaml_ns_library(
     name = "greetings",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Hello",
         ":Goodbye",

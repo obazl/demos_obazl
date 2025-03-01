@@ -26,7 +26,7 @@ ocaml_module(
 
 ocaml_ns_library(
     name = "libColor",
-    archived = True,
+    linkage  = "static",
     ns_name = "Color",
     manifest = [
         ":Red", # ":RedModule",
@@ -61,7 +61,7 @@ ocaml_module(
 # ocaml_library(  # nope
 ocaml_ns_library(  # ok
     name = "Greek", # "libGreek",
-    # archived = True,
+    # linkage  = "static",
     # ns_name = "Greek",
     manifest = [
         ":Alpha", # ":AlphaModule",

@@ -1,0 +1,65 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+package(default_visibility = [
+    "//ns/bottomup/ns_merge/colors:__pkg__",
+    "//ns/bottomup/hybrid:__pkg__"
+])
+
+SUBMODULES = [
+    "Red",
+    "Green",
+    "Blue",
+]
+
+#############
+ocaml_test(
+    timeout = "short",
+    name    = "test",
+    main    = ":Test",
+)
+
+ocaml_module(
+    name    = "Test",
+    struct  = "test.ml",
+    deps    = [
+        "@opam.ounit2//lib",
+        ":libRGB"
+    ],
+)
+
+##################
+ocaml_library(
+    name       = "libRGB",
+    manifest   = SUBMODULES
+)
+
+ocaml_ns(
+    name       = "nsRGB",
+    ns         = "RGB",
+    submodules = SUBMODULES
+)
+
+#############
+ocaml_module(
+    name       = "Red",
+    ns         = ":nsRGB",
+    struct     = "red.ml",
+)
+
+ocaml_module(
+    name       = "Green",
+    ns         = ":nsRGB",
+    struct     = "green.ml",
+)
+
+ocaml_module(
+    name       = "Blue",
+    ns         = ":nsRGB",
+    struct     = "blue.ml",
+)

@@ -10,7 +10,7 @@ load(
 # ocaml_ns_library(
 ocaml_ns_library(
     name = "greek",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Alpha",
         ":Beta",

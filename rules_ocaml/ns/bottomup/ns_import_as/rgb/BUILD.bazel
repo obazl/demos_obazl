@@ -1,0 +1,49 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "test",
+    opts = [# "-verbose",
+            # "-without-runtime"
+            # "-dstartup",
+            # "-dparsetree",
+            # "-dcmm",
+            # "-dinterf",
+            # "-dump-into-file"
+            # "-ccopt", "-Wl,--verbose" # linux
+            # "-ccopt", "-Wl,-t" # macos, logs each file loaded
+            # "-ccopt", "-Wl,-print_statistics" # macos
+            ],
+    main = "Test",
+    timeout = "short",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = ["@opam.ounit2//lib", ":libColor"],
+)
+
+## aggregate resolver and subnamespace
+ocaml_library(
+    name = "libColor",
+    manifest = [
+        "//ns/bottomup/submodules/rgb:libRGB",
+        ":nsRGB"
+    ],
+)
+
+# put exogenous ns RGB in Colors namespace, and alias it as Mycolors.
+# e.g. Mycolors.Red => RGB.Red
+ocaml_ns(
+    name        = "nsRGB",
+    ns          = "Colors",
+    ns_import_as  = {
+        "//ns/bottomup/submodules/rgb:nsRGB": "MyRGB"
+    }
+)

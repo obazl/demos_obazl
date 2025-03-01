@@ -71,7 +71,7 @@ ocaml_module(
 
 ocaml_library(
     name = "mylib",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Alpha"
     ]

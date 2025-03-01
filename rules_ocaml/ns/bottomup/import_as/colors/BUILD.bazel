@@ -1,0 +1,60 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+#############
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":olibColors",
+        # ":colors_ns",
+        "@opam.ounit2//lib"
+    ],
+)
+
+## we can import modules, whether they are namespaced
+## or not. so we can refer to them without using their ns names.
+## analogous to OCaml 'include' directive.
+## E.g. Colors.R => RGB.Red (or Colors.Red => RGB.Red, etc.)
+ocaml_ns(
+    name = "colors_ns",
+    ns   = "Colors",
+    import_as = {
+        ## Red, Green, Blue are not namespaced
+        "//ns/bottomup/import_as/colors/rgb:Red"   : "R",
+        "//ns/bottomup/import_as/colors/rgb:Green" : "G",
+        "//ns/bottomup/import_as/colors/rgb:Blue"  : "B",
+        ## The rest are namespaced, e.g. HSB.Hue
+        "//ns/bottomup/import_as/colors/hsb:Hue"        : "H",
+        "//ns/bottomup/import_as/colors/hsb:Saturation" : "S",
+        "//ns/bottomup/import_as/colors/hsb:Brightness" : "Br",
+        "//ns/bottomup/import_as/colors/cmyk:Cyan"    : "C",
+        "//ns/bottomup/import_as/colors/cmyk:Magenta" : "M",
+        "//ns/bottomup/import_as/colors/cmyk:Yellow"  : "Y",
+        "//ns/bottomup/import_as/colors/cmyk:Key"     : "K",
+    },
+)
+
+ocaml_library(
+    name = "olibColors",
+    manifest = [
+        ":colors_ns",
+        "//ns/bottomup/import_as/colors/rgb:Red",
+        "//ns/bottomup/import_as/colors/rgb:Green",
+        "//ns/bottomup/import_as/colors/rgb:Blue",
+        "//ns/bottomup/import_as/colors/hsb:olibHSB",
+        "//ns/bottomup/import_as/colors/cmyk:olibCMYK",
+    ],
+    visibility = ["//visibility:public"],
+)

@@ -24,7 +24,7 @@ ocaml_ns(
         "Green",  # module Green = Color__Green
         "Blue",   # module Blue  = Color__Blue
     ],
-    ns_deps = [
+    ns_submodules = [
         # "Greek"   # module Greek = Greek
         "//ns/new/case502b/greek:greek", # nslib as submodule
     ],

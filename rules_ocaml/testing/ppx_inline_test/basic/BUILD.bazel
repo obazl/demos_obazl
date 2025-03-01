@@ -28,6 +28,7 @@ LIBNAME="hello"
 
 ocaml_test(
     name = "test",
+    vm_linkage = "@rules_ocaml//vm/linkage:static",
     args = [
         "inline-test-runner", LIBNAME,
         # "-list-test-names",

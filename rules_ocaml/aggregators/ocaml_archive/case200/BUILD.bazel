@@ -38,7 +38,7 @@ ocaml_module(
 
 ocaml_library(
     name = "arch",
-    archived = True,
+    linkage  = "static",
     opts = ["-linkall",],
     manifest = [
         ":Easy",
@@ -48,9 +48,9 @@ ocaml_library(
 
 ################
 ocaml_test(
-    timeout = "short",
     name = "test_noarchive",
     main = ":Test_noarchive",
+    timeout = "short",
 )
 
 ocaml_module(
@@ -64,6 +64,7 @@ ocaml_module(
 
 ocaml_module(
     name   = "Main_noarchive",
+    module_name = "Main2",
     struct = "main2.ml",
     deps   = [
         ":Easy",
@@ -93,7 +94,7 @@ ocaml_module(
 # ## this target compiles sources to an archive:
 # ocaml_library(
 #     name = "archive_ml",
-#     archived = True,
+#     linkage  = "static",
 #     message = "Archiving...",
 #     srcs = ["easy.ml", "simple.ml"],
 #     opts = [ "-verbose" ],
@@ -103,7 +104,7 @@ ocaml_module(
 # ## this target mixes compilation and archiving:
 # ocaml_library(
 #     name = "archive_mix",
-#     archived = True,
+#     linkage  = "static",
 #     message = "Archiving...",
 #     srcs = ["easy.ml"],
 #     opts = [ "-verbose" ],

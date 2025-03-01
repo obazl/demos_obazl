@@ -6,7 +6,7 @@ load(
 
 ocaml_ns_library(
     name = "color",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Red",
         ":Green",

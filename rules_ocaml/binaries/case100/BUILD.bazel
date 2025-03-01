@@ -1,0 +1,141 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_binary",
+     "ocaml_library",
+     "ocaml_module",
+     "ocaml_runtime",
+     "ocaml_test")
+
+OPTS = [
+    "-verbose"
+]
+
+ocaml_binary(
+    name = "test",
+    # bin_type = "obj", # | exe | obj-complete | exe-complete
+    ## but obj means .o, .so, or .c, so:
+    # bin_out = "foo.o", #etc.
+    main = "Test",
+    # vm_linkage = "@rules_ocaml//vm/linkage:static",
+    # runtime = "@rules_ocaml//rt:dbg",
+    # runtime = "@rules_ocaml//rt:instrumented",
+    opts = OPTS + [
+        # "-ccopt", "-Wl,-t",
+        # "-Wl,-why_load",
+        # "-ccopt", "-Wl,-print_statistics",
+        # "-output-obj",
+        # "-output-complete-obj"
+    ],
+    # timeout = "short"
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = ["Main", "@opam.ounit2//lib"]
+)
+
+# ocaml_binary(
+#     name = "hello",
+#     main = ":Main",
+# )
+
+ocaml_module(
+    name = "Main",
+    struct = "main.ml",
+    opts = OPTS,
+    deps   = [":Alpha"],
+    # deps = select({
+    #     ":dynamic": [":alpha_dynamic"],
+    #     ":static" : [":alpha_static"],
+    #     "//conditions:default": [":alpha"]
+    # })
+)
+
+ocaml_library(
+    name = "mylib",
+    linkage  = "static",
+    manifest = [
+        ":Alpha"
+    ]
+)
+
+ocaml_module(
+    name = "Alpha",
+    struct = "alpha.ml",
+    deps = [
+        ":alpha_adapter",
+        # ":alphastub",
+        # "//binaries/case100/cclibs:alpha"
+    ],
+)
+
+cc_shared_library(
+    name = "alpha_adapter",
+    shared_lib_name = select({
+        "@rules_ocaml//platform/target/executor:vm?": "dllalpha.so",
+        "@rules_ocaml//platform/target/executor:sys?": "libalpha.so",
+        "//conditions:default": "libalpha.so"
+    }),
+    user_link_flags = select({
+        "@platforms//os:macos": [
+        "-Wl,-undefined,dynamic_lookup",
+        ],
+        "//conditions:default": []
+    }),
+    deps = [
+        ":alphastub",
+        "//binaries/case100/cclibs:alpha",
+    ],
+)
+
+# cc_import(
+#     name = "stdlib",
+#     static_library = "@opam.ocamlsdk//runtime:stdlib.a"
+# )
+# cc_import(
+#     name = "sdk",
+#     static_library = "@opam.ocamlsdk//runtime:libasmrun.a"
+# )
+# cc_import(
+#     name = "ocamlcommon",
+#     static_library = "@opam.ocamlsdk//runtime:ocamlcommon.a"
+# )
+# cc_import(
+#     name = "ocamlmiddleend",
+#     static_library = "@opam.ocamlsdk//runtime:ocamlmiddleend.a"
+# )
+# cc_import(
+#     name = "ocamloptcomp",
+#     static_library = "@opam.ocamlsdk//runtime:ocamloptcomp.a"
+# )
+# cc_import(
+#     name = "unix",
+#     static_library = "@opam.ocamlsdk//runtime:libunixbyt.a"
+# )
+
+cc_library(
+    name = "alphastub",
+    srcs = [
+        "alpha_adapter.c",
+    ],
+    copts = [
+        "-Ibinaries/case100/cclibs",
+    ],
+    linkstatic = True,
+    linkopts   = ["-L$(GENDIR)/binaries/case100/cclibs",
+                  "-lalpha"],
+    deps = [
+        "//binaries/case100/cclibs:alpha",
+        "@opam.ocamlsdk//lib/ffi",
+        # ":ocamlcommon",
+        # ":ocamlmiddleend",
+        # ":ocamloptcomp",
+        # ":sdk",
+        # ":stdlib",
+        # ":unix",
+    ],
+)
+
+

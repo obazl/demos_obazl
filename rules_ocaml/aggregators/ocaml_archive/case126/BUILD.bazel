@@ -36,7 +36,7 @@ ocaml_module(
 ##############
 ocaml_library(
     name = "libColor",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Red",
         ":Green",
@@ -66,7 +66,7 @@ ocaml_module(
 ##############
 ocaml_library(
     name = "libGreek",
-    archived = True,
+    linkage  = "static",
     opts = ["-linkall"],
     manifest = [
         ":Alpha",

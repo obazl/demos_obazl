@@ -1,7 +1,0 @@
-test_suite(
-    name = "test",
-    tests = [
-        "//ns/bottomup/merge/colors:test",
-        "//ns/bottomup/merge/rgb:test",
-    ]
-)

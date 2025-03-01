@@ -1,0 +1,64 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+package(default_visibility = [
+    "//ns/bottomup/ns_merge/colors:__pkg__",
+    "//ns/bottomup/hybrid:__pkg__"
+])
+
+SUBMODULES = [
+    "Hue",
+    "Saturation",
+    "Brightness",
+]
+
+#############
+ocaml_test(
+    timeout = "short",
+    name    = "test",
+    main    = ":Test",
+)
+
+ocaml_module(
+    name    = "Test",
+    struct  = "test.ml",
+    deps    = [
+        ":libHSB",
+        "@opam.ounit2//lib"
+    ],
+)
+
+##################
+ocaml_library(
+    name       = "libHSB",
+    manifest   = SUBMODULES
+)
+
+ocaml_ns(
+    name       = "nsHSB",
+    ns         = "HSB",
+    submodules = SUBMODULES
+)
+
+ocaml_module(
+    name       = "Hue",
+    ns         = ":nsHSB",
+    struct     = "hue.ml",
+)
+
+ocaml_module(
+    name       = "Saturation",
+    ns         = ":nsHSB",
+    struct     = "saturation.ml",
+)
+
+ocaml_module(
+    name       = "Brightness",
+    ns         = ":nsHSB",
+    struct     = "brightness.ml",
+)

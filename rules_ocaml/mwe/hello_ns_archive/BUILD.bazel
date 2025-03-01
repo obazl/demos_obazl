@@ -1,4 +1,4 @@
-# same as //mwe/hello_library except uses ocaml_library with archived = True
+# same as //mwe/hello_library except uses ocaml_library with linkage  = "static"
 
 load(
     "@rules_ocaml//build:rules.bzl",
@@ -40,7 +40,7 @@ ocaml_module(
 
 ocaml_ns_library(
     name = "libHello",
-    archived = True,
+    linkage  = "static",
     manifest = [":Easy", ":Simple"],
 )
 

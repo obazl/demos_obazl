@@ -5,15 +5,15 @@ opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
 
 bazel_dep(name = "obazl_menhir", repo_name="menhir")
 use_repo(opam, "opam.menhir", "opam.menhirLib")
-git_override(module_name = "obazl_menhir",
-             branch  = "2024.07.15.beta",
-             remote = "https://github.com/obazl/obazl_menhir.git")
+# git_override(module_name = "obazl_menhir",
+#              branch  = "2024.07.15.beta",
+#              remote = "https://github.com/obazl/obazl_menhir.git")
 
 bazel_dep(name = "obazl_cppo")
 use_repo(opam, "opam.cppo")
-git_override(module_name = "obazl_cppo",
-             branch  = "1.8.0.beta",
-             remote = "https://github.com/obazl/obazl_cppo.git")
+# git_override(module_name = "obazl_cppo",
+#              branch  = "1.8.0.beta",
+#              remote = "https://github.com/obazl/obazl_cppo.git")
 
 opam.deps(
     # toolchain = "local", # | "global" | "xdg"
@@ -21,8 +21,8 @@ opam.deps(
     ocaml_version = "5.1.0",
     opam_version = "2.3.0",
     # debug = 2,
-    # verbosity = 1,
-    # opam_verbosity = 1,
+    # verbosity = 2,
+    # opam_verbosity = 2,
     pkgs = {
         "alcotest": "",
         "base": "",

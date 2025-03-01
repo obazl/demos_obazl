@@ -39,7 +39,7 @@ opam.deps(
     opam_version = "2.3.0",
     # toolchain = "local",  # default
     # toolchain = "global",
-    toolchain = "embedded",
+    # toolchain = "embedded",
 )
 use_repo(opam, "opam.ocamlsdk")
 

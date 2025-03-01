@@ -1,0 +1,10 @@
+test_suite(
+    name = "ns_import_as",
+    tests = [
+        "//ns/bottomup/ns_import_as/colors:test",
+        "//ns/bottomup/ns_import_as/colors/rgb:test",
+        "//ns/bottomup/ns_import_as/colors/hsb:test",
+        "//ns/bottomup/ns_import_as/colors/cmyk:test",
+        "//ns/bottomup/ns_import_as/rgb:test",
+    ]
+)

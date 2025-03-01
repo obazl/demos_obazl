@@ -1,0 +1,51 @@
+# compare //ns/bottomup/include/colors
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+#############
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    timeout = "short",
+)
+
+ocaml_module(
+    name   = "Test",
+    struct = "test.ml",
+    deps = [
+        ":libColors",
+        ":nsColors",
+        "@opam.ounit2//lib"
+    ],
+)
+
+# to make the ns resolver useful we need to aggregate its
+# components, which are themselves aggregated as libraries.
+# they depend on their resolvers, which need not be listed
+# explicitly.
+ocaml_library(
+    name = "libColors",
+    manifest = [
+        "//ns/bottomup/ns_import_as/colors/rgb:libRGB",
+        "//ns/bottomup/ns_import_as/colors/hsb:libHSB",
+        "//ns/bottomup/ns_import_as/colors/cmyk:libCMYK",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_ns(
+    name = "nsColors",
+    ns   = "Colors",
+    visibility = ["//visibility:public"],
+    ns_import_as = {
+        "//ns/bottomup/ns_import_as/colors/rgb:nsRGB": "Foo",
+        "//ns/bottomup/ns_import_as/colors/hsb:nsHSB": "Bar",
+        "//ns/bottomup/ns_import_as/colors/cmyk:nsCMYK": "Baz"
+    },
+)

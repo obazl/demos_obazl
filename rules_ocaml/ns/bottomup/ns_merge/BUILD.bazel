@@ -1,0 +1,7 @@
+test_suite(
+    name = "ns_merge",
+    tests = [
+        "//ns/bottomup/ns_merge/colors:test",
+        "//ns/bottomup/ns_merge/rgb:test",
+    ]
+)

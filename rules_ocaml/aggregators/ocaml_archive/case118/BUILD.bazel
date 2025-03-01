@@ -28,7 +28,7 @@ ocaml_module(
 ##############
 ocaml_library(
     name = "color",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Red",
         ":Green",
@@ -53,11 +53,10 @@ ocaml_module(
 )
 
 ##############
-# with archived = True we get:
+# with linkage  = "static" we get:
 #  Option -a cannot be used with .cmxa input files.
 ocaml_library(
     name = "greek",
-    archived = False,
     manifest = [
         ":Alpha",
         ":Beta",

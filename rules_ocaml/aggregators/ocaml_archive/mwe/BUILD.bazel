@@ -24,7 +24,7 @@ ocaml_module(
 
 ocaml_library(
     name = "color",
-    archived = True,
+    linkage  = "static",
     # opts = ["-linkall"],
     manifest = [
         ":Red",

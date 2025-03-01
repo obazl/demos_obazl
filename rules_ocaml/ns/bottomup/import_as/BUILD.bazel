@@ -1,0 +1,7 @@
+test_suite(
+    name = "import_as",
+    tests = [
+        "//ns/bottomup/import_as/colors:test",
+        "//ns/bottomup/import_as/rgb:test",
+    ]
+)

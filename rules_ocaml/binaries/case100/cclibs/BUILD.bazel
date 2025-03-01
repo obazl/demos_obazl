@@ -1,0 +1,12 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "alpha",
+    srcs = ["alpha.c"],
+    hdrs = ["alpha.h"],
+    linkstatic = True,
+    deps = [
+        "@opam.ocamlsdk//lib/ffi",
+    ],
+    visibility = ["//binaries/case100:__pkg__"],
+)

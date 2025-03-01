@@ -26,7 +26,7 @@ ocaml_module(
 #################
 ocaml_ns_library(
     name = "color",
-    archived = True,
+    linkage  = "static",
     manifest = {
         ":Red": "Red",
         ":Green": "Green",

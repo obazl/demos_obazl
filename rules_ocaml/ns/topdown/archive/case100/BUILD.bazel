@@ -7,9 +7,9 @@ load(
     "ocaml_test",
 )
 ocaml_test(
-    timeout = "short",
     name = "test",
     main = ":Test",
+    timeout = "short",
 )
 
 ocaml_module(
@@ -20,7 +20,7 @@ ocaml_module(
 
 ocaml_ns_library(
     name = "color",
-    archived = True,
+    linkage  = "static",
     # ns = "Color",
     manifest = [
         ":Red",

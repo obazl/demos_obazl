@@ -23,6 +23,7 @@ LIBNAME="hello"
 ## `Ppx_inline_test_lib.Runtime.exit ()` last.
 ocaml_test(
     name = "test",
+    vm_linkage = "@rules_ocaml//vm/linkage:static",
     args = [
         ## WARNING: the module under test was built with
         ## -inline-test-lib=="hello"; if you pass anything else with

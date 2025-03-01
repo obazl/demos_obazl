@@ -3,7 +3,7 @@
 test_suite(
     name = "test",
     tests = [
-        "//aggregators:test",
+        "//aggregators",
         "//algebra/group:test",
         "//configuration:test",
         "//deps:test",

@@ -24,7 +24,7 @@ ocaml_library(
 
 ocaml_ns_library(
     name = "gem",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Alpha",
         ":Beta",

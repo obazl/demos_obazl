@@ -1,0 +1,72 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+package(default_visibility = [
+    "//ns/bottomup/ns_merge/colors:__pkg__",
+    "//ns/bottomup/hybrid:__subpackages__"
+])
+
+SUBMODULES = [
+    "Cyan",
+    "Magenta",
+    "Yellow",
+    "Key",
+]
+
+#############
+ocaml_test(
+    timeout = "short",
+    name    = "test",
+    main    = ":Test",
+)
+
+ocaml_module(
+    name    = "Test",
+    struct  = "test.ml",
+    deps    = [
+        ":libCMYK",
+        "@opam.ounit2//lib"
+    ],
+)
+
+##################
+ocaml_library(
+    name       = "libCMYK",
+    manifest   = SUBMODULES
+)
+
+ocaml_ns(
+    name       = "nsCMYK",
+    ns         = "CMYK",
+    submodules = SUBMODULES
+)
+
+#############
+ocaml_module(
+    name       = "Cyan",
+    ns         = ":nsCMYK",
+    struct     = "cyan.ml",
+)
+
+ocaml_module(
+    name       = "Magenta",
+    ns         = ":nsCMYK",
+    struct     = "magenta.ml",
+)
+
+ocaml_module(
+    name       = "Yellow",
+    ns         = ":nsCMYK",
+    struct     = "yellow.ml",
+)
+
+ocaml_module(
+    name       = "Key",
+    ns         = ":nsCMYK",
+    struct     = "key.ml",
+)

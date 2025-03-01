@@ -1,0 +1,48 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_library",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+# In this case, to demonstrate that the `import_as` attribute
+# of ocaml_ns works for non-namespaced modules, we just
+# build three modules without a namespace.
+
+VIZ = ["//ns/bottomup/import_as/colors:__pkg__"]
+
+#############
+ocaml_test(
+    name       = "test",
+    main       = ":Test",
+    # opts       = ["-verbose"],
+    timeout    = "short",
+)
+
+ocaml_module(
+    name       = "Test",
+    struct     = "test.ml",
+    deps       = [
+        ":Red", ":Green", ":Blue",
+        "@opam.ounit2//lib"
+    ],
+)
+
+ocaml_module(
+    name       = "Red",
+    struct     = "red.ml",
+    visibility = VIZ,
+)
+
+ocaml_module(
+    name       = "Green",
+    struct     = "green.ml",
+    visibility = VIZ,
+)
+
+ocaml_module(
+    name       = "Blue",
+    struct     = "blue.ml",
+    visibility = VIZ,
+)

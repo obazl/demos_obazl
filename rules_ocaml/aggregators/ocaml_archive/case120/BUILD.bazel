@@ -42,7 +42,7 @@ ocaml_module(
 ##############
 ocaml_library(
     name = "libColor",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Red",
         ":Green",

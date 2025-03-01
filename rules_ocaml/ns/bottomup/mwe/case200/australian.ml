@@ -1,0 +1,2 @@
+let msg = "G'day!"
+

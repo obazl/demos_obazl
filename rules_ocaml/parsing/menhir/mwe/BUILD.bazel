@@ -30,7 +30,7 @@ ocaml_module(
 
 ocaml_library(
     name     = "LibMwe",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Ast",
         ":Lexer",

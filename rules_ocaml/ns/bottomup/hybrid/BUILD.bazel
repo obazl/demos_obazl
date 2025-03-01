@@ -7,20 +7,19 @@ load(
 )
 
 ocaml_test(
-    name = "test",
-    main = "Test",
+    name    = "test",
+    main    = "Test",
     timeout = "short"
 )
 
 ocaml_module(
-    name   = "Test",
-    struct = "test.ml",
-    deps = [
+    name    = "Test",
+    struct  = "test.ml",
+    deps    = [
         ":libGreek",
         "@opam.ounit2//lib",
     ],
 )
-
 
 # package resolver and submodules in one library
 ocaml_library(
@@ -33,8 +32,8 @@ ocaml_library(
         "//mwe/rgb:R",
         "//mwe/rgb:G",
         "//mwe/rgb:B",
-        "//ns/bottomup/election/rgb:libRGB",
-        "//ns/bottomup/embed/colors/cmyk:libCMYK",
+        "//ns/bottomup/submodules/rgb:libRGB",
+        "//ns/bottomup/ns_import_as/colors/cmyk:libCMYK",
     ],
 )
 
@@ -42,25 +41,26 @@ ocaml_library(
 ocaml_ns(
     name = "nsGreek",
     ns   = "Greek",
-    manifest = [
+    submodules = [
         # elective submodules
         "Alpha",
         "Beta",
         "Gamma",
         ],
-    include = {
-        # exogenous NON-namespaced submodules
+    import_as = {
+        # exogenous submodules, namespaced or not
         "//mwe/rgb:R": "R",
         "//mwe/rgb:G": "G",
         "//mwe/rgb:B": "B",
     },
-    merge = [
+    ns_import_as = {
+        # exogenous namespaces
+        "//ns/bottomup/ns_import_as/colors/cmyk:nsCMYK": "CMYK"
+    },
+    ns_merge = [
         # exogenous namespaced submodules
-        "//ns/bottomup/election/rgb:nsRGB"
+        "//ns/bottomup/submodules/rgb:nsRGB"
     ],
-    embed = {
-        "//ns/bottomup/embed/colors/cmyk:nsCMYK": "CMYK"
-    }
 )
 
 #############

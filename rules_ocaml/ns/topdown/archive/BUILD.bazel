@@ -21,7 +21,8 @@ test_suite(
         "//ns/topdown/archive/case160:test",
         "//ns/topdown/archive/case170:test",
         "//ns/topdown/archive/case190:test",
-        "//ns/topdown/archive/embed:test",
+        ## embed not supported for topdown
+        # "//ns/topdown/archive/embed:test",
 
     ]
 )

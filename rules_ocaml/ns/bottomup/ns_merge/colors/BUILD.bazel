@@ -1,0 +1,47 @@
+# compare //ns/bottomup/include/colors
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+    "ocaml_test",
+)
+
+#############
+ocaml_test(
+    timeout = "short",
+    name    = "test",
+    main    = ":Test",
+)
+
+ocaml_module(
+    name    = "Test",
+    struct  = "test.ml",
+    deps    = [
+        "@opam.ounit2//lib",
+        ":libColors",
+    ],
+)
+
+##################
+ocaml_library(
+    name = "libColors",
+    manifest = [
+        ":nsColors",
+        "//ns/bottomup/ns_merge/colors/rgb:libRGB",
+        "//ns/bottomup/ns_merge/colors/hsb:libHSB",
+        "//ns/bottomup/ns_merge/colors/cmyk:libCMYK",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+ocaml_ns(
+    name = "nsColors",
+    ns   = "Colors",
+    ns_merge = [
+        "//ns/bottomup/ns_merge/colors/rgb:nsRGB",
+        "//ns/bottomup/ns_merge/colors/hsb:nsHSB",
+        "//ns/bottomup/ns_merge/colors/cmyk:nsCMYK"
+    ],
+)

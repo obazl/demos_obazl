@@ -26,7 +26,7 @@ ocaml_module(
 #################
 ocaml_ns_library(
     name = "libColor",
-    archived = True,
+    linkage  = "static",
     resolver   = ":Color",
     ns = "Color",
     manifest = [

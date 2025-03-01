@@ -82,7 +82,7 @@ ocaml_module(
 ############
 ocaml_library(
     name = "Ppx_greek",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Ppx_alpha",
         ":Ppx_beta",

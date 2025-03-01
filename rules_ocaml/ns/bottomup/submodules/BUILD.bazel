@@ -1,0 +1,6 @@
+test_suite(
+    name = "submodules",
+    tests = [
+        "//ns/bottomup/submodules/rgb:test",
+    ]
+)

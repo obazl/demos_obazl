@@ -41,7 +41,7 @@ ocaml_module(
 ############
 ocaml_library(
     name = "ppx_color",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":ppx_red",
         ":ppx_green",

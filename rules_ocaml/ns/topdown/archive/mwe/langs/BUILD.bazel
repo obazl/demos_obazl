@@ -21,7 +21,7 @@ ocaml_module(
 
 ocaml_ns_library(
     name = "hello",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Australian",
         ":English",

@@ -30,7 +30,7 @@ ocaml_test(
 # the aliasing equations will not be pseudo-recursive.
 ocaml_ns_library(
     name = "color",
-    archived = True,
+    linkage  = "static",
     manifest = {
         ":Red": "Red",
         ":Green": "Green",

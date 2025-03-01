@@ -40,7 +40,7 @@ ocaml_module(
 
 ocaml_library(
     name = "libHello",
-    archived = True,
+    linkage  = "static",
     manifest = [":Easy", ":Simple"],
 )
 

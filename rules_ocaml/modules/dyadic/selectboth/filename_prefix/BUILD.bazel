@@ -11,9 +11,9 @@ load(
 )
 
 ocaml_test(
-    timeout = "short",
     name = "test",
-    main = "Test"
+    main = "Test",
+    timeout = "short",
 )
 
 ocaml_module(
@@ -36,7 +36,7 @@ filegroup(
 )
 
 ocaml_signature(
-    name = "$Hello",
+    name = "Hello_cmi",
     module_name = "Hello", # force sigfile rename (symlink)
     src  = select({
         ":lang_en": "hello_en.mli",
@@ -47,7 +47,7 @@ ocaml_signature(
 ## module name will be derived from sig name, not name attribute.
 ocaml_module(
     name   = "Howdy",
-    sig    = ":$Hello",
+    sig    = ":Hello_cmi",
     # sig    = select({
     #     ":lang_en": "hello_en.mli",
     #     ":lang_fr": "hello_fr.mli",

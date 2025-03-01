@@ -24,7 +24,7 @@ ocaml_module(
 
 ocaml_ns_library(
     name = "color",
-    archived = True,
+    linkage  = "static",
     manifest = [
         ":Red",
         ":Green",
@@ -35,7 +35,7 @@ ocaml_ns_library(
 
 ocaml_ns_library(
     name = "greek",
-    # archived = True,
+    # linkage  = "static",
     manifest = [
         ":Alpha",
         ":Beta",
@@ -46,7 +46,7 @@ ocaml_ns_library(
 
 ocaml_ns_library(
     name = "foobar",
-    # archived = True,
+    # linkage  = "static",
     manifest = [
         ":Foo",
         ":Bar",
