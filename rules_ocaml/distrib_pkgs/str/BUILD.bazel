@@ -16,6 +16,6 @@ ocaml_module(
     deps = [
         "@opam.ounit2//lib",
         # "@str//lib/str"
-        "@opam.ocamlsdk//lib/str"
+        "@opam.ocamlsdk//str/lib"
     ],
 )

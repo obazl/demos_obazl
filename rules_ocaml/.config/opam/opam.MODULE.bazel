@@ -28,6 +28,8 @@ opam.deps(
         "base": "",
         "cmdliner": "",
         "core": "",
+        "ctypes": "",
+        "ctypes-foreign": "",
         "lwt": "",
         "ounit2": "2.2.7",
         "ppx_deriving": "",
@@ -64,6 +66,8 @@ register_toolchains(
 use_repo(opam, "opam.alcotest")
 use_repo(opam, "opam.base")
 use_repo(opam, "opam.cmdliner")
+use_repo(opam, "opam.ctypes")
+use_repo(opam, "opam.ctypes-foreign")
 use_repo(opam, "opam.core")
 use_repo(opam, "opam.lwt")
 use_repo(opam, "opam.ounit2")

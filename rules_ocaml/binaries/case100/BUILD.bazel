@@ -128,7 +128,7 @@ cc_library(
                   "-lalpha"],
     deps = [
         "//binaries/case100/cclibs:alpha",
-        "@opam.ocamlsdk//lib/ffi",
+        "@opam.ocamlsdk//ffi/lib",
         # ":ocamlcommon",
         # ":ocamlmiddleend",
         # ":ocamloptcomp",

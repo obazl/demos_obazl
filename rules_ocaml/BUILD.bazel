@@ -9,7 +9,7 @@ test_suite(
         "//deps:test",
         "//distrib_pkgs:test",
         "//filegen:test",
-        "//interop",
+        "//ffi",
         "//modules:test",
         "//mwe",
         "//ns",

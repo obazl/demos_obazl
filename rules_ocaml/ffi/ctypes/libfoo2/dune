@@ -1,0 +1,31 @@
+(rule
+ (deps (source_tree cclib))
+ (targets libfoo.a dllfoo.so)
+ (action
+ (no-infer
+  (progn
+   (chdir cclib (run make))
+   (copy cclib/libfoo.a libfoo.a)
+   (copy cclib/dllfoo.so dllfoo.so)))))
+
+(executable
+ (name foo)
+ (public_name foodemo)
+ (package foodemo)
+ (libraries core)
+ ; ctypes backward compatibility shims warn sometimes; suppress them
+ (flags (:standard -w -9-27))
+ (foreign_archives foo)
+ (ctypes
+  (external_library_name libfoo)
+  (build_flags_resolver (vendored (c_flags -I cclib)))
+  (headers (include "foo.h"))
+  (type_description
+   (instance Types)
+   (functor Type_description))
+  (function_description
+   (concurrency unlocked)
+   (instance Functions)
+   (functor Function_description))
+  (generated_types Types_generated)
+  (generated_entry_point C)))

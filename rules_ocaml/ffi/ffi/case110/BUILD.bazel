@@ -1,0 +1,74 @@
+## This example demonstrates the OCaml Foreign Function Interface (FFI),
+## with configurable linkmode.
+## New code should use the 'ctypes' package instead.
+
+# $ bazel build interop/ffi/case110:hello
+# $ ./bazel-bin/interop/ffi/case110/hello
+## Warning: using 'run' won't work on MacOS, because of the search path for dylibs
+# $ bazel run interop/ffi/case110:hello
+#  => image not found
+
+# To set the link mode, pass '--//ffi/ffi/case110:link=static' or '--//ffi/ffi/case110:link=dynamic'
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag") #, "string_setting")
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+string_flag(name = "link", build_setting_default = "default",
+            values = ["default", "dynamic", "static"])
+config_setting(name = "dynamic", flag_values = {":link": "dynamic"})
+config_setting(name = "static", flag_values = {":link": "static"})
+
+ocaml_test(
+    name = "test",
+    main = ":Test",
+    # vm_runtime default is @ocaml_rules//cfg/runtime:runtime
+    vm_runtime = select({
+        ":dynamic": "@rules_ocaml//cfg/runtime:dynamic", # default
+        ":static": "@rules_ocaml//cfg/runtime:static",   # -custom
+        "//conditions:default": "@rules_ocaml//cfg/runtime:dynamic" # default
+        # vm_runtime = "//foo/bar:rt" ## standalone rt, -use-runtime=...
+    }),
+    timeout = "short",
+    # opts = ["-cclib", "-lfoo"]
+    # cc_deps = {
+    #     "//ffi/ffi/case110/cclibs:dllalpha.so": "dynamic",
+    #     "@opam.ocamlsdk//runtime:camlrun_shared": "dynamic"
+    # }
+)
+
+ocaml_module(
+    name = "Test",
+    struct = "test.ml",
+    # opts = ["-linkall"],
+    deps = [
+        "//ffi/ffi/case110/cclibs:Alpha",
+        "@opam.ounit2//lib",
+    ]
+)
+
+# ocaml_binary(
+#     name = "hello",
+#     main = ":Main",
+#     opts = [
+#         # "-verbose", "-ccopt", "-Wl,-v", "-ccopt", "-v",
+#         # "-cclib", "-lalpha"
+#     ],
+#     # deps = ["//ffi/ffi/case110/cclibs:alpha"]
+# )
+
+# ocaml_module(
+#     name = "Main",
+#     struct = "main.ml",
+#     deps   = ["//ffi/ffi/case110/cclibs:Alpha"]
+#     # deps = select({
+#     #     ":dynamic": ["//ffi/ffi/case110/cclibs:alpha_dynamic"],
+#     #     ":static" : ["//ffi/ffi/case110/cclibs:alpha_static"],
+#     #     "//conditions:default": ["//ffi/ffi/case110/cclibs:alpha"]
+#     # })
+# )

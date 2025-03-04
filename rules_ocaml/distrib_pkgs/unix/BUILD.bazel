@@ -15,6 +15,6 @@ ocaml_module(
     struct = "test.ml",
     deps = [
         "@opam.ounit2//lib",
-        "@opam.ocamlsdk//lib/unix"
+        "@opam.ocamlsdk//unix/lib"
     ],
 )

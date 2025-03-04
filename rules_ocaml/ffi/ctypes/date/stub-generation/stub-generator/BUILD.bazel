@@ -1,0 +1,64 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+package(default_visibility = ["//visibility:public"])
+
+OPTS = ["-w", "@1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40"]
+
+DEPS = ["@opam.ctypes//lib",
+        "@opam.ctypes-foreign//lib",
+        "@opam.ctypes//stubs/lib"]
+
+# NB: dune generates empty date_stub_generator.mli
+
+ocaml_module(
+    name   = "Date_generated",
+    struct = "date_generated.ml",
+    # sig    = "date_generated_cmi",
+    opts   = OPTS,
+    deps   = DEPS + [":date_stubs"]
+)
+
+cc_library(
+    name = "date_stubs",
+    srcs = ["date_stubs.c"],
+    deps = ["@opam.ctypes//lib:hdrs"]
+    # also: <time.h> ?
+)
+
+########
+genrule(
+    name = "date_stub_gen",
+    # srcs = [""],
+    outs = ["date_generated.ml", "date_stubs.c"],
+    tools = [":date_stub_generator"],
+    cmd = "\n".join([
+        "$(execpath :date_stub_generator);",
+        "cp date_generated.ml  $(RULEDIR)/;",
+        "cp date_stubs.c  $(RULEDIR)/;",
+    ])
+)
+
+################
+ocaml_binary(
+    name     = "date_stub_generator",
+    main     = "Date_stub_generator",
+    opts     = OPTS,
+)
+
+#############
+ocaml_module(
+    name   = "Date_stub_generator",
+    struct = "date_stub_generator.ml",
+    opts   = OPTS,
+    deps   = DEPS + [
+        "//ffi/ctypes/date/stub-generation/bindings:Date_stubs"
+    ]
+)
+
+

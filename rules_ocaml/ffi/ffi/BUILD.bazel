@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "test",
+    tests = [
+        # "//ffi/ffi/case110:test",
+        "//ffi/ffi/case120:test",
+    ]
+)

@@ -1,0 +1,212 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_binary",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_test"
+)
+
+package(default_visibility = ["//visibility:public"])
+
+OPTS = ["-w", "@1..3@5..28@31..39@43@46..47@49..57@61..62@67@69-40"]
+
+DEPS = ["@opam.ctypes//lib",
+        "@opam.ctypes-foreign//lib",
+        "@opam.ctypes//stubs/lib"]
+
+ocaml_binary(
+    name     = "foodemo",
+    main     = ":Foodemo",
+    opts     = OPTS,
+)
+
+ocaml_module(
+    name   = "Foodemo",
+    struct = "foodemo.ml",
+    opts   = OPTS + ["-no-alias-deps", "-w", "-49"],
+    deps   = DEPS + [
+        ":Foo", ":FooTypesModule", ":FooFunctionsModule",
+    ]
+)
+
+# ctypes_module( ... )
+ocaml_module(
+    name   = "Foo",
+    struct = "foo.ml",
+    opts   = OPTS + ["-no-alias-deps", "-w", "-49"],
+    deps   = DEPS
+)
+
+## this rule will generate foo_type_gen.cm,
+## compile, link, and run it. Just like dune!
+## But: make this a macro
+# ctypes_typ_gen(
+#     name = "footypegen",
+#     out  = "FooTypesImpl_generator.c"
+# )
+
+################ FUNCTIONS ################
+ocaml_module(
+    name   = "FooFunctionsModule",
+    struct = "FooFunctionsModule.ml",
+    opts   = OPTS,
+    deps   = DEPS + [
+        ":FooFunctionsImpl", ":Foo",
+        ":foofuncs"
+    ]
+)
+
+cc_library(
+    name = "foofuncs",
+    srcs = ["fooFuncs.c"],
+    copts = ["-Iffi/ctypes/libfoo/cclib"],
+    deps  = ["//ffi/ctypes/libfoo/cclib:foo",
+             "@opam.ctypes//lib:hdrs"]
+)
+
+genrule(
+    name = "gencfuncs",
+    outs = ["fooFuncs.c"],
+    tools = ["fooFuncs_tool"],
+    cmd = "$(execpath fooFuncs_tool) c libfoo_stubs > \"$@\"",
+)
+
+ocaml_module(
+    name   = "FooFunctionsImpl",
+    struct = "FooFunctionsImpl.ml",
+    opts   = OPTS,
+    deps   = DEPS + [
+        "//ffi/ctypes/libfoo/cclib:foo",
+        ":footypesimpl_gen"
+    ]
+)
+
+genrule(
+    name = "genmlfuncs",
+    outs = ["FooFunctionsImpl.ml"],
+    tools = ["fooFuncs_tool"],
+    cmd = "$(execpath fooFuncs_tool) ml libfoo_stubs > \"$@\"",
+)
+
+ocaml_binary(
+    name     = "fooFuncs_tool",
+    prologue = [":Foo", ":FooTypesModule"],
+    main     = "FooFuncs_tool",
+    opts     = OPTS,
+)
+
+ocaml_module(
+    name   = "FooFuncs_tool",
+    struct = "FooFuncs_tool.ml",
+    opts   = OPTS,
+    deps   = DEPS + [":Foo"]
+)
+
+################ TYPES ################
+ocaml_module(
+    name   = "FooTypesModule",
+    struct = "FooTypesModule.ml",
+    opts   = OPTS,
+    deps   = DEPS + [":FooTypesImpl", ":Foo"]
+)
+
+ocaml_module(
+    name   = "FooTypesImpl",
+    struct = "FooTypesImpl.ml",
+    opts   = OPTS,
+    deps   = DEPS
+)
+
+genrule(
+    name = "genFootypesml",
+    outs = ["FooTypesImpl.ml"],
+    tools = ["footypesimpl_gen"],
+    cmd = "$(execpath footypesimpl_gen) > \"$@\"",
+)
+
+cc_binary(
+    name = "footypesimpl_gen",
+    srcs = ["fooTypesImpl_generator.c"],
+    copts = ["-Iffi/ctypes/libfoo/cclib"],
+    deps  = ["//ffi/ctypes/libfoo/cclib:foo",
+             "@opam.ctypes//lib:hdrs"]
+)
+
+genrule(
+    name = "genFootypesimplc",
+    outs = ["fooTypesImpl_generator.c"],
+    tools = [":foo_type_gen"],
+    cmd = "$(execpath :foo_type_gen) > \"$@\"",
+)
+
+
+# tool
+ocaml_binary(
+    name     = "foo_type_gen",
+    main     = ":Foo_type_gen",
+    opts     = OPTS
+)
+
+ocaml_module(
+    name   = "Foo_type_gen",
+    struct = "foo_type_gen.ml",
+    opts   = OPTS + ["-no-alias-deps", "-w", "-49"],
+    deps   = DEPS + [":Foo"]
+)
+
+FOOFNGEN = """
+let () =
+  let concurrency = Cstubs.unlocked in
+  let errno = Cstubs.ignore_errno in
+  let prefix = Sys.argv.(2) in
+  match Sys.argv.(1) with
+  | "ml" ->
+    Cstubs.write_ml ~concurrency Format.std_formatter ~prefix
+      ~errno
+      (module Foo.Functions)
+  | "c" ->
+  print_endline "#include <foo.h>";
+    Cstubs.write_c ~concurrency Format.std_formatter ~prefix
+      ~errno
+      (module Foo.Functions)
+  | s -> failwith ("unknown functions "^s)
+"""
+genrule(
+    name = "genFooFuncsGen",
+    outs = ["FooFuncs_tool.ml"],
+    cmd  = "echo -e '{}' > $@".format(FOOFNGEN)
+)
+
+
+FOOTYPESMOD = """
+include Foo.Types (FooTypesImpl)
+"""
+# include Type_description.Types (Libfoo__c_generated_types)
+genrule(
+    name = "genFooTypesMod",
+    outs = ["FooTypesModule.ml"],
+    cmd  = "echo -e '{}' > $@".format(FOOTYPESMOD)
+)
+
+FOOFNSMOD = """
+include Foo.Functions (FooFunctionsImpl)
+"""
+genrule(
+    name = "genFooFnsMod",
+    outs = ["FooFunctionsModule.ml"],
+    cmd  = "echo -e '{}' > $@".format(FOOFNSMOD)
+)
+
+
+GENSRC = """
+let () =
+  print_endline "#include <foo.h>";
+  Cstubs_structs.write_c Format.std_formatter
+  (module Foo.Types)
+"""
+
+genrule(
+    name = "genTgen",
+    outs = ["foo_type_gen.ml"],
+    cmd  = "echo -e '{}' > $@".format(GENSRC)
+)

@@ -6,7 +6,7 @@ cc_library(
     hdrs = ["alpha.h"],
     linkstatic = True,
     deps = [
-        "@opam.ocamlsdk//lib/ffi",
+        "@opam.ocamlsdk//ffi/lib",
     ],
     visibility = ["//binaries/case100:__pkg__"],
 )

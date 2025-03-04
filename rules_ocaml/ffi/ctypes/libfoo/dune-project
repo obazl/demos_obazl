@@ -1,0 +1,30 @@
+(lang dune 3.17)
+
+;; to build: in this dir, run '$ dune build ./foo.exe'
+
+;; to run: in this dir, run '$ dune exec ./foo.exe'
+
+(name foodemo)
+
+;; (source
+;;  (github username/reponame))
+
+(authors "Author Name <author@example.com>")
+
+(maintainers "Maintainer Name <maintainer@example.com>")
+
+(license LICENSE)
+
+(documentation https://url/to/documentation)
+
+(using ctypes 0.3)
+
+(package
+ (name foodemo)
+ (synopsis "A short synopsis")
+ (description "A longer description")
+ (depends ocaml)
+ (tags
+  ("add topics" "to describe" your project)))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html

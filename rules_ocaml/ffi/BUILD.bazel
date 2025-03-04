@@ -1,0 +1,8 @@
+
+test_suite(
+    name = "ffi",
+    tests = [
+        ## broken on vm platform
+        "//ffi/ffi:test",
+    ]
+)
