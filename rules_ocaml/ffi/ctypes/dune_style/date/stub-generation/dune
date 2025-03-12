@@ -1,0 +1,4 @@
+(executable
+ (name date_cmd)
+ (modes byte byte_complete native)
+ (libraries date_stubs date_generated))

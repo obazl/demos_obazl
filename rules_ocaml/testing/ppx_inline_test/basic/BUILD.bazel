@@ -28,13 +28,14 @@ LIBNAME="hello"
 
 ocaml_test(
     name = "test",
-    vm_linkage = "@rules_ocaml//vm/linkage:static",
+    # vm_linkage = "static",
     args = [
         "inline-test-runner", LIBNAME,
         # "-list-test-names",
         # "-log",
     ],
     opts = [
+        # "-verbose"
         # "-cclib", "-lppx_inline_test_runner_lib_stubs"
         # "-dllib", "-lppx_inline_test_runner_lib_stubs"
     ],

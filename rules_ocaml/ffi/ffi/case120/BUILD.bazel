@@ -20,7 +20,7 @@ OPTS = [] # "-verbose"]
 ocaml_test(
     name = "test",
     main = "Test",
-    vm_linkage = "@rules_ocaml//vm/linkage:static",
+    vm_linkage = "static",
     runtime = "@rules_ocaml//rt:dbg",
     # runtime = "@rules_ocaml//rt:instrumented",
     opts = OPTS,

@@ -16,20 +16,22 @@ let cmyk2 _ = assert_equal  92 (Colors.Magenta.m)
 let cmyk3 _ = assert_equal   0 (Colors.Yellow.y)
 let cmyk4 _ = assert_equal  15 (Colors.Key.k)
 
-(* But they remain accessible under their original nss, outside of the
-   Color ns: *)
-let xrgb1 _ = assert_equal  27 (RGB.Red.r)
-let xrgb2 _ = assert_equal  16 (RGB.Green.g)
-let xrgb3 _ = assert_equal 218 (RGB.Blue.b)
+(* But they remain accessible under their original nss,
+   outside of the 'Colors' ns: *)
+let xrgb1 _ = assert_equal (Colors.Red.r) (RGB.Red.r)
+let xrgb2 _ = assert_equal (Colors.Green.g) (RGB.Green.g)
+let xrgb3 _ = assert_equal (Colors.Blue.b)  (RGB.Blue.b)
 
-let xhsb1 _ = assert_equal 243 (HSB.Hue.h)
-let xhsb2 _ = assert_equal  92 (HSB.Saturation.s)
-let xhsb3 _ = assert_equal  85 (HSB.Brightness.b)
+let xhsb1 _ = assert_equal (Colors.Hue.h) (HSB.Hue.h)
+let xhsb2 _ = assert_equal
+                (Colors.Saturation.s) (HSB.Saturation.s)
+let xhsb3 _ = assert_equal
+                (Colors.Brightness.b) (HSB.Brightness.b)
 
-let xcmyk1 _ = assert_equal  88 (CMYK.Cyan.c)
-let xcmyk2 _ = assert_equal  92 (CMYK.Magenta.m)
-let xcmyk3 _ = assert_equal   0 (CMYK.Yellow.y)
-let xcmyk4 _ = assert_equal  15 (CMYK.Key.k)
+let xcmyk1 _ = assert_equal (Colors.Cyan.c) (CMYK.Cyan.c)
+let xcmyk2 _ = assert_equal (Colors.Magenta.m) (CMYK.Magenta.m)
+let xcmyk3 _ = assert_equal (Colors.Yellow.y) (CMYK.Yellow.y)
+let xcmyk4 _ = assert_equal (Colors.Key.k) (CMYK.Key.k)
 
 let suite =
 "suite">:::

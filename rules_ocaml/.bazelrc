@@ -1,15 +1,7 @@
-## during development:
-common --lockfile_mode=off
-
-try-import %workspace%/.config/toolchains.bazelrc
 try-import .config/registries.bazelrc
-
-#common --config=ocamlopt.opt  ## default
-#common --config=ocamlc.byte
-#common --config=ocamlopt.byte
-#common --config=ocamlc.opt
-
 common --registry=https://raw.githubusercontent.com/obazl/registry/main/
 common --registry=https://bcr.bazel.build
 
 try-import %workspace%/.config/user.bazelrc
+
+test --keep_going

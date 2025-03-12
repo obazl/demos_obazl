@@ -37,10 +37,10 @@ ocaml_library(
 )
 
 ocaml_ns(
-    name = "nsColors",
-    ns   = "Colors",
+    name     = "nsColors",
+    ns_name  = "Colors",
     ns_merge = [
-        "//ns/bottomup/ns_merge/colors/rgb:nsRGB",
+        "//ns/bottomup/ns_merge/colors/rgb:RGB",
         "//ns/bottomup/ns_merge/colors/hsb:nsHSB",
         "//ns/bottomup/ns_merge/colors/cmyk:nsCMYK"
     ],

@@ -19,6 +19,7 @@ DEPS = ["@opam.ctypes//lib",
 ocaml_binary(
     name     = "date_cmd",
     main     = "Date_cmd",
+    vm_linkage = "static",
     opts     = OPTS,
 )
 

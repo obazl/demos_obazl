@@ -12,6 +12,7 @@ load(
 ocaml_test(
     name = "test",
     main = ":Test",
+    # archive_deps = True,
     timeout = "short",
 )
 
@@ -19,9 +20,9 @@ ocaml_module(
     name   = "Test",
     struct = "test.ml",
     deps = [
+        "@opam.ounit2//lib",
         ":libColors",
-        ":nsColors",
-        "@opam.ounit2//lib"
+        # ":Colors",
     ],
 )
 
@@ -35,17 +36,17 @@ ocaml_library(
         "//ns/bottomup/ns_import_as/colors/rgb:libRGB",
         "//ns/bottomup/ns_import_as/colors/hsb:libHSB",
         "//ns/bottomup/ns_import_as/colors/cmyk:libCMYK",
+        ":Colors"
     ],
     visibility = ["//visibility:public"],
 )
 
 ocaml_ns(
-    name = "nsColors",
-    ns   = "Colors",
-    visibility = ["//visibility:public"],
+    name         = "Colors",
+    visibility   = ["//visibility:public"],
     ns_import_as = {
-        "//ns/bottomup/ns_import_as/colors/rgb:nsRGB": "Foo",
-        "//ns/bottomup/ns_import_as/colors/hsb:nsHSB": "Bar",
-        "//ns/bottomup/ns_import_as/colors/cmyk:nsCMYK": "Baz"
+        "//ns/bottomup/ns_import_as/colors/rgb:RGB": "Foo",
+        "//ns/bottomup/ns_import_as/colors/hsb:HSB": "Bar",
+        "//ns/bottomup/ns_import_as/colors/cmyk:CMYK": "Baz"
     },
 )

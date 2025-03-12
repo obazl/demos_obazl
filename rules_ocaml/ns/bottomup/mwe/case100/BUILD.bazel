@@ -6,6 +6,13 @@ load(
     "ocaml_test"
 )
 
+SUBMODULES = [
+    ":Australian",
+    ":English",
+    ":French",
+    ":Spanish"
+]
+
 ocaml_test(
     name = "test",
     main = "Test",
@@ -21,24 +28,18 @@ ocaml_module(
     ]
 )
 
-SUBMODULES = [
-    ":Australian",
-    ":English",
-    ":French",
-    ":Spanish"
-]
-
 ##############
 ocaml_library(
     name       = "libHello",
-    manifest   = SUBMODULES
+    manifest   = SUBMODULES + [":nsHello"]
 )
 
 ##################
 ocaml_ns(
     name       = "nsHello",
-    ns         = "hello",
-    submodules = SUBMODULES
+    ns_name    = "hello",
+    submodules = SUBMODULES,
+    visibility = ["//visibility:public"]
 )
 
 ocaml_module(

@@ -1,8 +1,8 @@
 open OUnit2
 
-let test1 _ = assert_equal 243 (Hsb.Hue.h)
-let test2 _ = assert_equal  92 (Hsb.Saturation.s)
-let test3 _ = assert_equal  85 (Hsb.Brightness.b)
+let test1 _ = assert_equal 243 (HSB.Hue.h)
+let test2 _ = assert_equal  92 (HSB.Saturation.s)
+let test3 _ = assert_equal  85 (HSB.Brightness.b)
 
 let suite =
 "suite">:::

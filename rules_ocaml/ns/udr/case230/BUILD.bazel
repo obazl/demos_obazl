@@ -34,8 +34,8 @@ ocaml_library(
 
 #################
 ocaml_ns(
-    name = "nsColor",
-    ns = "NsColor",
+    name     = "nsColor",
+    ns_name  = "NsColor",
     manifest = [
         ":Red",
         ":Green",
@@ -44,11 +44,11 @@ ocaml_ns(
 )
 
 ocaml_module(
-    name = "Color",
-    struct = "color.ml",
-    opts = ["-no-alias-deps"],
-    open = ["nsColor"],
-    deps   = [
+    name       = "Color",
+    struct     = "color.ml",
+    opts       = ["-no-alias-deps"],
+    open       = ["nsColor"],
+    deps       = [
         ":Red",
         ":Green",
         ":Blue"
@@ -56,21 +56,21 @@ ocaml_module(
 )
 
 ocaml_module(
-    name = "Red",
-    ns          = ":nsColor",
-    struct = "red.ml",
+    name       = "Red",
+    ns         = ":nsColor",
+    struct     = "red.ml",
 )
 
 ocaml_module(
-    name = "Green",
-    ns          = ":nsColor",
-    struct = "green.ml",
+    name       = "Green",
+    ns         = ":nsColor",
+    struct     = "green.ml",
 )
 
 ocaml_module(
-    name = "Blue",
-    ns          = ":nsColor",
-    struct = "blue.ml",
+    name       = "Blue",
+    ns         = ":nsColor",
+    struct     = "blue.ml",
     visibility = [
         ## this target is used by set400,  cases 415, 425
         "//ns/obazl/set400:__subpackages__",

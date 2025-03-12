@@ -1,0 +1,40 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns",
+)
+
+SUBMODULES = [":Alpha", ":Beta", ":Gamma"]
+
+ocaml_library(
+    name       = "gem",
+    # linkage    = "static",
+    manifest   = SUBMODULES + [":nsGem"],
+    visibility = ["//ns/bottomup/diamond_dep:__subpackages__"]
+)
+
+ocaml_ns(
+    name       = "nsGem",
+    ns_name    = "Gem",
+    submodules = SUBMODULES
+)
+
+ocaml_module(
+    name   = "Alpha",
+    ns     = "nsGem",
+    struct = "alpha.ml",
+    deps   = [":Beta"],
+)
+
+ocaml_module(
+    name   = "Beta",
+    ns     = "nsGem",
+    struct = "beta.ml",
+)
+
+ocaml_module(
+    name   = "Gamma",
+    ns     = "nsGem",
+    struct = "gamma.ml",
+)

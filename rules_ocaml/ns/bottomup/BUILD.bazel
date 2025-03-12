@@ -1,6 +1,7 @@
 test_suite(
     name = "bottomup",
     tests = [
+        "//ns/bottomup/diamond_dep",
         "//ns/bottomup/mwe",
         "//ns/bottomup/submodules",
         "//ns/bottomup/import_as",

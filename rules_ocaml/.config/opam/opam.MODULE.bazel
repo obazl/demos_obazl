@@ -3,22 +3,20 @@ bazel_dep(name = "zstd", version = "1.5.6")
 
 opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
 
-bazel_dep(name = "obazl_menhir", repo_name="menhir")
-use_repo(opam, "opam.menhir", "opam.menhirLib")
-# git_override(module_name = "obazl_menhir",
-#              branch  = "2024.07.15.beta",
-#              remote = "https://github.com/obazl/obazl_menhir.git")
+bazel_dep(name = "rules_ctypes", version = "0.23.0.dev")
+use_repo(opam, "opam.ctypes", "opam.ctypes-foreign")
 
-bazel_dep(name = "obazl_cppo")
+bazel_dep(name = "rules_menhir", version="2024.07.15.dev",
+          repo_name="menhir")
+use_repo(opam, "opam.menhir", "opam.menhirLib")
+
+bazel_dep(name = "rules_cppo", version="1.8.0.dev")
 use_repo(opam, "opam.cppo")
-# git_override(module_name = "obazl_cppo",
-#              branch  = "1.8.0.beta",
-#              remote = "https://github.com/obazl/obazl_cppo.git")
 
 opam.deps(
     # toolchain = "local", # | "global" | "xdg"
     toolchain = "xdg",
-    ocaml_version = "5.1.0",
+    ocaml_version = "5.1.1", # ppx_show incompat w/5.3.0
     opam_version = "2.3.0",
     # debug = 2,
     # verbosity = 2,
@@ -28,8 +26,9 @@ opam.deps(
         "base": "",
         "cmdliner": "",
         "core": "",
-        "ctypes": "",
-        "ctypes-foreign": "",
+        # "ctypes": "",
+        # "ctypes-foreign": "",
+        "integers": "",
         "lwt": "",
         "ounit2": "2.2.7",
         "ppx_deriving": "",
@@ -66,9 +65,10 @@ register_toolchains(
 use_repo(opam, "opam.alcotest")
 use_repo(opam, "opam.base")
 use_repo(opam, "opam.cmdliner")
-use_repo(opam, "opam.ctypes")
-use_repo(opam, "opam.ctypes-foreign")
+# use_repo(opam, "opam.ctypes")
+# use_repo(opam, "opam.ctypes-foreign")
 use_repo(opam, "opam.core")
+use_repo(opam, "opam.integers")
 use_repo(opam, "opam.lwt")
 use_repo(opam, "opam.ounit2")
 use_repo(opam, "opam.ppx_deriving")

@@ -29,8 +29,8 @@ ocaml_ns_library(
     linkage  = "static",
     ns_name = "Color",
     manifest = [
+        ":Green", # in this case, order matters
         ":Red", # ":RedModule",
-        ":Green",
         ":Blue",
         ":Greek", # ":libGreek"
     ],

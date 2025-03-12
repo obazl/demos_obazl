@@ -1,0 +1,60 @@
+#!/bin/sh
+
+VERBOSE=
+TARGET="test"
+
+while getopts "vt:" arg; do
+    case $arg in
+        v)
+            VERBOSE="--bazelrc=$HOME/.config/bazel/verbose.bazelrc"
+            ;;
+        t)
+            TARGET=${OPTARG}
+            ;;
+    esac
+done
+
+echo "TOOLCHAIN: ocamlopt.opt (sys->sys)"
+bazel clean --expunge
+bazel --bazelrc=tools/dev.bazelrc \
+      $VERBOSE \
+      --nosystem_rc \
+      --nohome_rc \
+      --noworkspace_rc \
+      test \
+      $TARGET \
+      --tc=ocamlopt.opt \
+      --keep_going
+
+echo "TOOLCHAIN: ocamlc.byte (vm->vm)"
+bazel --bazelrc=tools/dev.bazelrc \
+      $VERBOSE \
+      --nosystem_rc \
+      --nohome_rc \
+      --noworkspace_rc \
+      test \
+      $TARGET \
+      --tc=ocamlc.byte \
+      --keep_going
+
+echo "TOOLCHAIN: ocamlc.opt (sys->vm)"
+bazel --bazelrc=tools/dev.bazelrc \
+      $VERBOSE \
+      --nosystem_rc \
+      --nohome_rc \
+      --noworkspace_rc \
+      test \
+      $TARGET \
+      --tc=ocamlc.opt \
+      --keep_going
+
+echo "TOOLCHAIN: ocamlopt.byte (vm->sys)"
+bazel --bazelrc=tools/dev.bazelrc \
+      $VERBOSE \
+      --nosystem_rc \
+      --nohome_rc \
+      --noworkspace_rc \
+      test \
+      $TARGET \
+      --tc=ocamlopt.byte \
+      --keep_going

@@ -28,8 +28,7 @@ ocaml_module(
 ## analogous to OCaml 'include' directive.
 ## E.g. Colors.R => RGB.Red (or Colors.Red => RGB.Red, etc.)
 ocaml_ns(
-    name = "colors_ns",
-    ns   = "Colors",
+    name = "Colors",
     import_as = {
         ## Red, Green, Blue are not namespaced
         "//ns/bottomup/import_as/colors/rgb:Red"   : "R",
@@ -49,7 +48,7 @@ ocaml_ns(
 ocaml_library(
     name = "olibColors",
     manifest = [
-        ":colors_ns",
+        ":Colors",
         "//ns/bottomup/import_as/colors/rgb:Red",
         "//ns/bottomup/import_as/colors/rgb:Green",
         "//ns/bottomup/import_as/colors/rgb:Blue",

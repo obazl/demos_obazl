@@ -12,9 +12,9 @@ package(default_visibility = [
 ])
 
 SUBMODULES = [
-    "Red",
-    "Green",
-    "Blue",
+    ":Red",
+    ":Green",
+    ":Blue",
 ]
 
 #############
@@ -40,26 +40,25 @@ ocaml_library(
 )
 
 ocaml_ns(
-    name       = "nsRGB",
-    ns         = "RGB",
+    name       = "RGB",
     submodules = SUBMODULES
 )
 
 #############
 ocaml_module(
     name       = "Red",
-    ns         = ":nsRGB",
+    ns         = ":RGB",
     struct     = "red.ml",
 )
 
 ocaml_module(
     name       = "Green",
-    ns         = ":nsRGB",
+    ns         = ":RGB",
     struct     = "green.ml",
 )
 
 ocaml_module(
     name       = "Blue",
-    ns         = ":nsRGB",
+    ns         = ":RGB",
     struct     = "blue.ml",
 )

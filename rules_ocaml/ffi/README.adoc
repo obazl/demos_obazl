@@ -1,0 +1,12 @@
+= ctypes
+
+
+see also:
+
+    https://github.com/aantron/luv/tree/master/src/c
+
+    https://simonjbeaumont.com/posts/ocaml-ctypes/
+
+    https://michael.bacarella.com/2022/02/19/dune-ctypes/
+
+    https://github.com/mbacarella/mpg123/tree/077a72d922931eb46d4b4e5842b0426fa3c161b5/c

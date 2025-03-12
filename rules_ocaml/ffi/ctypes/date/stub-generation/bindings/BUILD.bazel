@@ -21,7 +21,7 @@ ocaml_module(
     name   = "Date_stubs",
     struct = "date_stubs.ml",
     opts   = OPTS,
-    deps   = DEPS
+    deps   = DEPS + ["@opam.integers//lib"]
 )
 
 ## dune log:

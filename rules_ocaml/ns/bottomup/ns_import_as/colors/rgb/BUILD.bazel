@@ -12,9 +12,9 @@ VIZ = [
 ]
 
 SUBMODULES = [
-    "Red",
-    "Green",
-    "Blue"
+    ":Red",
+    ":Green",
+    ":Blue"
 ]
 
 ###########
@@ -36,34 +36,33 @@ ocaml_module(
 ocaml_library(
     name = "libRGB",
     visibility = VIZ,
-    manifest = SUBMODULES
+    manifest = SUBMODULES + [":RGB"]
 )
 
 #########
 ocaml_ns(
-    name       = "nsRGB",
-    ns         = "rgb",
+    name       = "RGB",
     visibility = VIZ,
     submodules = SUBMODULES
 )
 
 ocaml_module(
     name       = "Red",
-    ns         = ":nsRGB",
+    ns         = ":RGB",
     struct     = "red.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Green",
-    ns         = ":nsRGB",
+    ns         = ":RGB",
     struct     = "green.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Blue",
-    ns         = ":nsRGB",
+    ns         = ":RGB",
     struct     = "blue.ml",
     visibility = VIZ,
 )

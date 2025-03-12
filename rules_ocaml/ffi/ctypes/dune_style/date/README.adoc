@@ -1,0 +1,39 @@
+= date
+
+To build and run using Bazel:
+
+----
+bazel run ffi/ctypes/dune_style/date/stub-generation:date_cmd
+bazel run ffi/ctypes/dune_style/date/stub-generation:date_cmd --tc=ocamlc
+bazel run ffi/ctypes/dune_style/date/foreign:date
+bazel run ffi/ctypes/dune_style/date/foreign:date --tc=ocamlc       <1>
+----
+<1> Default: build with `-custom‘
+
+To build a bytecode executable with `-output-complete-exe`:
+
+    bazel run ffi/ctypes/dune_style/date/foreign:date \
+    --tc=ocamlc --//ffi/ctypes/dune_style/date/foreign:link=static
+
+To build a bytecode executable dynamic linking (the `ocamlc` default):
+
+    bazel run ffi/ctypes/dune_style/date/foreign:date \
+    --tc=ocamlc --//ffi/ctypes/dune_style/date/foreign:link=dynamic
+
+WARNING: There’s a known bug in bytecode dynamic linking. You may see a “cannot open shared library“ error.
+
+
+
+To build and run using dune:
+
+----
+cd ffi/ctypes/dune_style/date
+dune exec stub-generation/date_cmd.exe
+dune exec stub-generation/date_cmd.bc
+    Fatal error: cannot load shared library dlldate_generated_stubs
+dune exec stub-generation/date_cmd.bc.exe
+dune exec foreign/date.exe
+dune exec foreign/date.bc
+dune exec foreign/date.bc.exe
+----
+

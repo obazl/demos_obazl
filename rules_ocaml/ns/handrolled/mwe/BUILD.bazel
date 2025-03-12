@@ -51,7 +51,7 @@ ocaml_module(
 
 # ocaml_ns(
 #     name = "nsHello",
-#     ns   = "Hello",
+#     ns_name = "Hello",
 #     manifest = [
 #         "Australian",
 #         "English",

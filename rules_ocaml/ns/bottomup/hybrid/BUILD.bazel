@@ -25,7 +25,7 @@ ocaml_module(
 ocaml_library(
     name = "libGreek",
     manifest = [
-        ":nsGreek",
+        ":Greek",
         ":Alpha",
         ":Beta",
         ":Gamma",
@@ -39,8 +39,7 @@ ocaml_library(
 
 ##################
 ocaml_ns(
-    name = "nsGreek",
-    ns   = "Greek",
+    name = "Greek",
     submodules = [
         # elective submodules
         "Alpha",
@@ -55,29 +54,29 @@ ocaml_ns(
     },
     ns_import_as = {
         # exogenous namespaces
-        "//ns/bottomup/ns_import_as/colors/cmyk:nsCMYK": "CMYK"
+        "//ns/bottomup/ns_import_as/colors/cmyk:CMYK": "CMYK"
     },
     ns_merge = [
         # exogenous namespaced submodules
-        "//ns/bottomup/submodules/rgb:nsRGB"
+        "//ns/bottomup/submodules/rgb:RGB"
     ],
 )
 
 #############
 ocaml_module(
     name        = "Alpha",
-    ns          = ":nsGreek",
+    ns          = ":Greek",
     struct      = "alpha.ml",
 )
 
 ocaml_module(
     name        = "Beta",
-    ns          = ":nsGreek",
+    ns          = ":Greek",
     struct      = "beta.ml",
 )
 
 ocaml_module(
     name        = "Gamma",
-    ns          = ":nsGreek",
+    ns          = ":Greek",
     struct      = "gamma.ml",
 )

@@ -31,39 +31,36 @@ ocaml_library(
         ":Red",
         ":Green",
         ":Blue",
-        ":nsRGB"
+        # ":RGB"
     ],
 )
 
 ocaml_ns(
-    name = "nsRGB",  # target name, not (necessarily) ns name
-    ## By default, ns name == target name (normalized)
-    ## Use 'ns' attrib to override.
-    ns   = "RGB",
+    name = "RGB",
     submodules = [
         ## These are strings, not labels.
         ## Must match name of modules that elect membership
         ## using ns_resolver attribute.
-        "Red",
-        "Green",
-        "Blue"
+        ":Red",
+        ":Green",
+        ":Blue"
         ],
 )
 
 ocaml_module(
     name   = "Red",
-    ns     = ":nsRGB",
+    ns     = ":RGB",
     struct = "red.ml",
 )
 
 ocaml_module(
     name   = "Green",
-    ns     = ":nsRGB",
+    ns     = ":RGB",
     struct = "green.ml",
 )
 
 ocaml_module(
     name   = "Blue",
-    ns     = ":nsRGB",
+    ns     = ":RGB",
     struct = "blue.ml",
 )

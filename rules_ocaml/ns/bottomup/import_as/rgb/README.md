@@ -1,4 +1,4 @@
-Demonstrates use of the `modules` attribute of the `ocaml_ns`
+Demonstrates use of the `import_as` attribute of the `ocaml_ns`
 rule, to embed exogenous non-namespaced modules (i.e. modules not
 submodules) in a namespace. "Exogenous" meaning they are targets in a
 different package.
@@ -19,4 +19,4 @@ produces `R.cmx` (and `R.cmi`, `R.o`), and similar for `Green` and
 
 You can see what the module targets produce by running
 
-`$ bazel build mwe/rgb:R --output_groups=fileset`
+`$ bazel build mwe/rgb:R --output_groups=all`

@@ -11,7 +11,7 @@ let hsb3 _ = assert_equal  85 (Colors.Bar.Brightness.b)
 let cmyk1 _ = assert_equal 88 (Colors.Baz.Cyan.c)
 let cmyk2 _ = assert_equal 92 (Colors.Baz.Magenta.m)
 let cmyk3 _ = assert_equal  0 (Colors.Baz.Yellow.y)
-let cmyk4 _ = assert_equal 15 (Colors .Baz.Key.k)
+let cmyk4 _ = assert_equal 15 (Colors.Baz.Key.k)
 
 let suite =
 "suite">:::

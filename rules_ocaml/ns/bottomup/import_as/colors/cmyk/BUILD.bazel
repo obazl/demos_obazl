@@ -35,12 +35,11 @@ ocaml_module(
 ocaml_library(
     name       = "olibCMYK",
     visibility = VIZ,
-    manifest   = SUBMODULES + [":nsCMYK"]
+    manifest   = SUBMODULES + [":CMYK"]
 )
 
 ocaml_ns(
-    name       = "nsCMYK",
-    ns         = "CMYK",
+    name       = "CMYK",
     visibility = VIZ,
     submodules = SUBMODULES
 )
@@ -48,28 +47,28 @@ ocaml_ns(
 #############
 ocaml_module(
     name       = "Cyan",
-    ns         = ":nsCMYK",
+    ns         = ":CMYK",
     struct     = "cyan.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Magenta",
-    ns         = ":nsCMYK",
+    ns         = ":CMYK",
     struct     = "magenta.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Yellow",
-    ns         = ":nsCMYK",
+    ns         = ":CMYK",
     struct     = "yellow.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Key",
-    ns         = ":nsCMYK",
+    ns         = ":CMYK",
     struct     = "key.ml",
     visibility = VIZ,
 )

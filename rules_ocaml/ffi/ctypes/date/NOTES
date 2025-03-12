@@ -1,0 +1,38 @@
+
+Step 1: types - 9 build actions
+
+    Cstubs_structs.write_c Format.std_formatter(module Foo.Types)
+    compile and run resulting c file
+    this gens "fooTypesImpl_generator.c"
+    compile this file, run it to produce
+    FooTypesImpl.ml, whose module type is Ctypes.TYPE
+    (write_c uses (module Foo.Types), a first-class functor,
+    to derive an instance of the Ctypes.TYPE module arg
+    of the functor)
+    compile FooTypesImpl.ml
+    it will be a dependency of FooTypesModule,
+    which is just
+    include Foo.Types(FooTypesImpl)
+
+    IOW, FooTypesImpl is a implementation module type of
+    Ctypes.TYPE, which we need to pass to functor Types
+
+    FooTypesModule applies the functor to the implementation
+    an 'include's the result. Which means it exports all
+    the symbols in the (result of) the Types functor application.
+
+Step 2: functions
+
+    Similar to step 1, but for the Functions functor and its
+    arg type, Ctypes.FOREIGN
+
+    i.e. we go from the functor to an impl of its arg type
+    (call it FooFunctionsImpl) to application of the
+    functor to that impl, giving us FooFunctionsModule
+    containing the OCaml API code
+
+Step 3: the C part
+
+     the FooFuncs_tool generates both ml code and c code
+     by applying Cstrubs.write_ml/c to (module Foo.Functions)
+     just like the first part of step 1

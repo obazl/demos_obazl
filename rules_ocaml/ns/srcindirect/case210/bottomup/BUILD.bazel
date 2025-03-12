@@ -31,8 +31,8 @@ ocaml_library(
 )
 
 ocaml_ns(
-    name = "nsColor",
-    ns   = "Color",
+    name    = "nsColor",
+    ns_name = "Color",
     submodules = SUBMODULES
 )
 

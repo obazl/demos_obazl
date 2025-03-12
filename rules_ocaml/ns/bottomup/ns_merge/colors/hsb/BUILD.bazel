@@ -41,7 +41,7 @@ ocaml_library(
 
 ocaml_ns(
     name       = "nsHSB",
-    ns         = "HSB",
+    ns_name    = "HSB",
     submodules = SUBMODULES
 )
 

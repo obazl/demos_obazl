@@ -18,7 +18,7 @@ ocaml_module(
     deps    = ["@opam.ounit2//lib", ":libColor"],
 )
 
-## aggregate resolvers and subnamespaces
+## aggregate resolvers and submodules
 ocaml_library(
     name = "libColor",
     manifest = [
@@ -30,9 +30,9 @@ ocaml_library(
 # merge all submodules of exogenous ns RGB into MyRGB namespace
 # e.g. MyRGB.Red => RGB.Red
 ocaml_ns(
-    name        = "nsRGB",
-    ns          = "MyRGB",
+    name      = "nsRGB",
+    ns_name   = "MyRGB",
     ns_merge  = [
-        "//ns/bottomup/submodules/rgb:nsRGB"
+        "//ns/bottomup/submodules/rgb:RGB"
     ]
 )

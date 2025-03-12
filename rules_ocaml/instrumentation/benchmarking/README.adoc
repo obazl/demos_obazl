@@ -1,0 +1,7 @@
+= benchmarking
+
+https://blog.janestreet.com/core_bench-micro-benchmarking-for-ocaml/[Core_bench: better micro-benchmarks through linear regression] Jane Street blog article, 2014
+
+https://github.com/janestreet/core_bench[core_bench]
+
+https://github.com/mirage/bechamel[bechamel] “Bechamel is a toolkit to do a micro-benchmarking on your functions.”

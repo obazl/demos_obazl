@@ -10,15 +10,13 @@ load(
 ocaml_test(
     timeout = "short",
     name = "test",
-    main = "Test1"
+    main = "Test1",
 )
 
 ocaml_module(
     name   = "Test1",
     struct = "test1.ml",
-    # opts = [
-    #     "-w", "-31"  ## files x and y both define a module named Z
-    # ],
+    opts = ["-w", "-31"],  ## files x and y both define a module named Z
     deps = [
         "@opam.ounit2//lib",
         ":Main"

@@ -1,9 +1,9 @@
 open OUnit2
 
-let test1 _ = assert_equal 88 (Cmyk.Cyan.c)
-let test2 _ = assert_equal 92 (Cmyk.Magenta.m)
-let test3 _ = assert_equal  0 (Cmyk.Yellow.y)
-let test4 _ = assert_equal 15 (Cmyk.Key.k)
+let test1 _ = assert_equal 88 (CMYK.Cyan.c)
+let test2 _ = assert_equal 92 (CMYK.Magenta.m)
+let test3 _ = assert_equal  0 (CMYK.Yellow.y)
+let test4 _ = assert_equal 15 (CMYK.Key.k)
 
 let suite =
 "suite">:::

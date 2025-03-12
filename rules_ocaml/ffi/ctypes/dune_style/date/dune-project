@@ -2,7 +2,7 @@
 
 (name date)
 
-# (generate_opam_files true)
+;; (generate_opam_files true)
 
 (source
  (github username/reponame))
@@ -17,6 +17,7 @@
 
 (package
  (name date)
+ (allow_empty)
  (synopsis "A short synopsis")
  (description "A longer description")
  (depends ocaml)

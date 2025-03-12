@@ -33,7 +33,7 @@ config_setting(name = "goodbye", flag_values = {":t": "goodbye"})
 
 ocaml_test(
     name = "test",
-    vm_linkage = "@rules_ocaml//vm/linkage:static",
+    vm_linkage = "static",
     args = select({
         ":hello": ["inline-test-runner", "hello"],
         ":main": ["inline-test-runner", "main"],

@@ -5,12 +5,19 @@ load(
 )
 
 ocaml_test(
-    name = "hello",
+    name = "test",
     main = "Test",
     opts = [
-        # "-verbose",
-        # "-ccopt", "-Wl,-v"
-    ],
+        # "-verbose", ## OCaml flag
+    ] + select({
+        # "@platforms//os:macos": [
+        #     "-ccopt", "-v", # cc driver verbosity
+        #     # "-ccopt", "-Wl,-t", # linker
+        #     # "-ccopt", "-Wl,-print_statistics" # linker
+        # ],
+        # "@platforms//os:linux": ["-ccopt", "-Wl,-v"],
+        "//conditions:default": []
+    }),
     timeout = "short"
 )
 
@@ -32,12 +39,16 @@ ocaml_module(
     # data = ["@opam.menhir//bin:menhir"],
     opts = [
         # "-opaque"
+        # "-verbose", # OCaml: print calls to external cmds
         # "-dlocations",
         # "-dsource",
-        # "-dparsetree",
-        # "-dshape",
+        #"-dparsetree",
         # "-dtypedtree",
+        # "-dshape",
         # "-dlambda",
         # "-dclambda",
-    ],
+        # "-dsel",
+        # "-dcombine",
+        # "-dtimings"
+    ]
 )

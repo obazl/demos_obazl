@@ -1,6 +1,6 @@
 load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@rules_ocaml//build:rules.bzl", "ocamllex")
-load("@obazl_cppo//build/rules:cppo.bzl", "cppo")
+load("@rules_cppo//build/rules:cppo.bzl", "cppo")
 
 test_suite(
     name = "cppo",

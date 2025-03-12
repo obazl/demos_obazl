@@ -45,8 +45,8 @@ ocaml_module(
 
 ocaml_ns(
     name       = "nsHello",
-    ns         = "hello", # => Hello__ (since private)
-    visibility = ["//visibility:private"],
+    ns_name    = "hello", # => Hello__ (since private)
+    private    = True,
     submodules = MANIFEST
 )
 

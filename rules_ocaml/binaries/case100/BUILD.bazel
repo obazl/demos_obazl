@@ -17,7 +17,7 @@ ocaml_binary(
     ## but obj means .o, .so, or .c, so:
     # bin_out = "foo.o", #etc.
     main = "Test",
-    # vm_linkage = "@rules_ocaml//vm/linkage:static",
+    # vm_linkage = "static",
     # runtime = "@rules_ocaml//rt:dbg",
     # runtime = "@rules_ocaml//rt:instrumented",
     opts = OPTS + [

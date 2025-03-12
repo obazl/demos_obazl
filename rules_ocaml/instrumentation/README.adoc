@@ -1,0 +1,13 @@
+= Instrumentation
+
+WARNING: The Dune documentation often refers to “backends”. What that
+seems to mean is “instrumentation library”. There is no back/front
+dichotomy involved, so OBazl does not “backend” terminology.
+
+An instrumentation library, in practice, is a ppx that injects
+instrumentation code that will emit some data at runtime. So
+instrumenting your code simply means running it through a ppx
+transformation. (It may also require that you add some ppx code to
+your sources.)
+
+IOW, an instrumentation library adds some side-effects to your library.

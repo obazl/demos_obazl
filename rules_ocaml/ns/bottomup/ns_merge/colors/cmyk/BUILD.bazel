@@ -42,7 +42,7 @@ ocaml_library(
 
 ocaml_ns(
     name       = "nsCMYK",
-    ns         = "CMYK",
+    ns_name    = "CMYK",
     submodules = SUBMODULES
 )
 

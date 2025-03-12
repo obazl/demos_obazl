@@ -7,9 +7,9 @@ load(
 load("@rules_ppx//build:rules.bzl", "ppx_executable")
 
 ocaml_test(
-    timeout = "short",
     name = "test",
-    main = "Test"
+    main = "Test",
+    timeout = "short",
 )
 
 ocaml_module(
@@ -76,7 +76,7 @@ ocaml_module(
 ############
 ocaml_library(
     name = "lib_ppx_greek",
-    linkage  = "static",
+    # linkage  = "static",
     manifest = [
         ":Ppx_alpha",
         ":Ppx_beta",

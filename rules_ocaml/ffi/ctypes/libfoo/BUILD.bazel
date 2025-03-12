@@ -102,56 +102,13 @@ ocaml_module(
     deps   = DEPS + [":Foo"]
 )
 
-################ TYPES ################
-ocaml_module(
-    name   = "FooTypesModule",
-    struct = "FooTypesModule.ml",
-    opts   = OPTS,
-    deps   = DEPS + [":FooTypesImpl", ":Foo"]
-)
-
-ocaml_module(
-    name   = "FooTypesImpl",
-    struct = "FooTypesImpl.ml",
-    opts   = OPTS,
-    deps   = DEPS
-)
-
+FOOFNSMOD = """
+include Foo.Functions (FooFunctionsImpl)
+"""
 genrule(
-    name = "genFootypesml",
-    outs = ["FooTypesImpl.ml"],
-    tools = ["footypesimpl_gen"],
-    cmd = "$(execpath footypesimpl_gen) > \"$@\"",
-)
-
-cc_binary(
-    name = "footypesimpl_gen",
-    srcs = ["fooTypesImpl_generator.c"],
-    copts = ["-Iffi/ctypes/libfoo/cclib"],
-    deps  = ["//ffi/ctypes/libfoo/cclib:foo",
-             "@opam.ctypes//lib:hdrs"]
-)
-
-genrule(
-    name = "genFootypesimplc",
-    outs = ["fooTypesImpl_generator.c"],
-    tools = [":foo_type_gen"],
-    cmd = "$(execpath :foo_type_gen) > \"$@\"",
-)
-
-
-# tool
-ocaml_binary(
-    name     = "foo_type_gen",
-    main     = ":Foo_type_gen",
-    opts     = OPTS
-)
-
-ocaml_module(
-    name   = "Foo_type_gen",
-    struct = "foo_type_gen.ml",
-    opts   = OPTS + ["-no-alias-deps", "-w", "-49"],
-    deps   = DEPS + [":Foo"]
+    name = "genFooFnsMod",
+    outs = ["FooFunctionsModule.ml"],
+    cmd  = "echo -e '{}' > $@".format(FOOFNSMOD)
 )
 
 FOOFNGEN = """
@@ -177,6 +134,13 @@ genrule(
     cmd  = "echo -e '{}' > $@".format(FOOFNGEN)
 )
 
+################ TYPES ################
+ocaml_module(
+    name   = "FooTypesModule",
+    struct = "FooTypesModule.ml",
+    opts   = OPTS,
+    deps   = DEPS + [":FooTypesImpl", ":Foo"]
+)
 
 FOOTYPESMOD = """
 include Foo.Types (FooTypesImpl)
@@ -188,15 +152,51 @@ genrule(
     cmd  = "echo -e '{}' > $@".format(FOOTYPESMOD)
 )
 
-FOOFNSMOD = """
-include Foo.Functions (FooFunctionsImpl)
-"""
-genrule(
-    name = "genFooFnsMod",
-    outs = ["FooFunctionsModule.ml"],
-    cmd  = "echo -e '{}' > $@".format(FOOFNSMOD)
+################    ################
+ocaml_module(
+    name   = "FooTypesImpl",
+    struct = "FooTypesImpl.ml",
+    opts   = OPTS,
+    deps   = DEPS
 )
 
+genrule(
+    name = "genFootypesml",
+    outs = ["FooTypesImpl.ml"],
+    tools = ["footypesimpl_gen"],
+    cmd = "$(execpath footypesimpl_gen) > \"$@\"",
+)
+
+## depends on the cclib we’re wrapping:
+cc_binary(
+    name = "footypesimpl_gen",
+    srcs = ["fooTypesImpl_generator.c"],
+    copts = ["-Iffi/ctypes/libfoo/cclib"],
+    deps  = ["//ffi/ctypes/libfoo/cclib:foo",
+             "@opam.ctypes//lib:hdrs"]
+)
+
+genrule(
+    name = "genFootypesimplc",
+    outs = ["fooTypesImpl_generator.c"],
+    tools = [":foo_type_gen"],
+    cmd = "$(execpath :foo_type_gen) > \"$@\"",
+)
+
+# tool
+ocaml_binary(
+    name     = "foo_type_gen",
+    main     = ":Foo_type_gen",
+    opts     = OPTS
+)
+
+## NB depends on foo.ml (module containing Types functor)
+ocaml_module(
+    name   = "Foo_type_gen",
+    struct = "foo_type_gen.ml",
+    opts   = OPTS + ["-no-alias-deps", "-w", "-49"],
+    deps   = DEPS + [":Foo"]
+)
 
 GENSRC = """
 let () =

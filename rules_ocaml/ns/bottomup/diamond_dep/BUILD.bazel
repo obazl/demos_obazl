@@ -1,0 +1,50 @@
+## diamond dep should only be built once
+
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_module",
+    "ocaml_test",
+)
+
+ocaml_test(
+    name = "diamond_dep",
+    main = "Test1",
+    # archive_deps = True,
+    timeout = "short",
+)
+
+ocaml_module(
+    name   = "Test1",
+    struct = "test1.ml",
+    # opts = ["-w", "-31"],  ## files x and y both define a module named Z
+    deps = [
+        "@opam.ounit2//lib",
+        ":Main"
+    ],
+)
+
+ocaml_module(
+    name   = "Test2",
+    struct = "test2.ml",
+    # opts = [
+    #     "-w", "-31"  ## files x and y both define a module named Z
+    # ],
+    deps = [
+        "@opam.ounit2//lib",
+        ":Main"
+    ],
+)
+
+ocaml_module(
+    name = "Main",
+    struct = "main.ml",
+    # opts = [
+    #     "-w", "-31"  ## files x and y both define a module named Z
+    # ],
+    deps   = [
+        ## both of these depend indirectly on
+        ## "//ns/bottomup/diamond_dep/diamond:gem"
+        "//ns/bottomup/diamond_dep/en:color",
+        "//ns/bottomup/diamond_dep/fr:couleur"
+    ]
+)

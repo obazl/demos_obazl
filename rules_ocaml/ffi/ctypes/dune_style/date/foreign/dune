@@ -1,0 +1,4 @@
+(executables
+ (names date)
+ (modes byte byte_complete native)
+ (libraries ctypes-foreign))

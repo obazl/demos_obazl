@@ -28,8 +28,8 @@ ocaml_ns_library(
     name = "color",
     linkage  = "static",
     manifest = {
-        ":Red": "Red",
         ":Green": "Green",
+        ":Red": "Red",
         ":Blue": "Blue",
     },
 )

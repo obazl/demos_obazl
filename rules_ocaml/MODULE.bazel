@@ -1,6 +1,6 @@
 module(
     name                = "demos_obazl",
-    version             = "3.0.0",
+    version             = "3.0.0.dev",
     compatibility_level = 3,
     bazel_compatibility = [">=7.1.0"],
 )
@@ -8,31 +8,16 @@ module(
 ## bcr:
 bazel_dep(name = "platforms",    version = "0.0.11")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "rules_cc",     version = "0.0.17")
+bazel_dep(name = "rules_cc",     version = "0.1.1")
 
 ## obazl:
-bazel_dep(name = "rules_ocaml", version = "3.0.0")
-# git_override(module_name = "rules_ocaml",
-#              branch  = "3.0.0.beta",
-#              remote = "https://github.com/obazl/rules_ocaml.git")
-
-bazel_dep(name = "rules_ppx", version = "3.0.0")
-local_path_override(module_name="rules_ppx",
-                    path = "/Users/gar/obazl/rules_ppx")
-# git_override(module_name = "rules_ppx",
-#              branch  = "5.0.0.alpha",
-#              remote = "https://github.com/obazl/rules_ppx.git")
-
-bazel_dep(name = "tools_opam", version = "1.0.0")
-# git_override(module_name = "tools_opam",
-#              branch  = "1.0.0.alpha",
-#              remote = "https://github.com/obazl/tools_opam.git")
-
-bazel_dep(name = "tools_obazl", version = "3.0.0",
+bazel_dep(name = "obazl_tools_cc", version = "3.0.0.dev",
+          repo_name = "obazl_cc")
+bazel_dep(name = "rules_ocaml",    version = "3.0.0.dev")
+bazel_dep(name = "tools_opam",     version = "1.0.0.dev")
+bazel_dep(name = "rules_ppx",      version = "3.0.0.dev")
+bazel_dep(name = "tools_obazl",    version = "3.0.0.dev",
           repo_name = "obazl")
-# git_override(module_name = "tools_obazl",
-#              branch  = "3.0.0.alpha",
-#              remote = "https://github.com/obazl/tools_obazl.git")
 
 include("//.config/opam:opam.MODULE.bazel")
 

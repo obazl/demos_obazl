@@ -1,0 +1,39 @@
+load(
+    "@rules_ocaml//build:rules.bzl",
+    "ocaml_library",
+    "ocaml_module",
+    "ocaml_ns"
+)
+
+SUBMODULES = [":Rouge", ":Vert", ":Bleu"]
+
+ocaml_library(
+    name = "couleur",
+    # linkage  = "static",
+    manifest = SUBMODULES + ["nsCouleur"],
+    visibility = ["//ns/bottomup/diamond_dep:__pkg__"]
+)
+
+ocaml_ns(
+    name = "nsCouleur",
+    ns_name = "Couleur",
+    submodules = SUBMODULES)
+
+ocaml_module(
+    name = "Rouge",
+    ns = ":nsCouleur",
+    struct = "rouge.ml",
+)
+
+ocaml_module(
+    name = "Vert",
+    ns = ":nsCouleur",
+    struct = "vert.ml",
+    deps = ["//ns/bottomup/diamond_dep/diamond:gem"]
+)
+
+ocaml_module(
+    name = "Bleu",
+    ns = ":nsCouleur",
+    struct = "bleu.ml",
+)

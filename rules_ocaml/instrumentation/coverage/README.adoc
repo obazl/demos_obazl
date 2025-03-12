@@ -1,0 +1,26 @@
+= coverage
+
+https://www.atlassian.com/continuous-delivery/software-testing/code-coverage[What is code coverage]
+
+https://piembsystech.com/code-coverage-in-ocaml-language[Code coverage in OCaml language]
+
+* https://courses.cs.cornell.edu/cs3110/2021sp/textbook/testing/coverage.html[Test coverage] (Cornell book)
+  ** https://courses.cs.cornell.edu/cs3110/2021sp/textbook/testing/bisect.html[bisect]
+
+* https://dune.readthedocs.io/en/stable/instrumentation.html[dune]
+
+  ** https://github.com/ocaml/dune/issues/3526[General instrumentation framework]
+
+* https://github.com/aantron/bisect_ppx[bisect_ppx]
+
+
+== Related
+
+Profiling:
+
+https://github.com/LexiFi/landmarks[Landmarks]
+
+
+https://opentelemetry.io/docs/concepts/observability-primer/#what-is-observability[Observability:]
+
+* https://github.com/imandra-ai/ocaml-opentelemetry[Opentelemetry]

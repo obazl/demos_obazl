@@ -18,7 +18,7 @@ ocaml_library(
 
 ocaml_ns(
     name = "nsColor",
-    ns   = "Color",
+    ns_name = "Color",
     manifest = [
         "Red",    # module Red   = Color__Red
         "Green",  # module Green = Color__Green

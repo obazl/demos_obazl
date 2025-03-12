@@ -1,0 +1,11 @@
+common --announce_rc
+common --symlink_prefix=.bazel/
+# common --nokeep_state_after_build
+# common --repository_cache=
+
+common --flag_alias=tc=@rules_ocaml//toolchain
+
+common --registry=file:///Users/gar/obazl/registry
+
+common --registry=https://raw.githubusercontent.com/obazl/registry/main/
+common --registry=https://bcr.bazel.build
