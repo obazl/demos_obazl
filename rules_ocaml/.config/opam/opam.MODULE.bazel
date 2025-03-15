@@ -55,7 +55,7 @@ opam.deps(
     # },
 )
 
-use_repo(opam, "opam.ocamlsdk")
+use_repo(opam, "opam", "opam.ocamlsdk")
 use_repo(opam, "opam.stublibs")
 register_toolchains(
     "@opam.ocamlsdk//toolchain/selectors/local:all",

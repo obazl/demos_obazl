@@ -6,25 +6,29 @@ module(
 
 ## bcr:
 bazel_dep(name = "platforms", version = "0.0.11")
+
 # bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.1.1")
 
 ## obazl:
-bazel_dep(name = "rules_ocaml", version = "3.0.0")
-bazel_dep(name = "tools_opam", version = "1.0.0")
+bazel_dep(name = "rules_ocaml", version = "3.0.0.dev")
+bazel_dep(name = "tools_opam", version = "1.0.0.dev")
+
 opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
 opam.deps(
-    toolchain = "xdg",
+    # ocaml_version = "5.3.0", # default
+    # opam_version = "2.3.0", # default
     # verbosity = 1,
+    # opam_verbosity = 1,
     # debug = 1,
     pkgs = {
         "ounit2": "2.2.7",
         # "alcotest": "",
         # "batteries": "",
     },
-    ocaml_version = "5.0.0",
-    opam_version = "2.3.0",
+    toolchain = "xdg",
 )
+use_repo(opam, "opam")
 use_repo(opam, "opam.ocamlsdk")
 
 ## always register toolchains:

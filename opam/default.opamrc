@@ -265,19 +265,16 @@ add_ccache_mount() {
   fi
 }
 
-add_bazel_mounts() {
-  local bazel_cache=${XDG_CACHE_HOME:-$HOME/.cache}/bazel
-  mkdir -p "${bazel_cache}"
-  add_mounts rw "$bazel_cache"
-  ## w/o this, libtool err: operation not permitted /dev/fd/62
-  add_mounts rw /dev/fd
-}
-POL="$POL"'(allow network*)'
-
 add_dune_cache_mount() {
   local dune_cache=${XDG_CACHE_HOME:-$HOME/.cache}/dune
   mkdir -p "${dune_cache}"
   add_mounts rw "$dune_cache"
+}
+
+add_obazl_cache_mount() { # macos
+  local obazl_cache=${XDG_CACHE_HOME:-$HOME/.cache}/obazl
+  mkdir -p "${obazl_cache}"
+  add_mounts rw "$obazl_cache"
 }
 
 # mount unusual path in ro
@@ -296,7 +293,7 @@ case "$COMMAND" in
         add_mounts rw "$PWD"
         add_ccache_mount
         add_dune_cache_mount
-        add_bazel_mounts
+        add_obazl_mount
         ;;
     install)
         add_mounts rw "$OPAM_SWITCH_PREFIX"
@@ -314,6 +311,12 @@ case "$COMMAND" in
         echo "$0: unknown command $COMMAND, must be one of 'build', 'install' or 'remove'" >&2
         exit 2
 esac
+
+if [ $1 == "--allow-network" ]; then
+    echo "ALLOW NETWORK";
+    shift;
+    POL="$POL"'(allow network*)';
+fi
 
 if ! command -v "$1" >/dev/null; then
     echo "[ERROR] Command not found: $1" >&2
