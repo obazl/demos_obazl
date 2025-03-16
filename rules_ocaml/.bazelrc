@@ -1,4 +1,7 @@
+common --lockfile_mode=off
+
 try-import .config/registries.bazelrc
+
 common --registry=https://raw.githubusercontent.com/obazl/registry/main/
 common --registry=https://bcr.bazel.build
 
