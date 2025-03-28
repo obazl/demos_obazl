@@ -27,12 +27,11 @@ config_setting(name = "static", flag_values = {":link": "static"})
 ocaml_test(
     name = "test",
     main = ":Test",
-    # vm_runtime default is @ocaml_rules//cfg/runtime:runtime
-    vm_runtime = select({
-        ":dynamic": "@rules_ocaml//cfg/runtime:dynamic", # default
-        ":static": "@rules_ocaml//cfg/runtime:static",   # -custom
-        "//conditions:default": "@rules_ocaml//cfg/runtime:dynamic" # default
-        # vm_runtime = "//foo/bar:rt" ## standalone rt, -use-runtime=...
+    runtime = "@rules_ocaml//rt:dbg",
+    vm_linkage = select({
+        ":dynamic": "dynamic",
+        ":static": "static",
+        "//conditions:default": "custom"
     }),
     timeout = "short",
     # opts = ["-cclib", "-lfoo"]

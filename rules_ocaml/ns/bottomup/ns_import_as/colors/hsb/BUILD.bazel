@@ -38,33 +38,34 @@ ocaml_module(
 ocaml_library(
     name = "libHSB",
     visibility = VIZ,
-    manifest = SUBMODULES + [":HSB"]
+    manifest = SUBMODULES + [":nsHSB"]
 )
 
 #########
 ocaml_ns(
-    name       = "HSB",
+    name       = "nsHSB",
+    ns_name    = "HSB",
     visibility = VIZ,
     submodules = SUBMODULES # as strings, will be normalized
 )
 
 ocaml_module(
     name       = "Hue",
-    ns         = ":HSB",
+    ns         = ":nsHSB",
     struct     = "hue.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Saturation",
-    ns         = ":HSB",
+    ns         = ":nsHSB",
     struct     = "saturation.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Brightness",
-    ns         = ":HSB",
+    ns         = ":nsHSB",
     struct     = "brightness.ml",
     visibility = VIZ,
 )

@@ -36,33 +36,34 @@ ocaml_module(
 ocaml_library(
     name = "libRGB",
     visibility = VIZ,
-    manifest = SUBMODULES + [":RGB"]
+    manifest = SUBMODULES + [":nsRGB"]
 )
 
 #########
 ocaml_ns(
-    name       = "RGB",
+    name       = "nsRGB",
+    ns_name    = "RGB",
     visibility = VIZ,
     submodules = SUBMODULES
 )
 
 ocaml_module(
     name       = "Red",
-    ns         = ":RGB",
+    ns         = ":nsRGB",
     struct     = "red.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Green",
-    ns         = ":RGB",
+    ns         = ":nsRGB",
     struct     = "green.ml",
     visibility = VIZ,
 )
 
 ocaml_module(
     name       = "Blue",
-    ns         = ":RGB",
+    ns         = ":nsRGB",
     struct     = "blue.ml",
     visibility = VIZ,
 )

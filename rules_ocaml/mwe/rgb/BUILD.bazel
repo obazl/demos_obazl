@@ -3,6 +3,7 @@
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_module",
+    "ocaml_signature",
     "ocaml_test",
 )
 
@@ -35,8 +36,15 @@ ocaml_module(
     visibility = ["//ns:__subpackages__"]
 )
 
+ocaml_signature(
+    name   = "B_cmi",
+    src    = "b.mli",
+)
+
+
 ocaml_module(
     name = "B",
     struct = "b.ml",
+    sig    = ":B_cmi",
     visibility = ["//ns:__subpackages__"]
 )

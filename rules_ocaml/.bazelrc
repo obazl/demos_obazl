@@ -5,6 +5,20 @@ try-import .config/registries.bazelrc
 common --registry=https://raw.githubusercontent.com/obazl/registry/main/
 common --registry=https://bcr.bazel.build
 
+build:modinfo --aspects @tools_opam//aspects:ocamlobjinfo.bzl%modinfo
+build:modinfo --output_groups=objinfo
+
+build:siginfo --aspects @tools_opam//aspects:ocamlobjinfo.bzl%siginfo
+build:siginfo --output_groups=objinfo
+
+build:archinfo --aspects @tools_opam//aspects:ocamlobjinfo.bzl%archinfo
+build:archinfo --output_groups=objinfo
+
+build:cmt_info --aspects @tools_opam//aspects:ocamlcmt.bzl%cmt
+build:cmt_info --output_groups=cmtinfo
+build:cmti_info --aspects @tools_opam//aspects:ocamlcmt.bzl%cmti
+build:cmti_info --output_groups=cmtinfo
+
 try-import %workspace%/.config/user.bazelrc
 
 test --keep_going

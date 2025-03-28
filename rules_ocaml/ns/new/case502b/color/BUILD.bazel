@@ -19,12 +19,12 @@ ocaml_library(
 ocaml_ns(
     name = "nsColor",
     ns_name = "Color",
-    manifest = [
+    submodules = [
         "Red",    # module Red   = Color__Red
         "Green",  # module Green = Color__Green
         "Blue",   # module Blue  = Color__Blue
     ],
-    ns_submodules = [
+    ns_merge = [
         # "Greek"   # module Greek = Greek
         "//ns/new/case502b/greek:greek", # nslib as submodule
     ],

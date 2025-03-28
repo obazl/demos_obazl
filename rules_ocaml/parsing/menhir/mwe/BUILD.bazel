@@ -82,10 +82,6 @@ ocaml_module(
     ],
 )
 
-##############################
-########################
-####  File Generators  ####
-
 ##########
 ocamllex(
     name  = "lex_Lexer",
@@ -97,6 +93,7 @@ ocamllex(
 menhir(
     name  = "menhir_Parser",
     grammars = ["parser.mly"],
+    cmly = True,
     deps  = [":Ast"],
     outs  = ["parser.ml", "parser.mli"]
 )

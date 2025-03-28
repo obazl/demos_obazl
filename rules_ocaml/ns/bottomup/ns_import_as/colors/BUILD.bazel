@@ -12,7 +12,7 @@ load(
 ocaml_test(
     name = "test",
     main = ":Test",
-    # archive_deps = True,
+    # force_archived_libdeps = True,
     timeout = "short",
 )
 
@@ -45,8 +45,8 @@ ocaml_ns(
     name         = "Colors",
     visibility   = ["//visibility:public"],
     ns_import_as = {
-        "//ns/bottomup/ns_import_as/colors/rgb:RGB": "Foo",
-        "//ns/bottomup/ns_import_as/colors/hsb:HSB": "Bar",
-        "//ns/bottomup/ns_import_as/colors/cmyk:CMYK": "Baz"
+        "//ns/bottomup/ns_import_as/colors/rgb:nsRGB": "Foo",
+        "//ns/bottomup/ns_import_as/colors/hsb:nsHSB": "Bar",
+        "//ns/bottomup/ns_import_as/colors/cmyk:nsCMYK": "Baz"
     },
 )

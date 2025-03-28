@@ -54,7 +54,7 @@ ocaml_ns(
     },
     ns_import_as = {
         # exogenous namespaces
-        "//ns/bottomup/ns_import_as/colors/cmyk:CMYK": "CMYK"
+        "//ns/bottomup/ns_import_as/colors/cmyk:nsCMYK": "CMYK"
     },
     ns_merge = [
         # exogenous namespaced submodules

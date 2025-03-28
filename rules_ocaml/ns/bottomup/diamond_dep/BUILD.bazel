@@ -9,7 +9,7 @@ load(
 ocaml_test(
     name = "diamond_dep",
     main = "Test1",
-    # archive_deps = True,
+    # force_archived_libdeps = True,
     timeout = "short",
 )
 

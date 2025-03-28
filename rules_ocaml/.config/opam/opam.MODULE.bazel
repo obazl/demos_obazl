@@ -55,7 +55,7 @@ opam.deps(
     # },
 )
 
-use_repo(opam, "opam", "opam.ocamlsdk")
+use_repo(opam, "opam.ocamlsdk")
 use_repo(opam, "opam.stublibs")
 register_toolchains(
     "@opam.ocamlsdk//toolchain/selectors/local:all",
@@ -90,3 +90,21 @@ use_repo(opam, "opam.time_now")
 # use_repo(opam, "opam.metapp")    # <5.3.0
 # use_repo(opam, "opam.metaquot")  # <5.3.0
 use_repo(opam, "opam.ppx_show")  # <5.3.0
+
+opam_dev = use_extension("@tools_opam//extensions:opam.bzl",
+                         "opam", dev_dependency = True)
+# enable 'bazel run @opam'
+use_repo(opam_dev, "opam")
+
+# enable 'bazel run @ocaml'
+opam_dev.ocaml()
+use_repo(opam_dev, "ocaml")
+
+# enable 'bazel run @utop'
+opam_dev.utop(version = "2.15.0-1",
+              ocamlinit = ".config/ocamlinit")
+use_repo(opam_dev, utop="opam.utop")
+
+# enable 'bazel run @dbg --@dbg//pgm=//pkg:tgt'
+opam_dev.dbg()
+use_repo(opam_dev, "dbg")

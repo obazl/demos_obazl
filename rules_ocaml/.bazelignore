@@ -6,7 +6,7 @@ interop/ffi/case110
 interop/ffi/chained
 
 ns/bottomup/embedx
-ns/bottomup/festooned
+ns/bottomup/festoonedX
 ns/new/case200
 
 ns/topdown/library/embed/case620

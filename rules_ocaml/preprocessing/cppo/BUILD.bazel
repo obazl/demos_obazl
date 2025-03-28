@@ -2,14 +2,19 @@ load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load("@rules_ocaml//build:rules.bzl", "ocamllex")
 load("@rules_cppo//build/rules:cppo.bzl", "cppo")
 
+config_setting(
+    name = "fastbuild_mode",
+    values = {"compilation_mode": "fastbuild"},
+)
+
 test_suite(
     name = "cppo",
     tests = [
-        ":ocamllex_test",
-        ":cppo_lexer_test",
-        ":cppo_french_test",
-        ":cppo_debug_test"
-    ]
+            ":ocamllex_test",
+            ":cppo_lexer_test",
+            ":cppo_french_test",
+            ":cppo_debug_test"
+    ],
 )
 
 ## https://github.com/ocaml-community/cppo
@@ -36,9 +41,9 @@ diff_test(
 )
 
 cppo(
-    name  = "debug",
-    src   = "debug.ml",
-    out   = "debug.out",
+    name  = "debug.out",
+    srcs  = ["debug.ml"],
+    # out   = "debug.out",
     defines = ["foo"]
 )
 
@@ -51,9 +56,9 @@ diff_test(
 )
 
 cppo(
-    name  = "french",
-    src   = "french.ml",
-    out   = "french.out",
+    name  = "french.out",
+    srcs  = ["french.ml"],
+    # out   = "french.out",
 )
 
 diff_test(
@@ -65,9 +70,9 @@ diff_test(
 )
 
 cppo(
-    name  = "lexer",
-    src   = "lexer.ml",
-    out   = "lexer.out",
+    name  = "lexer.out",
+    srcs  = ["lexer.ml"],
+    # out   = "lexer.out",
 )
 
 diff_test(
@@ -80,6 +85,6 @@ diff_test(
 
 ocamllex(
     name = "lexis",
-    src = "lexer.mll",
+    src  = "lexer.mll",
     out = "lexer.ml"
 )

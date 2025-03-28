@@ -39,7 +39,6 @@ ocaml_module(
     deps = [":libHello"],
 )
 
-# ocaml_archive(
 ocaml_library(
     name = "libHello",
     manifest = [":Easy", ":Simple"],

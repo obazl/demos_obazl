@@ -13,10 +13,10 @@ ocaml_module(
     #     "//ffi/ffi/case110:dynamic": [":dllalpha.so"],
     #     "//conditions:default": []
     # }),
-    deps = [
-        # "@opam.ocamlsdk//runtime:camlrun_shared", # libcamlrun_shared.so
-        ":dllalpha.so",
-    ],
+    # deps = [":dllalpha.so"],
+    # cc_deps = [":dllalpha.so"],
+    deps = [":alpha"], # default: compilation_mode fastbuild
+    #cc_deps = [":alpha"], ## set compilation_mode to opt
     # deps = select({
     #     "//ffi/ffi/case110:dynamic": [":dllalpha.so"],
     #     "//ffi/ffi/case110:static":  [":alpha"],
@@ -25,16 +25,15 @@ ocaml_module(
     #     # "//conditions:default": ["dllalpha.so"]
     #     "//conditions:default": [":alpha"]
     # }),
-    # cc_deps = [":alpha"],
     opts = [
-        "-verbose",
-        "-ccopt", "-Wl,-v" ## pass verbose to assembler
+        # "-verbose",
+        # "-ccopt", "-Wl,-v" ## pass verbose to assembler
     ],
     visibility = ["//ffi/ffi/case110:__pkg__"],
 )
 
 ## bazel 4.2.0: produces both .a and .so
-## bazel 5+: produces .a
+## bazel 5+: produces .a (macos)
 cc_library(
     name = "alpha",
     srcs = [
@@ -42,8 +41,9 @@ cc_library(
         "alpha.c",
         "alpha.h",
     ],
-    alwayslink = True,
-    linkstatic = True,
+    ## WARNING: these build a .lo, which ocaml cannot handle
+    # alwayslink = True,
+    # linkstatic = True,
     copts = [
         # "version",
         # "-I$(@ocaml)/lib/c",

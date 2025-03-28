@@ -81,13 +81,14 @@ genrule(
     name = "transform",
     outs = ["tmp/hello.ml"],
     srcs = ["hello.ml",
-            "@opam.stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so",
-            "@opam.stublibs//lib/stublibs:dllbase_stubs.so"],
+            "@opam.stublibs//lib:dllbase_internalhash_types_stubs.so",
+            "@opam.stublibs//lib:dllbase_stubs.so"],
     ## due to filename->module_name rules, output must be hello.ml, not e.g. hello.pp.ml
     ## $(location :ppx.exe) resolves to wherever Bazel placed ppx.exe
     ## {print_fmt} is for string interpolation
+    ## FIXME: use @opam.stublibs//lib:path?
     cmd = " ".join([
-        "STUBLIBS=`dirname $(execpath @opam.stublibs//lib/stublibs:dllbase_internalhash_types_stubs.so)`;",
+        "STUBLIBS=`dirname $(execpath @opam.stublibs//lib:dllbase_internalhash_types_stubs.so)`;",
         "export DYLD_LIBRARY_PATH=$$STUBLIBS;", ## MacOS
         "$(location :ppx.exe)",
         "{}".format(PPX_PRINT),

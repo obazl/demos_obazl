@@ -95,10 +95,6 @@ ocaml_module(
     struct        = "token.ml"
 )
 
-##############################
-########################
-####  File Generators  ####
-
 ##########
 ocamllex(
     name  = "lex_Lexer",
@@ -106,8 +102,7 @@ ocamllex(
     out   = "lexer.ml",
 )
 
-#######  emitting menhir ####
-##########
+#######
 menhir(
     name  = "menhir_Parser",
     outs  = ["parser.ml", "parser.mli"],

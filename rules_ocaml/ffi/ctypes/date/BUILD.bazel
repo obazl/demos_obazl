@@ -1,4 +1,4 @@
-load("@obazl_ctypes//build/rules:ctypes.bzl", "ctypes_module")
+load("@rules_ctypes//build/rules:ctypes.bzl", "ctypes_module")
 load(
     "@rules_ocaml//build:rules.bzl",
     "ocaml_binary",
@@ -33,7 +33,7 @@ ocaml_module(
 ##############
 ctypes_module(
     name = "date",
-    module_name = "date_stubs",
+    api_name = "date_stubs",
     functors = {"date_types.ml": "DateTypes",
                 "date_functions.ml": "DateFunctions"},
     cchdrs   = ["<time.h>"],
