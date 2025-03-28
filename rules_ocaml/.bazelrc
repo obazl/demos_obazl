@@ -1,5 +1,7 @@
 common --lockfile_mode=off
 
+common --flag_alias=tc=@rules_ocaml//toolchain
+
 try-import .config/registries.bazelrc
 
 common --registry=https://raw.githubusercontent.com/obazl/registry/main/
