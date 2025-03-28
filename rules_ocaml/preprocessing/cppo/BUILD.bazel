@@ -37,7 +37,7 @@ diff_test(
     "debug.out.expected",
     "debug.out",
     "cppo failure",
-    timeout = "short"
+    timeout = "short",
 )
 
 cppo(
@@ -52,7 +52,7 @@ diff_test(
     "french.out.expected",
     "french.out",
     "cppo failure",
-    timeout = "short"
+    timeout = "short",
 )
 
 cppo(
@@ -66,7 +66,8 @@ diff_test(
     "lexer.out.expected",
     "lexer.out",
     "cppo failure",
-    timeout = "short"
+    timeout = "short",
+    target_compatible_with = ["@platforms//os:macos"]
 )
 
 cppo(
@@ -80,7 +81,8 @@ diff_test(
     "lexer.ml.expected",
     "lexer.ml",
     "ocamllex failure",
-    timeout = "short"
+    timeout = "short",
+    target_compatible_with = ["@platforms//os:macos"]
 )
 
 ocamllex(
