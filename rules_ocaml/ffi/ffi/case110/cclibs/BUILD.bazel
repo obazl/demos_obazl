@@ -41,9 +41,9 @@ cc_library(
         "alpha.c",
         "alpha.h",
     ],
-    ## WARNING: these build a .lo, which ocaml cannot handle
+    linkstatic = True,
+    ## WARNING: this builds a .lo, which ocaml cannot handle
     # alwayslink = True,
-    # linkstatic = True,
     copts = [
         # "version",
         # "-I$(@ocaml)/lib/c",
