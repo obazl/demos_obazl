@@ -1,5 +1,7 @@
 # load("@tools_opam//build:rules.bzl", "opam_pkg")
 
+exports_files([".config/ocamlinit"])
+
 test_suite(
     name = "test",
     tests = [
