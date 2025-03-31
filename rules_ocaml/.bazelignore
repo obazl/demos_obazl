@@ -12,6 +12,7 @@ ns/new/case200
 ns/topdown/library/embed/case620
 ns/topdown/library/udr/case100:test
 ns/topdown/library/udr/case200
+ns/topdown/library/udr/case334
 ns/topdown/library/udr/sibdeps100
 ns/new/case336x
 ns/new/case610x
@@ -31,7 +32,7 @@ ns/obazl/set700/case730
 ns/obazl/set700/case740
 ns/ns-archive
 ns/assisted/hierarchical
-# ns/udr
+ns/udr
 
 # depends on core_unix which does not build under 5.3.0:
 parsing/ocamllex

@@ -1,0 +1,1 @@
+Because cppo output is context-specific, the diff tests won't work in general.  But the cppo build targets should work.

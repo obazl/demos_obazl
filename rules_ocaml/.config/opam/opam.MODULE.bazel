@@ -3,14 +3,14 @@ bazel_dep(name = "zstd", version = "1.5.6")
 
 opam = use_extension("@tools_opam//extensions:opam.bzl", "opam")
 
-bazel_dep(name = "rules_ctypes", version = "0.23.0.dev")
+bazel_dep(name = "rules_ctypes", version = "0.23.0.beta.1")
 use_repo(opam, "opam.ctypes", "opam.ctypes-foreign")
 
-bazel_dep(name = "rules_menhir", version="2024.07.15.dev",
+bazel_dep(name = "rules_menhir", version="2024.07.15.beta.1",
           repo_name="menhir")
 use_repo(opam, "opam.menhir", "opam.menhirLib")
 
-bazel_dep(name = "rules_cppo", version="1.8.0.dev")
+bazel_dep(name = "rules_cppo", version="1.8.0.beta.1")
 use_repo(opam, "opam.cppo")
 
 opam.deps(
@@ -41,7 +41,6 @@ opam.deps(
         "ppxlib": "",
         # "ppxlib_jane": "",  # >= 5.1.0
         "sexplib": "",
-        "stublibs": "",
         "time_now": "",
 
         # "async": "",  # //testing/ppx_expect demo, <5.3.0
@@ -94,6 +93,7 @@ use_repo(opam, "opam.ppx_show")  # <5.3.0
 opam_dev = use_extension("@tools_opam//extensions:opam.bzl",
                          "opam", dev_dependency = True)
 # enable 'bazel run @opam'
+opam_dev.opam()
 use_repo(opam_dev, "opam")
 
 # enable 'bazel run @ocaml'
