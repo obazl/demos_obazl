@@ -27,16 +27,13 @@ color.cmo: red.ml green.ml blue.ml
 
 ## leaf nodes depend on the ns module
 MD5_$(RED).cmo: red.ml color.cmo
-	cp red.ml MD5_`${HASHER} red.ml | cut -d ' ' -f 1`.ml
-	ocamlc $(LINKALL) -no-alias-deps -open Color -c MD5_$(RED).ml
+	ocamlc $(LINKALL) -no-alias-deps -open Color -c red.ml -o MD5_$(RED)
 
 MD5_$(GREEN).cmo: green.ml color.cmo
-	cp green.ml MD5_`${HASHER} green.ml | cut -d ' ' -f 1`.ml
-	ocamlc $(LINKALL) -no-alias-deps -open Color -c MD5_$(GREEN).ml
+	ocamlc $(LINKALL) -no-alias-deps -open Color -c green.ml -o MD5_$(GREEN)
 
 MD5_$(BLUE).cmo: blue.ml color.cmo
-	cp blue.ml MD5_`${HASHER} blue.ml | cut -d ' ' -f 1`.ml
-	ocamlc $(LINKALL) -no-alias-deps -open Color -c MD5_$(BLUE).ml
+	ocamlc $(LINKALL) -no-alias-deps -open Color -c blue.ml -o MD5_$(BLUE)
 
 clean:
 	-rm *.exe 2>/dev/null || true;

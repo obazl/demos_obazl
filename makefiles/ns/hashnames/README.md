@@ -13,4 +13,11 @@ hand, if you really had a use for this, you could use a fixed naming
 convention during development and switch to hashed names for
 production builds.
 
-To run: cd to the subdir, run `make`, then `./test.byte`.  Then `make clean`
+To run: cd to the subdir, run `make`, then `./test.byte`. Inspect the generated file `color.ml`:
+
+module Red   = MD5_8d30595d20978446afadefa2ea0269a3
+module Green = MD5_0c57214774ed4b5c4f13c802c488e578
+module Blue  = MD5_c0711142a86d96f2836ab0db6b2050d5
+
+
+Then `make clean`

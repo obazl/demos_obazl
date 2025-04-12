@@ -19,6 +19,13 @@ a$(COMBO): amli
 amli:
 	$(COMPILER) -c a.mli; # emits a.cmi
 
+xmli:
+	$(COMPILER) -c a.mli -o X; # emits X.cmi
+
+xml:
+	$(COMPILER) -cmi-file X.cmi -c ax.ml -o X; #
+
+
 all:
 	for c in $(COMBOS); do $(MAKE) COMBO=$$c; done
 

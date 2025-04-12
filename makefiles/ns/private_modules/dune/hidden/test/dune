@@ -1,0 +1,4 @@
+(test
+ (modes byte)
+ (name test_hidden)
+ (libraries hidden ounit2))
